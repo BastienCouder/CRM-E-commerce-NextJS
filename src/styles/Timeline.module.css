@@ -1,0 +1,48 @@
+.iconLeft,
+.iconRight {
+  top: 0;
+  position: absolute;
+  width: 2px;
+  height: 50px;
+  background-color: #fff;
+}
+.iconLeft {
+  left: 0;
+}
+.iconRight {
+  right: 0;
+}
+
+.iconTopLeft,
+.iconTopRight {
+  top: 0;
+  position: absolute;
+  height: 2px;
+  width: 20px;
+  background-color: #fff;
+}
+
+.iconTopLeft {
+  left: 0;
+}
+
+.iconTopRight {
+  right: 0;
+}
+
+.iconBottomLeft,
+.iconBottomRight {
+  top: 50px;
+  position: absolute;
+  height: 2px;
+  width: 20px;
+  background-color: #fff;
+}
+
+.iconBottomLeft {
+  left: 0;
+}
+
+.iconBottomRight {
+  right: 0;
+}

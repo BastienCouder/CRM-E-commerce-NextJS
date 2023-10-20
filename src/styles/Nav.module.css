@@ -1,0 +1,40 @@
+@media only screen and (min-width: 786px) {
+  .path {
+    width: 30px;
+    height: 0.5px;
+    background-color: #fff;
+    margin-right: 0.8rem;
+  }
+
+  .name:hover > .bar {
+    height: 0.5px;
+    background-color: #fff;
+    margin-right: 0.8rem;
+    animation: bar-hover 0.1s ease-in-out forwards;
+  }
+
+  @keyframes bar-hover {
+    to {
+      width: 30px;
+    }
+    from {
+      width: 0;
+    }
+  }
+
+  .name > .bar {
+    height: 0.5px;
+    background-color: #fff;
+    margin-right: 0.8rem;
+    animation: bar-nohover 0.1s ease-in-out forwards;
+  }
+
+  @keyframes bar-nohover {
+    to {
+      width: 0;
+    }
+    from {
+      width: 30px;
+    }
+  }
+}

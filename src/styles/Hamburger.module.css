@@ -1,0 +1,151 @@
+/* styles/NavBar.module.css */
+.navbar {
+  display: flex;
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 999;
+  color: white;
+}
+
+.burger-button {
+  gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.navTitle {
+  display: none;
+}
+
+@media only screen and (min-width: 600px) {
+  .navTitle {
+    display: block;
+    opacity: 0;
+    margin-right: 0.8rem;
+    animation: NavTitle-out 0.15s linear forwards;
+  }
+
+  .navbar:hover > .navTitle {
+    animation: NavTitle-in 0.15s linear forwards;
+  }
+}
+
+@keyframes NavTitle-in {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+}
+@keyframes NavTitle-out {
+  to {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.burger-button:hover > .bar2 {
+  animation: nav 0.8s ease;
+}
+
+/*Bar*/
+.bar1,
+.bar2,
+.bar3 {
+  width: 2.7rem;
+  background-color: #ffffff;
+  height: 2px;
+  transition: transform 0.15s ease-in-out;
+}
+
+.bar1 {
+  transform: translateY(5px);
+}
+
+.bar3 {
+  transform: translateY(-5px);
+}
+
+.burger-button:hover > .bar1,
+.burger-button:hover > .bar3 {
+  transform: translateY(0px);
+}
+
+.burger-button:hover > .bar2 {
+  animation: nav-in 0.15s linear forwards;
+}
+
+.burger-button > .bar2 {
+  animation: nav-out 0.15s linear forwards;
+}
+
+.bar2 {
+  width: 50%;
+}
+
+@keyframes nav-in {
+  to {
+    width: 50%;
+  }
+  from {
+    width: 0%;
+  }
+}
+
+@keyframes nav-out {
+  to {
+    width: 0%;
+  }
+  from {
+    width: 50%;
+  }
+}
+
+.burger-button.active {
+  transform: translateY(5px);
+}
+
+.burger-button.active > .bar1 {
+  transition: transform 0.2s ease-in-out;
+  transform: translateY(6px) rotate(-45deg);
+}
+
+.burger-button.active > .bar2 {
+  display: none;
+}
+
+.burger-button.active > .bar3 {
+  transition: transform 0.2s ease-in-out;
+  transform: translateY(-6px) rotate(45deg);
+}
+
+.menu {
+  display: none;
+  visibility: hidden;
+}
+
+.menu.open {
+  display: none;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  visibility: visible;
+  background-color: #333;
+  padding: 1rem;
+  border: 1px solid #555;
+  border-radius: 5px;
+  color: white;
+}
