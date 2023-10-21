@@ -21,6 +21,7 @@
     "react": "experimental",
     "react-dom": "experimental",
     "react-icons": "^4.11.0",
+    "sonner": "^1.0.3",
     "zod": "^3.22.4"
   },
   "devDependencies": {

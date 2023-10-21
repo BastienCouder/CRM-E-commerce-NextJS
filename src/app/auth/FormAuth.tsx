@@ -75,6 +75,7 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
           <div className="w-full flex flex-col items-start space-y-8">
             {variant === "register" && (
               <Input
+                required={true}
                 id="name"
                 type="text"
                 label="Nom"
@@ -83,6 +84,7 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
               />
             )}
             <Input
+              required={true}
               id="email"
               type="email"
               label="Email"

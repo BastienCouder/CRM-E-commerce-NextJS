@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
-import PropTypes from "prop-types";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import Input from "@/components/Input";
 
 interface ShowPasswordProps {
   password: string;
@@ -23,17 +23,14 @@ export default function ShowPassword({
   return (
     <>
       <div className="w-full flex flex-col space-y-1 relative">
-        <label htmlFor={password}>
-          Mot de passe
-          <span className="-mt-1 ml-1">*</span>
-        </label>
-        <input
+        <Input
+          required={true}
+          label="Mot de passe"
           type={showPassword ? "text" : "password"}
           name="password"
           id="password"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
-          className="p-1.5 outline-none"
         />
         <button
           type="button"

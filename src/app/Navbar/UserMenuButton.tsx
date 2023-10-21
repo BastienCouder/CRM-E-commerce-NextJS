@@ -1,5 +1,4 @@
 import { Session } from "next-auth";
-import Logout from "@/components/Logout";
 import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
 

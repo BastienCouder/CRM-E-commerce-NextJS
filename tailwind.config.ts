@@ -7,5 +7,13 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   plugins: [require("daisyui")],
+  theme: {
+    extend: {
+      fontFamily: {
+        Bodoni: ["Bodoni", "serif"],
+        Noto: ["Noto", "serif"],
+      },
+    },
+  },
 };
 export default config;

@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Bodoni";
+  src: local("Bodoni"), url("/fonts/Bodoni.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Noto";
+  src: local("Noto"), url("/fonts/Noto.ttf") format("truetype");
+}
+
 :root {
   --foreground-rgb: 255, 255, 255;
 }
@@ -16,8 +26,23 @@ body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
   min-height: 100vh;
+  font-family: "Noto";
 }
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+::selection {
+  background: black;
+}
+nav,
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Bodoni";
 }

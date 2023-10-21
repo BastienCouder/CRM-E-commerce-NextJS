@@ -5,6 +5,7 @@ interface InputFieldProps {
   name?: string;
   placeholder?: string;
   value?: string;
+  required: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -15,13 +16,14 @@ export default function Input({
   name,
   placeholder,
   value,
+  required,
   onChange,
 }: InputFieldProps) {
   return (
     <div className="w-full flex flex-col space-y-1">
       <label htmlFor={id}>
         {label}
-        {name === "promo" ? null : <span className="-mt-1 ml-1">*</span>}
+        {required === true ? <span className="-mt-1 ml-1">*</span> : null}
       </label>
       <input
         type={type}
@@ -31,7 +33,6 @@ export default function Input({
         name={name}
         onChange={onChange}
         autoComplete="off"
-        // required
         className="p-1.5 outline-none"
       />
     </div>

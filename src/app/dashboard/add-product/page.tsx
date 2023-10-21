@@ -6,6 +6,7 @@ import { notFound, redirect } from "next/navigation";
 import { cache } from "react";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { checkAdminRole } from "@/lib/admin";
+import Input from "@/components/Input";
 
 export const metadata = {
   title: "Add Product - E-commerce",
@@ -49,44 +50,65 @@ export default async function AddProductPage() {
 
   return (
     <>
-      <h1 className="text-lg mb-3">Add Product</h1>
-      <form action={addProduct}>
-        <input
-          className="mb-3 w-full text-black"
-          required
-          type="text"
-          name="name"
-          placeholder="Name"
-        />
-        <textarea
-          required
-          name="description"
-          className="mb-3 w-full text-black"
-          placeholder="Description"
-        ></textarea>
-        <input
-          className="mb-3 w-full text-black"
-          required
-          type="url"
-          name="imageUrl"
-          placeholder="Image Url"
-        />
-        <input
-          className="mb-3 w-full text-black"
-          required
-          type="number"
-          name="price"
-          placeholder="Price"
-        />
-        <select name="category" className="mb-3 w-full text-white">
-          {categories.map((category: Category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-        <FormSubmitButton className="">Add Product</FormSubmitButton>
-      </form>
+      <div>
+        <h1 className="text-lg mb-3">Add Product</h1>
+        <form action={addProduct} className="space-y-4 w-[40rem]">
+          <div className="flex space-x-4">
+            <Input
+              label="Name"
+              required={true}
+              id="name"
+              type="text"
+              name="name"
+              placeholder="Name"
+            />
+            <Input
+              required={true}
+              label="Price"
+              id="price"
+              type="number"
+              name="price"
+              placeholder="Price"
+            />
+          </div>
+
+          <Input
+            required={true}
+            label="ImageUrl"
+            id="imageUrl"
+            type="url"
+            name="imageUrl"
+            placeholder="Image Url"
+          />
+          <input
+            type="file"
+            name="imageUrl"
+            className="file-input w-full max-w-xs"
+          />
+          <select
+            name="category"
+            className="p-1 my-4 outline-none w-full text-white"
+          >
+            {categories.map((category: Category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+          <div className="space-y-1">
+            <label htmlFor="textarea">
+              Description
+              <span className="-mt-1 ml-1">*</span>
+            </label>
+            <textarea
+              name="description"
+              placeholder="Description"
+              className="w-full "
+            ></textarea>
+          </div>
+          <FormSubmitButton>Add Product</FormSubmitButton>
+        </form>
+      </div>
     </>
   );
 }

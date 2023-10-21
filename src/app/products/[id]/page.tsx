@@ -1,10 +1,9 @@
-import PriceTag from "@/components/PriceTag";
 import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import AddToCartButton from "./AddToCartButton";
 import { incrementProductQuantity } from "./actions";
+import Product from "./Product";
 
 interface ProductPageProps {
   params: {
@@ -40,15 +39,9 @@ export default async function ProductPage({
 }: ProductPageProps) {
   const product = await getProduct(id);
   return (
-    <div className="flex">
-      <h2>{product.name}</h2>
-      {product.category && <h2>{product.category.name}</h2>}
-      <p>{product.description}</p>
-      <PriceTag price={product.price} />
-      <AddToCartButton
-        productId={product.id}
-        incrementProductQuantity={incrementProductQuantity}
-      />
-    </div>
+    <Product
+      product={product}
+      incrementProductQuantity={incrementProductQuantity}
+    />
   );
 }
