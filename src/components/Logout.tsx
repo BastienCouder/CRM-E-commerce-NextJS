@@ -11,5 +11,12 @@ export default function AccountMenu({ visible }: AccountMenuProps) {
     return null;
   }
 
-  return <div onClick={() => signOut({ callbackUrl: "/" })}>Sign out</div>;
+  return (
+    <div
+      onClick={() => signOut({ callbackUrl: "/" })}
+      className="w-16 cursor-pointer"
+    >
+      Sign out
+    </div>
+  );
 }

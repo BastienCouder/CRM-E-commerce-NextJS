@@ -1,8 +1,11 @@
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { prisma } from "@/lib/db/prisma";
 import { Category } from "@prisma/client";
+import { getServerSession } from "next-auth";
 import { notFound, redirect } from "next/navigation";
 import { cache } from "react";
+import { authOptions } from "../../api/auth/[...nextauth]/route";
+import { checkAdminRole } from "@/lib/admin";
 
 export const metadata = {
   title: "Add Product - E-commerce",
@@ -16,6 +19,13 @@ const getCategory = cache(async () => {
 });
 
 export default async function AddProductPage() {
+  const session = await getServerSession(authOptions);
+  const updatedSession = checkAdminRole(session);
+
+  if (updatedSession && updatedSession.user.role !== "admin") {
+    redirect("/");
+  }
+
   const categories = await getCategory();
 
   async function addProduct(formData: FormData) {

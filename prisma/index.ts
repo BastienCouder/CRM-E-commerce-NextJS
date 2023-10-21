@@ -3,11 +3,28 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function main() {
+  // const userId = "6533a2555cf192fe1e2cbe6a";
   // const user = await prisma.user.findUnique({
   //   where: {
-  //     id: "651947a5b9f3a78b824f3326",
+  //     id: userId,
   //   },
   // });
+  // if (user) {
+  //   // Mise à jour du champ "isAdmin" pour définir l'utilisateur comme administrateur
+  //   const updatedUser = await prisma.user.update({
+  //     where: {
+  //       id: userId,
+  //     },
+  //     data: {
+  //       role: "admin",
+  //     },
+  //   });
+  //   console.log(
+  //     `L'utilisateur ${updatedUser.username} est maintenant administrateur.`
+  //   );
+  // } else {
+  //   console.log("Utilisateur non trouvé.");
+  // }
   // Créer un produit
   // const category = await prisma.category.create({
   //   data: {

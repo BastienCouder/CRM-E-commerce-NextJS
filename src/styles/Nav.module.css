@@ -24,17 +24,8 @@
 
   .name > .bar {
     height: 0.5px;
+    width: 0;
     background-color: #fff;
     margin-right: 0.8rem;
-    animation: bar-nohover 0.1s ease-in-out forwards;
-  }
-
-  @keyframes bar-nohover {
-    to {
-      width: 0;
-    }
-    from {
-      width: 30px;
-    }
   }
 }

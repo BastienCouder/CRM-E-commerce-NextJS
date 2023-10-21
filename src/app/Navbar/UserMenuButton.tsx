@@ -16,7 +16,7 @@ export default function UserMenuButton({
 }: UserMenuButtonProps) {
   const user = session?.user;
   return user ? (
-    <Link href={`/dashboard`} onClick={toggleMenu}>
+    <Link href={`/profile`} onClick={toggleMenu}>
       {isSmallScreen ? (
         <AiOutlineUser size={34} />
       ) : (

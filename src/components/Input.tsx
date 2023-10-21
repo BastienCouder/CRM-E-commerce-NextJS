@@ -6,7 +6,6 @@ interface InputFieldProps {
   placeholder?: string;
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  variant?: string;
 }
 
 export default function Input({
@@ -17,7 +16,6 @@ export default function Input({
   placeholder,
   value,
   onChange,
-  variant,
 }: InputFieldProps) {
   return (
     <div className="w-full flex flex-col space-y-1">
@@ -36,9 +34,6 @@ export default function Input({
         // required
         className="p-1.5 outline-none"
       />
-      {type === "password" && variant === "login" ? (
-        <span className="text-xs cursor-pointer">Mot de passe oublié ?</span>
-      ) : null}
     </div>
   );
 }

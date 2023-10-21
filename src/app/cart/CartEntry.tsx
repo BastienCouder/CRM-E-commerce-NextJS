@@ -59,7 +59,7 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
           {formatPrice(product.price * quantity, "EUR")}
         </p>
       </div>
-      <div className="lg:h-[30px] justify-start items-center flex flex-col lg:space-y-6 lg:items-start">
+      <div className="lg:h-[27px] justify-start items-center flex flex-col lg:space-y-6 lg:items-start">
         <div className="h-full "></div>
         <button onClick={handleDelete} className=" px-2">
           <RxCross2 />

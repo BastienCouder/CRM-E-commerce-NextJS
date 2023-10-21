@@ -5,7 +5,8 @@ import { signIn } from "next-auth/react";
 import styles from "@/styles/Button.module.css";
 import Input from "@/components/Input";
 import { AiFillFacebook, AiFillGoogleSquare } from "react-icons/ai";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import ShowPassword from "./ShowPassword";
 
 interface FormAuthProps {
   registerForm: any;
@@ -26,15 +27,19 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
     );
     setError("");
   }, []);
-
-  const login: () => void = useCallback(async () => {
+  const login = useCallback(async () => {
     try {
-      signIn("credentials", {
+      const result = await signIn("credentials", {
         email,
         password,
         redirect: false,
       });
-      router.push("/dashboard");
+
+      if (result?.error) {
+        setError(result.error);
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -84,13 +89,11 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
               value={email}
               onChange={(e: any) => setEmail(e.target.value)}
             />
-            <Input
-              variant={variant}
+            <ShowPassword
+              password={password}
+              setPassword={setPassword}
               type="password"
-              id="password"
-              label="Mot de passe"
-              value={password}
-              onChange={(e: any) => setPassword(e.target.value)}
+              variant={variant}
             />
           </div>
 
@@ -114,10 +117,10 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
             <div className="w-1/2 h-px bg-white"></div>
           </div>
           <div className="flex space-x-8 items-center cursor-pointer ">
-            <div onClick={() => signIn("google", { callbackUrl: "/profile" })}>
+            <div onClick={() => signIn("google", { callbackUrl: "/" })}>
               <AiFillGoogleSquare size={34} />
             </div>
-            <div onClick={() => signIn("github", { callbackUrl: "/profile" })}>
+            <div onClick={() => signIn("github", { callbackUrl: "/" })}>
               <AiFillFacebook size={34} />
             </div>
           </div>

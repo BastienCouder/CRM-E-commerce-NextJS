@@ -7,10 +7,9 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export default async function Auth() {
   const session = await getServerSession(authOptions);
-  console.log(session);
 
   if (session) {
-    redirect("/dashboard");
+    redirect("/profile");
   }
 
   async function registerForm(formData: FormData) {
@@ -19,7 +18,8 @@ export default async function Auth() {
     const email = formData.get("email")?.toString();
     const password = formData.get("password")?.toString();
 
-    if (!name || !email || !password) throw Error("Des champs sont manquants");
+    if (!name || !email || !password)
+      throw Error("Nom, adresse e-mail et mot de passe requis");
 
     if (email && !validateEmail(email)) {
       throw Error("Email invalide");

@@ -5,7 +5,7 @@ import styles from "@/styles/Nav.module.css";
 import { useRouter } from "next/navigation";
 import ShoppingCartButton from "@/app/Navbar/ShoppingCartButton";
 import { ShoppingCart } from "@/lib/db/cart";
-import UserMenuButton from "./UserMenuButton";
+import UserMenuButton from "@/app/Navbar/UserMenuButton";
 import { Session } from "next-auth";
 
 interface NavBarProps {
@@ -16,7 +16,7 @@ interface NavBarProps {
 
 const mainNavData = [
   { name: "Catégorie 1", path: "/" },
-  { name: `Catégorie 2`, path: "/dashboard" },
+  { name: `Catégorie 2`, path: "/profile" },
   {
     name: "Catégorie 3",
     path: "/contact",

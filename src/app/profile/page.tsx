@@ -6,7 +6,6 @@ import Logout from "@/components/Logout";
 
 export default async function dashboardPage() {
   const session = await getServerSession(authOptions);
-  console.log(session);
 
   if (!session) {
     redirect("/auth");
