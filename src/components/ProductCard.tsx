@@ -2,10 +2,10 @@ import Link from "next/link";
 import PriceTag from "./PriceTag";
 import Image from "next/image";
 
-import { Products, Category } from "@prisma/client";
+import { Product, Category } from "@prisma/client";
 
 interface ProductCardProps {
-  product: Products & {
+  product: Product & {
     category: Category | null;
   };
 }

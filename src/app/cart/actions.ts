@@ -6,12 +6,13 @@ import { revalidatePath } from "next/cache";
 
 export async function UpdateProductQuantity(
   productId: string,
-  quantity: number
+  quantity: number,
+  variantId: string | null
 ) {
   const cart = (await getCart()) ?? (await createCart());
 
   const articleInCart = cart.cartItems.find(
-    (item) => item.productId === productId
+    (item) => item.productId === productId && item.variantId === variantId
   );
 
   if (articleInCart) {
@@ -36,6 +37,7 @@ export async function UpdateProductQuantity(
           data: {
             cartId: cart.id,
             productId,
+            variantId,
             quantity,
           },
         });

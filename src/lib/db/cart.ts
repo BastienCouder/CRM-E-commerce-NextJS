@@ -5,11 +5,13 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export type CartWithProducts = Prisma.CartGetPayload<{
-  include: { cartItems: { include: { product: true } } };
+  include: {
+    cartItems: { include: { product: true; variant: true } };
+  };
 }>;
 
 export type CartItemWithProduct = Prisma.CartItemsGetPayload<{
-  include: { product: true };
+  include: { product: true; variant: true };
 }>;
 
 export type ShoppingCart = CartWithProducts & {
@@ -27,14 +29,20 @@ export async function getCart(): Promise<ShoppingCart | null> {
       where: {
         userId: session.user.id,
       },
-      include: { cartItems: { include: { product: true } } },
+      include: {
+        cartItems: { include: { product: true, variant: true } },
+      },
     });
   } else {
     const localCartId = cookies().get("localCartId")?.value;
     cart = localCartId
       ? await prisma.cart.findUnique({
           where: { id: localCartId },
-          include: { cartItems: { include: { product: true } } },
+          include: {
+            cartItems: {
+              include: { product: true, variant: true },
+            },
+          },
         })
       : null;
   }
@@ -46,10 +54,17 @@ export async function getCart(): Promise<ShoppingCart | null> {
   return {
     ...cart,
     size: cart.cartItems.reduce((acc, item) => acc + item.quantity, 0),
-    subtotal: cart.cartItems.reduce(
-      (acc, item) => acc + item.quantity * item.product.price,
-      0
-    ),
+    subtotal: cart.cartItems.reduce((acc, item) => {
+      const variantPrice = item.variant ? item.variant.price : null;
+      const productPrice = item.product ? item.product.price : null;
+      const price =
+        variantPrice !== null
+          ? variantPrice
+          : productPrice !== null
+          ? productPrice
+          : 0;
+      return acc + item.quantity * price;
+    }, 0),
   };
 }
 

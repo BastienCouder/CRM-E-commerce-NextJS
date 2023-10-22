@@ -5,11 +5,16 @@ import { Toaster, toast } from "sonner";
 
 interface AddToCartButtonProps {
   productId: string;
-  incrementProductQuantity: (productId: string) => Promise<void>;
+  variantId: string;
+  incrementProductQuantity: (
+    productId: string,
+    variantId: string
+  ) => Promise<void>;
 }
 
 export default function AddToCartButton({
   productId,
+  variantId,
   incrementProductQuantity,
 }: AddToCartButtonProps) {
   const [isPending, startTransition] = useTransition();
@@ -20,7 +25,7 @@ export default function AddToCartButton({
           className={`py-3 px-5 relative uppercase tracking-[4px] flex items-center ${buttonStyles.button}`}
           onClick={() => {
             startTransition(async () => {
-              await incrementProductQuantity(productId);
+              await incrementProductQuantity(productId, variantId);
               const promise = () =>
                 new Promise((resolve) => setTimeout(resolve, 2000));
 

@@ -27,16 +27,20 @@ export default async function Cart() {
       <div className="mt-8 pb-10 lg:px-16 xl:px-44 ">
         <h1 className="text-4xl text-center lg:text-start">Panier</h1>
         <ul className="flex flex-col space-y-2 py-8 lg:py-12">
-          {cart?.cartItems.map((cartItem) => (
-            <li
-              key={cartItem.id}
-              className="space-y-6 lg:space-y-0 flex flex-col px-8 py-4 lg:border-b-2 lg:border-zinc-800 w-full lg:flex-row items-center"
-            >
-              <CartEntry cartItem={cartItem} key={cartItem.id} />
+          {cart?.cartItems.map((cartItem) => {
+            console.log(cartItem);
 
-              <div className="flex lg:hidden  h-[2px] w-3/4 bg-zinc-800"></div>
-            </li>
-          ))}
+            return (
+              <li
+                key={cartItem.id}
+                className="space-y-6 lg:space-y-0 flex flex-col px-8 py-4 lg:border-b-2 lg:border-zinc-800 w-full lg:flex-row items-center"
+              >
+                <CartEntry cartItem={cartItem} key={cartItem.id} />
+
+                <div className="flex lg:hidden  h-[2px] w-3/4 bg-zinc-800"></div>
+              </li>
+            );
+          })}
           {!cart?.cartItems.length && <p>Cart is empty</p>}
         </ul>
 

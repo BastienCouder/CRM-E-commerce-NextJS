@@ -41,7 +41,7 @@ export default async function AddProductPage() {
     if (!name || !description || !imageUrl || !categoryId || !price)
       throw Error("Des champs sont manquants");
 
-    await prisma.products.create({
+    await prisma.product.create({
       data: { name, description, imageUrl, categoryId, price },
     });
 

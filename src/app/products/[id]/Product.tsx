@@ -5,20 +5,36 @@ import Image from "next/image";
 import PriceTag from "@/components/PriceTag";
 import AddToCartButton from "./AddToCartButton";
 import { AiOutlinePlus } from "react-icons/ai";
+import { Product, ProductVariant } from "@prisma/client";
 
 interface ProductProps {
-  product: any;
-  incrementProductQuantity: (productId: string) => Promise<void>;
+  product: Product & {
+    variants: ProductVariant[];
+  };
+  incrementProductQuantity: (
+    productId: string,
+    variantId: string
+  ) => Promise<void>;
 }
 export default function Product({
   product,
   incrementProductQuantity,
 }: ProductProps) {
   const [showColor, setShowColor] = useState(false);
+  const [selectedColor, setSelectedColor] = useState(product.variants[0].id);
 
   const toggleColorVisibility = useCallback(async () => {
     setShowColor(!showColor);
   }, [showColor]);
+
+  const handleColorChange = (color: string) => {
+    setSelectedColor(color);
+    toggleColorVisibility();
+  };
+
+  const selectedVariant = product.variants.find(
+    (variant: any) => variant.id === selectedColor
+  );
 
   return (
     <>
@@ -26,18 +42,24 @@ export default function Product({
         <div className="flex flex-col">
           <div className="relative">
             <motion.div
-              initial={{ opacity: 0, y: 150 }}
+              key={selectedColor}
+              initial={{ opacity: 0.5, y: -500 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 150 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 1 }}
             >
-              <Image
-                src={"/images/montre1.png"}
-                alt={product.name}
-                width={500}
-                height={1000}
-                className="z-50 h-[28rem] object-contain"
-              />
+              {selectedVariant && (
+                <Image
+                  src={
+                    selectedVariant.imageUrl
+                      ? selectedVariant.imageUrl
+                      : product.imageUrl
+                  }
+                  alt={product.name}
+                  width={500}
+                  height={1000}
+                  className="z-10 h-[28rem] object-contain"
+                />
+              )}
             </motion.div>
 
             <motion.div
@@ -54,7 +76,7 @@ export default function Product({
               animate={{ opacity: 1, x: 0, y: 0 }}
               exit={{ opacity: 0, x: 30, y: 0 }}
               transition={{ delay: 0.3, duration: 0.4 }}
-              className="z-50 absolute top-10 right-10 "
+              className="z-10 absolute top-10 right-10 "
             >
               <div
                 onClick={toggleColorVisibility}
@@ -92,31 +114,50 @@ export default function Product({
               <p className="w-full">{product.description}</p>
             </div>
             <PriceTag
-              price={product.price}
+              price={
+                selectedVariant?.price ? selectedVariant?.price : product.price
+              }
               className="text-2xl text-center font-bold"
             />
             <AddToCartButton
               productId={product.id}
               incrementProductQuantity={incrementProductQuantity}
+              variantId={selectedVariant?.id || ""}
             />
           </motion.div>
         </div>
       </div>
-      {showColor ? (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="fixed top-0 h-screen w-screen flex justify-center items-center bg-zinc-900/80"
-        >
-          <ul className="flex flex-col gap-3 items-center justify-center uppercase">
-            <li className="cursor-pointer">or</li>
-            <li className="cursor-pointer">rose</li>
-            <li className="cursor-pointer">argent</li>
-          </ul>
-        </motion.div>
-      ) : null}
+
+      <AnimatePresence>
+        {showColor ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-0 h-screen w-screen flex justify-center items-center bg-zinc-900/80"
+          >
+            <ul className="flex flex-col gap-3 items-center justify-center uppercase">
+              {product.variants.map((variant: ProductVariant) => (
+                <motion.li
+                  initial={{ opacity: 0.5, y: -50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{
+                    opacity: 0,
+                    y: -50,
+                  }}
+                  transition={{ duration: 0.2 }}
+                  key={variant.id}
+                  className="cursor-pointer"
+                  onClick={() => handleColorChange(variant.id)}
+                >
+                  {variant.color}
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

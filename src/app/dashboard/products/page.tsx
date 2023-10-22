@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 
 const getProducts = cache(async () => {
-  const products = await prisma.products.findMany({
+  const products = await prisma.product.findMany({
     include: { category: true },
   });
 
