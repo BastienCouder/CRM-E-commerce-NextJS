@@ -17,6 +17,7 @@ export async function UpdateProductQuantity(
 
   if (articleInCart) {
     const newQuantity = quantity;
+    console.log();
 
     if (newQuantity === 0) {
       await prisma.cartItems.delete({

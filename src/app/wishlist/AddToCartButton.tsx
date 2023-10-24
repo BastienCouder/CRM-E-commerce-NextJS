@@ -6,16 +6,13 @@ import { Toaster, toast } from "sonner";
 interface AddToCartButtonProps {
   productId: string;
   variantId: string;
-  incrementProductQuantity: (
-    productId: string,
-    variantId: string
-  ) => Promise<void>;
+  addToCart: (productId: string, variantId: string) => Promise<void>;
 }
 
 export default function AddToCartButton({
   productId,
   variantId,
-  incrementProductQuantity,
+  addToCart,
 }: AddToCartButtonProps) {
   const [isPending, startTransition] = useTransition();
   return (
@@ -25,17 +22,8 @@ export default function AddToCartButton({
           className={`py-3 px-5 relative uppercase tracking-[4px] flex items-center ${buttonStyles.button}`}
           onClick={() => {
             startTransition(async () => {
-              await incrementProductQuantity(productId, variantId);
-              const promise = () =>
-                new Promise((resolve) => setTimeout(resolve, 2000));
-
-              toast.promise(promise, {
-                loading: "Chargement...",
-                success: () => {
-                  return `Produit ajouté avec succès`;
-                },
-                error: "Error",
-              });
+              await addToCart(productId, variantId);
+              toast("Produit ajouté au panier");
             });
           }}
         >

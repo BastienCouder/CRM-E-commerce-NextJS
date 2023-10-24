@@ -2,8 +2,11 @@ import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import { incrementProductQuantity } from "./actions";
+import { incrementProductQuantity, incrementWishlist } from "./actions";
 import Product from "./Product";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getLike } from "@/lib/db/like";
 
 interface ProductPageProps {
   params: {
@@ -37,11 +40,29 @@ export async function generateMetadata({
 export default async function ProductPage({
   params: { id },
 }: ProductPageProps) {
+  const session = await getServerSession(authOptions);
+  const userId = session?.user?.id;
   const product = await getProduct(id);
-  return (
-    <Product
-      product={product}
-      incrementProductQuantity={incrementProductQuantity}
-    />
-  );
+
+  const likedProductId = product?.variants[0]?.id || product.id;
+  let likedVariant = null;
+  if (product?.variants) {
+    likedVariant = product.variants.find(
+      (variant) => variant.id === likedProductId
+    );
+  }
+  if (userId) {
+    const like = await getLike(userId, likedProductId);
+    console.log(like);
+
+    return (
+      <Product
+        product={product}
+        session={session}
+        like={like}
+        incrementProductQuantity={incrementProductQuantity}
+        incrementWishlist={incrementWishlist}
+      />
+    );
+  }
 }

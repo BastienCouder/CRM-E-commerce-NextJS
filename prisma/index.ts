@@ -42,28 +42,28 @@ async function main() {
 
   const product = await prisma.product.create({
     data: {
-      name: "Produit 1",
-      description: "Description du produit 1",
+      name: "Produit 2",
+      description: "Description du produit 2",
       price: 2000,
       imageUrl: "/images/montre1-or.png",
-      variants: {
-        create: [
-          {
-            color: "or",
-            imageUrl: "/images/montre1-or.png",
-          },
-          {
-            color: "argent",
-            price: 1800,
-            imageUrl: "/images/variants/montre1-argent.png",
-          },
-          {
-            color: "rose",
-            price: 1800,
-            imageUrl: "/images/variants/montre1-rose.png",
-          },
-        ],
-      },
+      // variants: {
+      //   create: [
+      //     {
+      //       color: "or",
+      //       imageUrl: "/images/montre1-or.png",
+      //     },
+      //     {
+      //       color: "argent",
+      //       price: 1800,
+      //       imageUrl: "/images/variants/montre1-argent.png",
+      //     },
+      //     {
+      //       color: "rose",
+      //       price: 1800,
+      //       imageUrl: "/images/variants/montre1-rose.png",
+      //     },
+      //   ],
+      // },
     },
   });
   console.log(product);

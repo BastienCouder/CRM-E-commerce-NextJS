@@ -19,7 +19,7 @@ const mainNavData = [
   { name: `Catégorie 2`, path: "/profile" },
   {
     name: "Catégorie 3",
-    path: "/contact",
+    path: "/wishlist",
   },
 ];
 

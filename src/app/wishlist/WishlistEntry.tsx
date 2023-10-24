@@ -1,0 +1,77 @@
+"use client";
+
+import { CartItemWithProduct } from "@/lib/db/cart";
+import formatPrice from "@/lib/format";
+import Image from "next/image";
+import Link from "next/link";
+import { RxCross2 } from "react-icons/rx";
+
+import Loading from "../loading";
+import useMobile from "@/hooks/useMobile";
+import { WishlistItemWithProduct } from "@/lib/db/wishlist";
+import AddToCartButton from "../wishlist/AddToCartButton";
+import { AddToCart } from "./actions";
+
+interface WishlistEntryProps {
+  wishlistItem: WishlistItemWithProduct;
+  AddToCart: (productId: string, variantId: string) => Promise<void>;
+}
+
+export default function WishlistEntry({ wishlistItem }: WishlistEntryProps) {
+  const { product, quantity, variant } = wishlistItem;
+  const ismobile = useMobile();
+  if (!product || (variant && !variant)) {
+    return <Loading />;
+  }
+
+  return (
+    <>
+      <div className="justify-end items-center w-full  flex flex-col lg:items-start">
+        <h3 className="hidden lg:block text-xs mb-2">Produit</h3>
+        <div className="flex gap-8 items-center">
+          {variant ? (
+            <Link href={"/products/" + product.id}>
+              <Image
+                src={variant.imageUrl || ""}
+                alt={product.name}
+                width={200}
+                height={200}
+                className="rounded-lg w-[70px] h-[70px] border-white border-[1px]"
+              />
+            </Link>
+          ) : (
+            <Link href={"/products/" + product.id}>
+              <Image
+                src={product.imageUrl}
+                alt={product.name}
+                width={200}
+                height={200}
+                className="rounded-lg w-[70px] h-[70px] border-white border-[1px]"
+              />
+            </Link>
+          )}
+          <Link href={"/products/" + product.id}>
+            <p className="font-bold capitalize">{product.name}</p>
+            {variant && <p className="text-sm capitalize">{variant.color}</p>}
+          </Link>
+        </div>
+      </div>
+
+      <div className="lg:h-[85px] justify-start items-center w-full flex flex-col lg:space-y-2 lg:items-start">
+        <h3 className="hidden lg:flex text-xs mb-[1.2rem]">Prix</h3>
+        <p className="font-bold">
+          {variant?.price
+            ? formatPrice(variant.price, "EUR")
+            : formatPrice(product.price, "EUR")}
+        </p>
+      </div>
+      <div className="w-[80rem] lg:h-[85px] flex pt-[1.2rem] items-center">
+        <AddToCartButton
+          productId={product.id}
+          addToCart={AddToCart}
+          variantId={variant?.id || ""}
+        />
+      </div>
+    </>
+  );
+}
