@@ -3,7 +3,7 @@ import { VAT_RATE } from "@/lib/utils";
 import buttonStyles from "@/styles/Button.module.css";
 import { getWishlist } from "@/lib/db/wishlist";
 import WishlistEntry from "./WishlistEntry";
-import { AddToCart } from "./actions";
+import { useServerAddToCart } from "./actions";
 
 export const metadata = {
   title: "Your Cart - E-commerce",
@@ -29,7 +29,7 @@ export default async function Wishlist() {
                 <WishlistEntry
                   wishlistItem={wishlistItem}
                   key={wishlistItem.id}
-                  AddToCart={AddToCart}
+                  AddToCart={useServerAddToCart}
                 />
 
                 <div className="flex lg:hidden  h-[2px] w-3/4 bg-zinc-800"></div>

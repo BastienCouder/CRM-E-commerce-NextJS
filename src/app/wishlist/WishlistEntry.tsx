@@ -9,7 +9,7 @@ import { RxCross2 } from "react-icons/rx";
 import Loading from "../loading";
 import { WishlistItemWithProduct } from "@/lib/db/wishlist";
 import AddToCartButton from "../wishlist/AddToCartButton";
-import { AddToCart } from "./actions";
+import { useServerAddToCart } from "./actions";
 
 interface WishlistEntryProps {
   wishlistItem: WishlistItemWithProduct;
@@ -67,7 +67,7 @@ export default function WishlistEntry({ wishlistItem }: WishlistEntryProps) {
       <div className="w-[80rem] lg:h-[85px] flex pt-[1.2rem] items-center">
         <AddToCartButton
           productId={product.id}
-          addToCart={AddToCart}
+          addToCart={useServerAddToCart}
           variantId={variant?.id || ""}
         />
       </div>

@@ -119,11 +119,12 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
             <div className="w-1/2 h-px bg-white"></div>
           </div>
           <div className="flex space-x-8 items-center cursor-pointer ">
-            <div onClick={() => signIn("google", { callbackUrl: "/" })}>
+            <div
+              onClick={() => signIn("google", { callbackUrl: "/" })}
+              className="flex items-center gap-x-2 cursor-pointer px-4 py-2 border-2 border-white"
+            >
+              Google
               <AiFillGoogleSquare size={34} />
-            </div>
-            <div onClick={() => signIn("github", { callbackUrl: "/" })}>
-              <AiFillFacebook size={34} />
             </div>
           </div>
           <p>

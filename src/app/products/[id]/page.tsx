@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import { incrementProductQuantity, incrementWishlist } from "./actions";
+import { useServerAddToCart, useServerAddWishlist } from "./actions";
 import Product from "./Product";
 import { getLike } from "@/lib/db/like";
 
@@ -53,8 +53,8 @@ export default async function ProductPage({
       products={products}
       product={product}
       like={like}
-      incrementProductQuantity={incrementProductQuantity}
-      incrementWishlist={incrementWishlist}
+      incrementProductQuantity={useServerAddToCart}
+      incrementWishlist={useServerAddWishlist}
     />
   );
 }

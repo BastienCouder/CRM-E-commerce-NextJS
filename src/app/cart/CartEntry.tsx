@@ -29,7 +29,7 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
   };
 
   const handleDelete = () => {
-    DeleteProduct(product.id);
+    DeleteProduct(product.id, variant?.id);
   };
 
   return (

@@ -18,6 +18,7 @@ export default function AddToCartButton({
   incrementProductQuantity,
 }: AddToCartButtonProps) {
   const [isPending, startTransition] = useTransition();
+
   return (
     <>
       <button

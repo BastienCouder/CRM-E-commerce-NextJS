@@ -20,7 +20,6 @@ export async function createOrderIncrementation(
     if (OrderInSession) {
       await updateOrderItem(OrderInSession, order, cartId, deliveryId);
       await updateDelivery(deliveryId, userId);
-
       await updateCart(cartId, userId);
     } else {
       await createOrderItem(order, cartId, deliveryId);

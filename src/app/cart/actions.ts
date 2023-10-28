@@ -15,51 +15,69 @@ export async function UpdateProductQuantity(
   const articleVariantInCart = cart.cartItems.find(
     (item) => item.variantId === variantId && item.productId === productId
   );
+  const articleInCart = cart.cartItems.find(
+    (item) => item.productId === productId
+  );
 
+  const newQuantity = quantity;
   if (articleVariantInCart) {
-    const newQuantity = quantity;
-
     if (newQuantity === 0) {
-      await prisma.cartItems.delete({
-        where: {
-          id: articleVariantInCart.id,
-        },
-      });
+      await deleteItemIncrementFromCart(articleVariantInCart);
     } else {
-      if (articleVariantInCart) {
-        await prisma.cartItems.update({
-          where: {
-            id: articleVariantInCart.id,
-          },
-          data: { quantity: newQuantity },
-        });
-      } else {
-        await prisma.cartItems.create({
-          data: {
-            cartId: cart.id,
-            productId,
-            variantId,
-            quantity,
-          },
-        });
-      }
+      await updateItemIncrementFromCart(newQuantity, articleVariantInCart);
+    }
+  } else {
+    if (newQuantity === 0) {
+      await deleteItemIncrementFromCart(articleInCart);
+    } else {
+      await updateItemIncrementFromCart(newQuantity, articleInCart);
     }
   }
 
   revalidatePath("/cart");
 }
 
-export async function DeleteProduct(productId: string) {
+async function updateItemIncrementFromCart(newQuantity: number, item: any) {
+  await prisma.cartItems.update({
+    where: {
+      id: item.id,
+    },
+    data: { quantity: newQuantity },
+  });
+}
+
+//Delete Item From Whishlist
+async function deleteItemIncrementFromCart(item: any) {
+  await prisma.cartItems.delete({
+    where: {
+      id: item.id,
+    },
+  });
+}
+
+export async function DeleteProduct(
+  productId: string,
+  variantId: string | undefined
+) {
   const cart = (await getCart()) ?? (await createCart());
 
+  const articleVariantInCart = cart.cartItems.find(
+    (item) => item.variantId === variantId && item.productId === productId
+  );
   const articleInCart = cart.cartItems.find(
     (item) => item.productId === productId
   );
 
-  if (articleInCart) {
+  if (articleVariantInCart) {
     await prisma.cartItems.delete({
       where: {
-        id: articleInCart.id,
+        id: articleVariantInCart.id,
+      },
+    });
+  } else {
+    await prisma.cartItems.delete({
+      where: {
+        id: articleInCart?.id,
       },
     });
   }
