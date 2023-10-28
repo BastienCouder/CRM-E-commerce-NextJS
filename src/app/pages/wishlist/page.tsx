@@ -36,7 +36,7 @@ export default async function Wishlist() {
               </li>
             );
           })}
-          {!wishlist?.wishlistItems.length && <p>Wishlist is empty</p>}
+          {!wishlist?.wishlistItems.length && <p>Votre wishlist est vide</p>}
         </ul>
       </div>
     </>

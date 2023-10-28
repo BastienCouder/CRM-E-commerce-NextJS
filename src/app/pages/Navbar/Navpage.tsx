@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import styles from "@/styles/Nav.module.css";
 import { useRouter } from "next/navigation";
-import ShoppingCartButton from "@/app/Navbar/ShoppingCartButton";
+import ShoppingCartButton from "@/app/pages/Navbar/ShoppingCartButton";
 import { ShoppingCart } from "@/lib/db/cart";
-import UserMenuButton from "@/app/Navbar/UserMenuButton";
+import UserMenuButton from "@/app/pages/Navbar/UserMenuButton";
 import { Session } from "next-auth";
 
 interface NavBarProps {

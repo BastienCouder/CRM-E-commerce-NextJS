@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { RxCross2 } from "react-icons/rx";
 
-import Loading from "../loading";
+import Loading from "@/app/loading";
 import { WishlistItemWithProduct } from "@/lib/db/wishlist";
 import AddToCartButton from "../wishlist/AddToCartButton";
 import { useServerAddToCart } from "./actions";

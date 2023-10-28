@@ -8,7 +8,7 @@ import Link from "next/link";
 import QuantitySelector from "./QuantityUpdate";
 import { DeleteProduct, UpdateProductQuantity } from "./actions";
 import { RxCross2 } from "react-icons/rx";
-import Loading from "../loading";
+import Loading from "@/app/loading";
 
 interface CartEntryProps {
   cartItem: CartItemWithProduct;
