@@ -1,17 +1,15 @@
 import React, { useState, useCallback, useTransition } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Toaster, toast } from "sonner";
-import { Like } from "@prisma/client";
+import { ShoppingLike } from "@/lib/db/like";
 
 interface AddToWishlistProps {
   productId: string;
-  userId: string;
   variantId?: string | null;
-  like: Like | null;
+  like: ShoppingLike | null;
   incrementWishlist: (
     productId: string,
-    variantId: string | null,
-    userId: string
+    variantId: string | null
   ) => Promise<void>;
 }
 
@@ -19,7 +17,6 @@ export default function AddToWishlist({
   productId,
   variantId = null,
   like,
-  userId,
   incrementWishlist,
 }: AddToWishlistProps) {
   const [isPending, startTransition] = useTransition();
@@ -28,11 +25,10 @@ export default function AddToWishlist({
   const toggleLikeVisibility = useCallback(() => {
     setCheckLike(!like);
   }, [like]);
-  console.log(like);
 
   const handleAddToWishlist = async () => {
     toggleLikeVisibility();
-    await incrementWishlist(productId, variantId, userId);
+    await incrementWishlist(productId, variantId);
   };
 
   return (

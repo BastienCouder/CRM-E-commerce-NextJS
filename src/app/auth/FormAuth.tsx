@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import ShowPassword from "./ShowPassword";
 
 interface FormAuthProps {
-  registerForm: any;
+  registerForm: (formData: FormData) => Promise<void>;
 }
 
 export default function FormAuth({ registerForm }: FormAuthProps) {

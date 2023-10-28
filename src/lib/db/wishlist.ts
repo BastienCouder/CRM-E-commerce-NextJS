@@ -15,8 +15,7 @@ export type WishlistItemWithProduct = Prisma.WishlistItemsGetPayload<{
 }>;
 
 export type ShoppingWishlist = WishlistWithProducts & {
-  size: number;
-  subtotal: number;
+  ///...
 };
 
 export async function getWishlist(): Promise<ShoppingWishlist | null> {
@@ -53,18 +52,6 @@ export async function getWishlist(): Promise<ShoppingWishlist | null> {
 
   return {
     ...wishlist,
-    size: wishlist.wishlistItems.reduce((acc, item) => acc + item.quantity, 0),
-    subtotal: wishlist.wishlistItems.reduce((acc, item) => {
-      const variantPrice = item.variant ? item.variant.price : null;
-      const productPrice = item.product ? item.product.price : null;
-      const price =
-        variantPrice !== null
-          ? variantPrice
-          : productPrice !== null
-          ? productPrice
-          : 0;
-      return acc + item.quantity * price;
-    }, 0),
   };
 }
 
@@ -87,8 +74,6 @@ export async function createWishlist(): Promise<ShoppingWishlist> {
   return {
     ...newWishlist,
     wishlistItems: [],
-    size: 0,
-    subtotal: 0,
   };
 }
 
@@ -148,7 +133,7 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
       where: { id: localWishlist.id },
     });
 
-    cookies().set("localCartId", "");
+    cookies().set("localWishlistId", "");
   });
 }
 

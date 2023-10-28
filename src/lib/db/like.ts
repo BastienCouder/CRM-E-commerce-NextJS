@@ -1,22 +1,38 @@
+import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "./prisma";
-import { Like } from "@prisma/client";
+import { Prisma, Like } from "@prisma/client";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+export type ShoppingLike = {
+  id: string;
+  likedById: string | null;
+  likedProductId: string | null;
+};
 
 export async function createLike(
-  userId: string,
-  productId: string,
-  variantId: string | null
-): Promise<Like> {
-  const likedProductId = variantId ? variantId : productId;
+  likedProductId: string
+): Promise<ShoppingLike | null> {
+  const session = await getServerSession(authOptions);
 
-  const like = await prisma.like.create({
-    data: {
-      likedById: userId,
-      likedProductId,
-    },
-  });
+  let newLike: Like;
+  if (session) {
+    newLike = await prisma.like.create({
+      data: { likedById: session.user.id, likedProductId },
+    });
+  } else {
+    newLike = await prisma.like.create({
+      data: {},
+    });
+  }
 
-  return like;
+  cookies().set("localLikeId", newLike.id);
+
+  return {
+    ...newLike,
+  };
 }
+
 export async function deleteLike(likeId: string): Promise<void> {
   await prisma.like.delete({
     where: {
@@ -25,17 +41,35 @@ export async function deleteLike(likeId: string): Promise<void> {
   });
 }
 
-export async function getLike(
-  userId: string,
-  productId: string
-): Promise<Like | null> {
-  const like = await prisma.like.findFirst({
-    where: {
-      likedById: userId,
-      likedProductId: productId,
-    },
-  });
-  console.log(like);
+export async function getLike(productId: string): Promise<ShoppingLike | null> {
+  const session = await getServerSession(authOptions);
 
-  return like;
+  let like: ShoppingLike | null = null;
+
+  if (session) {
+    like = await prisma.like.findFirst({
+      where: {
+        likedById: session.user.id,
+        likedProductId: productId,
+      },
+    });
+  } else {
+    const localLikeId = cookies().get("localLikeId")?.value;
+    localLikeId
+      ? await prisma.like.findFirst({
+          where: {
+            likedById: localLikeId,
+            likedProductId: productId,
+          },
+        })
+      : null;
+  }
+
+  if (!like) {
+    return null;
+  }
+
+  return {
+    ...like,
+  };
 }

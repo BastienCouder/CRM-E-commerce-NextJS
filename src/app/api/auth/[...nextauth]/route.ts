@@ -6,6 +6,8 @@ import NextAuth from "next-auth/next";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { Adapter } from "next-auth/adapters";
 import { mergeAnonymousCartIntoUserCart } from "@/lib/db/cart";
+import { mergeAnonymousWishlistIntoUserCart } from "@/lib/db/wishlist";
+import { mergeAnonymousDeliveryIntoUserCart } from "@/lib/db/delivery";
 
 const prisma = new PrismaClient();
 
@@ -26,6 +28,8 @@ export const authOptions: AuthOptions = {
   events: {
     async signIn({ user }) {
       await mergeAnonymousCartIntoUserCart(user.id);
+      await mergeAnonymousWishlistIntoUserCart(user.id);
+      await mergeAnonymousDeliveryIntoUserCart(user.id);
     },
   },
 };

@@ -4,8 +4,6 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 import { incrementProductQuantity, incrementWishlist } from "./actions";
 import Product from "./Product";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getLike } from "@/lib/db/like";
 
 interface ProductPageProps {
@@ -40,29 +38,23 @@ export async function generateMetadata({
 export default async function ProductPage({
   params: { id },
 }: ProductPageProps) {
-  const session = await getServerSession(authOptions);
-  const userId = session?.user?.id;
+  const products = await prisma.product.findMany({
+    orderBy: {
+      id: "desc",
+    },
+    include: { category: true, likedByUsers: true },
+  });
+
   const product = await getProduct(id);
+  const like = await getLike(product.id);
 
-  const likedProductId = product?.variants[0]?.id || product.id;
-  let likedVariant = null;
-  if (product?.variants) {
-    likedVariant = product.variants.find(
-      (variant) => variant.id === likedProductId
-    );
-  }
-  if (userId) {
-    const like = await getLike(userId, likedProductId);
-    console.log(like);
-
-    return (
-      <Product
-        product={product}
-        session={session}
-        like={like}
-        incrementProductQuantity={incrementProductQuantity}
-        incrementWishlist={incrementWishlist}
-      />
-    );
-  }
+  return (
+    <Product
+      products={products}
+      product={product}
+      like={like}
+      incrementProductQuantity={incrementProductQuantity}
+      incrementWishlist={incrementWishlist}
+    />
+  );
 }

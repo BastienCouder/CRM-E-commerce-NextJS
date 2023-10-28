@@ -28,7 +28,7 @@ async function main() {
   // Créer un produit
   // const category = await prisma.category.create({
   //   data: {
-  //     name: "Catégorie 3",
+  //     name: "Bracelet Cuir",
   //   },
   // });
   // console.log(category);
@@ -39,34 +39,49 @@ async function main() {
   //   },
   // });
   // console.log(productOrder);
-
-  const product = await prisma.product.create({
+  const categoryId = "653aa6eef14338a1dca7ff19";
+  const productId = "65378d7c9ca11ec8eebdcbb0";
+  const product = await prisma.product.update({
+    where: {
+      id: productId,
+    },
     data: {
-      name: "Produit 2",
-      description: "Description du produit 2",
-      price: 2000,
-      imageUrl: "/images/montre1-or.png",
-      // variants: {
-      //   create: [
-      //     {
-      //       color: "or",
-      //       imageUrl: "/images/montre1-or.png",
-      //     },
-      //     {
-      //       color: "argent",
-      //       price: 1800,
-      //       imageUrl: "/images/variants/montre1-argent.png",
-      //     },
-      //     {
-      //       color: "rose",
-      //       price: 1800,
-      //       imageUrl: "/images/variants/montre1-rose.png",
-      //     },
-      //   ],
-      // },
+      category: {
+        connect: {
+          id: categoryId,
+        },
+      },
     },
   });
   console.log(product);
+  // })
+  // const product = await prisma.product.create({
+  //   data: {
+  //     name: "Produit 2",
+  //     description: "Description du produit 2",
+  //     price: 2000,
+  //     imageUrl: "/images/montre1-or.png",
+  //     variants: {
+  //       create: [
+  //         {
+  //           color: "or",
+  //           imageUrl: "/images/montre1-or.png",
+  //         },
+  //         {
+  //           color: "argent",
+  //           price: 1800,
+  //           imageUrl: "/images/variants/montre1-argent.png",
+  //         },
+  //         {
+  //           color: "rose",
+  //           price: 1800,
+  //           imageUrl: "/images/variants/montre1-rose.png",
+  //         },
+  //       ],
+  //     },
+  //   },
+  // });
+  // console.log(product);
 
   // const deliveryOptions = [
   //   {

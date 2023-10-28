@@ -2,6 +2,7 @@
 
 import { createCart, getCart } from "@/lib/db/cart";
 import { prisma } from "@/lib/db/prisma";
+import { createWishlist, getWishlist } from "@/lib/db/wishlist";
 import { revalidatePath } from "next/cache";
 
 export async function UpdateProductQuantity(
@@ -11,25 +12,24 @@ export async function UpdateProductQuantity(
 ) {
   const cart = (await getCart()) ?? (await createCart());
 
-  const articleInCart = cart.cartItems.find(
-    (item) => item.productId === productId && item.variantId === variantId
+  const articleVariantInCart = cart.cartItems.find(
+    (item) => item.variantId === variantId && item.productId === productId
   );
 
-  if (articleInCart) {
+  if (articleVariantInCart) {
     const newQuantity = quantity;
-    console.log();
 
     if (newQuantity === 0) {
       await prisma.cartItems.delete({
         where: {
-          id: articleInCart.id,
+          id: articleVariantInCart.id,
         },
       });
     } else {
-      if (articleInCart) {
+      if (articleVariantInCart) {
         await prisma.cartItems.update({
           where: {
-            id: articleInCart.id,
+            id: articleVariantInCart.id,
           },
           data: { quantity: newQuantity },
         });

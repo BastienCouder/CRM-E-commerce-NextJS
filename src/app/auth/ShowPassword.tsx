@@ -6,7 +6,7 @@ interface ShowPasswordProps {
   password: string;
   setPassword: (value: string) => void;
   type: string;
-  variant: string;
+  variant?: string;
 }
 export default function ShowPassword({
   password,

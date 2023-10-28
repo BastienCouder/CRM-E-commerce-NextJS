@@ -9,7 +9,6 @@ import QuantitySelector from "./QuantityUpdate";
 import { DeleteProduct, UpdateProductQuantity } from "./actions";
 import { RxCross2 } from "react-icons/rx";
 import Loading from "../loading";
-import useMobile from "@/hooks/useMobile";
 
 interface CartEntryProps {
   cartItem: CartItemWithProduct;
@@ -17,7 +16,6 @@ interface CartEntryProps {
 
 export default function CartEntry({ cartItem }: CartEntryProps) {
   const { product, quantity, variant } = cartItem;
-  const ismobile = useMobile();
   if (!product || (variant && !variant)) {
     return <Loading />;
   }
