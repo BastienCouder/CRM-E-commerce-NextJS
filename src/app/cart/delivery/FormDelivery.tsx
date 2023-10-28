@@ -1,13 +1,14 @@
 "use client";
 import Input from "@/components/Input";
-import { useState } from "react";
+import { useId, useState } from "react";
 import formStyles from "@/styles/FormDelivery.module.css";
 import buttonStyles from "@/styles/Button.module.css";
 import { Session } from "next-auth";
 import ShowPassword from "@/app/auth/ShowPassword";
 import { signIn } from "next-auth/react";
-import { AiFillFacebook, AiFillGoogleSquare } from "react-icons/ai";
+import { AiFillGoogleSquare } from "react-icons/ai";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface FormDeliveryProps {
   deliveryForm: (formData: FormData) => Promise<void>;
@@ -18,22 +19,23 @@ export default function FormDelivery({
   deliveryForm,
   session,
 }: FormDeliveryProps) {
+  const emailId = useId();
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
+    email: "",
     address: "",
     postcode: "",
     city: "",
     country: "France",
-    email: "",
     tel: "",
   });
-
   const [loginData, setLoginData] = useState({
-    email: "",
+    emailLogin: "",
     password: "",
   });
+  const [errorLogin, setErrorLogin] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const countries = [
@@ -50,8 +52,9 @@ export default function FormDelivery({
     "Royaume-uni",
   ];
 
-  const { name, surname, address, postcode, city, country, tel } = formData;
-  const { email, password } = loginData;
+  const { name, surname, email, address, postcode, city, country, tel } =
+    formData;
+  const { emailLogin, password } = loginData;
 
   const handleDeliveryChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -63,44 +66,55 @@ export default function FormDelivery({
   const handleLoginChange = (name: string, value: string) => {
     setLoginData({ ...loginData, [name]: value });
   };
+
+  const handlelogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const result = await signIn("credentials", {
+        email: emailLogin,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setErrorLogin(result.error);
+      } else {
+        router.push("/");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorLogin(error.message);
+      }
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (session && !session.user) {
-      try {
-        const result = await signIn("credentials", {
-          email,
-          password,
-          redirect: false,
-        });
+    if (!session || !session.user) {
+      setError("Veuillez vous connecter");
+      return;
+    }
 
-        if (result?.error) {
-          setError(result.error);
-        }
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        }
-      }
-    } else {
-      const form = new FormData();
-      form.append("name", name);
-      form.append("surname", surname);
-      form.append("email", email);
-      form.append("address", address);
-      form.append("country", country);
-      form.append("postcode", postcode);
-      form.append("city", city);
-      form.append("tel", tel);
-      try {
-        await deliveryForm(form);
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        }
+    const form = new FormData();
+    form.append("name", name);
+    form.append("surname", surname);
+    form.append("email", email);
+    form.append("address", address);
+    form.append("country", country);
+    form.append("postcode", postcode);
+    form.append("city", city);
+    form.append("tel", tel);
+
+    try {
+      await deliveryForm(form);
+      router.push("/cart/payment");
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
       }
     }
-    router.push("/cart/payment");
   };
 
   return (
@@ -109,14 +123,16 @@ export default function FormDelivery({
         <>
           <h1 className="text-4xl text-center lg:text-start">Connexion</h1>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handlelogin}
             className="w-full sm:w-[35rem] md:w-[45rem] space-y-6"
           >
-            {error ? <small className="text-red-500">{error}</small> : null}
+            {errorLogin ? (
+              <small className="text-red-500">{errorLogin}</small>
+            ) : null}
             <div className="flex flex-col sm:flex-row gap-6 sm:gap-12">
               <Input
                 required={true}
-                id="email"
+                id={emailId}
                 type="email"
                 label="Email"
                 name="email"
@@ -131,17 +147,47 @@ export default function FormDelivery({
                 type="password"
               />
             </div>
-            <div className="flex space-x-8 items-center cursor-pointer ">
+            <div className="flex space-x-8 items-center">
               <div
                 onClick={() =>
                   signIn("google", { callbackUrl: "/cart/delivery" })
                 }
+                className="flex items-center gap-x-2 cursor-pointer"
               >
+                Google
                 <AiFillGoogleSquare size={34} />
               </div>
-              <div onClick={() => signIn("github", { callbackUrl: "/" })}>
-                <AiFillFacebook size={34} />
-              </div>
+            </div>
+            <div className="flex gap-x-8 pt-4">
+              <button
+                type="submit"
+                className={`${buttonStyles.button} py-3 px-5 w-44 justify-center relative uppercase tracking-[4px] flex items-center`}
+              >
+                <div className={buttonStyles.buttonLeft}></div>
+                <div className={buttonStyles.buttonTopLeft}></div>
+                <div className={buttonStyles.buttonBottomLeft}></div>
+                <div className={buttonStyles.buttonTop}></div>
+                <div className={buttonStyles.buttonBottom}></div>
+                <div className={buttonStyles.buttonRight}></div>
+                <div className={buttonStyles.buttonTopRight}></div>
+                <div className={buttonStyles.buttonBottomRight}></div>
+                Valider
+              </button>
+              <Link href="/auth">
+                <button
+                  className={`${buttonStyles.button} py-3 px-5 w-44 justify-center relative uppercase tracking-[4px] flex items-center`}
+                >
+                  <div className={buttonStyles.buttonLeft}></div>
+                  <div className={buttonStyles.buttonTopLeft}></div>
+                  <div className={buttonStyles.buttonBottomLeft}></div>
+                  <div className={buttonStyles.buttonTop}></div>
+                  <div className={buttonStyles.buttonBottom}></div>
+                  <div className={buttonStyles.buttonRight}></div>
+                  <div className={buttonStyles.buttonTopRight}></div>
+                  <div className={buttonStyles.buttonBottomRight}></div>
+                  S&apos;inscrire
+                </button>
+              </Link>
             </div>
           </form>
         </>
@@ -175,7 +221,7 @@ export default function FormDelivery({
         <div className="flex flex-col sm:flex-row gap-6 sm:gap-12">
           <Input
             required={true}
-            id="email"
+            id={emailId}
             type="email"
             label="Email"
             name="email"

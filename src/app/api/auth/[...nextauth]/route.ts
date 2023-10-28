@@ -29,7 +29,7 @@ export const authOptions: AuthOptions = {
     async signIn({ user }) {
       await mergeAnonymousCartIntoUserCart(user.id);
       await mergeAnonymousWishlistIntoUserCart(user.id);
-      await mergeAnonymousDeliveryIntoUserCart(user.id);
+      // await mergeAnonymousDeliveryIntoUserCart(user.id);
     },
   },
 };

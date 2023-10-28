@@ -48,8 +48,10 @@ export default function Check({ cart }: CheckProps) {
         </div>
         <div className="bg-zinc-500 w-full h-px"></div>
         <div className="flex space-x-4 items-center">
-          <p className="capitalize">livraison</p>
-          <p className="text-sm text-zinc-500">3 - 5 jours ouvrables</p>
+          <p className="capitalize">Expédition</p>
+          <p className="text-sm text-zinc-500">
+            Les frais de livraison sont calculés lors du paiement
+          </p>
         </div>
         <div className="bg-zinc-500 w-full h-px"></div>
         <div className="flex justify-between">

@@ -25,16 +25,7 @@ export default function AddToCartButton({
         onClick={() => {
           startTransition(async () => {
             await incrementProductQuantity(productId, variantId);
-            const promise = () =>
-              new Promise((resolve) => setTimeout(resolve, 2000));
-
-            toast.promise(promise, {
-              loading: "Chargement...",
-              success: () => {
-                return `Produit ajouté avec succès`;
-              },
-              error: "Error",
-            });
+            toast.success("Produit ajouté avec succès");
           });
         }}
       >

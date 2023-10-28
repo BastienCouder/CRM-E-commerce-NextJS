@@ -83,7 +83,9 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
   const localWishlist = localWishlistId
     ? await prisma.wishlist.findUnique({
         where: { id: localWishlistId },
-        include: { wishlistItems: true },
+        include: {
+          wishlistItems: { include: { product: true, variant: true } },
+        },
       })
     : null;
 
@@ -93,7 +95,7 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
 
   const userWishlist = await prisma.wishlist.findFirst({
     where: { userId },
-    include: { wishlistItems: true },
+    include: { wishlistItems: { include: { product: true, variant: true } } },
   });
 
   await prisma.$transaction(async (tx) => {
@@ -110,8 +112,8 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
       await tx.wishlistItems.createMany({
         data: mergedWishlistItems.map((item) => ({
           wishlistId: userWishlist.id,
+          variantId: item.variantId,
           productId: item.productId,
-          quantity: item.quantity,
         })),
       });
     } else {
@@ -121,8 +123,8 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
           wishlistItems: {
             createMany: {
               data: localWishlist.wishlistItems.map((item) => ({
+                variantId: item.variantId,
                 productId: item.productId,
-                quantity: item.quantity,
               })),
             },
           },
@@ -140,12 +142,10 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
 function mergeWishlistItems(...wishlistItems: WishlistItems[][]) {
   return wishlistItems.reduce((acc, items) => {
     items.forEach((item) => {
-      const existingItem = acc.find((i) => i.productId === item.productId);
-      if (existingItem) {
-        existingItem.quantity += item.quantity;
-      } else {
-        acc.push(item);
-      }
+      acc.find(
+        (i) => i.productId === item.productId && i.variantId === item.variantId
+      );
+      acc.push(item);
     });
     return acc;
   }, [] as WishlistItems[]);

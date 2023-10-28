@@ -11,68 +11,80 @@ export async function incrementProductQuantity(
   variantId: string | null
 ) {
   const cart = (await getCart()) ?? (await createCart());
-  const articleInCart = cart.cartItems.find(
-    (item) => item.variantId === variantId || item.productId === productId
+  const articleInCartWithVariant = cart.cartItems.find(
+    (item) => item.variantId === variantId && item.productId === productId
   );
-
+  const articleInCart = cart.cartItems.find(
+    (item) => item.productId === productId
+  );
   const wishlist = (await getWishlist()) ?? (await createWishlist());
   const articleInWishlist = wishlist.wishlistItems.find(
     (item) => item.productId === productId || item.variantId === variantId
   );
 
-  if (articleInCart) {
+  if (articleInCartWithVariant) {
     await prisma.cartItems.update({
       where: {
-        id: articleInCart.id,
+        id: articleInCartWithVariant.id,
       },
       data: { quantity: { increment: 1 } },
     });
     revalidatePath(`/products/${productId}`);
   } else {
-    const cartItemDataVariant = {
-      cartId: cart.id,
-      productId,
-      variantId,
-      quantity: 1,
-    };
-    const cartItemData = {
-      cartId: cart.id,
-      productId,
-      quantity: 1,
-    };
-
-    if (variantId) {
-      const productVariant = await prisma.productVariant.findUnique({
+    if (articleInCart) {
+      await prisma.cartItems.update({
         where: {
-          id: variantId,
+          id: articleInCart.id,
         },
+        data: { quantity: { increment: 1 } },
       });
-      if (productVariant) {
+      revalidatePath(`/products/${productId}`);
+    } else {
+      const cartItemDataVariant = {
+        cartId: cart.id,
+        productId,
+        variantId,
+        quantity: 1,
+      };
+      const cartItemData = {
+        cartId: cart.id,
+        productId,
+        quantity: 1,
+      };
+
+      if (variantId) {
+        const productVariant = await prisma.productVariant.findUnique({
+          where: {
+            id: variantId,
+          },
+        });
+        if (productVariant) {
+          await prisma.cartItems.create({
+            data: cartItemDataVariant,
+          });
+        }
+      } else {
         await prisma.cartItems.create({
-          data: cartItemDataVariant,
+          data: cartItemData,
         });
       }
-    } else {
-      await prisma.cartItems.create({
-        data: cartItemData,
-      });
-    }
 
-    const likedProductId = variantId || productId;
-    const like = await getLike(likedProductId);
-    if (like) {
-      await deleteLike(like.id);
-    }
+      const likedProductId = variantId || productId;
+      const like = await getLike(likedProductId);
+      if (like) {
+        await deleteLike(like.id);
+      }
 
-    if (articleInWishlist) {
-      await prisma.wishlistItems.delete({
-        where: {
-          id: articleInWishlist.id,
-        },
-      });
-    }
+      if (articleInWishlist) {
+        await prisma.wishlistItems.delete({
+          where: {
+            id: articleInWishlist.id,
+          },
+        });
+      }
 
-    revalidatePath(`/products/${productId}`);
+      revalidatePath(`/products/${productId}`);
+    }
   }
 }
 
@@ -87,7 +99,7 @@ export async function incrementWishlist(
 
   const wishlist = (await getWishlist()) ?? (await createWishlist());
   const articleInWishlist = wishlist.wishlistItems.find(
-    (item) => item.productId === productId || item.variantId === variantId
+    (item) => item.productId === productId && item.variantId === variantId
   );
 
   const likedProductId = variantId || productId;
@@ -112,7 +124,6 @@ export async function incrementWishlist(
           wishlistId: wishlist.id,
           productId,
           variantId,
-          quantity: 1,
         },
       });
 

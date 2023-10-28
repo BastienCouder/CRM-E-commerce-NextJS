@@ -13,3 +13,13 @@ export default function formatPrice(price: number, currency: string) {
     currencyDisplay: "symbol",
   });
 }
+
+export function formatDate(date: Date): string {
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
+  return date.toLocaleString(undefined, options);
+}

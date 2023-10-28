@@ -95,11 +95,12 @@ export async function createCart(): Promise<ShoppingCart> {
 
 export async function mergeAnonymousCartIntoUserCart(userId: string) {
   const localCartId = cookies().get("localCartId")?.value;
+  console.log("localCartId : " + localCartId);
 
   const localCart = localCartId
     ? await prisma.cart.findUnique({
         where: { id: localCartId },
-        include: { cartItems: true },
+        include: { cartItems: { include: { product: true, variant: true } } },
       })
     : null;
 
@@ -109,7 +110,7 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
 
   const userCart = await prisma.cart.findFirst({
     where: { userId },
-    include: { cartItems: true },
+    include: { cartItems: { include: { product: true, variant: true } } },
   });
 
   await prisma.$transaction(async (tx) => {
@@ -127,6 +128,7 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
         data: mergedCartItems.map((item) => ({
           cartId: userCart.id,
           productId: item.productId,
+          variantId: item.variantId,
           quantity: item.quantity,
         })),
       });
@@ -138,6 +140,7 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
           cartItems: {
             createMany: {
               data: localCart.cartItems.map((item) => ({
+                variantId: item.variantId,
                 productId: item.productId,
                 quantity: item.quantity,
               })),
@@ -146,6 +149,7 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
         },
       });
     }
+
     await tx.cart.delete({
       where: { id: localCart.id },
     });
@@ -157,7 +161,9 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
 function mergeCartItems(...cartItems: CartItems[][]) {
   return cartItems.reduce((acc, items) => {
     items.forEach((item) => {
-      const existingItem = acc.find((i) => i.productId === item.productId);
+      const existingItem = acc.find(
+        (i) => i.productId === item.productId && i.variantId === item.variantId
+      );
       if (existingItem) {
         existingItem.quantity += item.quantity;
       } else {

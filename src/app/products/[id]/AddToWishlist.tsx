@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useTransition } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { Toaster, toast } from "sonner";
 import { ShoppingLike } from "@/lib/db/like";
 
 interface AddToWishlistProps {
@@ -36,8 +35,6 @@ export default function AddToWishlist({
       <div className="w-0 my-4 cursor-pointer" onClick={handleAddToWishlist}>
         <p>{like ? <AiFillHeart size={25} /> : <AiOutlineHeart size={25} />}</p>
       </div>
-
-      <Toaster expand={false} position="bottom-left" />
     </>
   );
 }

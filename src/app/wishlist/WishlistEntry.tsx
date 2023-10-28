@@ -7,7 +7,6 @@ import Link from "next/link";
 import { RxCross2 } from "react-icons/rx";
 
 import Loading from "../loading";
-import useMobile from "@/hooks/useMobile";
 import { WishlistItemWithProduct } from "@/lib/db/wishlist";
 import AddToCartButton from "../wishlist/AddToCartButton";
 import { AddToCart } from "./actions";
@@ -18,11 +17,11 @@ interface WishlistEntryProps {
 }
 
 export default function WishlistEntry({ wishlistItem }: WishlistEntryProps) {
-  const { product, quantity, variant } = wishlistItem;
-  const ismobile = useMobile();
+  const { product, variant } = wishlistItem;
   if (!product || (variant && !variant)) {
     return <Loading />;
   }
+  console.log(wishlistItem);
 
   return (
     <>

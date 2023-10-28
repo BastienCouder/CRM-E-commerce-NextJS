@@ -6,6 +6,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { boolean } from "zod";
 
 export type OrderWithCartDelivery = Prisma.OrderGetPayload<{
+  createdAt: Date;
+  updatedAt: Date;
   include: {
     orderItems: {
       include: {
@@ -14,6 +16,7 @@ export type OrderWithCartDelivery = Prisma.OrderGetPayload<{
             cartItems: {
               include: {
                 product: true;
+                variant: true;
               };
             };
           };
@@ -39,6 +42,7 @@ export type OrderItemWithCartDelivery = Prisma.OrderItemsGetPayload<{
         cartItems: {
           include: {
             product: true;
+            variant: true;
           };
         };
       };
@@ -56,7 +60,7 @@ export type OrderItemWithCartDelivery = Prisma.OrderItemsGetPayload<{
 }>;
 
 export type ShoppingOrder = OrderWithCartDelivery & {
-  ///
+  //
 };
 
 export async function getOrder(): Promise<ShoppingOrder | null> {
@@ -77,6 +81,7 @@ export async function getOrder(): Promise<ShoppingOrder | null> {
                 cartItems: {
                   include: {
                     product: true,
+                    variant: true,
                   },
                 },
               },
@@ -113,37 +118,6 @@ export async function createOrder(
           create: [{ cartId, deliveryId, isPaid: false }],
         },
       },
-    });
-
-    //delivery
-    await prisma.delivery.findUnique({
-      where: {
-        id: deliveryId,
-        isPaid: false,
-      },
-      include: { deliveryItems: true },
-    });
-    await prisma.delivery.update({
-      where: {
-        id: deliveryId,
-        userId: session.user.id,
-      },
-      data: { isPaid: true },
-    });
-    //cart
-    const del = await prisma.cart.findUnique({
-      where: {
-        id: cartId,
-        isPaid: false,
-      },
-      include: { cartItems: true },
-    });
-    const delupdate = await prisma.cart.update({
-      where: {
-        id: cartId,
-        userId: session.user.id,
-      },
-      data: { isPaid: true },
     });
 
     const orderWithCart = await prisma.order.findUnique({
