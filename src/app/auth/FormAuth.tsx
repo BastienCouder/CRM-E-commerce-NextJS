@@ -7,6 +7,7 @@ import Input from "@/components/Input";
 import { AiFillFacebook, AiFillGoogleSquare } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import ShowPassword from "./ShowPassword";
+import SubmitButton from "@/components/SubmitButton";
 
 interface FormAuthProps {
   registerForm: (formData: FormData) => Promise<void>;
@@ -75,6 +76,7 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
           <div className="w-full flex flex-col items-start space-y-8">
             {variant === "register" && (
               <Input
+                autoComplete={false}
                 required={true}
                 id="name"
                 type="text"
@@ -84,6 +86,7 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
               />
             )}
             <Input
+              autoComplete={false}
               required={true}
               id="email"
               type="email"
@@ -100,18 +103,9 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
           </div>
 
           <div className="py-4">
-            <button
-              onClick={variant === "login" ? login : register}
-              className={`${styles.button} py-3 px-5  relative uppercase tracking-[4px] flex items-center`}
-            >
-              <div className={styles.buttonLeft}></div>
-              <div className={styles.buttonTopLeft}></div>
-              <div className={styles.buttonBottomLeft}></div>
-              <div className={styles.buttonRight}></div>
-              <div className={styles.buttonTopRight}></div>
-              <div className={styles.buttonBottomRight}></div>
+            <SubmitButton onClick={variant === "login" ? login : register}>
               {variant === "login" ? "Se connecter" : "S'inscrire"}
-            </button>
+            </SubmitButton>
           </div>
           <div className="w-full flex items-center">
             <div className="w-1/2 h-px bg-white"></div>

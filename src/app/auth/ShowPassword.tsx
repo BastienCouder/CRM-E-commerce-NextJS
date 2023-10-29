@@ -1,10 +1,14 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useId } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import Input from "@/components/Input";
 
 interface ShowPasswordProps {
   password: string;
-  setPassword: (value: string) => void;
+  setPassword: (
+    value: string
+  ) =>
+    | void
+    | ((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void);
   type: string;
   variant?: string;
 }
@@ -14,6 +18,7 @@ export default function ShowPassword({
   type,
   variant,
 }: ShowPasswordProps) {
+  const passwordId: string = useId();
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = useCallback(async () => {
@@ -24,11 +29,12 @@ export default function ShowPassword({
     <>
       <div className="w-full flex flex-col space-y-1 relative">
         <Input
+          autoComplete={false}
           required={true}
           label="Mot de passe"
           type={showPassword ? "text" : "password"}
           name="password"
-          id="password"
+          id={passwordId}
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />

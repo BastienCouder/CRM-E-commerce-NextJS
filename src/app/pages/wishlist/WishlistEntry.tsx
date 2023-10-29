@@ -21,7 +21,6 @@ export default function WishlistEntry({ wishlistItem }: WishlistEntryProps) {
   if (!product || (variant && !variant)) {
     return <Loading />;
   }
-  console.log(wishlistItem);
 
   return (
     <>

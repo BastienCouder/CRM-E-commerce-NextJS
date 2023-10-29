@@ -1,5 +1,5 @@
 "use client";
-import buttonStyles from "@/styles/Button.module.css";
+import SubmitButton from "@/components/SubmitButton";
 import { useTransition } from "react";
 import { Toaster, toast } from "sonner";
 
@@ -21,8 +21,7 @@ export default function AddToCartButton({
 
   return (
     <>
-      <button
-        className={`py-3 px-5 relative uppercase tracking-[4px] flex items-center ${buttonStyles.button}`}
+      <SubmitButton
         onClick={() => {
           startTransition(async () => {
             await incrementProductQuantity(productId, variantId);
@@ -30,14 +29,8 @@ export default function AddToCartButton({
           });
         }}
       >
-        <div className={buttonStyles.buttonLeft}></div>
-        <div className={buttonStyles.buttonTopLeft}></div>
-        <div className={buttonStyles.buttonBottomLeft}></div>
-        <div className={buttonStyles.buttonRight}></div>
-        <div className={buttonStyles.buttonTopRight}></div>
-        <div className={buttonStyles.buttonBottomRight}></div>
         Ajouter au panier
-      </button>
+      </SubmitButton>
 
       <Toaster expand={false} position="bottom-left" />
     </>

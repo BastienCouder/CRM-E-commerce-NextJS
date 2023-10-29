@@ -6,6 +6,7 @@ interface InputFieldProps {
   placeholder?: string;
   value?: string;
   required: boolean;
+  autoComplete: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -17,6 +18,7 @@ export default function Input({
   placeholder,
   value,
   required,
+  autoComplete,
   onChange,
 }: InputFieldProps) {
   return (
@@ -32,7 +34,7 @@ export default function Input({
         value={value}
         name={name}
         onChange={onChange}
-        autoComplete="off"
+        autoComplete={autoComplete === true ? "on" : "off"}
         className="p-1.5 outline-none"
       />
     </div>

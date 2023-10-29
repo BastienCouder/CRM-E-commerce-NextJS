@@ -1,13 +1,18 @@
-import { cookies } from "next/dist/client/components/headers";
-import { prisma } from "./prisma";
-import { Order, Prisma } from "@prisma/client";
+import {
+  Prisma,
+  Order,
+  Cart,
+  Delivery,
+  DeliveryOption,
+  User,
+} from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { boolean } from "zod";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export type OrderWithCartDelivery = Prisma.OrderGetPayload<{
-  createdAt: Date;
-  updatedAt: Date;
   include: {
     orderItems: {
       include: {
@@ -21,13 +26,10 @@ export type OrderWithCartDelivery = Prisma.OrderGetPayload<{
             };
           };
         };
-        delivery: {
+
+        deliveryItems: {
           include: {
-            deliveryItems: {
-              include: {
-                deliveryOption: true;
-              };
-            };
+            deliveryOption: true;
           };
         };
       };
@@ -47,13 +49,10 @@ export type OrderItemWithCartDelivery = Prisma.OrderItemsGetPayload<{
         };
       };
     };
-    delivery: {
+
+    deliveryItems: {
       include: {
-        deliveryItems: {
-          include: {
-            deliveryOption: true;
-          };
-        };
+        deliveryOption: true;
       };
     };
   };
@@ -86,13 +85,13 @@ export async function getOrder(): Promise<ShoppingOrder | null> {
                 },
               },
             },
-            delivery: {
+
+            deliveryItems: {
+              where: {
+                OR: [{ SoftDelete: true }, { SoftDelete: false }],
+              },
               include: {
-                deliveryItems: {
-                  include: {
-                    deliveryOption: true,
-                  },
-                },
+                deliveryOption: true,
               },
             },
           },
@@ -115,14 +114,8 @@ export async function createOrder(
       data: {
         userId: session.user.id,
         orderItems: {
-          create: [{ cartId, deliveryId, isPaid: false }],
+          create: [{ cartId, deliveryItemsId: deliveryId, isPaid: false }],
         },
-      },
-    });
-
-    const orderWithCart = await prisma.order.findUnique({
-      where: {
-        id: newOrder.id,
       },
       include: {
         orderItems: {
@@ -136,13 +129,10 @@ export async function createOrder(
                 },
               },
             },
-            delivery: {
+
+            deliveryItems: {
               include: {
-                deliveryItems: {
-                  include: {
-                    deliveryOption: true,
-                  },
-                },
+                deliveryOption: true,
               },
             },
           },
@@ -150,7 +140,7 @@ export async function createOrder(
       },
     });
 
-    return orderWithCart;
+    return newOrder;
   }
 
   return null;

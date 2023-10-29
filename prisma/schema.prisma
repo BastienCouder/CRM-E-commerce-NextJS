@@ -48,22 +48,21 @@ model VerificationToken {
 }
 
 model User {
-    id             String          @id @default(auto()) @map("_id") @db.ObjectId
+    id             String     @id @default(auto()) @map("_id") @db.ObjectId
     name           String?
-    email          String?         @unique
+    email          String?    @unique
     emailVerified  DateTime?
     role           String?
     hashedPassword String?
     image          String?
-    createdAt      DateTime        @default(now())
-    updatedAt      DateTime        @updatedAt
+    createdAt      DateTime   @default(now())
+    updatedAt      DateTime   @updatedAt
     accounts       Account[]
     sessions       Session[]
     Cart           Cart[]
     Wishlist       Wishlist[]
-    likedProducts  Like[]          @relation("LikesByUser")
+    likedProducts  Like[]     @relation("LikesByUser")
     Delivery       Delivery[]
-    DeliveryItems  DeliveryItems[]
     Order          Order[]
 
     @@map("users")
@@ -180,8 +179,6 @@ model Delivery {
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
     deliveryItems DeliveryItems[]
-    OrderItems    OrderItems[]
-    isPaid        Boolean
 
     @@map("deliveries")
 }
@@ -194,17 +191,17 @@ model DeliveryItems {
     updatedAt        DateTime        @updatedAt
     deliveryOptionId String?         @db.ObjectId
     deliveryOption   DeliveryOption? @relation(fields: [deliveryOptionId], references: [id], onDelete: Cascade)
-
-    name     String
-    surname  String
-    email    String
-    tel      String
-    address  String
-    postcode String
-    country  String
-    city     String
-    User     User?   @relation(fields: [userId], references: [id])
-    userId   String? @db.ObjectId
+    Default          Boolean         @default(true)
+    SoftDelete       Boolean         @default(false)
+    name             String
+    surname          String
+    email            String
+    tel              String
+    address          String
+    postcode         String
+    country          String
+    city             String
+    orderItems       OrderItems[]
 
     @@map("deliveries_items")
 }
@@ -228,16 +225,16 @@ model Order {
 }
 
 model OrderItems {
-    id         String   @id @default(auto()) @map("_id") @db.ObjectId
-    orderId    String?  @db.ObjectId
-    order      Order?   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-    cartId     String   @db.ObjectId
-    cart       Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
-    deliveryId String   @db.ObjectId
-    delivery   Delivery @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
-    isPaid     Boolean
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
+    id              String         @id @default(auto()) @map("_id") @db.ObjectId
+    orderId         String?        @db.ObjectId
+    order           Order?         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+    cartId          String         @db.ObjectId
+    cart            Cart           @relation(fields: [cartId], references: [id], onDelete: Cascade)
+    isPaid          Boolean
+    createdAt       DateTime       @default(now())
+    updatedAt       DateTime       @updatedAt
+    deliveryItems   DeliveryItems? @relation(fields: [deliveryItemsId], references: [id])
+    deliveryItemsId String?        @db.ObjectId
 
     @@map("orders_items")
 }

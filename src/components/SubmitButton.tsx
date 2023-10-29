@@ -1,27 +1,28 @@
 "use client";
-import { ComponentProps } from "react";
-import { experimental_useFormStatus as useFormStatus } from "react-dom";
+import React from "react";
+import { HTMLProps } from "react";
 import buttonStyles from "@/styles/Button.module.css";
 
-type FormSubmitButtonProps = {
+type SubmitButtonProps = {
   children: React.ReactNode;
   className?: string;
-} & ComponentProps<"button">;
-
-export default function FormSubmitButton({
+  type?: "button" | "submit" | "reset";
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+} & HTMLProps<HTMLButtonElement>;
+export default function SubmitButton({
   children,
   className,
+  type,
+  onClick,
   ...props
-}: FormSubmitButtonProps) {
-  const { pending } = useFormStatus();
+}: SubmitButtonProps) {
   return (
     <button
       {...props}
-      className={`btn bg-inherit hover:bg-inherit outline-none py-3 px-5 justify-center relative border-none uppercase tracking-[4px] flex items-center ${className} ${buttonStyles.button}`}
-      type="submit"
-      disabled={pending}
+      className={`border-none outline-none py-3 px-5 text-white justify-center relative uppercase tracking-[4px] flex justify-center items-center ${className} ${buttonStyles.button}`}
+      type={type}
+      onClick={onClick}
     >
-      {pending && <span className="loading loading-spinner" />}
       <div className={buttonStyles.buttonLeft}></div>
       <div className={buttonStyles.buttonTopLeft}></div>
       <div className={buttonStyles.buttonBottomLeft}></div>

@@ -15,6 +15,8 @@ export default function Orders({ order }: OrderProps) {
   const [selectedOrderIndex, setSelectedOrderIndex] = useState<number | null>(
     null
   );
+  console.log(order);
+
   function calculateSubtotal(cartItems: any): number {
     return cartItems.reduce((acc: number, item: any) => {
       const variantPrice = item.variant ? item.variant.price : null;
@@ -63,13 +65,11 @@ export default function Orders({ order }: OrderProps) {
                         <div className="flex gap-2">
                           <p>Envoyé à </p>
                           <div className="flex gap-2 font-bold">
-                            {orderItem.delivery.deliveryItems.map(
-                              (deliveryItems, itemIndex) => (
-                                <div key={itemIndex} className="space-x-2">
-                                  <span>{deliveryItems.name}</span>
-                                  <span>{deliveryItems.surname}</span>
-                                </div>
-                              )
+                            {orderItem.deliveryItems && (
+                              <div className="space-x-2 capitalize">
+                                <span>{orderItem.deliveryItems.name}</span>
+                                <span>{orderItem.deliveryItems.surname}</span>
+                              </div>
                             )}
                           </div>
                         </div>
@@ -79,13 +79,7 @@ export default function Orders({ order }: OrderProps) {
                         {formatPrice(subtotal, "EUR")}
                       </div>
                     </div>
-                    <div className="space-y-4 p-4">
-                      <div className="flex items-center gap-3">
-                        <AiFillHome size={20} />
-                        <p>Adresse :</p>
-                        <span className="font-bold">Default</span>
-                      </div>
-                    </div>
+                    <div className="space-y-4 p-4"></div>
                   </div>
                   <div className="px-4 pb-4 w-32">
                     <p
@@ -117,33 +111,27 @@ export default function Orders({ order }: OrderProps) {
                   </div>
                   <div className="p-4">
                     <h2 className="text-lg pb-2">Adresse de livraison</h2>
-                    {isOrderSelected &&
-                      orderItem.delivery.deliveryItems.map(
-                        (deliveryItems, itemIndex) => (
-                          <div
-                            key={itemIndex}
-                            className="text-sm border-b-2 pb-8 border-zinc-800"
-                          >
-                            <div className="flex space-x-2">
-                              <p className="font-bold">{deliveryItems.name}</p>
-                              <p className="font-bold">
-                                {deliveryItems.surname}
-                              </p>
-                            </div>
-                            <p className="uppercase">{deliveryItems.address}</p>
-                            <div className="flex">
-                              <p className="flex gap-2">
-                                <span className="uppercase">
-                                  {deliveryItems.city}, {deliveryItems.postcode}
-                                  ,
-                                </span>
-                                {deliveryItems.country}
-                              </p>
-                            </div>
-                            <p>{deliveryItems.tel}</p>
-                          </div>
-                        )
-                      )}
+                    {isOrderSelected && orderItem.deliveryItems && (
+                      <div className="text-sm border-b-2 pb-8 border-zinc-800">
+                        <div className="font-bold capitalize flex space-x-2">
+                          <p>{orderItem.deliveryItems.name}</p>
+                          <p>{orderItem.deliveryItems.surname}</p>
+                        </div>
+                        <p className="uppercase">
+                          {orderItem.deliveryItems.address}
+                        </p>
+                        <div className="flex">
+                          <p className="flex gap-2">
+                            <span className="uppercase">
+                              {orderItem.deliveryItems.city},
+                              {orderItem.deliveryItems.postcode},
+                            </span>
+                            {orderItem.deliveryItems.country}
+                          </p>
+                        </div>
+                        <p>{orderItem.deliveryItems.tel}</p>
+                      </div>
+                    )}
 
                     <div className=" border-b-2 border-zinc-800">
                       <h2 className="text-lg mt-8 pb-2">Votre commande</h2>

@@ -95,7 +95,6 @@ export async function createCart(): Promise<ShoppingCart> {
 
 export async function mergeAnonymousCartIntoUserCart(userId: string) {
   const localCartId = cookies().get("localCartId")?.value;
-  console.log("localCartId : " + localCartId);
 
   const localCart = localCartId
     ? await prisma.cart.findUnique({

@@ -10,91 +10,111 @@ export async function createOrderIncrementation(
   deliveryId: string
 ) {
   const session = await getServerSession(authOptions);
-  if (session) {
-    const userId = session.user.id;
-    const order = (await getOrder()) ?? (await createOrder(cartId, deliveryId));
-    const OrderInSession = order?.orderItems.find(
-      (item) => item.cartId === cartId && item.deliveryId === deliveryId
-    );
 
-    if (OrderInSession) {
-      await updateOrderItem(OrderInSession, order, cartId, deliveryId);
-      await updateDelivery(deliveryId, userId);
-      await updateCart(cartId, userId);
-    } else {
-      await createOrderItem(order, cartId, deliveryId);
-      await updateDelivery(deliveryId, userId);
-      await updateCart(cartId, userId);
-    }
-
-    revalidatePath("/cart");
+  if (!session) {
+    return; // Exit early if no session is found
   }
+
+  const userId = session.user.id;
+  const order = (await getOrder()) || (await createOrder(cartId, deliveryId));
+  const OrderInSession = order?.orderItems.find(
+    (item) => item.cartId === cartId
+  );
+
+  if (OrderInSession) {
+    await updateOrderItem(OrderInSession, order, cartId, deliveryId);
+  } else {
+    await createOrderItem(order, cartId, deliveryId);
+  }
+
+  await updateCart(cartId, userId);
+  revalidatePath("/cart");
 }
 
 async function updateOrderItem(
   OrderIncart: any,
-  order: ShoppingOrder | null,
-  cartId: string,
-  deliveryId: string
+  order: any,
+  cartId: any,
+  deliveryId: any
 ) {
-  await prisma.orderItems.update({
-    where: {
-      id: OrderIncart.id,
-    },
-    data: {
-      orderId: order?.id,
-      cartId,
-      deliveryId,
-      isPaid: false,
-    },
-  });
-}
-
-async function createOrderItem(
-  order: ShoppingOrder | null,
-  cartId: string,
-  deliveryId: string
-) {
-  await prisma.orderItems.create({
-    data: {
-      orderId: order?.id,
-      cartId,
-      deliveryId,
-      isPaid: false,
-    },
-  });
-}
-
-async function updateDelivery(deliveryId: string, userId: string) {
-  await prisma.delivery.findUnique({
+  const deliveryItemId = await prisma.delivery.findUnique({
     where: {
       id: deliveryId,
-      isPaid: false,
     },
-    include: { deliveryItems: true },
-  });
-  await prisma.delivery.update({
-    where: {
-      id: deliveryId,
-      userId,
+    include: {
+      deliveryItems: {
+        where: {
+          Default: true,
+        },
+      },
     },
-    data: { isPaid: true },
   });
+
+  if (deliveryItemId) {
+    const deliveryItem = deliveryItemId.deliveryItems[0];
+
+    if (deliveryItem) {
+      await prisma.orderItems.update({
+        where: {
+          id: OrderIncart.id,
+        },
+        data: {
+          orderId: order?.id,
+          cartId,
+          deliveryItemsId: deliveryItem.id,
+          isPaid: false,
+        },
+      });
+    }
+  }
 }
 
-async function updateCart(cartId: string, userId: string) {
-  await prisma.cart.findUnique({
+async function createOrderItem(order: any, cartId: any, deliveryId: any) {
+  const deliveryItemId = await prisma.delivery.findUnique({
+    where: {
+      id: deliveryId,
+    },
+    include: {
+      deliveryItems: {
+        where: {
+          Default: true,
+        },
+      },
+    },
+  });
+
+  if (deliveryItemId) {
+    const deliveryItem = deliveryItemId.deliveryItems[0];
+
+    if (deliveryItem) {
+      await prisma.orderItems.create({
+        data: {
+          orderId: order?.id,
+          cartId,
+          deliveryItemsId: deliveryItem.id,
+          isPaid: false,
+        },
+      });
+    }
+  }
+}
+
+async function updateCart(cartId: any, userId: any) {
+  const cart = await prisma.cart.findUnique({
     where: {
       id: cartId,
       isPaid: false,
     },
     include: { cartItems: true },
   });
-  await prisma.cart.update({
-    where: {
-      id: cartId,
-      userId,
-    },
-    data: { isPaid: true },
-  });
+
+  if (cart) {
+    await prisma.cart.update({
+      where: {
+        id: cartId,
+        userId,
+      },
+      data: { isPaid: true },
+    });
+  }
 }

@@ -1,13 +1,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { AiOutlinePlus } from "react-icons/ai";
-import AddToCartButton from "./AddToCartButton";
+import AddToCartButton from "./components/AddToCartButton";
 import PriceTag from "@/components/PriceTag";
 import { Category, Product, ProductVariant } from "@prisma/client";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { RxCross2 } from "react-icons/rx";
-import AddToWishlist from "./AddToWishlist";
+import AddToWishlist from "./components/AddToWishlist";
 import { ShoppingLike } from "@/lib/db/like";
 
 interface ProductMobileProps {

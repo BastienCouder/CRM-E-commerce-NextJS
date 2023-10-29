@@ -7,14 +7,16 @@ import { Session } from "next-auth";
 import Logout from "@/components/Logout";
 import Orders from "./Orders";
 import { ShoppingOrder } from "@/lib/db/order";
-// import UserInfo from "@/components/UserInfo";
+import { DeliveryProps } from "@/lib/db/delivery";
+import UserInfo from "./UserInfo";
 
 interface MenuProps {
   session: Session | null;
   order: ShoppingOrder | null;
+  delivery: DeliveryProps | null;
 }
 
-export default function Menu({ session, order }: MenuProps) {
+export default function Menu({ session, order, delivery }: MenuProps) {
   const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(
     "orders"
   );
@@ -33,11 +35,11 @@ export default function Menu({ session, order }: MenuProps) {
             Bonjour {session?.user?.name}
           </h1>
 
-          <div className="flex flex-col gap-2 w-72">
+          <div className="flex flex-col gap-2 w-72 text-zinc-500">
             <div
               onClick={() => handleMenuItemClick("orders")}
               className={`cursor-pointer flex items-center gap-4 p-4 pl-0 border-b-2 border-zinc-800 ${
-                selectedMenuItem === "orders" ? "text-zinc-500" : ""
+                selectedMenuItem === "orders" ? "text-white" : ""
               }`}
             >
               <span>
@@ -48,7 +50,7 @@ export default function Menu({ session, order }: MenuProps) {
             <div
               onClick={() => handleMenuItemClick("userInfo")}
               className={`cursor-pointer flex items-center gap-4 p-4 pl-0 border-b-2 border-zinc-800 ${
-                selectedMenuItem === "userInfo" ? "text-zinc-500" : ""
+                selectedMenuItem === "userInfo" ? "text-white" : ""
               }`}
             >
               <span>
@@ -67,7 +69,11 @@ export default function Menu({ session, order }: MenuProps) {
           </div>
         </div>
       </div>
-      {selectedMenuItem === "orders" ? <Orders order={order} /> : "hello"}
+      {selectedMenuItem === "orders" ? (
+        <Orders order={order} />
+      ) : (
+        <UserInfo delivery={delivery} session={session} />
+      )}
     </>
   );
 }

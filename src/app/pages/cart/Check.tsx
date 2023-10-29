@@ -4,6 +4,7 @@ import { VAT_RATE } from "@/lib/utils";
 import { CartItems } from "@prisma/client";
 import buttonStyles from "@/styles/Button.module.css";
 import { redirect, useRouter } from "next/navigation";
+import SubmitButton from "@/components/SubmitButton";
 
 interface CheckProps {
   cart: Cart | null;
@@ -49,9 +50,7 @@ export default function Check({ cart }: CheckProps) {
         <div className="bg-zinc-500 w-full h-px"></div>
         <div className="flex space-x-4 items-center">
           <p className="capitalize">Expédition</p>
-          <p className="text-sm text-zinc-500">
-            Les frais de livraison sont calculés lors du paiement
-          </p>
+          <p className="text-sm text-zinc-500">Gratuite</p>
         </div>
         <div className="bg-zinc-500 w-full h-px"></div>
         <div className="flex justify-between">
@@ -64,18 +63,9 @@ export default function Check({ cart }: CheckProps) {
           <p>Total: {formatPrice(cart?.subtotal || 0, "EUR")}</p>
         </div>
         <div className="pt-4">
-          <button
-            onClick={cartCheckout}
-            className={`${buttonStyles.button} py-3 px-5 w-44 justify-center relative uppercase tracking-[4px] flex items-center`}
-          >
-            <div className={buttonStyles.buttonLeft}></div>
-            <div className={buttonStyles.buttonTopLeft}></div>
-            <div className={buttonStyles.buttonBottomLeft}></div>
-            <div className={buttonStyles.buttonRight}></div>
-            <div className={buttonStyles.buttonTopRight}></div>
-            <div className={buttonStyles.buttonBottomRight}></div>
+          <SubmitButton onClick={cartCheckout} className="w-44">
             Valider
-          </button>
+          </SubmitButton>
         </div>
       </div>
       {/* <div className="">
