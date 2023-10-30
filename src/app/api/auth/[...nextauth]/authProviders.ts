@@ -1,21 +1,10 @@
 import GoogleProvider from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
-import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
-import { getSession } from "next-auth/react";
+import { LoginSchema } from "@/lib/zod";
 
 const prisma = new PrismaClient();
-
-const loginUserSchema = z.object({
-  email: z
-    .string()
-    .min(5, "Email should be minimum 5 characters")
-    .refine((email) => /\S+@\S+\.\S+/.test(email), {
-      message: "Invalid email format",
-    }),
-  password: z.string().min(5, "Password should be minimum 5 characters"),
-});
 
 export const authProviders = [
   GoogleProvider({
@@ -29,7 +18,7 @@ export const authProviders = [
     },
     async authorize(credentials, req) {
       try {
-        const { email, password } = loginUserSchema.parse(credentials);
+        const { email, password } = LoginSchema.parse(credentials);
         const user = await prisma.user.findUnique({
           where: { email },
         });

@@ -8,7 +8,7 @@ import Logout from "@/components/Logout";
 import Orders from "./Orders";
 import { ShoppingOrder } from "@/lib/db/order";
 import { DeliveryProps } from "@/lib/db/delivery";
-import UserInfo from "./UserInfo";
+import UserInfo from "./Info";
 
 interface MenuProps {
   session: Session | null;

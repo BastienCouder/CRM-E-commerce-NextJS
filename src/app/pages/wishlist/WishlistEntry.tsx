@@ -6,7 +6,7 @@ import Link from "next/link";
 import Loading from "@/app/loading";
 import { WishlistItemWithProduct } from "@/lib/db/wishlist";
 import { useServerAddToCart } from "./actions";
-import AddToCartButton from "@/app/pages/products/[id]/components/AddToCartButton";
+import AddToCartButton from "@/components/AddToCartButton";
 
 interface WishlistEntryProps {
   wishlistItem: WishlistItemWithProduct;

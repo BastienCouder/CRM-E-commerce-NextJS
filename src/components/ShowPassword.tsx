@@ -21,7 +21,7 @@ export default function ShowPassword({
     <div className="w-full flex flex-col space-y-1 relative">
       <Input
         autoComplete="off"
-        required={true}
+        required={false}
         type={showPassword ? "text" : "password"}
         value={password}
         onChange={(e) => setPassword(e.target.value)}

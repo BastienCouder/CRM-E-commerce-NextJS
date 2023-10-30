@@ -26,7 +26,7 @@ import {
   defaultLoginValues,
   defaultRegisterValues,
 } from "@/lib/zod";
-import ShowPassword from "./ShowPassword";
+import ShowPassword from "../../components/ShowPassword";
 
 interface FormAuthProps {
   registerForm: (formData: FormData) => Promise<void>;

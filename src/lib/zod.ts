@@ -1,5 +1,58 @@
 import * as z from "zod";
 
+//Register
+export const RegisterSchema = z.object({
+  username: z
+    .string({
+      required_error: "Le nom d'utilisateur est requis",
+      invalid_type_error:
+        "Le nom d'utilisateur doit être une chaîne de caractères",
+    })
+    .min(3, {
+      message: "Le nom d'utilisateur doit comporter au moins 3 caractères.",
+    })
+    .max(50),
+  email: z
+    .string({
+      required_error: "L'adresse e-mail est requise",
+      invalid_type_error: "L'adresse e-mail doit être une chaîne de caractères",
+    })
+    .max(250)
+    .email({
+      message: "Adresse e-mail invalide",
+    }),
+  password: z
+    .string({
+      required_error: "Le mot de passe est requis",
+      invalid_type_error: "Le mot de passe doit être une chaîne de caractères",
+    })
+    .min(8, {
+      message: "Le mot de passe doit comporter au moins 8 caractères.",
+    }),
+});
+
+//Login
+export const LoginSchema = z.object({
+  email: z
+    .string({
+      required_error: "L'adresse e-mail est requise",
+      invalid_type_error: "L'adresse e-mail doit être une chaîne de caractères",
+    })
+    .max(250)
+    .email({
+      message: "Adresse e-mail invalide",
+    }),
+  password: z
+    .string({
+      required_error: "Le mot de passe est requis",
+      invalid_type_error: "Le mot de passe doit être une chaîne de caractères",
+    })
+    .min(8, {
+      message: "Le mot de passe doit comporter au moins 8 caractères.",
+    }),
+});
+
+//Delivery
 export const DeliverySchema = z.object({
   name: z
     .string({
@@ -67,60 +120,10 @@ export const DeliverySchema = z.object({
     .max(20),
 });
 
-export const RegisterSchema = z.object({
-  username: z
-    .string({
-      required_error: "Le nom d'utilisateur est requis",
-      invalid_type_error:
-        "Le nom d'utilisateur doit être une chaîne de caractères",
-    })
-    .min(3, {
-      message: "Le nom d'utilisateur doit comporter au moins 3 caractères.",
-    })
-    .max(50),
-  email: z
-    .string({
-      required_error: "L'adresse e-mail est requise",
-      invalid_type_error: "L'adresse e-mail doit être une chaîne de caractères",
-    })
-    .max(250)
-    .email({
-      message: "Adresse e-mail invalide",
-    }),
-  password: z
-    .string({
-      required_error: "Le mot de passe est requis",
-      invalid_type_error: "Le mot de passe doit être une chaîne de caractères",
-    })
-    .min(8, {
-      message: "Le mot de passe doit comporter au moins 8 caractères.",
-    }),
-});
-
-export const LoginSchema = z.object({
-  email: z
-    .string({
-      required_error: "L'adresse e-mail est requise",
-      invalid_type_error: "L'adresse e-mail doit être une chaîne de caractères",
-    })
-    .max(250)
-    .email({
-      message: "Adresse e-mail invalide",
-    }),
-  password: z
-    .string({
-      required_error: "Le mot de passe est requis",
-      invalid_type_error: "Le mot de passe doit être une chaîne de caractères",
-    })
-    .min(8, {
-      message: "Le mot de passe doit comporter au moins 8 caractères.",
-    }),
-});
-
-export type DeliveryValues = z.infer<typeof DeliverySchema>;
-export type LoginValues = z.infer<typeof LoginSchema>;
 export type RegisterValues = z.infer<typeof RegisterSchema>;
+export type LoginValues = z.infer<typeof LoginSchema>;
+export type DeliveryValues = z.infer<typeof DeliverySchema>;
 
-export const defaultDeliveryValues: Partial<DeliveryValues> = {};
-export const defaultLoginValues: Partial<LoginValues> = {};
 export const defaultRegisterValues: Partial<RegisterValues> = {};
+export const defaultLoginValues: Partial<LoginValues> = {};
+export const defaultDeliveryValues: Partial<DeliveryValues> = {};

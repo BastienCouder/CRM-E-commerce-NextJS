@@ -2,7 +2,7 @@
 import Input from "@/components/Input";
 import { useId, useState } from "react";
 import { Session } from "next-auth";
-import ShowPassword from "@/app/auth/ShowPassword";
+import ShowPassword from "@/components/ShowPassword";
 import { signIn } from "next-auth/react";
 import { AiFillGoogleSquare } from "react-icons/ai";
 import { useRouter } from "next/navigation";
