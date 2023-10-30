@@ -1,9 +1,9 @@
 import { getServerSession } from "next-auth";
 import FormDelivery from "./FormDelivery";
 import {
-  DeleteDeliveryItem,
-  deliveryForm,
-  setDefaultDeliveryItem,
+  useServerDeleteDeliveryItem,
+  useServerSetDefaultDeliveryItem,
+  useServerDeliveryForm,
 } from "./actions";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import FormLogin from "./FormLogin";
@@ -19,12 +19,15 @@ export default async function Delivery() {
       <div className="flex">
         <div className="flex flex-col space-y-8">
           <FormLogin session={session} />
-          <FormDelivery deliveryForm={deliveryForm} session={session} />
+          <FormDelivery
+            deliveryForm={useServerDeliveryForm}
+            session={session}
+          />
           <SelectDelivery
             session={session}
             delivery={delivery}
-            setDefaultDeliveryItem={setDefaultDeliveryItem}
-            DeleteDeliveryItem={DeleteDeliveryItem}
+            setDefaultDeliveryItem={useServerSetDefaultDeliveryItem}
+            DeleteDeliveryItem={useServerDeleteDeliveryItem}
           />
         </div>
         <div className="px-24 py-16">hello</div>

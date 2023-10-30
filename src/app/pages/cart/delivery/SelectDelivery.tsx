@@ -53,8 +53,7 @@ export default function SelectDelivery({
           delivery.deliveryItems.map((deliveryItem) => (
             <li
               key={deliveryItem.id}
-              onClick={() => handleDeliveryChange(deliveryItem.id)}
-              className="flex text-sm border-2 px-8 py-6 border-zinc-800 cursor-pointer"
+              className="flex text-sm border-2 px-8 py-6 border-zinc-800"
             >
               <div className="w-60">
                 <div className="flex flex-col font-bold">
@@ -78,6 +77,7 @@ export default function SelectDelivery({
               <div className="pl-12 space-y-4">
                 <div className="flex gap-x-4">
                   <div
+                    onClick={() => handleDeliveryChange(deliveryItem.id)}
                     className={`mb-2 h-4 w-4 border-2 border-white cursor-pointer ${
                       selectedDeliveryItem === deliveryItem.id ? "bg-white" : ""
                     }`}

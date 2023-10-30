@@ -1,6 +1,6 @@
 import { getCart } from "@/lib/db/cart";
 import CartEntry from "./CartEntry";
-import Check from "./Check";
+import CheckCart from "./CheckCart";
 import Link from "next/link";
 import SubmitButton from "@/components/SubmitButton";
 
@@ -37,7 +37,7 @@ export default async function Cart() {
         )}
       </ul>
 
-      <Check cart={cart} />
+      <CheckCart cart={cart} />
     </>
   );
 }

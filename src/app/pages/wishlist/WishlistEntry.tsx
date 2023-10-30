@@ -8,7 +8,7 @@ import { RxCross2 } from "react-icons/rx";
 
 import Loading from "@/app/loading";
 import { WishlistItemWithProduct } from "@/lib/db/wishlist";
-import AddToCartButton from "../wishlist/AddToCartButton";
+import AddToCartButton from "./components/AddToCartButton";
 import { useServerAddToCart } from "./actions";
 
 interface WishlistEntryProps {

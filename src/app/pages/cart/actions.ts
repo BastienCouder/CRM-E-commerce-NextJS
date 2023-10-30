@@ -2,7 +2,6 @@
 
 import { createCart, getCart } from "@/lib/db/cart";
 import { prisma } from "@/lib/db/prisma";
-import { createWishlist, getWishlist } from "@/lib/db/wishlist";
 import { revalidatePath } from "next/cache";
 
 export async function UpdateProductQuantity(
@@ -55,6 +54,7 @@ async function deleteItemIncrementFromCart(item: any) {
   });
 }
 
+//Delete Product From Cart
 export async function DeleteProduct(
   productId: string,
   variantId: string | undefined

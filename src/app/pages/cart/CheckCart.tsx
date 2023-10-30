@@ -2,11 +2,10 @@
 import formatPrice from "@/lib/format";
 import { VAT_RATE } from "@/lib/utils";
 import { CartItems } from "@prisma/client";
-import buttonStyles from "@/styles/Button.module.css";
 import { redirect, useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
 
-interface CheckProps {
+interface CheckCartProps {
   cart: Cart | null;
 }
 
@@ -16,7 +15,7 @@ interface Cart {
   cartItems: CartItems[];
 }
 
-export default function Check({ cart }: CheckProps) {
+export default function CheckCart({ cart }: CheckCartProps) {
   const router = useRouter();
   const total: number = parseInt(formatPrice(cart?.subtotal || 0, "EUR"));
   const totalTVA = (VAT_RATE * total).toFixed(2);

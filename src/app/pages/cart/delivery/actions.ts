@@ -3,17 +3,15 @@ import { createDelivery, getDelivery } from "@/lib/db/delivery";
 import { validateEmail } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 
-export async function deliveryForm(formData: FormData) {
+export async function useServerDeliveryForm(formData: FormData) {
   const delivery = (await getDelivery()) ?? (await createDelivery());
+  validateAndCreateDeliveryItem(delivery, formData);
+  revalidatePath("/cart/delivery");
+}
 
-  const name = formData.get("name")?.toString();
-  const surname = formData.get("surname")?.toString();
-  const email = formData.get("email")?.toString();
-  const address = formData.get("address")?.toString();
-  const postcode = formData.get("postcode")?.toString();
-  const city = formData.get("city")?.toString();
-  const country = formData.get("country")?.toString();
-  const tel = formData.get("tel")?.toString();
+async function validateAndCreateDeliveryItem(delivery: any, formData: any) {
+  const { name, email, surname, address, postcode, city, country, tel } =
+    getFormDataValues(formData);
 
   if (
     !name ||
@@ -50,6 +48,11 @@ export async function deliveryForm(formData: FormData) {
     },
   });
 
+  updateDefaultDeliveryItem(delivery, newDeliveryItem);
+  revalidatePath("/cart/delivery");
+}
+
+async function updateDefaultDeliveryItem(delivery: any, newDeliveryItem: any) {
   const hasDefaultDelivery = await prisma.deliveryItems.findFirst({
     where: {
       deliveryId: delivery.id,
@@ -69,15 +72,23 @@ export async function deliveryForm(formData: FormData) {
   }
   revalidatePath("/cart/delivery");
 }
-
-export async function setDefaultDeliveryItem(deliveryItemId: string) {
+export async function useServerSetDefaultDeliveryItem(deliveryItemId: string) {
   const selectedDeliveryItem = await prisma.deliveryItems.findUnique({
     where: { id: deliveryItemId },
   });
 
+  validateSelectedDeliveryItem(selectedDeliveryItem);
+  await updateDefaultDeliveryItems(selectedDeliveryItem);
+  revalidatePath("/cart/delivery");
+}
+
+function validateSelectedDeliveryItem(selectedDeliveryItem: any) {
   if (!selectedDeliveryItem) {
     throw new Error("Moyen de livraison non trouvé");
   }
+}
+
+async function updateDefaultDeliveryItems(selectedDeliveryItem: any) {
   await prisma.deliveryItems.updateMany({
     where: {
       deliveryId: selectedDeliveryItem.deliveryId,
@@ -90,11 +101,9 @@ export async function setDefaultDeliveryItem(deliveryItemId: string) {
     where: { id: selectedDeliveryItem.id },
     data: { Default: true },
   });
-
-  revalidatePath("/cart/delivery");
 }
 
-export async function DeleteDeliveryItem(deliveryItemId: string) {
+export async function useServerDeleteDeliveryItem(deliveryItemId: string) {
   const deliveryItem = await prisma.deliveryItems.findUnique({
     where: { id: deliveryItemId },
   });
@@ -102,38 +111,46 @@ export async function DeleteDeliveryItem(deliveryItemId: string) {
   if (deliveryItem) {
     const { deliveryId } = deliveryItem;
 
+    await softDeleteDeliveryItem(deliveryItemId);
+    await updateDefaultDelivery(deliveryId);
+    revalidatePath("/cart/delivery");
+  }
+}
+
+async function softDeleteDeliveryItem(deliveryItemId: string) {
+  await prisma.deliveryItems.update({
+    where: {
+      id: deliveryItemId,
+    },
+    data: {
+      SoftDelete: true,
+      Default: false,
+    },
+  });
+}
+
+async function updateDefaultDelivery(deliveryId: string) {
+  const hasDefaultDelivery = await prisma.deliveryItems.findFirst({
+    where: {
+      deliveryId,
+      Default: false,
+      SoftDelete: false,
+    },
+  });
+
+  if (hasDefaultDelivery) {
     await prisma.deliveryItems.update({
       where: {
-        id: deliveryItemId,
+        id: hasDefaultDelivery.id,
       },
       data: {
-        SoftDelete: true,
-        Default: false,
+        Default: true,
       },
     });
-
-    const hasDefaultDelivery = await prisma.deliveryItems.findFirst({
-      where: {
-        deliveryId,
-        Default: false,
-      },
-    });
-
-    if (hasDefaultDelivery) {
-      await prisma.deliveryItems.update({
-        where: {
-          id: hasDefaultDelivery.id,
-        },
-        data: {
-          Default: true,
-        },
-      });
-    }
   }
-
-  revalidatePath("/cart/delivery");
 }
-export async function UpdateDeliveryForm(
+
+export async function useServerUpdateDeliveryForm(
   deliveryItemId: string,
   formData: FormData
 ) {
@@ -145,33 +162,65 @@ export async function UpdateDeliveryForm(
     if (!deliveryItem) {
       throw new Error("L'élément de livraison n'a pas été trouvé.");
     }
-    const name = formData.get("name") as string;
-    const surname = formData.get("surname") as string;
-    const email = formData.get("email") as string;
-    const address = formData.get("address") as string;
-    const postcode = formData.get("postcode") as string;
-    const city = formData.get("city") as string;
-    const country = formData.get("country") as string;
-    const tel = formData.get("tel") as string;
 
-    await prisma.deliveryItems.update({
-      where: {
-        id: deliveryItem.id,
-      },
-      data: {
-        name,
-        email,
-        surname,
-        address,
-        postcode,
-        city,
-        country,
-        tel,
-      },
-    });
+    const { name, surname, email, address, postcode, city, country, tel } =
+      getFormDataValues(formData);
+
+    await updateDeliveryItem(
+      deliveryItem,
+      name,
+      surname,
+      email,
+      address,
+      postcode,
+      city,
+      country,
+      tel
+    );
 
     revalidatePath("/cart/delivery");
   } catch (error) {
     throw error;
   }
+}
+
+async function updateDeliveryItem(
+  deliveryItem: any,
+  name: string | undefined,
+  surname: string | undefined,
+  email: string | undefined,
+  address: string | undefined,
+  postcode: string | undefined,
+  city: string | undefined,
+  country: string | undefined,
+  tel: string | undefined
+) {
+  await prisma.deliveryItems.update({
+    where: {
+      id: deliveryItem.id,
+    },
+    data: {
+      name,
+      email,
+      surname,
+      address,
+      postcode,
+      city,
+      country,
+      tel,
+    },
+  });
+}
+
+function getFormDataValues(formData: FormData) {
+  return {
+    name: formData.get("name")?.toString(),
+    surname: formData.get("surname")?.toString(),
+    email: formData.get("email")?.toString(),
+    address: formData.get("address")?.toString(),
+    postcode: formData.get("postcode")?.toString(),
+    city: formData.get("city")?.toString(),
+    country: formData.get("country")?.toString(),
+    tel: formData.get("tel")?.toString(),
+  };
 }
