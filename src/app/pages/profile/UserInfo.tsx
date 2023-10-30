@@ -1,12 +1,14 @@
 "use client";
 import { DeliveryProps } from "@/lib/db/delivery";
-import DeliveryInfo from "./components/DeliveryInfo";
+import DeliveryInfo from "./DeliveryInfo";
 import {
   useServerDeleteDeliveryItem,
   useServerUpdateDeliveryForm,
   useServerSetDefaultDeliveryItem,
+  useServerDeliveryForm,
 } from "../cart/delivery/actions";
 import { Session } from "next-auth";
+import FormDelivery from "@/components/FormDelivery";
 
 interface UserInfoProps {
   session: Session | null;
@@ -15,7 +17,11 @@ interface UserInfoProps {
 
 export default function UserInfo({ session, delivery }: UserInfoProps) {
   return (
-    <div>
+    <div className="my-12 space-y-4">
+      <h2 className="text-2xl text-center md:text-start">
+        Addresse de livraison
+      </h2>
+      <FormDelivery deliveryForm={useServerDeliveryForm} session={session} />
       <DeliveryInfo
         delivery={delivery}
         setDefaultDeliveryItem={useServerSetDefaultDeliveryItem}

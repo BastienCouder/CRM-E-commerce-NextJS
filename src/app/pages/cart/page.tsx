@@ -2,7 +2,7 @@ import { getCart } from "@/lib/db/cart";
 import CartEntry from "./CartEntry";
 import CheckCart from "./CheckCart";
 import Link from "next/link";
-import SubmitButton from "@/components/SubmitButton";
+import { Button } from "@/components/ui/button";
 
 export const metadata = {
   title: "Your Cart - E-commerce",
@@ -30,7 +30,7 @@ export default async function Cart() {
             <div className="flex items-center gap-x-16">
               <p>Votre panier est vide</p>
               <Link href="/">
-                <SubmitButton classID="w-96">Continuer mes achats</SubmitButton>
+                <Button size="xl">Continuer mes achats</Button>
               </Link>
             </div>
           </>

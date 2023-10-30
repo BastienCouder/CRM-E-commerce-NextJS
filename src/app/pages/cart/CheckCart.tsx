@@ -3,7 +3,7 @@ import formatPrice from "@/lib/format";
 import { VAT_RATE } from "@/lib/utils";
 import { CartItems } from "@prisma/client";
 import { redirect, useRouter } from "next/navigation";
-import SubmitButton from "@/components/SubmitButton";
+import { Button } from "@/components/ui/button";
 
 interface CheckCartProps {
   cart: Cart | null;
@@ -62,9 +62,7 @@ export default function CheckCart({ cart }: CheckCartProps) {
           <p>Total: {formatPrice(cart?.subtotal || 0, "EUR")}</p>
         </div>
         <div className="pt-4">
-          <SubmitButton onClick={cartCheckout} className="w-44">
-            Valider
-          </SubmitButton>
+          <Button onClick={cartCheckout}>Valider</Button>
         </div>
       </div>
       {/* <div className="">

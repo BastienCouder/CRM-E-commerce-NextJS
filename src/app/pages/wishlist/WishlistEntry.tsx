@@ -1,15 +1,12 @@
 "use client";
-
-import { CartItemWithProduct } from "@/lib/db/cart";
 import formatPrice from "@/lib/format";
 import Image from "next/image";
 import Link from "next/link";
-import { RxCross2 } from "react-icons/rx";
 
 import Loading from "@/app/loading";
 import { WishlistItemWithProduct } from "@/lib/db/wishlist";
-import AddToCartButton from "./components/AddToCartButton";
 import { useServerAddToCart } from "./actions";
+import AddToCartButton from "@/app/pages/products/[id]/components/AddToCartButton";
 
 interface WishlistEntryProps {
   wishlistItem: WishlistItemWithProduct;

@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { RxCross2 } from "react-icons/rx";
 import { ShoppingLike } from "@/lib/db/like";
 import AddToWishlist from "./components/AddToWishlist";
+import { useServerAddToCart, useServerAddWishlist } from "./actions";
 
 interface ProductTabletProps {
   products: {
@@ -33,14 +34,6 @@ interface ProductTabletProps {
   product: ExtendedProduct;
   toggleColorVisibility: () => Promise<void>;
   toggleCategoriesVisibility: () => Promise<void>;
-  incrementProductQuantity: (
-    productId: string,
-    variantId: string
-  ) => Promise<void>;
-  incrementWishlist: (
-    productId: string,
-    variantId: string | null
-  ) => Promise<void>;
   handleColorChange: (color: string) => void;
 }
 
@@ -55,11 +48,9 @@ export default function ProductTablet({
   showCategories,
   selectedColor,
   selectedVariant,
-  product,
   toggleColorVisibility,
   toggleCategoriesVisibility,
-  incrementProductQuantity,
-  incrementWishlist,
+  product,
   handleColorChange,
 }: ProductTabletProps) {
   const pathname = usePathname();
@@ -186,14 +177,14 @@ export default function ProductTablet({
                 <AddToWishlist
                   productId={product.id}
                   variantId={selectedVariant?.id}
-                  incrementWishlist={incrementWishlist}
+                  incrementWishlist={useServerAddWishlist}
                   like={like}
                 />
               </div>
               <div className="flex items-center justify-start gap-2">
                 <AddToCartButton
                   productId={product.id}
-                  incrementProductQuantity={incrementProductQuantity}
+                  addToCart={useServerAddToCart}
                   variantId={selectedVariant?.id || ""}
                 />
               </div>

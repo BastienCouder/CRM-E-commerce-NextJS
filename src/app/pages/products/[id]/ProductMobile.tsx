@@ -9,6 +9,7 @@ import Link from "next/link";
 import { RxCross2 } from "react-icons/rx";
 import AddToWishlist from "./components/AddToWishlist";
 import { ShoppingLike } from "@/lib/db/like";
+import { useServerAddToCart, useServerAddWishlist } from "./actions";
 
 interface ProductMobileProps {
   products: {
@@ -33,14 +34,6 @@ interface ProductMobileProps {
   product: ExtendedProduct;
   toggleColorVisibility: () => Promise<void>;
   toggleCategoriesVisibility: () => Promise<void>;
-  incrementProductQuantity: (
-    productId: string,
-    variantId: string
-  ) => Promise<void>;
-  incrementWishlist: (
-    productId: string,
-    variantId: string | null
-  ) => Promise<void>;
   handleColorChange: (color: string) => void;
 }
 
@@ -59,8 +52,6 @@ export default function ProductMobile({
   product,
   toggleColorVisibility,
   toggleCategoriesVisibility,
-  incrementProductQuantity,
-  incrementWishlist,
   handleColorChange,
 }: ProductMobileProps) {
   const pathname = usePathname();
@@ -176,14 +167,14 @@ export default function ProductMobile({
               <AddToWishlist
                 productId={product.id}
                 variantId={selectedVariant?.id}
-                incrementWishlist={incrementWishlist}
+                incrementWishlist={useServerAddWishlist}
                 like={like}
               />
             </div>
             <div className="flex items-center justify-center gap-2">
               <AddToCartButton
                 productId={product.id}
-                incrementProductQuantity={incrementProductQuantity}
+                addToCart={useServerAddToCart}
                 variantId={selectedVariant?.id || ""}
               />{" "}
             </div>

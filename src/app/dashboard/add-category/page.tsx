@@ -1,11 +1,7 @@
-import FormSubmitButton from "@/components/SubmitButton";
 import { prisma } from "@/lib/db/prisma";
-import { Category } from "@prisma/client";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
-import { checkAdminRole } from "@/lib/admin";
 import Input from "@/components/Input";
+import { Button } from "@/components/ui/button";
 
 export const metadata = {
   title: "Add Category - E-commerce",
@@ -32,6 +28,7 @@ export default async function AddCategoryPage() {
         <h1 className="text-lg mb-3">Add Category</h1>
         <form action={addCategory} className="space-y-4 w-[40rem] mb-4">
           <Input
+            autoComplete={true}
             label="Category"
             required={true}
             id="category"
@@ -39,7 +36,7 @@ export default async function AddCategoryPage() {
             name="category"
             placeholder="Categorie"
           />
-          <FormSubmitButton>Add Category</FormSubmitButton>
+          <Button>Add Category</Button>
         </form>
       </div>
     </>

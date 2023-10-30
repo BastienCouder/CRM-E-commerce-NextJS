@@ -48,13 +48,5 @@ export default async function ProductPage({
   const product = await getProduct(id);
   const like = await getLike(product.id);
 
-  return (
-    <Product
-      products={products}
-      product={product}
-      like={like}
-      incrementProductQuantity={useServerAddToCart}
-      incrementWishlist={useServerAddWishlist}
-    />
-  );
+  return <Product products={products} product={product} like={like} />;
 }

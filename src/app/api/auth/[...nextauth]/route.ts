@@ -1,5 +1,5 @@
 import { AuthOptions } from "next-auth";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 import { env } from "@/lib/env";
 import { authProviders } from "./authProviders";
 import NextAuth from "next-auth/next";
@@ -7,7 +7,8 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { Adapter } from "next-auth/adapters";
 import { mergeAnonymousCartIntoUserCart } from "@/lib/db/cart";
 import { mergeAnonymousWishlistIntoUserCart } from "@/lib/db/wishlist";
-import { mergeAnonymousDeliveryIntoUserCart } from "@/lib/db/delivery";
+import { randomBytes, randomUUID } from "crypto";
+// import { mergeAnonymousDeliveryIntoUserCart } from "@/lib/db/delivery";
 
 const prisma = new PrismaClient();
 
@@ -17,11 +18,20 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: "/auth",
   },
+  session: {
+    strategy: "database",
+    maxAge: 30 * 24 * 60 * 60,
+    updateAge: 24 * 60 * 60,
+    generateSessionToken: () => {
+      return randomUUID?.() ?? randomBytes(32).toString("hex");
+    },
+  },
   secret: env.NEXTAUTH_URL,
-  // debug: process.env.NODE_ENV === "development",
+  debug: process.env.NODE_ENV === "development",
   callbacks: {
     async session({ session, user }) {
       session.user.id = user.id;
+      console.log("session", user, session);
       return session;
     },
   },

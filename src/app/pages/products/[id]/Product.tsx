@@ -8,6 +8,7 @@ import ProductMobile from "./ProductMobile";
 import ProductDesktop from "./ProductDesktop";
 import ProductTablet from "./ProductTablet";
 import { ShoppingLike } from "@/lib/db/like";
+import { useServerAddToCart, useServerAddWishlist } from "./actions";
 
 interface ProductProps {
   product: Product & {
@@ -29,23 +30,9 @@ interface ProductProps {
     } | null;
   }[];
   like: ShoppingLike | null;
-  incrementProductQuantity: (
-    productId: string,
-    variantId: string
-  ) => Promise<void>;
-  incrementWishlist: (
-    productId: string,
-    variantId: string | null
-  ) => Promise<void>;
 }
 
-export default function Product({
-  product,
-  products,
-  like,
-  incrementProductQuantity,
-  incrementWishlist,
-}: ProductProps) {
+export default function Product({ product, products, like }: ProductProps) {
   const [showColor, setShowColor] = useState(false);
   const [selectedColor, setSelectedColor] = useState(
     product?.variants[0]?.id || null
@@ -83,8 +70,6 @@ export default function Product({
           selectedVariant={selectedVariant}
           product={product}
           toggleColorVisibility={toggleColorVisibility}
-          incrementProductQuantity={incrementProductQuantity}
-          incrementWishlist={incrementWishlist}
           handleColorChange={handleColorChange}
           toggleCategoriesVisibility={toggleCategoriesVisibility}
         />
@@ -99,8 +84,6 @@ export default function Product({
             selectedVariant={selectedVariant}
             product={product}
             toggleColorVisibility={toggleColorVisibility}
-            incrementProductQuantity={incrementProductQuantity}
-            incrementWishlist={incrementWishlist}
             handleColorChange={handleColorChange}
             toggleCategoriesVisibility={toggleCategoriesVisibility}
           />
@@ -108,14 +91,12 @@ export default function Product({
       ) : (
         <ProductDesktop
           like={like}
-          incrementWishlist={incrementWishlist}
           showColor={showColor}
           products={products}
           selectedColor={selectedColor}
           selectedVariant={selectedVariant}
           product={product}
           toggleColorVisibility={toggleColorVisibility}
-          incrementProductQuantity={incrementProductQuantity}
           handleColorChange={handleColorChange}
         />
       )}

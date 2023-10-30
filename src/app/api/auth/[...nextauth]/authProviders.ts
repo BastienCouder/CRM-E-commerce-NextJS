@@ -1,7 +1,21 @@
 import GoogleProvider from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
-import { compare } from "bcrypt";
-import { env } from "@/lib/env";
+import { z } from "zod";
+import bcrypt from "bcryptjs";
+import { PrismaClient } from "@prisma/client";
+import { getSession } from "next-auth/react";
+
+const prisma = new PrismaClient();
+
+const loginUserSchema = z.object({
+  email: z
+    .string()
+    .min(5, "Email should be minimum 5 characters")
+    .refine((email) => /\S+@\S+\.\S+/.test(email), {
+      message: "Invalid email format",
+    }),
+  password: z.string().min(5, "Password should be minimum 5 characters"),
+});
 
 export const authProviders = [
   GoogleProvider({
@@ -9,64 +23,34 @@ export const authProviders = [
     clientSecret: process.env.GOOGLE_SECRET || "",
   }),
   Credentials({
-    id: "credentials",
-    name: "Credentials",
     credentials: {
-      email: {
-        label: "Email",
-        type: "text",
-      },
-      password: {
-        label: "Mot de passe",
-        type: "password",
-      },
+      email: { type: "text" },
+      password: { type: "password" },
     },
-    async authorize(credentials) {
+    async authorize(credentials, req) {
       try {
-        if (!credentials?.email || !credentials?.password) {
-          throw Error("Adresse e-mail et mot de passe requis");
-        }
-
-        let user = await prisma.user.findUnique({
-          where: {
-            email: credentials?.email as string,
-          },
+        const { email, password } = loginUserSchema.parse(credentials);
+        const user = await prisma.user.findUnique({
+          where: { email },
         });
 
-        if (!user || !user.hashedPassword) {
-          throw Error("Adresse e-mail incorrecte");
-        }
+        if (!user) return null;
 
-        const isCorrectPassword = await compare(
-          credentials?.password as string,
-          user.hashedPassword as string
-        );
+        if (password !== null && user.hashedPassword) {
+          const isPasswordValid = await bcrypt.compare(
+            password,
+            user.hashedPassword
+          );
 
-        if (!isCorrectPassword) {
-          throw Error("Mot de passe incorrect");
-        }
-
-        if (user.email === env.ADMIN) {
-          user.role = "admin";
+          if (!isPasswordValid) return null;
         } else {
-          user.role = "user";
+          return null;
         }
-        user = {
-          email: credentials?.email,
-          password: isCorrectPassword,
-          role: user.role,
-        };
+        console.log(user);
 
-        if (user) {
-          return Promise.resolve(user);
-        } else {
-          return Promise.resolve(null);
-        }
+        return user;
       } catch (error) {
-        console.error(
-          "Une erreur s'est produite lors de l'authentification :",
-          error
-        );
+        console.error("An error occurred during authentication:", error);
         throw error;
       }
     },

@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import FormDelivery from "./FormDelivery";
+import FormDelivery from "../../../../components/FormDelivery";
 import {
   useServerDeleteDeliveryItem,
   useServerSetDefaultDeliveryItem,
@@ -19,10 +19,13 @@ export default async function Delivery() {
       <div className="flex">
         <div className="flex flex-col space-y-8">
           <FormLogin session={session} />
-          <FormDelivery
-            deliveryForm={useServerDeliveryForm}
-            session={session}
-          />
+          <div className="px-4 md:px-20 xl:p-0 space-y-8 ">
+            <h1 className="text-4xl text-center md:text-start">Livraison</h1>
+            <FormDelivery
+              deliveryForm={useServerDeliveryForm}
+              session={session}
+            />
+          </div>
           <SelectDelivery
             session={session}
             delivery={delivery}

@@ -112,7 +112,7 @@ export async function useServerDeleteDeliveryItem(deliveryItemId: string) {
     const { deliveryId } = deliveryItem;
 
     await softDeleteDeliveryItem(deliveryItemId);
-    await updateDefaultDelivery(deliveryId);
+    updateDefaultDelivery(deliveryId);
     revalidatePath("/cart/delivery");
   }
 }
@@ -148,6 +148,7 @@ async function updateDefaultDelivery(deliveryId: string) {
       },
     });
   }
+  revalidatePath("/cart/delivery");
 }
 
 export async function useServerUpdateDeliveryForm(

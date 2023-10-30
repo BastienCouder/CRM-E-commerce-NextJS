@@ -1,11 +1,11 @@
 "use client";
 import Input from "@/components/Input";
-import SubmitButton from "@/components/SubmitButton";
 import { DeliveryProps } from "@/lib/db/delivery";
 import { Session } from "next-auth";
 import formStyles from "@/styles/FormDelivery.module.css";
 import { useCallback, useEffect, useId, useState } from "react";
 import { Toaster, toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 interface DeliveryInfoProps {
   delivery: DeliveryProps | null;
@@ -139,9 +139,6 @@ export default function DeliveryInfo({
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl text-center md:text-start">
-        Addresse de livraison
-      </h2>
       <ul className="space-y-4 w-[35rem]">
         {delivery?.deliveryItems &&
           delivery.deliveryItems.map((deliveryItem) => (
@@ -290,7 +287,7 @@ export default function DeliveryInfo({
               value={city}
               onChange={handleFormDeliveryChange}
             />
-            <SubmitButton className="w-44">Modifier</SubmitButton>
+            <Button>Modifier</Button>
           </form>
         </div>
       )}

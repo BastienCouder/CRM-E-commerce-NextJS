@@ -1,54 +1,38 @@
-import { useState, useCallback, useId } from "react";
+import { Input } from "@/components/ui/input";
+import { useState, useCallback } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import Input from "@/components/Input";
 
 interface ShowPasswordProps {
   password: string;
-  setPassword: (
-    value: string
-  ) =>
-    | void
-    | ((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void);
-  type: string;
-  variant?: string;
+  setPassword: (value: string) => void;
 }
+
 export default function ShowPassword({
   password,
   setPassword,
-  type,
-  variant,
 }: ShowPasswordProps) {
-  const passwordId: string = useId();
   const [showPassword, setShowPassword] = useState(false);
 
-  const togglePasswordVisibility = useCallback(async () => {
+  const togglePasswordVisibility = useCallback(() => {
     setShowPassword(!showPassword);
   }, [showPassword]);
 
   return (
-    <>
-      <div className="w-full flex flex-col space-y-1 relative">
-        <Input
-          autoComplete={false}
-          required={true}
-          label="Mot de passe"
-          type={showPassword ? "text" : "password"}
-          name="password"
-          id={passwordId}
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-        <button
-          type="button"
-          onClick={togglePasswordVisibility}
-          className="absolute top-8 right-0 px-2 outline-none text-xl cursor-pointer"
-        >
-          {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
-        </button>
-        {type === "password" && variant === "login" ? (
-          <span className="text-xs cursor-pointer">Mot de passe oublié ?</span>
-        ) : null}
-      </div>
-    </>
+    <div className="w-full flex flex-col space-y-1 relative">
+      <Input
+        autoComplete="off"
+        required={true}
+        type={showPassword ? "text" : "password"}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button
+        type="button"
+        onClick={togglePasswordVisibility}
+        className="absolute text-zinc-900 top-1.5 right-0 px-2 outline-none text-xl cursor-pointer"
+      >
+        {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+      </button>
+    </div>
   );
 }

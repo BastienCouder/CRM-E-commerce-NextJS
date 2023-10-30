@@ -8,6 +8,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import AddToWishlist from "./components/AddToWishlist";
 import { ShoppingLike } from "@/lib/db/like";
+import { useServerAddToCart, useServerAddWishlist } from "./actions";
 
 interface ProductDesktopProps {
   like: ShoppingLike | null;
@@ -30,14 +31,6 @@ interface ProductDesktopProps {
   selectedVariant: ProductVariant | undefined;
   product: ExtendedProduct;
   toggleColorVisibility: () => Promise<void>;
-  incrementProductQuantity: (
-    productId: string,
-    variantId: string
-  ) => Promise<void>;
-  incrementWishlist: (
-    productId: string,
-    variantId: string | null
-  ) => Promise<void>;
   handleColorChange: (color: string) => void;
 }
 
@@ -47,14 +40,12 @@ interface ExtendedProduct extends Product {
 }
 export default function ProductDesktop({
   like,
-  incrementWishlist,
   products,
   showColor,
   selectedColor,
   selectedVariant,
   product,
   toggleColorVisibility,
-  incrementProductQuantity,
   handleColorChange,
 }: ProductDesktopProps) {
   const pathname = usePathname();
@@ -212,7 +203,7 @@ export default function ProductDesktop({
                   <AddToWishlist
                     productId={product.id}
                     variantId={selectedVariant?.id}
-                    incrementWishlist={incrementWishlist}
+                    incrementWishlist={useServerAddWishlist}
                     like={like}
                   />
                 </div>
@@ -220,9 +211,9 @@ export default function ProductDesktop({
                   <div className="flex items-center justify-center gap-2">
                     <AddToCartButton
                       productId={product.id}
-                      incrementProductQuantity={incrementProductQuantity}
+                      addToCart={useServerAddToCart}
                       variantId={selectedVariant?.id || ""}
-                    />{" "}
+                    />
                   </div>
                 </div>
               </motion.div>

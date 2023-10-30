@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AiOutlineShopping } from "react-icons/ai";
 import { ShoppingCart } from "@/lib/db/cart";
+import { Badge } from "@/components/ui/badge";
 
 interface ShoppingCartButtonProps {
   toggleMenu: () => void;
@@ -14,9 +15,7 @@ export default function ShoppingCartButton({
   return (
     <Link href={`/cart`} onClick={toggleMenu}>
       <AiOutlineShopping size={34} />
-      <span className="absolute top-0 -right-2 badge badge-sm">
-        {cart?.size || 0}
-      </span>
+      <Badge className="absolute top-0 -right-2">{cart?.size || 0}</Badge>
     </Link>
   );
 }

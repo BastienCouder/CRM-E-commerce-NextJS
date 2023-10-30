@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react";
 import { AiFillGoogleSquare } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import SubmitButton from "@/components/SubmitButton";
+import { Button } from "@/components/ui/button";
 
 interface FormDeliveryProps {
   session: Session | null;
@@ -93,9 +93,9 @@ export default function FormLogin({ session }: FormDeliveryProps) {
                 </div>
               </div>
               <div className="flex gap-x-8 pt-4">
-                <SubmitButton className="w-44">Valider</SubmitButton>
+                <Button>Valider</Button>
                 <Link href="/auth">
-                  <SubmitButton className="w-44">S&apos;inscrire</SubmitButton>
+                  <Button>S&apos;inscrire</Button>
                 </Link>
               </div>
             </form>

@@ -3,8 +3,8 @@ import { DeliveryProps } from "@/lib/db/delivery";
 import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import SubmitButton from "@/components/SubmitButton";
 import { Toaster, toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 interface SelectDeliveryProps {
   delivery: DeliveryProps | null;
@@ -96,12 +96,7 @@ export default function SelectDelivery({
             </li>
           ))}
       </ul>
-      <SubmitButton
-        onClick={() => router.push("/cart/payment")}
-        className="w-44"
-      >
-        Valider
-      </SubmitButton>
+      <Button onClick={() => router.push("/cart/payment")}>Valider</Button>
       <Toaster expand={false} position="bottom-left" />
     </>
   );
