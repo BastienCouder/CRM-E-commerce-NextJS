@@ -33,12 +33,18 @@ interface FormAuthProps {
 }
 
 export default function FormAuth({ registerForm }: FormAuthProps) {
-  const form = useForm<RegisterValues | LoginValues>({
-    resolver: zodResolver(RegisterSchema || LoginSchema),
-    defaultValues: defaultRegisterValues || defaultLoginValues,
-  });
   const router = useRouter();
   const [variant, setVariant] = useState("login");
+
+  const formResolver =
+    variant === "login"
+      ? zodResolver(LoginSchema)
+      : zodResolver(RegisterSchema);
+  const form = useForm<RegisterValues | LoginValues>({
+    resolver: formResolver,
+    defaultValues:
+      variant === "login" ? defaultLoginValues : defaultRegisterValues,
+  });
 
   const toggleVariant: () => void = useCallback(() => {
     setVariant((currentVariant) =>
@@ -103,7 +109,7 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
                     control={form.control}
                     name="username"
                     render={({ field }) => (
-                      <FormItem className="w-[25rem]">
+                      <FormItem className="w-full">
                         <FormLabel>Nom</FormLabel>
                         <FormControl>
                           <Input placeholder="Nom" {...field} />
@@ -120,7 +126,7 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
                 control={form.control}
                 name="email"
                 render={({ field }) => (
-                  <FormItem className="w-[25rem]">
+                  <FormItem className="w-full">
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input placeholder="email" {...field} />
@@ -135,7 +141,7 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
                 control={form.control}
                 name="password"
                 render={({ field }) => (
-                  <FormItem className="w-[25rem]">
+                  <FormItem className="w-full">
                     <FormLabel>Password</FormLabel>
                     <FormControl>
                       <ShowPassword

@@ -1,5 +1,5 @@
 "use client";
-import Input from "@/components/Input";
+import { Input } from "@/components/ui/input";
 import { DeliveryProps } from "@/lib/db/delivery";
 import { Session } from "next-auth";
 import formStyles from "@/styles/FormDelivery.module.css";
@@ -201,48 +201,12 @@ export default function DeliveryInfo({
           >
             {error ? <small className="text-red-500">{error}</small> : null}
             <div className="flex flex-col sm:flex-row gap-6 sm:gap-12">
-              <Input
-                autoComplete={true}
-                required={false}
-                id="name"
-                type="text"
-                label="Prénom"
-                name="name"
-                value={name}
-                onChange={handleFormDeliveryChange}
-              />
-              <Input
-                autoComplete={true}
-                required={false}
-                id="surname"
-                type="text"
-                label="Nom"
-                name="surname"
-                value={surname}
-                onChange={handleFormDeliveryChange}
-              />
+              <Input />
+              <Input />
             </div>
             <div className="flex flex-col sm:flex-row gap-6 sm:gap-12">
-              <Input
-                autoComplete={true}
-                required={false}
-                id={emailId}
-                type="email"
-                label="Email"
-                name="email"
-                value={email}
-                onChange={handleFormDeliveryChange}
-              />
-              <Input
-                autoComplete={true}
-                required={false}
-                id="tel"
-                type="tel"
-                label="Téléphone"
-                name="tel"
-                value={tel}
-                onChange={handleFormDeliveryChange}
-              />
+              <Input />
+              <Input />
             </div>
             <select
               id="country"
@@ -257,36 +221,9 @@ export default function DeliveryInfo({
                 </option>
               ))}
             </select>
-            <Input
-              autoComplete={true}
-              required={false}
-              id="address"
-              type="text"
-              label="Adresse"
-              name="address"
-              value={address}
-              onChange={handleFormDeliveryChange}
-            />
-            <Input
-              autoComplete={true}
-              required={false}
-              id="postcode"
-              type="text"
-              label="Code postal"
-              name="postcode"
-              value={postcode}
-              onChange={handleFormDeliveryChange}
-            />
-            <Input
-              autoComplete={true}
-              required={false}
-              id="city"
-              type="text"
-              label="Ville"
-              name="city"
-              value={city}
-              onChange={handleFormDeliveryChange}
-            />
+            <Input />
+            <Input />
+            <Input />
             <Button>Modifier</Button>
           </form>
         </div>

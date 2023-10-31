@@ -15,7 +15,7 @@ interface UserInfoProps {
   delivery: DeliveryProps | null;
 }
 
-export default function UserInfo({ session, delivery }: UserInfoProps) {
+export default function Info({ session, delivery }: UserInfoProps) {
   return (
     <div className="my-12 space-y-4">
       <h2 className="text-2xl text-center md:text-start">

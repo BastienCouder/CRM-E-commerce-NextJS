@@ -1,3 +1,8 @@
+import {
+  checkEmail,
+  checkIfEmailExists,
+  checkPassword,
+} from "@/app/auth/action";
 import * as z from "zod";
 
 //Register
@@ -20,7 +25,16 @@ export const RegisterSchema = z.object({
     .max(250)
     .email({
       message: "Adresse e-mail invalide",
-    }),
+    })
+    .refine(
+      async (email) => {
+        const existingUser = await checkIfEmailExists(email);
+        return !existingUser;
+      },
+      {
+        message: "L'e-mail est déjà utilisé",
+      }
+    ),
   password: z
     .string({
       required_error: "Le mot de passe est requis",
@@ -41,7 +55,16 @@ export const LoginSchema = z.object({
     .max(250)
     .email({
       message: "Adresse e-mail invalide",
-    }),
+    })
+    .refine(
+      async (email) => {
+        const errorEmail = await checkEmail({ email });
+        return errorEmail;
+      },
+      {
+        message: "Adresse e-mail incorrecte",
+      }
+    ),
   password: z
     .string({
       required_error: "Le mot de passe est requis",
@@ -49,7 +72,16 @@ export const LoginSchema = z.object({
     })
     .min(8, {
       message: "Le mot de passe doit comporter au moins 8 caractères.",
-    }),
+    })
+    .refine(
+      async (password) => {
+        const errorPassword = await checkPassword({ email: "", password });
+        return errorPassword === true;
+      },
+      {
+        message: "Mot de passe incorrect",
+      }
+    ),
 });
 
 //Delivery

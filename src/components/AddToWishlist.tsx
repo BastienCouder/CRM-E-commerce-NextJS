@@ -1,34 +1,51 @@
-import React, { useState, useCallback, useTransition } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { ShoppingLike } from "@/lib/db/like";
 
 interface AddToWishlistProps {
+  handleColorChange: (color: string) => void;
   productId: string;
   variantId?: string | null;
-  like: ShoppingLike | null;
   incrementWishlist: (
     productId: string,
     variantId: string | null
   ) => Promise<void>;
+  wishlistItems: any;
 }
 
 export default function AddToWishlist({
   productId,
   variantId = null,
-  like,
+  handleColorChange,
+  wishlistItems,
   incrementWishlist,
 }: AddToWishlistProps) {
-  const [isPending, startTransition] = useTransition();
-  const [checkLike, setCheckLike] = useState(false);
+  const [like, setLike] = useState(false);
 
   const toggleLikeVisibility = useCallback(() => {
-    setCheckLike(!like);
+    setLike(!like);
   }, [like]);
 
   const handleAddToWishlist = async () => {
     toggleLikeVisibility();
     await incrementWishlist(productId, variantId);
   };
+
+  const isProductInWishlist = wishlistItems.find(
+    (item: any) => item.productId === productId && item.variantId === variantId
+  );
+  if (
+    isProductInWishlist &&
+    isProductInWishlist.productId === productId &&
+    isProductInWishlist.variantId === variantId
+  ) {
+  }
+  useEffect(() => {
+    if (isProductInWishlist) {
+      setLike(true);
+    } else {
+      setLike(false);
+    }
+  }, [isProductInWishlist, handleColorChange]);
 
   return (
     <>

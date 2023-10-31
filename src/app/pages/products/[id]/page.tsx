@@ -2,10 +2,8 @@ import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import { useServerAddToCart, useServerAddWishlist } from "./actions";
 import Product from "./Product";
-import { getLike } from "@/lib/db/like";
-
+import { getWishlist } from "@/lib/db/wishlist";
 interface ProductPageProps {
   params: {
     id: string;
@@ -46,7 +44,13 @@ export default async function ProductPage({
   });
 
   const product = await getProduct(id);
-  const like = await getLike(product.id);
+  const wishlist = await getWishlist();
 
-  return <Product products={products} product={product} like={like} />;
+  return (
+    <Product
+      products={products}
+      product={product}
+      wishlistItems={wishlist?.wishlistItems}
+    />
+  );
 }

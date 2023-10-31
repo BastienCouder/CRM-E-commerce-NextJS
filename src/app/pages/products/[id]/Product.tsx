@@ -2,15 +2,13 @@
 import { useState, useCallback } from "react";
 import { Product, ProductVariant, Like, Category } from "@prisma/client";
 import useMobile from "@/hooks/useMobile";
-import { Session } from "next-auth";
 import useTablet from "@/hooks/useTablet";
 import ProductMobile from "./ProductMobile";
 import ProductDesktop from "./ProductDesktop";
 import ProductTablet from "./ProductTablet";
-import { ShoppingLike } from "@/lib/db/like";
-import { useServerAddToCart, useServerAddWishlist } from "./actions";
 
 interface ProductProps {
+  wishlistItems: any;
   product: Product & {
     variants: ProductVariant[];
     category: Category | null;
@@ -29,10 +27,13 @@ interface ProductProps {
       name: string;
     } | null;
   }[];
-  like: ShoppingLike | null;
 }
 
-export default function Product({ product, products, like }: ProductProps) {
+export default function Product({
+  product,
+  products,
+  wishlistItems,
+}: ProductProps) {
   const [showColor, setShowColor] = useState(false);
   const [selectedColor, setSelectedColor] = useState(
     product?.variants[0]?.id || null
@@ -49,7 +50,6 @@ export default function Product({ product, products, like }: ProductProps) {
 
   const isMobile = useMobile();
   const isTablet = useTablet();
-
   const handleColorChange = (color: string) => {
     setSelectedColor(color);
     toggleColorVisibility();
@@ -58,47 +58,29 @@ export default function Product({ product, products, like }: ProductProps) {
     (variant: any) => variant.id === selectedColor
   );
 
+  const ProductPagesProps = {
+    showCategories,
+    wishlistItems,
+    showColor,
+    products,
+    selectedColor,
+    selectedVariant,
+    product,
+    toggleColorVisibility,
+    toggleCategoriesVisibility,
+    handleColorChange,
+  };
+
   return (
     <>
       {isMobile && !isTablet ? (
-        <ProductMobile
-          like={like}
-          products={products}
-          showColor={showColor}
-          showCategories={showCategories}
-          selectedColor={selectedColor}
-          selectedVariant={selectedVariant}
-          product={product}
-          toggleColorVisibility={toggleColorVisibility}
-          handleColorChange={handleColorChange}
-          toggleCategoriesVisibility={toggleCategoriesVisibility}
-        />
+        <ProductMobile {...ProductPagesProps} />
       ) : isTablet ? (
         <>
-          <ProductTablet
-            like={like}
-            products={products}
-            showColor={showColor}
-            showCategories={showCategories}
-            selectedColor={selectedColor}
-            selectedVariant={selectedVariant}
-            product={product}
-            toggleColorVisibility={toggleColorVisibility}
-            handleColorChange={handleColorChange}
-            toggleCategoriesVisibility={toggleCategoriesVisibility}
-          />
+          <ProductTablet {...ProductPagesProps} />
         </>
       ) : (
-        <ProductDesktop
-          like={like}
-          showColor={showColor}
-          products={products}
-          selectedColor={selectedColor}
-          selectedVariant={selectedVariant}
-          product={product}
-          toggleColorVisibility={toggleColorVisibility}
-          handleColorChange={handleColorChange}
-        />
+        <ProductDesktop {...ProductPagesProps} />
       )}
     </>
   );

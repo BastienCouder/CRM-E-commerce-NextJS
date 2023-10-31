@@ -21,6 +21,7 @@ export default function ShowPassword({
     <div className="w-full flex flex-col space-y-1 relative">
       <Input
         autoComplete="off"
+        placeholder="Mot de passe"
         required={false}
         type={showPassword ? "text" : "password"}
         value={password}

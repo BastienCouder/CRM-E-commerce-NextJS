@@ -8,10 +8,12 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { RxCross2 } from "react-icons/rx";
 import AddToWishlist from "../../../../components/AddToWishlist";
-import { ShoppingLike } from "@/lib/db/like";
 import { useServerAddToCart, useServerAddWishlist } from "./actions";
+import { WishlistItemWithProduct } from "@/lib/db/wishlist";
 
 interface ProductMobileProps {
+  wishlistItems: any;
+
   products: {
     id: string;
     description: string;
@@ -26,7 +28,6 @@ interface ProductMobileProps {
       name: string;
     } | null;
   }[];
-  like: ShoppingLike | null;
   showColor: boolean;
   showCategories: boolean;
   selectedColor: string | null;
@@ -43,9 +44,9 @@ interface ExtendedProduct extends Product {
 }
 
 export default function ProductMobile({
+  wishlistItems,
   products,
   showColor,
-  like,
   showCategories,
   selectedColor,
   selectedVariant,
@@ -165,10 +166,11 @@ export default function ProductMobile({
                 className="text-xl text-start font-bold"
               />
               <AddToWishlist
+                handleColorChange={handleColorChange}
+                wishlistItems={wishlistItems}
                 productId={product.id}
                 variantId={selectedVariant?.id}
                 incrementWishlist={useServerAddWishlist}
-                like={like}
               />
             </div>
             <div className="flex items-center justify-center gap-2">
@@ -176,7 +178,7 @@ export default function ProductMobile({
                 productId={product.id}
                 addToCart={useServerAddToCart}
                 variantId={selectedVariant?.id || ""}
-              />{" "}
+              />
             </div>
           </motion.div>
         </div>

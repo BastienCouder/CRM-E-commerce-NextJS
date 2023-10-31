@@ -7,11 +7,13 @@ import { Category, Product, ProductVariant } from "@prisma/client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { RxCross2 } from "react-icons/rx";
-import { ShoppingLike } from "@/lib/db/like";
+
 import AddToWishlist from "../../../../components/AddToWishlist";
 import { useServerAddToCart, useServerAddWishlist } from "./actions";
 
 interface ProductTabletProps {
+  wishlistItems: any;
+
   products: {
     id: string;
     description: string;
@@ -26,7 +28,6 @@ interface ProductTabletProps {
       name: string;
     } | null;
   }[];
-  like: ShoppingLike | null;
   showColor: boolean;
   showCategories: boolean;
   selectedColor: string | null;
@@ -42,8 +43,8 @@ interface ExtendedProduct extends Product {
   category: Category | null;
 }
 export default function ProductTablet({
+  wishlistItems,
   products,
-  like,
   showColor,
   showCategories,
   selectedColor,
@@ -175,10 +176,11 @@ export default function ProductTablet({
                   className="text-xl text-start font-bold"
                 />
                 <AddToWishlist
+                  handleColorChange={handleColorChange}
+                  wishlistItems={wishlistItems}
                   productId={product.id}
                   variantId={selectedVariant?.id}
                   incrementWishlist={useServerAddWishlist}
-                  like={like}
                 />
               </div>
               <div className="flex items-center justify-start gap-2">

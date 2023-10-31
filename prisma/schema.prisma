@@ -61,7 +61,6 @@ model User {
     sessions       Session[]
     Cart           Cart[]
     Wishlist       Wishlist[]
-    likedProducts  Like[]     @relation("LikesByUser")
     Delivery       Delivery[]
     Order          Order[]
 
@@ -81,7 +80,6 @@ model Product {
     category      Category?        @relation(fields: [categoryId], references: [id])
     variants      ProductVariant[]
     WishlistItems WishlistItems[]
-    likedByUsers  Like[]           @relation("LikesProduct")
 
     @@map("products")
 }
@@ -106,17 +104,6 @@ model Category {
     products Product[]
 
     @@map("categories")
-}
-
-model Like {
-    id             String   @id @default(auto()) @map("_id") @db.ObjectId
-    likedById      String?  @db.ObjectId
-    likedByUser    User?    @relation("LikesByUser", fields: [likedById], references: [id])
-    likedProductId String?  @db.ObjectId
-    likedProduct   Product? @relation("LikesProduct", fields: [likedProductId], references: [id])
-    createdAt      DateTime @default(now())
-
-    @@map("likes")
 }
 
 model Cart {

@@ -90,7 +90,7 @@ async function handleAddToCartWithoutVariant(
 }
 
 //Delete Item From Whishlist
-async function deleteItemFromWishlist(item: any) {
+export async function deleteItemFromWishlist(item: any) {
   await prisma.wishlistItems.delete({
     where: {
       id: item.id,

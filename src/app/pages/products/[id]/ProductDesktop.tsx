@@ -7,11 +7,12 @@ import { Category, Product, ProductVariant } from "@prisma/client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import AddToWishlist from "../../../../components/AddToWishlist";
-import { ShoppingLike } from "@/lib/db/like";
 import { useServerAddToCart, useServerAddWishlist } from "./actions";
+import { WishlistItemWithProduct } from "@/lib/db/wishlist";
 
 interface ProductDesktopProps {
-  like: ShoppingLike | null;
+  wishlistItems: any;
+
   products: {
     id: string;
     description: string;
@@ -39,7 +40,7 @@ interface ExtendedProduct extends Product {
   category: Category | null;
 }
 export default function ProductDesktop({
-  like,
+  wishlistItems,
   products,
   showColor,
   selectedColor,
@@ -201,10 +202,11 @@ export default function ProductDesktop({
                     className="text-xl text-start font-bold"
                   />
                   <AddToWishlist
+                    handleColorChange={handleColorChange}
+                    wishlistItems={wishlistItems}
                     productId={product.id}
                     variantId={selectedVariant?.id}
                     incrementWishlist={useServerAddWishlist}
-                    like={like}
                   />
                 </div>
                 <div className="flex flex-col">

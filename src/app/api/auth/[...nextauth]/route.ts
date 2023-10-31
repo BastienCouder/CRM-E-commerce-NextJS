@@ -27,11 +27,10 @@ export const authOptions: AuthOptions = {
     },
   },
   secret: env.NEXTAUTH_URL,
-  debug: process.env.NODE_ENV === "development",
+  // debug: process.env.NODE_ENV === "development",
   callbacks: {
     async session({ session, user }) {
       session.user.id = user.id;
-      console.log("session", user, session);
       return session;
     },
   },

@@ -1,10 +1,6 @@
 import GoogleProvider from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
-import { PrismaClient } from "@prisma/client";
-import { LoginSchema } from "@/lib/zod";
-
-const prisma = new PrismaClient();
+import { checkEmail, checkPassword } from "@/app/auth/action";
 
 export const authProviders = [
   GoogleProvider({
@@ -12,34 +8,44 @@ export const authProviders = [
     clientSecret: process.env.GOOGLE_SECRET || "",
   }),
   Credentials({
+    id: "credentials",
+    name: "Credentials",
     credentials: {
-      email: { type: "text" },
-      password: { type: "password" },
+      email: {
+        label: "Email",
+        type: "text",
+      },
+      password: {
+        label: "Mot de passe",
+        type: "password",
+      },
     },
-    async authorize(credentials, req) {
+    async authorize(credentials) {
       try {
-        const { email, password } = LoginSchema.parse(credentials);
-        const user = await prisma.user.findUnique({
-          where: { email },
-        });
+        if (credentials?.email || credentials?.password) {
+          const isCorrectPassword = await checkPassword(credentials);
 
-        if (!user) return null;
+          if (!isCorrectPassword) {
+            throw Error("Mot de passe incorrect");
+          }
 
-        if (password !== null && user.hashedPassword) {
-          const isPasswordValid = await bcrypt.compare(
-            password,
-            user.hashedPassword
-          );
+          const user = await checkEmail(credentials);
 
-          if (!isPasswordValid) return null;
-        } else {
-          return null;
+          if (user) {
+            return {
+              id: user.id,
+              username: user.username,
+              email: user.email,
+            };
+          }
         }
-        console.log(user);
 
-        return user;
+        return null;
       } catch (error) {
-        console.error("An error occurred during authentication:", error);
+        console.error(
+          "Une erreur s'est produite lors de l'authentification :",
+          error
+        );
         throw error;
       }
     },

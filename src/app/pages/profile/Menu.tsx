@@ -8,7 +8,7 @@ import Logout from "@/components/Logout";
 import Orders from "./Orders";
 import { ShoppingOrder } from "@/lib/db/order";
 import { DeliveryProps } from "@/lib/db/delivery";
-import UserInfo from "./Info";
+import Info from "./Info";
 
 interface MenuProps {
   session: Session | null;
@@ -72,7 +72,7 @@ export default function Menu({ session, order, delivery }: MenuProps) {
       {selectedMenuItem === "orders" ? (
         <Orders order={order} />
       ) : (
-        <UserInfo delivery={delivery} session={session} />
+        <Info delivery={delivery} session={session} />
       )}
     </>
   );
