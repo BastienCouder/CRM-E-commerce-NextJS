@@ -10,10 +10,13 @@ import { RxCross2 } from "react-icons/rx";
 
 import AddToWishlist from "../../../../components/AddToWishlist";
 import { useServerAddToCart, useServerAddWishlist } from "./actions";
+import { useAnimationContext } from "@/context/AnimationContext";
+import { BsCaretDownFill } from "react-icons/bs";
+import styles from "@/styles/Utils.module.css";
 
 interface ProductTabletProps {
   wishlistItems: any;
-
+  productCategory: string | null | undefined;
   products: {
     id: string;
     description: string;
@@ -46,6 +49,7 @@ export default function ProductTablet({
   wishlistItems,
   products,
   showColor,
+  productCategory,
   showCategories,
   selectedColor,
   selectedVariant,
@@ -56,16 +60,23 @@ export default function ProductTablet({
 }: ProductTabletProps) {
   const pathname = usePathname();
 
+  const { disableAnimation, setDisableAnimation } = useAnimationContext();
+
+  const handleSecondAnimation = () => {
+    if (!disableAnimation) {
+      setDisableAnimation(true);
+    }
+  };
+
   return (
     <>
       <div className="flex h-full py-16 justify-center">
-        <div className="flex">
+        {!disableAnimation ? (
           <div className="w-1/2 relative">
             {product.variants.length > 0 ? (
               <motion.div
                 initial={{ opacity: 0, x: 30, y: 0 }}
                 animate={{ opacity: 1, x: 0, y: 0 }}
-                exit={{ opacity: 0, x: 30, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
                 className="z-20 absolute top-10 right-10 "
               >
@@ -80,9 +91,8 @@ export default function ProductTablet({
                 </p>
               </motion.div>
             ) : null}
-            <motion.div
-              key={selectedColor}
-              initial={{ opacity: 0.5, y: -500 }}
+            <motion.figure
+              initial={{ opacity: 0.5, y: -650 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
             >
@@ -107,18 +117,80 @@ export default function ProductTablet({
                   className="z-10 h-[40rem] relative object-contain"
                 />
               )}
-            </motion.div>
+            </motion.figure>
 
             <motion.div
               className="font-Bodoni absolute text-[5.5rem] top-44 -left-24 sm:-left-24 uppercase text-white/5"
               initial={{ opacity: 0, x: 50, rotate: -90 }}
               animate={{ opacity: 1, x: 0, rotate: -90 }}
-              exit={{ opacity: 0, x: 50, rotate: -90 }}
               transition={{ delay: 0.4, duration: 0.6 }}
             >
               {product.name}
             </motion.div>
           </div>
+        ) : (
+          <div className="w-1/2 relative">
+            {product.variants.length > 0 ? (
+              <motion.div
+                initial={{ opacity: 0, x: 30, y: 0 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
+                className="z-20 absolute top-10 right-10 "
+              >
+                <div
+                  onClick={toggleColorVisibility}
+                  className="cursor-pointer h-12 w-12 rounded-full bg-white/5 flex justify-center items-center"
+                >
+                  <AiOutlinePlus size={20} />
+                </div>
+                <p className="absolute top-20 -right-1 -rotate-90 text-white/50">
+                  Couleur
+                </p>
+              </motion.div>
+            ) : null}
+            <figure>
+              {selectedVariant ? (
+                <Image
+                  src={
+                    selectedVariant.imageUrl
+                      ? selectedVariant.imageUrl
+                      : product.imageUrl
+                  }
+                  alt={product.name}
+                  width={800}
+                  height={2000}
+                  className="z-10 h-[40rem] relative object-contain"
+                />
+              ) : (
+                <Image
+                  src={product.imageUrl}
+                  alt={product.name}
+                  width={800}
+                  height={2000}
+                  className="z-10 h-[40rem] relative object-contain"
+                />
+              )}
+            </figure>
+
+            <motion.div
+              className="font-Bodoni absolute text-[5.5rem] top-44 -left-24 sm:-left-24 uppercase text-white/5"
+              initial={{ opacity: 0, x: 20, rotate: -90 }}
+              animate={{ opacity: 1, x: 0, rotate: -90 }}
+              transition={{
+                type: "spring",
+                damping: 12,
+                stiffness: 100,
+                ease: [0.36, 0.61, 0.04, 1],
+                duration: 0.2,
+                delay: 0.2,
+              }}
+            >
+              {product.name}
+            </motion.div>
+          </div>
+        )}
+
+        {!disableAnimation ? (
           <div className="w-1/2 mt-32 pl-4 space-y-16">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -127,10 +199,22 @@ export default function ProductTablet({
               transition={{ delay: 0.2, duration: 0.6 }}
               className="flex justify-start items-start flex-col gap-y-4"
             >
-              <h1 className="text-start w-full font-Noto uppercase">
-                {product.name}
-              </h1>
+              <div className="flex flex-row space-x-2 items-center">
+                <h1 className="text-start w-full font-Noto uppercase">
+                  {product.name}
+                </h1>
+                {selectedVariant && <span>-</span>}
 
+                <motion.p
+                  key={selectedColor}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="flex uppercase text-xs"
+                >
+                  <span>{selectedVariant?.color}</span>
+                </motion.p>
+              </div>
               <div
                 className="flex flex-col space-y-3 cursor-pointer"
                 onClick={toggleCategoriesVisibility}
@@ -141,6 +225,12 @@ export default function ProductTablet({
                   <span className="capitalize text-sm">
                     {product.category?.name}
                   </span>
+                  <BsCaretDownFill
+                    size={15}
+                    className={`ml-2 ${
+                      showCategories ? `${styles.rotate}` : ""
+                    } : ""}`}
+                  />
                 </h2>
                 <span className="h-[1.5px] bg-white/70 px-24"></span>
               </div>
@@ -156,7 +246,7 @@ export default function ProductTablet({
                 Description
                 <span className="w-[10rem] h-[1px] bg-white absolute bottom-4 -left-48"></span>
               </h2>
-              <p className="w-full">{product.description}</p>
+              <p className="w-full pr-12">{product.description}</p>
             </motion.div>
 
             <motion.div
@@ -167,14 +257,28 @@ export default function ProductTablet({
               className="flex flex-col mt-8 gap-y-8"
             >
               <div className="flex items-center space-x-4">
-                <PriceTag
-                  price={
-                    selectedVariant?.price
-                      ? selectedVariant?.price
-                      : product.price
-                  }
-                  className="text-xl text-start font-bold"
-                />
+                <motion.div
+                  key={selectedColor}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    damping: 12,
+                    stiffness: 100,
+                    ease: [0.36, 0.61, 0.04, 1],
+                    duration: 0.2,
+                    delay: 0.2,
+                  }}
+                >
+                  <PriceTag
+                    price={
+                      selectedVariant?.price
+                        ? selectedVariant?.price
+                        : product.price
+                    }
+                    className="text-xl text-start font-bold"
+                  />
+                </motion.div>
                 <AddToWishlist
                   handleColorChange={handleColorChange}
                   wishlistItems={wishlistItems}
@@ -192,7 +296,142 @@ export default function ProductTablet({
               </div>
             </motion.div>
           </div>
-        </div>
+        ) : (
+          <div className="w-1/2 mt-32 pl-4 space-y-16">
+            <div className="flex justify-start items-start flex-col gap-y-4">
+              <div className="flex flex-row space-x-2 items-center">
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    damping: 12,
+                    stiffness: 100,
+                    ease: [0.36, 0.61, 0.04, 1],
+                    duration: 0.2,
+                    delay: 0.2,
+                  }}
+                  className="text-start w-full font-Noto uppercase"
+                >
+                  {product.name}
+                </motion.h1>
+                {selectedVariant && (
+                  <motion.span
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      type: "spring",
+                      damping: 12,
+                      stiffness: 100,
+                      ease: [0.36, 0.61, 0.04, 1],
+                      duration: 0.2,
+                      delay: 0.2,
+                    }}
+                  >
+                    -
+                  </motion.span>
+                )}
+                <motion.p
+                  key={selectedColor}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    damping: 12,
+                    stiffness: 100,
+                    ease: [0.36, 0.61, 0.04, 1],
+                    duration: 0.2,
+                    delay: 0.2,
+                  }}
+                  className="flex uppercase text-xs"
+                >
+                  <span>{selectedVariant?.color}</span>
+                </motion.p>
+              </div>
+              <div
+                className="flex flex-col space-y-3 cursor-pointer"
+                onClick={toggleCategoriesVisibility}
+              >
+                <span className="h-[1.5px] bg-white/70 px-24"></span>
+                <h2 className="flex gap-1 items-center text-start text-sm w-full font-Noto uppercase">
+                  Catégories -
+                  <span className="capitalize text-sm">
+                    {product.category?.name}
+                  </span>
+                  <BsCaretDownFill
+                    size={15}
+                    className={`ml-2 ${
+                      showCategories ? `${styles.rotate}` : ""
+                    } : ""}`}
+                  />
+                </h2>
+                <span className="h-[1.5px] bg-white/70 px-24"></span>
+              </div>
+            </div>
+            <div className="flex flex-col items-start gap-4">
+              <h2 className="text-3xl relative">
+                Description
+                <span className="w-[10rem] h-[1px] bg-white absolute bottom-4 -left-48"></span>
+              </h2>
+              <motion.p
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  type: "spring",
+                  damping: 12,
+                  stiffness: 100,
+                  ease: [0.36, 0.61, 0.04, 1],
+                  duration: 0.2,
+                  delay: 0.2,
+                }}
+                className="w-full"
+              >
+                {product.description}
+              </motion.p>
+            </div>
+
+            <div className="flex flex-col mt-8 gap-y-8">
+              <div className="flex items-center space-x-4">
+                <motion.div
+                  key={selectedColor}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    damping: 12,
+                    stiffness: 100,
+                    ease: [0.36, 0.61, 0.04, 1],
+                    duration: 0.2,
+                    delay: 0.2,
+                  }}
+                >
+                  <PriceTag
+                    price={
+                      selectedVariant?.price
+                        ? selectedVariant?.price
+                        : product.price
+                    }
+                    className="text-xl text-start font-bold"
+                  />
+                </motion.div>
+                <AddToWishlist
+                  handleColorChange={handleColorChange}
+                  wishlistItems={wishlistItems}
+                  productId={product.id}
+                  variantId={selectedVariant?.id}
+                  incrementWishlist={useServerAddWishlist}
+                />
+              </div>
+              <div className="flex items-center justify-start gap-2">
+                <AddToCartButton
+                  productId={product.id}
+                  addToCart={useServerAddToCart}
+                  variantId={selectedVariant?.id || ""}
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <AnimatePresence>
@@ -200,7 +439,6 @@ export default function ProductTablet({
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="z-20 fixed top-0 h-screen w-screen flex justify-center items-center bg-zinc-900/80"
           >
@@ -248,7 +486,7 @@ export default function ProductTablet({
             </div>
             <ul className="absolute w-[15rem] space-y-4">
               {products.map((product) => {
-                if (product.category?.name === product.category?.name) {
+                if (product.category?.name === productCategory) {
                   const productPath = `/products/${product.id}`;
                   return (
                     <motion.li
@@ -264,6 +502,7 @@ export default function ProductTablet({
                       <Link
                         href={productPath}
                         className="w-full flex justify-center"
+                        onClick={handleSecondAnimation}
                       >
                         {pathname === productPath ? (
                           <>

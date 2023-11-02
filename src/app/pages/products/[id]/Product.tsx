@@ -1,8 +1,7 @@
 "use client";
 import { useState, useCallback } from "react";
-import { Product, ProductVariant, Like, Category } from "@prisma/client";
-import useMobile from "@/hooks/useMobile";
-import useTablet from "@/hooks/useTablet";
+import { Product, ProductVariant, Category } from "@prisma/client";
+
 import ProductMobile from "./ProductMobile";
 import ProductDesktop from "./ProductDesktop";
 import ProductTablet from "./ProductTablet";
@@ -48,8 +47,6 @@ export default function Product({
     setShowCategories(!showCategories);
   }, [showCategories]);
 
-  const isMobile = useMobile();
-  const isTablet = useTablet();
   const handleColorChange = (color: string) => {
     setSelectedColor(color);
     toggleColorVisibility();
@@ -58,7 +55,10 @@ export default function Product({
     (variant: any) => variant.id === selectedColor
   );
 
+  const productCategory = product ? product.category?.name : null;
+
   const ProductPagesProps = {
+    productCategory,
     showCategories,
     wishlistItems,
     showColor,
@@ -73,15 +73,15 @@ export default function Product({
 
   return (
     <>
-      {isMobile && !isTablet ? (
+      <div className="block productTablet:hidden ">
         <ProductMobile {...ProductPagesProps} />
-      ) : isTablet ? (
-        <>
-          <ProductTablet {...ProductPagesProps} />
-        </>
-      ) : (
+      </div>
+      <div className="hidden productTablet:block productDesktop:hidden">
+        <ProductTablet {...ProductPagesProps} />
+      </div>
+      <div className="hidden productTablet:hidden productDesktop:block">
         <ProductDesktop {...ProductPagesProps} />
-      )}
+      </div>
     </>
   );
 }

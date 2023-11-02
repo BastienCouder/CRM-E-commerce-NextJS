@@ -1,11 +1,31 @@
 "use client";
-import { Input } from "@/components/ui/input";
 import { DeliveryProps } from "@/lib/db/delivery";
 import { Session } from "next-auth";
-import formStyles from "@/styles/FormDelivery.module.css";
 import { useCallback, useEffect, useId, useState } from "react";
 import { Toaster, toast } from "sonner";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { DeliverySchema, DeliveryValues } from "@/lib/zod";
 
 interface DeliveryInfoProps {
   delivery: DeliveryProps | null;
@@ -29,6 +49,23 @@ export default function DeliveryInfo({
     string | undefined
   >(delivery?.deliveryItems.find((item) => item.Default)?.id);
 
+  const deliveryItem = delivery?.deliveryItems.find(
+    (item) => item.id === selectedDeliveryItem
+  );
+
+  const form = useForm<DeliveryValues>({
+    resolver: zodResolver(DeliverySchema),
+    defaultValues: {
+      name: deliveryItem?.name || "",
+      surname: deliveryItem?.surname || "",
+      email: deliveryItem?.email || "",
+      address: deliveryItem?.address || "",
+      postcode: deliveryItem?.postcode || "",
+      city: deliveryItem?.city || "",
+      country: deliveryItem?.country || "France",
+      tel: deliveryItem?.tel || "",
+    },
+  });
   const handleDeliveryChange = (id: string) => {
     setSelectedDeliveryItem(id);
     handleDefaultDeliveryItem(id);
@@ -44,41 +81,11 @@ export default function DeliveryInfo({
     toast.success("Addresse de livraison supprimé avec succès");
   };
 
-  useEffect(() => {
-    setSelectedDeliveryItem(
-      delivery?.deliveryItems.find((item) => item.Default)?.id
-    );
-  }, [delivery]);
-
-  const emailId = useId();
   const [formVisible, setFormVisible] = useState(false);
 
   const toggleFormVisibility = useCallback(async () => {
     setFormVisible(!formVisible);
   }, [formVisible]);
-
-  const [formData, setFormData] = useState({
-    name: "",
-    surname: "",
-    email: "",
-    address: "",
-    postcode: "",
-    city: "",
-    country: "France",
-    tel: "",
-  });
-
-  const deliveryItem = delivery?.deliveryItems.find(
-    (item) => item.id === selectedDeliveryItem
-  );
-
-  useEffect(() => {
-    if (deliveryItem) {
-      setFormData({
-        ...deliveryItem,
-      });
-    }
-  }, [deliveryItem]);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -96,46 +103,44 @@ export default function DeliveryInfo({
     "Royaume-uni",
   ];
 
-  const { name, surname, email, address, postcode, city, country, tel } =
-    formData;
+  const onSubmit = useCallback(
+    async (data: DeliveryValues) => {
+      if (!session || !session.user) {
+        setError("Veuillez vous connecter");
+        return;
+      }
 
-  const handleFormDeliveryChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("surname", data.surname);
+      formData.append("email", data.email);
+      formData.append("address", data.address);
+      formData.append("country", data.country);
+      formData.append("postcode", data.postcode);
+      formData.append("city", data.city);
+      formData.append("tel", data.tel);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!session || !session.user) {
-      setError("Veuillez vous connecter");
-      return;
-    }
-
-    const form = new FormData();
-    form.append("name", name);
-    form.append("surname", surname);
-    form.append("email", email);
-    form.append("address", address);
-    form.append("country", country);
-    form.append("postcode", postcode);
-    form.append("city", city);
-    form.append("tel", tel);
-
-    try {
-      if (deliveryItem?.id) {
-        await UpdateDeliveryForm(deliveryItem.id, form);
+      try {
+        if (deliveryItem?.id) {
+          await UpdateDeliveryForm(deliveryItem.id, formData);
+        }
         toggleFormVisibility();
-        toast.success("Addresse de livraison modifiée avec succès");
+        toast.success("Addresse de livraison ajoutée avec succès");
+        form.reset();
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        }
       }
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
-    }
-  };
+    },
+    [UpdateDeliveryForm, deliveryItem?.id, session, form, toggleFormVisibility]
+  );
+
+  useEffect(() => {
+    setSelectedDeliveryItem(
+      delivery?.deliveryItems.find((item) => item.Default)?.id
+    );
+  }, [delivery]);
 
   return (
     <div className="space-y-4">
@@ -194,41 +199,144 @@ export default function DeliveryInfo({
           ))}
       </ul>
       {formVisible && (
-        <div className="py-4">
+        <Form {...form}>
           <form
-            onSubmit={handleSubmit}
-            className="w-full md:w-[45rem] space-y-6"
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full space-y-4"
           >
             {error ? <small className="text-red-500">{error}</small> : null}
-            <div className="flex flex-col sm:flex-row gap-6 sm:gap-12">
-              <Input />
-              <Input />
+            <div className="w-full flex flex-col sm:flex-row gap-6 sm:gap-12">
+              {/* name */}
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Prenom</FormLabel>
+                    <FormControl>
+                      <Input placeholder="prenom" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* surname */}
+              <FormField
+                control={form.control}
+                name="surname"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Nom</FormLabel>
+                    <FormControl>
+                      <Input placeholder="nom" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
-            <div className="flex flex-col sm:flex-row gap-6 sm:gap-12">
-              <Input />
-              <Input />
-            </div>
-            <select
-              id="country"
+            {/* email*/}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/*tel*/}
+            <FormField
+              control={form.control}
+              name="tel"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Téléphone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="tel" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* address*/}
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Adresse</FormLabel>
+                  <FormControl>
+                    <Input placeholder="adresse" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* country*/}
+            <FormField
+              control={form.control}
               name="country"
-              value={country}
-              onChange={handleFormDeliveryChange}
-              className={`${formStyles.select} bg-zinc-800 px-4 py-2`}
-            >
-              {countries.map((country, index) => (
-                <option key={index} value={country} className={` bg-zinc-800`}>
-                  {country}
-                </option>
-              ))}
-            </select>
-            <Input />
-            <Input />
-            <Input />
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Pays</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Pays" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {countries.map((country, index) => (
+                        <SelectItem key={index} value={country}>
+                          {country}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* postcode*/}
+            <FormField
+              control={form.control}
+              name="postcode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Code Postal</FormLabel>
+                  <FormControl>
+                    <Input placeholder="code postal" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* city*/}
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Ville</FormLabel>
+                  <FormControl>
+                    <Input placeholder="ville" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button>Modifier</Button>
           </form>
-        </div>
+        </Form>
       )}
-      <Toaster expand={false} position="bottom-left" />
     </div>
   );
 }

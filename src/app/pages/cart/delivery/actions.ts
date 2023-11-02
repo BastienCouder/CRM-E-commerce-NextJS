@@ -180,6 +180,7 @@ export async function useServerUpdateDeliveryForm(
     );
 
     revalidatePath("/cart/delivery");
+    revalidatePath("/profile");
   } catch (error) {
     throw error;
   }

@@ -49,7 +49,7 @@ model VerificationToken {
 
 model User {
     id             String     @id @default(auto()) @map("_id") @db.ObjectId
-    username       String?
+    name           String?
     email          String?    @unique
     emailVerified  DateTime?
     role           String?
@@ -80,6 +80,8 @@ model Product {
     category      Category?        @relation(fields: [categoryId], references: [id])
     variants      ProductVariant[]
     WishlistItems WishlistItems[]
+    Colors        Colors?          @relation(fields: [colorsId], references: [id])
+    colorsId      String?          @db.ObjectId
 
     @@map("products")
 }
@@ -95,15 +97,23 @@ model ProductVariant {
     CartItems     CartItems[]
     WishlistItems WishlistItems[]
 
-    @@map("productvariants")
+    @@map("products_variants")
 }
 
 model Category {
     id       String    @id @default(auto()) @map("_id") @db.ObjectId
-    name     String
+    name     String?
     products Product[]
 
     @@map("categories")
+}
+
+model Colors {
+    id       String    @id @default(auto()) @map("_id") @db.ObjectId
+    name     String?
+    products Product[]
+
+    @@map("colors")
 }
 
 model Cart {
@@ -131,7 +141,7 @@ model CartItems {
     createdAt DateTime        @default(now())
     updatedAt DateTime        @updatedAt
 
-    @@map("cartitems")
+    @@map("carts_items")
 }
 
 model Wishlist {
@@ -156,7 +166,7 @@ model WishlistItems {
     createdAt  DateTime        @default(now())
     updatedAt  DateTime        @updatedAt
 
-    @@map("wishlistitems")
+    @@map("wishlist_items")
 }
 
 model Delivery {

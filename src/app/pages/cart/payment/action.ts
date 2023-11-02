@@ -12,7 +12,7 @@ export async function createOrderIncrementation(
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return; // Exit early if no session is found
+    return;
   }
 
   const userId = session.user.id;
@@ -116,5 +116,47 @@ async function updateCart(cartId: any, userId: any) {
       },
       data: { isPaid: true },
     });
+  }
+}
+import "@stripe/stripe-js";
+import { loadStripe } from "@stripe/stripe-js/pure";
+import { createStripeSession } from "@/app/api/create-stripe-session/route";
+import { env } from "@/lib/env";
+
+export async function handleStripePayment(carId: string, deliveryId: string) {
+  if (carId && deliveryId) {
+    try {
+      const stripeKey = env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+
+      if (!stripeKey) {
+        console.error("Stripe key is not defined.");
+        return;
+      }
+      loadStripe.setLoadParameters({ advancedFraudSignals: false });
+      const stripe = await loadStripe(stripeKey);
+
+      console.log("cle stripe" + stripe);
+
+      const session = await createStripeSession(carId, deliveryId);
+      console.log(session);
+
+      if (session) {
+        const result = await stripe?.redirectToCheckout({
+          sessionId: session.id,
+        });
+        console.log(result);
+
+        if (result?.error) {
+          console.error(result.error.message);
+        }
+      } else {
+        console.error("Stripe session is not defined.");
+      }
+    } catch (error) {
+      console.error(
+        "An error occurred while creating the payment session:",
+        error
+      );
+    }
   }
 }

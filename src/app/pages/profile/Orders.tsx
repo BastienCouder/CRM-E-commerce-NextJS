@@ -1,7 +1,7 @@
 "use client";
 
 import { ShoppingOrder } from "@/lib/db/order";
-import formatPrice, { formatDate } from "@/lib/format";
+import formatPrice, { formatDate, formatDescription } from "@/lib/format";
 import Image from "next/image";
 import { useState } from "react";
 import { AiFillCreditCard, AiFillHome, AiOutlineUser } from "react-icons/ai";
@@ -15,7 +15,6 @@ export default function Orders({ order }: OrderProps) {
   const [selectedOrderIndex, setSelectedOrderIndex] = useState<number | null>(
     null
   );
-  console.log(order);
 
   function calculateSubtotal(cartItems: any): number {
     return cartItems.reduce((acc: number, item: any) => {
@@ -137,13 +136,16 @@ export default function Orders({ order }: OrderProps) {
                       <h2 className="text-lg mt-8 pb-2">Votre commande</h2>
                       {isOrderSelected &&
                         orderItem.cart.cartItems.map((cartItems, itemIndex) => {
+                          const description = `${cartItems.product.description}`;
+                          const formattedDescription =
+                            formatDescription(description);
                           return (
                             <>
                               <div
                                 key={itemIndex}
                                 className="flex flex-row-reverse justify-end gap-4 text-sm pb-8"
                               >
-                                <div className="flex">
+                                <div className="flex w-full">
                                   {cartItems.variant ? (
                                     <Image
                                       src={cartItems.variant.imageUrl || ""}
@@ -175,7 +177,9 @@ export default function Orders({ order }: OrderProps) {
                                       </>
                                     )}
                                   </p>
-                                  <p>{cartItems.product.description}</p>
+                                  <p className="w-full text-sm">
+                                    {formattedDescription}
+                                  </p>
                                   <p className="uppercase">
                                     {formatPrice(
                                       cartItems.variant?.price

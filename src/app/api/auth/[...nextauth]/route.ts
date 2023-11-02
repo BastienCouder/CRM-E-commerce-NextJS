@@ -15,13 +15,13 @@ const prisma = new PrismaClient();
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma as PrismaClient) as Adapter,
   providers: authProviders,
+
   pages: {
     signIn: "/auth",
   },
   session: {
     strategy: "database",
     maxAge: 30 * 24 * 60 * 60,
-    updateAge: 24 * 60 * 60,
     generateSessionToken: () => {
       return randomUUID?.() ?? randomBytes(32).toString("hex");
     },
@@ -29,7 +29,7 @@ export const authOptions: AuthOptions = {
   secret: env.NEXTAUTH_URL,
   // debug: process.env.NODE_ENV === "development",
   callbacks: {
-    async session({ session, user }) {
+    async session({ session, user }: any) {
       session.user.id = user.id;
       return session;
     },

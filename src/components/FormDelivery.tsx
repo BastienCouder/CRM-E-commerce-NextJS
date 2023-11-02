@@ -238,7 +238,7 @@ export default function FormDelivery({
               )}
             />
             <div className="pt-4">
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Ajouter</Button>
             </div>
           </form>
         </Form>

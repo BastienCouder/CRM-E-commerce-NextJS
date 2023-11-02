@@ -4,14 +4,14 @@ import { redirect } from "next/navigation";
 import { compare } from "bcryptjs";
 
 export async function registerForm(formData: FormData) {
-  const username = formData.get("username")?.toString();
+  const name = formData.get("username")?.toString();
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
 
   const hashedPassword = await bcrypt.hash(password!, 10);
 
   await prisma.user.create({
-    data: { username, email, hashedPassword },
+    data: { name, email, hashedPassword },
   });
 
   redirect("/profile");
@@ -27,6 +27,28 @@ export async function checkIfEmailExists(email: string) {
 
   return !!existingUser;
 }
+
+// export async function isEmailMatchingSession(
+
+// ) {
+//   const user = await prisma.user.findUnique({
+//     where: {
+//       email: credentials.email,
+//     },
+//   });
+
+//   if (!user) {
+//     return;
+//   }
+
+//   const userEmail = user.email;
+
+//   if (!userEmail) {
+//     return;
+//   }
+
+//   return email === userEmail;
+// }
 
 //Check LoginEmail
 export async function checkEmail(credentials: { email: string }) {

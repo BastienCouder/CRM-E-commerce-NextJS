@@ -18,6 +18,10 @@ const nextConfig = {
         destination: "/pages/cart",
       },
       {
+        source: "/collection",
+        destination: "/pages/collection",
+      },
+      {
         source: "/cart/delivery",
         destination: "/pages/cart/delivery",
       },

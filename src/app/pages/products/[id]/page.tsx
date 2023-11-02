@@ -40,7 +40,7 @@ export default async function ProductPage({
     orderBy: {
       id: "desc",
     },
-    include: { category: true, likedByUsers: true },
+    include: { category: true },
   });
 
   const product = await getProduct(id);

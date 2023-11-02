@@ -1,9 +1,9 @@
+"use client";
 import Link from "next/link";
 import PriceTag from "./PriceTag";
 import Image from "next/image";
 
 import { Product, Category } from "@prisma/client";
-
 interface ProductCardProps {
   product: Product & {
     category: Category | null;

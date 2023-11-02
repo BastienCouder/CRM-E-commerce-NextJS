@@ -1,13 +1,10 @@
 "use client";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { useTransition } from "react";
-import { createOrderIncrementation } from "./action";
-import { Toaster, toast } from "sonner";
 
 interface PaymentProps {
   cartId: string;
   deliveryId: string;
+  handleStripePayment: (productId: string, variantId: string) => Promise<void>;
   createOrderIncrementation: (
     productId: string,
     variantId: string
@@ -16,6 +13,7 @@ interface PaymentProps {
 export default function Payment({
   cartId,
   deliveryId,
+  handleStripePayment,
   createOrderIncrementation,
 }: PaymentProps) {
   const [isPending, startTransition] = useTransition();
@@ -25,17 +23,8 @@ export default function Payment({
       <button
         onClick={() => {
           startTransition(async () => {
+            await handleStripePayment(cartId, deliveryId);
             await createOrderIncrementation(cartId, deliveryId);
-            const promise = () =>
-              new Promise((resolve) => setTimeout(resolve, 2000));
-
-            toast.promise(promise, {
-              loading: "Chargement...",
-              success: () => {
-                return `Produit ajouté avec succès`;
-              },
-              error: "Error",
-            });
           });
         }}
       >

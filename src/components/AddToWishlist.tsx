@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import styles from "@/styles/Like.module.css";
 
 interface AddToWishlistProps {
   handleColorChange: (color: string) => void;
@@ -30,7 +31,7 @@ export default function AddToWishlist({
     await incrementWishlist(productId, variantId);
   };
 
-  const isProductInWishlist = wishlistItems.find(
+  const isProductInWishlist = wishlistItems?.find(
     (item: any) => item.productId === productId && item.variantId === variantId
   );
   if (
@@ -50,7 +51,16 @@ export default function AddToWishlist({
   return (
     <>
       <div className="w-0 my-4 cursor-pointer" onClick={handleAddToWishlist}>
-        <p>{like ? <AiFillHeart size={25} /> : <AiOutlineHeart size={25} />}</p>
+        <p>
+          {like ? (
+            <AiFillHeart
+              size={25}
+              className={`${like ? `${styles.pulse}` : ""}`}
+            />
+          ) : (
+            <AiOutlineHeart size={25} />
+          )}
+        </p>
       </div>
     </>
   );

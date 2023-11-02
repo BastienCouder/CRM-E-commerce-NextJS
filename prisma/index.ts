@@ -38,9 +38,9 @@ async function main() {
   //     quantity: 1,
   //   },
   // });
-  // console.log(productOrder);
-  const categoryId = "653aa6eef14338a1dca7ff19";
-  const productId = "65378d7c9ca11ec8eebdcbb0";
+
+  const categoryId = "6533e2ec992cbcd6500334bc";
+  const productId = "65429df61db58b9eb336d315";
   const product = await prisma.product.update({
     where: {
       id: productId,
@@ -53,14 +53,15 @@ async function main() {
       },
     },
   });
-  console.log(product);
-  // })
+  // console.log(product);
+
   // const product = await prisma.product.create({
   //   data: {
-  //     name: "Produit 2",
-  //     description: "Description du produit 2",
-  //     price: 2000,
-  //     imageUrl: "/images/montre1-or.png",
+  //     name: "Produit 4",
+  //     description:
+  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  //     price: 4000,
+  //     imageUrl: "/images/montre1-rose.png",
   //     variants: {
   //       create: [
   //         {
@@ -81,7 +82,6 @@ async function main() {
   //     },
   //   },
   // });
-  // console.log(product);
 
   // const deliveryOptions = [
   //   {

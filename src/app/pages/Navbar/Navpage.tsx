@@ -2,11 +2,12 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import styles from "@/styles/Nav.module.css";
-import { useRouter } from "next/navigation";
 import ShoppingCartButton from "@/app/pages/Navbar/components/ShoppingCartButton";
 import { ShoppingCart } from "@/lib/db/cart";
 import UserMenuButton from "@/app/pages/Navbar/components/UserMenuButton";
 import { Session } from "next-auth";
+import { useDisableAnimation } from "@/hooks/useDisableAnimation";
+import WishlistButton from "./components/WishlistButton";
 
 interface NavBarProps {
   toggleMenu: () => void;
@@ -15,8 +16,8 @@ interface NavBarProps {
 }
 
 const mainNavData = [
-  { name: "Catégorie 1", path: "/" },
-  { name: `Catégorie 2`, path: "/profile" },
+  { name: "Accueil", path: "/" },
+  { name: `Collection`, path: "/collection" },
   {
     name: "Catégorie 3",
     path: "/wishlist",
@@ -24,7 +25,7 @@ const mainNavData = [
 ];
 
 export default function NavPage({ toggleMenu, cart, session }: NavBarProps) {
-  const router = useRouter();
+  const { handleEnableAnimation } = useDisableAnimation();
   const isSmallScreen = window.innerWidth <= 768;
 
   const iconProfileMotionProps = isSmallScreen
@@ -94,6 +95,9 @@ export default function NavPage({ toggleMenu, cart, session }: NavBarProps) {
           />
         </motion.div>
         <motion.div {...iconShopMotionProps}>
+          <WishlistButton toggleMenu={toggleMenu} />
+        </motion.div>
+        <motion.div {...iconShopMotionProps}>
           <ShoppingCartButton toggleMenu={toggleMenu} cart={cart} />
         </motion.div>
       </div>
@@ -104,7 +108,13 @@ export default function NavPage({ toggleMenu, cart, session }: NavBarProps) {
           <ul className="space-y-8 text-white flex flex-col items-center text-[1.8rem] md:items-start">
             {mainNavData.map((link, index) => (
               <li key={index} className="flex relative">
-                <Link href={link.path} onClick={toggleMenu}>
+                <Link
+                  href={link.path}
+                  onClick={() => {
+                    toggleMenu();
+                    handleEnableAnimation();
+                  }}
+                >
                   <div className={`flex items-center ${styles.name}`}>
                     {"" === link.path ? (
                       <div className={styles.path}></div>

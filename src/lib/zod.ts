@@ -14,7 +14,7 @@ export const RegisterSchema = z.object({
         "Le nom d'utilisateur doit être une chaîne de caractères",
     })
     .min(3, {
-      message: "Le nom d'utilisateur doit comporter au moins 3 caractères.",
+      message: "Le nom d'utilisateur doit comporter au moins 3 caractères",
     })
     .max(50),
   email: z
@@ -76,12 +76,56 @@ export const LoginSchema = z.object({
     .refine(
       async (password) => {
         const errorPassword = await checkPassword({ email: "", password });
+
         return errorPassword === true;
       },
       {
         message: "Mot de passe incorrect",
       }
     ),
+});
+
+//Account
+export const AccountFormSchema = z.object({
+  surname: z
+    .string({
+      required_error: "Le nom est requis",
+      invalid_type_error: "Le nom doit être une chaîne de caractères",
+    })
+    .min(2, {
+      message: "Le nom d'utilisateur doit comporter au moins 3 caractères",
+    }),
+  email: z
+    .string({
+      required_error: "L'adresse e-mail est requise",
+      invalid_type_error: "L'adresse e-mail doit être une chaîne de caractères",
+    })
+    .max(250)
+    .email({
+      message: "Adresse e-mail invalide",
+    }),
+  // .refine(async (email) => {
+  //   const isMatchingSession = await isEmailMatchingSession({ email });
+
+  //   if (isMatchingSession) {
+  //     return true;
+  //   }
+
+  //   const existingUser = await checkIfEmailExists({ email });
+  //   return !existingUser;
+  // }),
+});
+
+//Password
+export const PasswordFormSchema = z.object({
+  password: z
+    .string({
+      required_error: "Le nouveau mot de passe est requis",
+      invalid_type_error: "Le mot de passe doit être une chaîne de caractères",
+    })
+    .min(8, {
+      message: "Le mot de passe doit comporter au moins 8 caractères.",
+    }),
 });
 
 //Delivery
@@ -154,8 +198,12 @@ export const DeliverySchema = z.object({
 
 export type RegisterValues = z.infer<typeof RegisterSchema>;
 export type LoginValues = z.infer<typeof LoginSchema>;
+export type AccountFormValues = z.infer<typeof AccountFormSchema>;
+export type PasswordFormValues = z.infer<typeof PasswordFormSchema>;
 export type DeliveryValues = z.infer<typeof DeliverySchema>;
 
 export const defaultRegisterValues: Partial<RegisterValues> = {};
 export const defaultLoginValues: Partial<LoginValues> = {};
+export const defaultAccountValues: Partial<AccountFormValues> = {};
+export const defaultPasswordValues: Partial<PasswordFormValues> = {};
 export const defaultDeliveryValues: Partial<DeliveryValues> = {};

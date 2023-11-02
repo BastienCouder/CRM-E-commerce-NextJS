@@ -23,3 +23,12 @@ export function formatDate(date: Date): string {
 
   return date.toLocaleString(undefined, options);
 }
+
+export function formatDescription(description: string): string {
+  const words = description.split(" ");
+  if (words.length <= 20) {
+    return description;
+  }
+  const truncatedDescription = words.slice(0, 20).join(" ");
+  return truncatedDescription + "...";
+}

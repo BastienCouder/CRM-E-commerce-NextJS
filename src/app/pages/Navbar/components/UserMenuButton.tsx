@@ -1,3 +1,4 @@
+import { useDisableAnimation } from "@/hooks/useDisableAnimation";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
@@ -14,8 +15,16 @@ export default function UserMenuButton({
   isSmallScreen,
 }: UserMenuButtonProps) {
   const user = session?.user;
+  const { handleEnableAnimation } = useDisableAnimation();
+
   return user ? (
-    <Link href={`/profile`} onClick={toggleMenu}>
+    <Link
+      href={`/profile`}
+      onClick={() => {
+        toggleMenu();
+        handleEnableAnimation();
+      }}
+    >
       {isSmallScreen ? (
         <AiOutlineUser size={34} />
       ) : (
@@ -23,7 +32,13 @@ export default function UserMenuButton({
       )}
     </Link>
   ) : (
-    <Link href={`/auth`} onClick={toggleMenu}>
+    <Link
+      href={`/auth`}
+      onClick={() => {
+        toggleMenu();
+        handleEnableAnimation();
+      }}
+    >
       {isSmallScreen ? (
         <AiOutlineUser size={34} />
       ) : (

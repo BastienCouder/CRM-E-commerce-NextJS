@@ -72,3 +72,31 @@ h3,
 h4 {
   font-family: "Bodoni";
 }
+
+input[type="range"] {
+  width: 70%;
+  height: 7px;
+  border: none;
+  background: #f9f5f5;
+  border-radius: 5px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+}

@@ -1,7 +1,10 @@
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import Navbar from "./pages/Navbar/Navbar";
-import SessionProvider from "../../context/SessionProvider";
+import SessionProvider from "../context/SessionProvider";
+import { AnimationProvider } from "../context/AnimationContext";
+import { Toaster } from "sonner";
+require("dotenv").config();
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +22,12 @@ export default function RootLayout({
     <html lang="fr">
       <body className={`${inter.className}`}>
         <SessionProvider>
-          <Navbar />
-          <main>{children}</main>
+          <AnimationProvider>
+            <Navbar />
+            <main>{children}</main>
+          </AnimationProvider>
         </SessionProvider>
+        <Toaster expand={false} position="bottom-left" />
       </body>
     </html>
   );

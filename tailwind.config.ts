@@ -17,6 +17,10 @@ const config: Config = {
       },
     },
     extend: {
+      screens: {
+        productTablet: "768px",
+        productDesktop: "1068px",
+      },
       colors: {
         border: "",
         input: "",

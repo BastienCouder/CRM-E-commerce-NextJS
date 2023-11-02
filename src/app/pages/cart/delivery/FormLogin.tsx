@@ -1,5 +1,5 @@
 "use client";
-import Input from "@/components/Input";
+import { Input } from "@/components/ui/input";
 import { useId, useState } from "react";
 import { Session } from "next-auth";
 import ShowPassword from "@/components/ShowPassword";
@@ -64,11 +64,9 @@ export default function FormLogin({ session }: FormDeliveryProps) {
               {error ? <small className="text-red-500">{error}</small> : null}
               <div className="flex flex-col sm:flex-row gap-6 sm:gap-12">
                 <Input
-                  autoComplete={false}
                   required={true}
                   id={emailId}
                   type="email"
-                  label="Email"
                   name="email"
                   value={email}
                   onChange={(e) => handleLoginChange("email", e.target.value)}
@@ -78,7 +76,6 @@ export default function FormLogin({ session }: FormDeliveryProps) {
                 <ShowPassword
                   password={password}
                   setPassword={(value) => handleLoginChange("password", value)}
-                  type="password"
                 />
               </div>
               <div className="flex space-x-8 items-center">
