@@ -3,14 +3,14 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import styles from "@/styles/Like.module.css";
 
 interface AddToWishlistProps {
-  handleColorChange: (color: string) => void;
+  handleColorChange?: (color: string) => void;
   productId: string;
   variantId?: string | null;
   incrementWishlist: (
     productId: string,
     variantId: string | null
   ) => Promise<void>;
-  wishlistItems: any;
+  wishlistItems?: any;
 }
 
 export default function AddToWishlist({

@@ -17,7 +17,7 @@ export default function WishlistButton({ toggleMenu }: WishlistButtonProps) {
         handleEnableAnimation();
       }}
     >
-      <AiOutlineHeart size={34} />
+      <AiOutlineHeart size={30} className="mt-1" />
     </Link>
   );
 }

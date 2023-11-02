@@ -79,7 +79,6 @@ export async function createWishlist(): Promise<ShoppingWishlist> {
 
 export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
   const localWishlistId = cookies().get("localWishlistId")?.value;
-
   const localWishlist = localWishlistId
     ? await prisma.wishlist.findUnique({
         where: { id: localWishlistId },
@@ -131,7 +130,7 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
         },
       });
     }
-    await tx.cart.delete({
+    await tx.wishlist.delete({
       where: { id: localWishlist.id },
     });
 

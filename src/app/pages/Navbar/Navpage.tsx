@@ -18,10 +18,6 @@ interface NavBarProps {
 const mainNavData = [
   { name: "Accueil", path: "/" },
   { name: `Collection`, path: "/collection" },
-  {
-    name: "Catégorie 3",
-    path: "/wishlist",
-  },
 ];
 
 export default function NavPage({ toggleMenu, cart, session }: NavBarProps) {

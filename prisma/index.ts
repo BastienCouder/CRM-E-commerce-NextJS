@@ -25,35 +25,29 @@ async function main() {
   // } else {
   //   console.log("Utilisateur non trouvé.");
   // }
-  // Créer un produit
-  // const category = await prisma.category.create({
+
+  // const category = await prisma.color.create({
   //   data: {
-  //     name: "Bracelet Cuir",
+  //     name: "rose",
   //   },
   // });
   // console.log(category);
-  // const productOrder = await prisma.cart.create({
-  //   data: {
-  //     productId: product.id,
-  //     quantity: 1,
-  //   },
-  // });
 
-  const categoryId = "6533e2ec992cbcd6500334bc";
-  const productId = "65429df61db58b9eb336d315";
+  const colorId = "6543ebf1bea5aaa901450acd";
+  const productId = "65429de57e957726166f5dca";
   const product = await prisma.product.update({
     where: {
       id: productId,
     },
     data: {
-      category: {
+      color: {
         connect: {
-          id: categoryId,
+          id: colorId,
         },
       },
     },
   });
-  // console.log(product);
+  console.log(product);
 
   // const product = await prisma.product.create({
   //   data: {
