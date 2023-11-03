@@ -57,11 +57,6 @@ export default function CardProduct({
               <div className="text-center">
                 <PriceTag price={product.price} />
               </div>
-              <AddToWishlist
-                productId={product.id}
-                variantId={""}
-                incrementWishlist={useServerAddWishlist}
-              />
             </div>
           </div>
           <div className="pb-2">

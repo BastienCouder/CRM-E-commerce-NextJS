@@ -1,11 +1,8 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
 import { Category, Color } from "@prisma/client";
-import { AnimatePresence, motion } from "framer-motion";
-import { useCallback, useState } from "react";
 import { BsCaretDownFill } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
-import styles from "@/styles/Utils.module.css";
 import formatPrice from "@/lib/format";
 
 import {
@@ -181,7 +178,7 @@ export default function Filter({
       <div className="block xl:hidden">
         <Sheet>
           <SheetTrigger>
-            <div className="flex items-center uppercase bg-zinc-800 h-full px-3 py-2 font-Noto">
+            <div className="text-sm md:text-base flex items-center uppercase bg-zinc-800 h-full px-3 py-2 font-Noto">
               Filtres
               <BsCaretDownFill size={15} className={`ml-2 `} />
             </div>
@@ -193,7 +190,7 @@ export default function Filter({
                   <h2 className="uppercase text-lg">Filtres</h2>
                 </div>
                 <Separator className="bg-white h-[2px]" />
-                <div className="mt-12 space-y-8">
+                <div className="mt-8 space-y-8">
                   <div className="flex w-full relative">
                     <Accordion
                       className="flex w-full relative"

@@ -33,7 +33,7 @@ export default async function Delivery() {
             DeleteDeliveryItem={useServerDeleteDeliveryItem}
           />
         </div>
-        <div className="px-24 py-16">hello</div>
+        <div className="px-24 py-16"></div>
       </div>
     </>
   );

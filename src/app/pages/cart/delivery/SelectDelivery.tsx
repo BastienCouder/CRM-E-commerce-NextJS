@@ -24,6 +24,8 @@ export default function SelectDelivery({
     string | undefined
   >(delivery?.deliveryItems.find((item) => item.Default)?.id);
 
+  const [error, setError] = useState("");
+
   const handleDeliveryChange = (id: string) => {
     setSelectedDeliveryItem(id);
     handleDefaultDeliveryItem(id);
@@ -45,9 +47,17 @@ export default function SelectDelivery({
     );
   }, [delivery]);
 
+  const handleSubmit = () => {
+    if (selectedDeliveryItem) {
+      router.push("/cart/payment");
+    } else {
+      setError("Créez une adresse de livraison");
+    }
+  };
   return (
     <>
       <ul className="space-y-4 w-[35rem]">
+        {error ? <small className="text-red-500">{error}</small> : null}
         {session &&
           delivery?.deliveryItems &&
           delivery.deliveryItems.map((deliveryItem) => (
@@ -96,7 +106,7 @@ export default function SelectDelivery({
             </li>
           ))}
       </ul>
-      <Button onClick={() => router.push("/cart/payment")}>Valider</Button>
+      <Button onClick={handleSubmit}>Valider</Button>
       <Toaster expand={false} position="bottom-left" />
     </>
   );

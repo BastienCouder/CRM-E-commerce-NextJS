@@ -68,9 +68,11 @@ export default function CollectionPage({
 
   return (
     <div className="w-full flex flex-col xl:h-full xl:pt-10">
-      <h1 className="text-4xl text-start pl-20 mt-6 mb-12">Collection</h1>
+      <h1 className="text-4xl text-start pl-20 mt-12 xl:mt-6 mb-12">
+        Collection
+      </h1>
       <div className="w-full flex flex-col xl:flex-row">
-        <div className="xl:bg-zinc-800 xl:h-screen px-4">
+        <div className="xl:bg-zinc-800 xl:block hidden xl:h-screen px-4">
           <Filter
             categories={categories}
             colors={colors}
@@ -83,17 +85,19 @@ export default function CollectionPage({
           />
         </div>
 
-        <div className="mt-4 xl:w-3/4 mx-20 xl:mx-0 xl:mr-12 flex flex-col xl:pl-20 ">
+        <div className="mt-4 xl:w-3/4 mx-8 md:mx-20 xl:mx-0 xl:mr-12 flex flex-col xl:pl-20 ">
           <div className="mb-4 w-full flex flex-col md:flex-row gap-y-4 md:gap-0 md:justify-between items-start relative pr-10">
             <div className="font-bold">
               Produits : <span>{products.length}</span>
             </div>
             <Accordion className="-mt-4 w-[10rem]" type="single" collapsible>
               <AccordionItem value="item-1" className="relative">
-                <AccordionTrigger className="font-Noto">Trier</AccordionTrigger>
+                <AccordionTrigger className="text-sm md:text-base font-Noto">
+                  Trier
+                </AccordionTrigger>
                 <AccordionContent>
                   <p
-                    className={`cursor-pointer ${
+                    className={`text-sm cursor-pointer ${
                       selectedSort === "A-Z" ? "text-amber-600" : "text-white"
                     }`}
                     onClick={handleSortAlphabetically}
@@ -103,7 +107,7 @@ export default function CollectionPage({
                 </AccordionContent>
                 <AccordionContent>
                   <p
-                    className={`cursor-pointer ${
+                    className={`text-sm cursor-pointer ${
                       selectedSort === "Z-A" ? "text-amber-600" : "text-white"
                     }`}
                     onClick={handleSortReverseAlphabetically}
@@ -115,7 +119,19 @@ export default function CollectionPage({
             </Accordion>
           </div>
           <Separator />
-          <div className="mt-4 w-full h-[40rem] overflow-y-auto pb-4 flex justify-center lg:justify-start flex-wrap gap-8">
+          <div className="xl:hidden">
+            <Filter
+              categories={categories}
+              colors={colors}
+              selectedCategory={selectedCategory}
+              selectedColor={selectedColor}
+              onSelectColor={handleColorSelect}
+              onSelectCategory={handleCategorySelect}
+              priceRange={priceRange}
+              PriceRangeChange={handlePriceRangeChange}
+            />
+          </div>
+          <div className="mt-4 mb-8 xl:mb-0 w-full xl:h-[38rem] md:overflow-y-auto pb-4 flex justify-center lg:justify-start flex-wrap gap-8">
             {filteredProducts.map((product) => (
               <CardProduct
                 product={product}
