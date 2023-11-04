@@ -89,11 +89,14 @@ model Product {
 model ProductVariant {
     id            String          @id @default(auto()) @map("_id") @db.ObjectId
     name          String?
-    color         String?
     price         Int?
     imageUrl      String?
     productId     String?         @db.ObjectId
     product       Product?        @relation(fields: [productId], references: [id])
+    categoryId    String?         @db.ObjectId
+    category      Category?       @relation(fields: [categoryId], references: [id])
+    color         Color?          @relation(fields: [colorsId], references: [id])
+    colorsId      String?         @db.ObjectId
     CartItems     CartItems[]
     WishlistItems WishlistItems[]
 
@@ -101,17 +104,19 @@ model ProductVariant {
 }
 
 model Category {
-    id       String    @id @default(auto()) @map("_id") @db.ObjectId
-    name     String?
-    products Product[]
+    id             String           @id @default(auto()) @map("_id") @db.ObjectId
+    name           String?
+    products       Product[]
+    ProductVariant ProductVariant[]
 
     @@map("categories")
 }
 
 model Color {
-    id       String    @id @default(auto()) @map("_id") @db.ObjectId
-    name     String?
-    products Product[]
+    id             String           @id @default(auto()) @map("_id") @db.ObjectId
+    name           String?
+    products       Product[]
+    ProductVariant ProductVariant[]
 
     @@map("colors")
 }

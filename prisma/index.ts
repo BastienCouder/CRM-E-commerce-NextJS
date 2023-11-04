@@ -33,49 +33,49 @@ async function main() {
   // });
   // console.log(category);
 
-  const colorId = "6543ebf1bea5aaa901450acd";
-  const productId = "65429de57e957726166f5dca";
-  const product = await prisma.product.update({
-    where: {
-      id: productId,
-    },
-    data: {
-      color: {
-        connect: {
-          id: colorId,
-        },
-      },
-    },
-  });
-  console.log(product);
-
-  // const product = await prisma.product.create({
+  // const colorId = "6543ebf1bea5aaa901450acd";
+  // const productId = "65429de57e957726166f5dca";
+  // const product = await prisma.product.update({
+  //   where: {
+  //     id: productId,
+  //   },
   //   data: {
-  //     name: "Produit 4",
-  //     description:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-  //     price: 4000,
-  //     imageUrl: "/images/montre1-rose.png",
-  //     variants: {
-  //       create: [
-  //         {
-  //           color: "or",
-  //           imageUrl: "/images/montre1-or.png",
-  //         },
-  //         {
-  //           color: "argent",
-  //           price: 1800,
-  //           imageUrl: "/images/variants/montre1-argent.png",
-  //         },
-  //         {
-  //           color: "rose",
-  //           price: 1800,
-  //           imageUrl: "/images/variants/montre1-rose.png",
-  //         },
-  //       ],
+  //     color: {
+  //       connect: {
+  //         id: colorId,
+  //       },
   //     },
   //   },
   // });
+  // console.log(product);
+
+  const product = await prisma.product.create({
+    data: {
+      name: "Produit 5",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's .",
+      price: 4000,
+      imageUrl: "/images/montre1-rose.png",
+      variants: {
+        create: [
+          {
+            color: "or",
+            imageUrl: "/images/montre1-or.png",
+          },
+          {
+            color: "argent",
+            price: 1800,
+            imageUrl: "/images/variants/montre1-argent.png",
+          },
+          {
+            color: "rose",
+            price: 1800,
+            imageUrl: "/images/variants/montre1-rose.png",
+          },
+        ],
+      },
+    },
+  });
 
   // const deliveryOptions = [
   //   {

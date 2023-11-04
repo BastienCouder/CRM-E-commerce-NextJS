@@ -28,33 +28,11 @@ export async function checkIfEmailExists(email: string) {
   return !!existingUser;
 }
 
-// export async function isEmailMatchingSession(
-
-// ) {
-//   const user = await prisma.user.findUnique({
-//     where: {
-//       email: credentials.email,
-//     },
-//   });
-
-//   if (!user) {
-//     return;
-//   }
-
-//   const userEmail = user.email;
-
-//   if (!userEmail) {
-//     return;
-//   }
-
-//   return email === userEmail;
-// }
-
 //Check LoginEmail
-export async function checkEmail(credentials: { email: string }) {
+export async function checkEmail(email: { email: string }) {
   const user = await prisma.user.findUnique({
     where: {
-      email: credentials.email,
+      email: email.email,
     },
   });
 
@@ -66,21 +44,32 @@ export async function checkEmail(credentials: { email: string }) {
 }
 
 //Check LoginPassword
-export async function checkPassword(credentials: {
+export async function checkPassword(email: {
   email: string;
   password: string;
 }) {
-  const user = await checkEmail(credentials);
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email.email,
+      },
+    });
 
-  if (user && user.hashedPassword) {
-    const isCorrectPassword = await compare(
-      credentials.password,
-      user.hashedPassword
+    if (user && user.hashedPassword) {
+      const isCorrectPassword = await compare(
+        email.password,
+        user.hashedPassword
+      );
+
+      return isCorrectPassword;
+    }
+
+    return false;
+  } catch (error) {
+    console.error(
+      "Une erreur s'est produite lors de la vérification du mot de passe :",
+      error
     );
-    console.log(isCorrectPassword);
-
-    return isCorrectPassword;
+    return false;
   }
-
-  return false;
 }

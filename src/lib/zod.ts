@@ -71,20 +71,9 @@ export const LoginSchema = z.object({
       invalid_type_error: "Le mot de passe doit être une chaîne de caractères",
     })
     .min(8, {
-      message: "Le mot de passe doit comporter au moins 8 caractères",
+      message: "Le mot de passe doit comporter au moins 8 caractères.",
     })
-    .max(32, "Le mot de passe doit comporter moins de 32 caractères")
-
-    .refine(
-      async (password) => {
-        const errorPassword = await checkPassword({ email: "", password });
-
-        return errorPassword === true;
-      },
-      {
-        message: "Mot de passe incorrect",
-      }
-    ),
+    .max(32, "Le mot de passe doit comporter moins de 32 caractères"),
 });
 
 //Account
@@ -116,18 +105,6 @@ export const AccountFormSchema = z.object({
   //   const existingUser = await checkIfEmailExists({ email });
   //   return !existingUser;
   // }),
-});
-
-//Password
-export const PasswordFormSchema = z.object({
-  password: z
-    .string({
-      required_error: "Le nouveau mot de passe est requis",
-      invalid_type_error: "Le mot de passe doit être une chaîne de caractères",
-    })
-    .min(8, {
-      message: "Le mot de passe doit comporter au moins 8 caractères.",
-    }),
 });
 
 //Delivery
@@ -201,11 +178,10 @@ export const DeliverySchema = z.object({
 export type RegisterValues = z.infer<typeof RegisterSchema>;
 export type LoginValues = z.infer<typeof LoginSchema>;
 export type AccountFormValues = z.infer<typeof AccountFormSchema>;
-export type PasswordFormValues = z.infer<typeof PasswordFormSchema>;
+
 export type DeliveryValues = z.infer<typeof DeliverySchema>;
 
 export const defaultRegisterValues: Partial<RegisterValues> = {};
 export const defaultLoginValues: Partial<LoginValues> = {};
 export const defaultAccountValues: Partial<AccountFormValues> = {};
-export const defaultPasswordValues: Partial<PasswordFormValues> = {};
 export const defaultDeliveryValues: Partial<DeliveryValues> = {};

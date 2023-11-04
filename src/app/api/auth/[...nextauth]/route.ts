@@ -33,6 +33,22 @@ export const authOptions: AuthOptions = {
       session.user.id = user.id;
       return session;
     },
+    async signIn({ user, account, email }) {
+      console.log(user);
+      const userEmail = user.email ?? "";
+      const userExists = await prisma.user.findUnique({
+        where: {
+          email: userEmail, // Utilisation de userEmail
+        },
+      });
+      console.log("existing" + userExists);
+
+      if (userExists) {
+        return true;
+      } else {
+        return "/register";
+      }
+    },
   },
   events: {
     async signIn({ user }) {

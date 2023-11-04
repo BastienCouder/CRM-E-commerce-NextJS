@@ -51,7 +51,7 @@ export default function SelectDelivery({
     if (selectedDeliveryItem) {
       router.push("/cart/payment");
     } else {
-      setError("Créez une adresse de livraison");
+      setError("Ajouter une adresse de livraison");
     }
   };
   return (

@@ -13,17 +13,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { useCallback, useState } from "react";
-import ShowPassword from "@/components/ShowPassword";
-import {
-  AccountFormValues,
-  AccountFormSchema,
-  PasswordFormSchema,
-  PasswordFormValues,
-  defaultPasswordValues,
-} from "@/lib/zod";
+
+import { AccountFormValues, AccountFormSchema } from "@/lib/zod";
 import { Session } from "next-auth";
-import updateUser, { updatePassword } from "./action";
+import updateUser from "./action";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 interface UserInfoProps {
   session: Session | null;
@@ -31,7 +26,8 @@ interface UserInfoProps {
 
 export default function UserInfo({ session }: UserInfoProps) {
   const [error, setError] = useState<string | null>(null);
-  const formProfile = useForm<AccountFormValues>({
+
+  const form = useForm<AccountFormValues>({
     resolver: zodResolver(AccountFormSchema),
     defaultValues: {
       surname: session?.user.name || "",
@@ -39,12 +35,7 @@ export default function UserInfo({ session }: UserInfoProps) {
     },
   });
 
-  const formPassword = useForm<PasswordFormValues>({
-    resolver: zodResolver(PasswordFormSchema),
-    defaultValues: defaultPasswordValues,
-  });
-
-  const onSubmitProfile = useCallback(
+  const onSubmit = useCallback(
     async (data: AccountFormValues) => {
       const formData = new FormData();
 
@@ -54,46 +45,28 @@ export default function UserInfo({ session }: UserInfoProps) {
       try {
         await updateUser(formData);
         toast.success("Profile modifiée avec succès");
-        formProfile.reset();
+        form.reset();
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);
         }
       }
     },
-    [formProfile]
-  );
-
-  const onSubmitPassword = useCallback(
-    async (data: PasswordFormValues) => {
-      const formData = new FormData();
-      formData.append("password", data.password);
-
-      try {
-        await updatePassword(formData);
-        toast.success("Mot de passe modifiée avec succès");
-        formPassword.reset();
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        }
-      }
-    },
-    [formPassword]
+    [form]
   );
 
   return (
     <div className="space-y-12">
-      <Form {...formProfile}>
+      <Form {...form}>
         <form
-          onSubmit={formProfile.handleSubmit(onSubmitProfile)}
+          onSubmit={form.handleSubmit(onSubmit)}
           className="w-full space-y-6"
         >
           {error ? <small className="text-red-500">{error}</small> : null}
 
           {/* surname */}
           <FormField
-            control={formProfile.control}
+            control={form.control}
             name="surname"
             render={({ field }) => (
               <FormItem className="w-full">
@@ -108,7 +81,7 @@ export default function UserInfo({ session }: UserInfoProps) {
 
           {/* email*/}
           <FormField
-            control={formProfile.control}
+            control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
@@ -125,36 +98,9 @@ export default function UserInfo({ session }: UserInfoProps) {
         </form>
       </Form>
       <Separator />
-
-      <Form {...formPassword}>
-        <form
-          onSubmit={formPassword.handleSubmit(onSubmitPassword)}
-          className="w-full space-y-6"
-        >
-          {error ? <small className="text-red-500">{error}</small> : null}
-
-          {/* password */}
-          <FormField
-            control={formPassword.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Nouveau mot de passe</FormLabel>
-                <FormControl>
-                  <ShowPassword
-                    password={field.value}
-                    setPassword={field.onChange}
-                  />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button size="xl">Modifier le mot de passe</Button>
-        </form>
-      </Form>
+      <Link href="/profile/resetPassword">
+        <Button size="xl">Modifier le mot de passe</Button>
+      </Link>
     </div>
   );
 }

@@ -138,8 +138,7 @@ export default function NavPage({ toggleMenu, cart, session }: NavBarProps) {
           <div className="text-white flex flex-col items-center md:items-start">
             <h2 className="text-[1.8rem]">Infos</h2>
             <div className="hidden md:flex md:flex-col">
-              <p>Email : example@example.com</p>
-              <p>Téléphone : (123) 456-7890</p>
+              <p>addresse : [...]</p>
             </div>
           </div>
         </motion.div>

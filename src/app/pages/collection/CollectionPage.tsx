@@ -2,7 +2,7 @@
 import CardProduct from "./CardProduct";
 import Filter from "./Filter";
 import { useState } from "react";
-import { Category, Product, Color } from "@prisma/client";
+import { Category, Product, Color, ProductVariant } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
 
 import {
@@ -11,12 +11,18 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Input } from "@/components/ui/input";
+import { AiOutlineSearch } from "react-icons/ai";
 
 interface CollectionPageProps {
-  products: (Product & { category: Category | null })[];
+  products: (Product & {
+    category: Category | null;
+    variants: ProductVariant[] | null;
+  })[];
   categories: Category[];
   colors: Color[];
 }
+
 export default function CollectionPage({
   products,
   categories,
@@ -25,15 +31,21 @@ export default function CollectionPage({
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
   );
+
   const [selectedColor, setSelectedColor] = useState<Color | null>(null);
   const [sortedProducts, setSortedProducts] = useState([...products]);
   const [priceRange, setPriceRange] = useState<number>(50000);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleCategorySelect = (category: Category | null) => {
     setSelectedCategory(category);
   };
   const handleColorSelect = (color: Color | null) => {
     setSelectedColor(color);
+  };
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
   };
 
   const [selectedSort, setSelectedSort] = useState("A-Z");
@@ -56,19 +68,24 @@ export default function CollectionPage({
     const newPriceRange = parseInt(e.target.value, 10);
     setPriceRange(newPriceRange);
   };
-  const filteredProducts = sortedProducts.filter((product) => {
-    if (
-      (selectedCategory && product.categoryId !== selectedCategory.id) ||
-      (selectedColor && product.colorsId !== selectedColor.id)
-    ) {
-      return false;
-    }
-    return product.price <= priceRange;
-  });
+
+  const filteredProducts = sortedProducts
+    .filter((product) => {
+      if (
+        (selectedCategory && product.categoryId !== selectedCategory.id) ||
+        (selectedColor && product.colorsId !== selectedColor.id)
+      ) {
+        return false;
+      }
+      return product.price <= priceRange;
+    })
+    .filter((product) => {
+      return product.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
 
   return (
     <div className="w-full flex flex-col xl:h-full xl:pt-10">
-      <h1 className="text-4xl text-start pl-20 mt-12 xl:mt-6 mb-12">
+      <h1 className="text-4xl md:text-start text-center md:pl-20 mt-12 xl:mt-6 mb-12">
         Collection
       </h1>
       <div className="w-full flex flex-col xl:flex-row">
@@ -86,9 +103,21 @@ export default function CollectionPage({
         </div>
 
         <div className="mt-4 xl:w-3/4 mx-8 md:mx-20 xl:mx-0 xl:mr-12 flex flex-col xl:pl-20 ">
-          <div className="mb-4 w-full flex flex-col md:flex-row gap-y-4 md:gap-0 md:justify-between items-start relative pr-10">
+          <div className="mb-4 w-full flex flex-col md:flex-row gap-y-4 md:gap-0 md:justify-between items-start relative">
             <div className="font-bold">
               Produits : <span>{products.length}</span>
+            </div>
+            <div className="space-y-1 relative">
+              <Input
+                className="w-full md:w-[20rem] bg-zinc-800 p-2 border-none outline-none text-white"
+                type="text"
+                value={searchTerm}
+                onChange={handleSearch}
+                placeholder="Rechercher..."
+              />
+              <div className="absolute text-zinc-900 top-1.5 right-0 px-2 outline-none text-xl cursor-pointer">
+                <AiOutlineSearch size={20} className="text-white mr-1" />
+              </div>
             </div>
             <Accordion className="-mt-4 w-[10rem]" type="single" collapsible>
               <AccordionItem value="item-1" className="relative">

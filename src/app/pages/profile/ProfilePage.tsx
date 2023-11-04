@@ -10,8 +10,7 @@ import {
 import { Session } from "next-auth";
 import FormDelivery from "@/components/FormDelivery";
 import { Separator } from "@/components/ui/separator";
-import UserForm from "./components/UserForm";
-import PasswordForm from "./components/PasswordForm";
+import UserInfo from "./UserInfo";
 
 interface ProfilePageProps {
   session: Session | null;
@@ -24,9 +23,8 @@ export default function ProfilePage({ session, delivery }: ProfilePageProps) {
       <div className="space-y-8">
         <h2 className="text-2xl text-center md:text-start">Profil</h2>
         <Separator />
-        <UserForm session={session} />
+        <UserInfo session={session} />
         <Separator />
-        <PasswordForm />
       </div>
       <div className="space-y-8">
         <h2 className="text-2xl text-center md:text-start">

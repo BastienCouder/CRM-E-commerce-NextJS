@@ -27,6 +27,9 @@ import {
   defaultRegisterValues,
 } from "@/lib/zod";
 import ShowPassword from "../../components/ShowPassword";
+import { checkPassword } from "./action";
+import { toast } from "sonner";
+import Link from "next/link";
 
 interface FormAuthProps {
   registerForm: (formData: FormData) => Promise<void>;
@@ -51,25 +54,32 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
       currentVariant === "login" ? "register" : "login"
     );
   }, []);
+
   const login = useCallback(async () => {
     try {
-      const result = await signIn("credentials", {
-        email: form.getValues("email"),
-        password: form.getValues("password"),
+      const email = form.getValues("email");
+      const password = form.getValues("password");
+
+      await signIn("email", {
+        email: email,
+        password: password,
         redirect: false,
       });
 
-      if (result?.error) {
-        return;
-      } else {
-        router.push("/");
+      const isCorrectPassword = await checkPassword({ email, password });
+
+      if (password) {
+        if (!isCorrectPassword) {
+          toast.error("Le mot de passe est incorrecte");
+        } else {
+          router.push("/auth/emailLogin");
+        }
       }
     } catch (error) {
-      if (error instanceof Error) {
-        return;
-      }
+      console.error("Une erreur s'est produite lors de la connexion : ", error);
+      throw error;
     }
-  }, [form, router]);
+  }, [form]);
 
   const register = useCallback(async () => {
     const formData = new FormData();
@@ -150,7 +160,15 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
                       />
                     </FormControl>
 
-                    <FormMessage />
+                    <div className="flex flex-col">
+                      <Link
+                        href="/auth/forgotPassword"
+                        className="cursor-pointer"
+                      >
+                        <small>Mot de passe oublié ?</small>
+                      </Link>
+                      <FormMessage />
+                    </div>
                   </FormItem>
                 )}
               />
