@@ -4,6 +4,7 @@ import Navbar from "./pages/Navbar/Navbar";
 import SessionProvider from "../context/SessionProvider";
 import { AnimationProvider } from "../context/AnimationContext";
 import { Toaster } from "sonner";
+import CookieBanner from "@/components/CookieBanner";
 require("dotenv").config();
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,6 +26,7 @@ export default function RootLayout({
           <AnimationProvider>
             <Navbar />
             <main>{children}</main>
+            <CookieBanner />
           </AnimationProvider>
         </SessionProvider>
         <Toaster expand={false} position="bottom-left" />
