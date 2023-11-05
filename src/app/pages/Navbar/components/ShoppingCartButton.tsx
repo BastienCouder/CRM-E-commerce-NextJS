@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { AiOutlineShopping } from "react-icons/ai";
-import { ShoppingCart } from "@/lib/db/cart";
+import { CartProps } from "@/lib/db/cart";
 import { Badge } from "@/components/ui/badge";
 import { useDisableAnimation } from "@/hooks/useDisableAnimation";
 
 interface ShoppingCartButtonProps {
   toggleMenu: () => void;
-  cart: ShoppingCart | null;
+  cart: CartProps | null;
 }
 
 export default function ShoppingCartButton({

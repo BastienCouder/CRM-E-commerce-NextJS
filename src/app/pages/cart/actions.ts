@@ -1,6 +1,6 @@
 "use server";
 
-import { createCart, getCart } from "@/lib/db/cart";
+import { CartItemsProps, createCart, getCart } from "@/lib/db/cart";
 import { prisma } from "@/lib/db/prisma";
 import { revalidatePath } from "next/cache";
 
@@ -36,20 +36,23 @@ export async function UpdateProductQuantity(
   revalidatePath("/cart");
 }
 
-async function updateItemIncrementFromCart(newQuantity: number, item: any) {
+async function updateItemIncrementFromCart(
+  newQuantity: number,
+  item: CartItemsProps | undefined
+) {
   await prisma.cartItems.update({
     where: {
-      id: item.id,
+      id: item?.id,
     },
     data: { quantity: newQuantity },
   });
 }
 
 //Delete Item From Whishlist
-async function deleteItemIncrementFromCart(item: any) {
+async function deleteItemIncrementFromCart(item: CartItemsProps | undefined) {
   await prisma.cartItems.delete({
     where: {
-      id: item.id,
+      id: item?.id,
     },
   });
 }

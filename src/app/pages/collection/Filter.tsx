@@ -79,7 +79,7 @@ export default function Filter({
                 <ul className="w-full">
                   {categories.map((category) => {
                     return (
-                      <>
+                      <li key={category.id}>
                         <AccordionContent
                           onClick={() => handleCategoryClick(category)}
                           className="cursor-pointer"
@@ -94,7 +94,7 @@ export default function Filter({
                             {category.name}
                           </div>
                         </AccordionContent>
-                      </>
+                      </li>
                     );
                   })}
                 </ul>
@@ -122,7 +122,7 @@ export default function Filter({
                 <ul className="w-full">
                   {colors.map((color) => {
                     return (
-                      <>
+                      <li key={color.id}>
                         <AccordionContent
                           onClick={() => handleColorClick(color)}
                           className="cursor-pointer"
@@ -137,7 +137,7 @@ export default function Filter({
                             {color.name}
                           </div>
                         </AccordionContent>
-                      </>
+                      </li>
                     );
                   })}
                 </ul>
@@ -204,7 +204,7 @@ export default function Filter({
                         <ul className="w-full">
                           {categories.map((category) => {
                             return (
-                              <>
+                              <li key={category.id}>
                                 <AccordionContent
                                   onClick={() => handleCategoryClick(category)}
                                   className="cursor-pointer"
@@ -213,7 +213,7 @@ export default function Filter({
                                     {category.name}
                                   </div>
                                 </AccordionContent>
-                              </>
+                              </li>
                             );
                           })}
                         </ul>
@@ -241,7 +241,7 @@ export default function Filter({
                         <ul className="w-full">
                           {colors.map((color) => {
                             return (
-                              <>
+                              <li key={color.id}>
                                 <AccordionContent
                                   onClick={() => handleColorClick(color)}
                                   className="cursor-pointer"
@@ -250,7 +250,7 @@ export default function Filter({
                                     {color.name}
                                   </div>
                                 </AccordionContent>
-                              </>
+                              </li>
                             );
                           })}
                         </ul>

@@ -1,6 +1,11 @@
 "use server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { ShoppingOrder, createOrder, getOrder } from "@/lib/db/order";
+import {
+  OrderItemsProps,
+  OrderProps,
+  createOrder,
+  getOrder,
+} from "@/lib/db/order";
 import { prisma } from "@/lib/db/prisma";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
@@ -32,10 +37,10 @@ export async function createOrderIncrementation(
 }
 
 async function updateOrderItem(
-  OrderIncart: any,
-  order: any,
-  cartId: any,
-  deliveryId: any
+  OrderIncart: OrderItemsProps | null,
+  order: OrderProps | null,
+  cartId: string,
+  deliveryId: string
 ) {
   const deliveryItemId = await prisma.delivery.findUnique({
     where: {
@@ -56,7 +61,7 @@ async function updateOrderItem(
     if (deliveryItem) {
       await prisma.orderItems.update({
         where: {
-          id: OrderIncart.id,
+          id: OrderIncart?.id,
         },
         data: {
           orderId: order?.id,
@@ -69,7 +74,11 @@ async function updateOrderItem(
   }
 }
 
-async function createOrderItem(order: any, cartId: any, deliveryId: any) {
+async function createOrderItem(
+  order: OrderProps | null,
+  cartId: string,
+  deliveryId: string
+) {
   const deliveryItemId = await prisma.delivery.findUnique({
     where: {
       id: deliveryId,
@@ -99,7 +108,7 @@ async function createOrderItem(order: any, cartId: any, deliveryId: any) {
   }
 }
 
-async function updateCart(cartId: any, userId: any) {
+async function updateCart(cartId: string, userId: string) {
   const cart = await prisma.cart.findUnique({
     where: {
       id: cartId,

@@ -42,6 +42,23 @@ const nextConfig = {
         source: "/Navbar",
         destination: "/pages/Navbar",
       },
+
+      {
+        source: "/mentions-legales",
+        destination: "/pages/policy/legalInformation",
+      },
+      {
+        source: "/politique-de-confidentialite",
+        destination: "/pages/policy/privacyPolicy",
+      },
+      {
+        source: "/politique-de-cookies",
+        destination: "/pages/policy/cookiesPolicy",
+      },
+      {
+        source: "/politique-de-remboursement",
+        destination: "/pages/policy/refundPolicy",
+      },
     ];
   },
 };

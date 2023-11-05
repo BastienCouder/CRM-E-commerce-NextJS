@@ -22,14 +22,14 @@ export async function sendForgotPassword(formData: FormData) {
     const user = await findUserByEmail(email);
 
     if (user) {
-      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+      const token = jwt.sign({ userId: user.id }, env.JWT_SECRET, {
         expiresIn: "1h",
       });
 
       const resetPasswordLink = `${env.NEXTAUTH_URL}/auth/reset-password/${token}`;
 
       const mailOptions = {
-        from: process.env.EMAIL_FROM,
+        from: env.EMAIL_FROM,
         to: email,
         subject: "Réinitialisation de mot de passe",
         html: `

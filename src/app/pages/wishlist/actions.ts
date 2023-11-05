@@ -1,8 +1,11 @@
 "use server";
-import { ShoppingCart, createCart, getCart } from "@/lib/db/cart";
-import { deleteLike, getLike } from "@/lib/db/like";
+import { CartProps, createCart, getCart } from "@/lib/db/cart";
 import { prisma } from "@/lib/db/prisma";
-import { createWishlist, getWishlist } from "@/lib/db/wishlist";
+import {
+  WishlistItemsProps,
+  createWishlist,
+  getWishlist,
+} from "@/lib/db/wishlist";
 import { revalidatePath } from "next/cache";
 
 export async function useServerAddToCart(
@@ -36,15 +39,14 @@ export async function useServerAddToCart(
       articleInWishlistInCart
     );
   }
-  await handleLikeDeletion(variantId, productId);
 }
 
 //Add Item From Cart With Variant
 async function handleAddToCartWithVariant(
-  cart: ShoppingCart,
+  cart: CartProps,
   productId: string,
   variantId: string | null,
-  articleInWishlistVariantInCart: any
+  articleInWishlistVariantInCart: WishlistItemsProps
 ) {
   const cartItemDataWithVariant = {
     cartId: cart.id,
@@ -65,9 +67,9 @@ async function handleAddToCartWithVariant(
 
 //Add Item From Cart Without Variant
 async function handleAddToCartWithoutVariant(
-  cart: ShoppingCart,
+  cart: CartProps,
   productId: string,
-  articleInWishlistInCart: any
+  articleInWishlistInCart: WishlistItemsProps | undefined
 ) {
   const cartItemData = {
     cartId: cart.id,
@@ -90,20 +92,10 @@ async function handleAddToCartWithoutVariant(
 }
 
 //Delete Item From Whishlist
-export async function deleteItemFromWishlist(item: any) {
+export async function deleteItemFromWishlist(item: WishlistItemsProps) {
   await prisma.wishlistItems.delete({
     where: {
       id: item.id,
     },
   });
-}
-
-//Delete Like
-async function handleLikeDeletion(variantId: string | null, productId: string) {
-  const likedProductId = variantId || productId;
-  const like = await getLike(likedProductId);
-
-  if (like) {
-    await deleteLike(like.id);
-  }
 }

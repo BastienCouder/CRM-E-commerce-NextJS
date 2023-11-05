@@ -14,7 +14,7 @@ export const metadata = {
 };
 
 const getCategory = cache(async () => {
-  const category = await prisma.category.findMany();
+  const category = await prisma.category.findM();
   if (!category) notFound();
   return category;
 });

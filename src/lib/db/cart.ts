@@ -4,25 +4,25 @@ import { Cart, CartItems, Prisma } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export type CartWithProducts = Prisma.CartGetPayload<{
+export type CartWithCartItemsProps = Prisma.CartGetPayload<{
   include: {
     cartItems: { include: { product: true; variant: true } };
   };
 }>;
 
-export type CartItemWithProduct = Prisma.CartItemsGetPayload<{
+export type CartItemsProps = Prisma.CartItemsGetPayload<{
   include: { product: true; variant: true };
 }>;
 
-export type ShoppingCart = CartWithProducts & {
+export type CartProps = CartWithCartItemsProps & {
   size: number;
   subtotal: number;
 };
 
-export async function getCart(): Promise<ShoppingCart | null> {
+export async function getCart(): Promise<CartProps | null> {
   const session = await getServerSession(authOptions);
 
-  let cart: CartWithProducts | null = null;
+  let cart: CartWithCartItemsProps | null = null;
 
   if (session) {
     cart = await prisma.cart.findFirst({
@@ -69,7 +69,7 @@ export async function getCart(): Promise<ShoppingCart | null> {
   };
 }
 
-export async function createCart(): Promise<ShoppingCart> {
+export async function createCart(): Promise<CartProps> {
   const session = await getServerSession(authOptions);
 
   let newCart: Cart;

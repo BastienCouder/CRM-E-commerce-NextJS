@@ -13,9 +13,10 @@ import { useServerAddToCart, useServerAddWishlist } from "./actions";
 import { useAnimationContext } from "@/context/AnimationContext";
 import { BsCaretDownFill } from "react-icons/bs";
 import styles from "@/styles/Utils.module.css";
+import { WishlistItemsProps } from "@/lib/db/wishlist";
 
 interface ProductTabletProps {
-  wishlistItems: any;
+  wishlistItems: WishlistItemsProps[] | undefined;
   productCategory: string | null | undefined;
   products: {
     id: string;

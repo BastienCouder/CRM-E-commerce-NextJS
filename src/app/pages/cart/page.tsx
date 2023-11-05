@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export const metadata = {
-  title: "Your Cart - E-commerce",
+  title: "Pannier - E-commerce",
 };
 
 export default async function Cart() {

@@ -12,13 +12,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { AccountFormValues, AccountFormSchema } from "@/lib/zod";
 import { Session } from "next-auth";
-import updateUser from "./action";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { updateUser } from "./action";
 
 interface UserInfoProps {
   session: Session | null;
@@ -35,28 +35,29 @@ export default function UserInfo({ session }: UserInfoProps) {
     },
   });
 
-  const onSubmit = useCallback(
-    async (data: AccountFormValues) => {
-      const formData = new FormData();
+  useEffect(() => {
+    form.setValue("surname", session?.user.name || "");
+    form.setValue("email", session?.user.email || "");
+  }, [session, form]);
 
-      formData.append("surname", data.surname);
-      formData.append("email", data.email);
+  const onSubmit = useCallback(async (data: AccountFormValues) => {
+    const formData = new FormData();
 
-      try {
-        await updateUser(formData);
-        toast.success("Profile modifiée avec succès");
-        form.reset();
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        }
+    formData.append("surname", data.surname);
+    formData.append("email", data.email);
+
+    try {
+      await updateUser(formData);
+      toast.success("Profil modifié avec succès");
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
       }
-    },
-    [form]
-  );
+    }
+  }, []);
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -98,9 +99,14 @@ export default function UserInfo({ session }: UserInfoProps) {
         </form>
       </Form>
       <Separator />
-      <Link href="/profile/resetPassword">
-        <Button size="xl">Modifier le mot de passe</Button>
-      </Link>
+      <div className="space-y-4">
+        <h2 className="text-2xl">Mot de passe :</h2>
+        <div>
+          <Link href="/auth/forgotPassword">
+            <Button size="xl">Modifier le mot de passe</Button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

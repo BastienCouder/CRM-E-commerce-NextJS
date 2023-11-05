@@ -4,24 +4,24 @@ import { Prisma, Wishlist, WishlistItems } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export type WishlistWithProducts = Prisma.WishlistGetPayload<{
+export type WishlistWithWishlistItemsProps = Prisma.WishlistGetPayload<{
   include: {
     wishlistItems: { include: { product: true; variant: true } };
   };
 }>;
 
-export type WishlistItemWithProduct = Prisma.WishlistItemsGetPayload<{
+export type WishlistItemsProps = Prisma.WishlistItemsGetPayload<{
   include: { product: true; variant: true };
 }>;
 
-export type ShoppingWishlist = WishlistWithProducts & {
+export type WishlistProps = WishlistWithWishlistItemsProps & {
   ///...
 };
 
-export async function getWishlist(): Promise<ShoppingWishlist | null> {
+export async function getWishlist(): Promise<WishlistProps | null> {
   const session = await getServerSession(authOptions);
 
-  let wishlist: WishlistWithProducts | null = null;
+  let wishlist: WishlistWithWishlistItemsProps | null = null;
 
   if (session) {
     wishlist = await prisma.wishlist.findFirst({
@@ -55,7 +55,7 @@ export async function getWishlist(): Promise<ShoppingWishlist | null> {
   };
 }
 
-export async function createWishlist(): Promise<ShoppingWishlist> {
+export async function createWishlist(): Promise<WishlistProps> {
   const session = await getServerSession(authOptions);
 
   let newWishlist: Wishlist;

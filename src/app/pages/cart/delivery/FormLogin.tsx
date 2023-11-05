@@ -1,55 +1,68 @@
 "use client";
-import { Input } from "@/components/ui/input";
-import { useId, useState } from "react";
-import { Session } from "next-auth";
-import ShowPassword from "@/components/ShowPassword";
-import { signIn } from "next-auth/react";
-import { AiFillGoogleSquare } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { LoginSchema, LoginValues, defaultLoginValues } from "@/lib/zod";
+
+import { toast } from "sonner";
+import Link from "next/link";
+import { Session } from "next-auth";
+import { useCallback } from "react";
+import { signIn } from "next-auth/react";
+import { checkPassword } from "@/app/auth/action";
+import ShowPassword from "@/components/ShowPassword";
+import { AiFillGoogleSquare } from "react-icons/ai";
 
 interface FormDeliveryProps {
   session: Session | null;
 }
 
 export default function FormLogin({ session }: FormDeliveryProps) {
-  const emailId: string = useId();
   const router = useRouter();
-  const [loginData, setLoginData] = useState({
-    email: "",
-    password: "",
+
+  const formResolver = zodResolver(LoginSchema);
+  const form = useForm<LoginValues>({
+    resolver: formResolver,
+    defaultValues: defaultLoginValues,
   });
 
-  const [error, setError] = useState<string | null>(null);
-
-  const { email, password } = loginData;
-
-  const handleLoginChange = (name: string, value: string) => {
-    setLoginData({ ...loginData, [name]: value });
-  };
-
-  const handlelogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const login = useCallback(async () => {
     try {
-      const result = await signIn("credentials", {
-        email,
-        password,
+      const email = form.getValues("email");
+      const password = form.getValues("password");
+
+      await signIn("email", {
+        email: email,
+        password: password,
         redirect: false,
       });
 
-      if (result?.error) {
-        setError(result.error);
-      } else {
-        router.push("/");
+      const isCorrectPassword = await checkPassword({ email, password });
+
+      if (password) {
+        if (!isCorrectPassword) {
+          toast.error("Le mot de passe est incorrecte");
+        } else {
+          router.push("/auth/emailLogin");
+        }
       }
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
+      console.error("Une erreur s'est produite lors de la connexion : ", error);
+      throw error;
     }
-  };
+  }, [form, router]);
 
   return (
     <>
@@ -57,45 +70,71 @@ export default function FormLogin({ session }: FormDeliveryProps) {
         {!session?.user ? (
           <>
             <h1 className="text-4xl text-center md:text-start">Connexion</h1>
-            <form
-              onSubmit={handlelogin}
-              className="w-full  md:w-[30rem] space-y-6"
-            >
-              {error ? <small className="text-red-500">{error}</small> : null}
-              <div className="flex flex-col sm:flex-row gap-6 sm:gap-12">
-                <Input
-                  required={true}
-                  id={emailId}
-                  type="email"
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(login)}
+                className="w-full flex flex-col justify-center items-center space-y-4"
+              >
+                {/* email */}
+                <FormField
+                  control={form.control}
                   name="email"
-                  value={email}
-                  onChange={(e) => handleLoginChange("email", e.target.value)}
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="email" {...field} />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
-              <div className="flex flex-col sm:flex-row gap-6 sm:gap-12">
-                <ShowPassword
-                  password={password}
-                  setPassword={(value) => handleLoginChange("password", value)}
+                {/* password */}
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <ShowPassword
+                          password={field.value}
+                          setPassword={field.onChange}
+                        />
+                      </FormControl>
+
+                      <div className="flex flex-col">
+                        <Link
+                          href="/auth/forgotPassword"
+                          className="cursor-pointer"
+                        >
+                          <small>Mot de passe oublié ?</small>
+                        </Link>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
                 />
-              </div>
-              <div className="flex space-x-8 items-center">
-                <div
-                  onClick={() =>
-                    signIn("google", { callbackUrl: "/cart/delivery" })
-                  }
-                  className="flex items-center gap-x-2 cursor-pointer px-4 py-2 border-2 border-white"
-                >
-                  Google
-                  <AiFillGoogleSquare size={34} />
+                <div className="py-4">
+                  <Button size="lg">Se connecter</Button>
                 </div>
-              </div>
-              <div className="flex gap-x-8 pt-4">
-                <Button>Valider</Button>
-                <Link href="/auth">
-                  <Button>S&apos;inscrire</Button>
-                </Link>
-              </div>
-            </form>
+                <div className="w-full flex items-center">
+                  <div className="w-1/2 h-px bg-white"></div>
+                  <p className="px-8 flex justify-center items-center">Ou</p>
+                  <div className="w-1/2 h-px bg-white"></div>
+                </div>
+                <div className="flex space-x-8 items-center cursor-pointer ">
+                  <div
+                    onClick={() => signIn("google", { callbackUrl: "/" })}
+                    className="flex items-center gap-x-2 cursor-pointer px-4 py-2 border-2 border-white"
+                  >
+                    Google
+                    <AiFillGoogleSquare size={34} />
+                  </div>
+                </div>
+              </form>
+            </Form>
           </>
         ) : null}
       </div>

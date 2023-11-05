@@ -2,16 +2,12 @@
 import Link from "next/link";
 import PriceTag from "@/components/PriceTag";
 import Image from "next/image";
-
 import { Product, Category, Color } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import AddToCartButton from "@/components/AddToCartButton";
-import {
-  useServerAddToCart,
-  useServerAddWishlist,
-} from "../products/[id]/actions";
-import AddToWishlist from "@/components/AddToWishlist";
+import { useServerAddToCart } from "../products/[id]/actions";
+
 interface CardProductProps {
   product: Product & {
     category: Category | null;
@@ -35,7 +31,7 @@ export default function CardProduct({
     product.colorsId === selectedColor.id
   ) {
     return (
-      <div className="flex justify-center max-w-[300px] max-h-[400px] p-4">
+      <li className="flex justify-center max-w-[300px] max-h-[400px] p-4">
         <div className="w-full flex flex-col justify-center items-center space-y-2">
           <Link href={"/products/" + product.id}>
             <figure>
@@ -68,10 +64,9 @@ export default function CardProduct({
           </div>
           <Separator />
         </div>
-      </div>
+      </li>
     );
   } else {
-    // Return null if the product does not match the selected category
     return null;
   }
 }

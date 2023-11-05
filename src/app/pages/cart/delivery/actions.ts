@@ -1,5 +1,10 @@
 "use server";
-import { createDelivery, getDelivery } from "@/lib/db/delivery";
+import {
+  DeliveryItemsProps,
+  DeliveryProps,
+  createDelivery,
+  getDelivery,
+} from "@/lib/db/delivery";
 import { validateEmail } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 
@@ -9,7 +14,10 @@ export async function useServerDeliveryForm(formData: FormData) {
   revalidatePath("/cart/delivery");
 }
 
-async function validateAndCreateDeliveryItem(delivery: any, formData: any) {
+async function validateAndCreateDeliveryItem(
+  delivery: DeliveryProps,
+  formData: FormData
+) {
   const { name, email, surname, address, postcode, city, country, tel } =
     getFormDataValues(formData);
 
@@ -52,7 +60,10 @@ async function validateAndCreateDeliveryItem(delivery: any, formData: any) {
   revalidatePath("/cart/delivery");
 }
 
-async function updateDefaultDeliveryItem(delivery: any, newDeliveryItem: any) {
+async function updateDefaultDeliveryItem(
+  delivery: DeliveryProps,
+  newDeliveryItem: DeliveryItemsProps
+) {
   const hasDefaultDelivery = await prisma.deliveryItems.findFirst({
     where: {
       deliveryId: delivery.id,
@@ -82,13 +93,17 @@ export async function useServerSetDefaultDeliveryItem(deliveryItemId: string) {
   revalidatePath("/cart/delivery");
 }
 
-function validateSelectedDeliveryItem(selectedDeliveryItem: any) {
+function validateSelectedDeliveryItem(
+  selectedDeliveryItem: DeliveryItemsProps
+) {
   if (!selectedDeliveryItem) {
     throw new Error("Moyen de livraison non trouvé");
   }
 }
 
-async function updateDefaultDeliveryItems(selectedDeliveryItem: any) {
+async function updateDefaultDeliveryItems(
+  selectedDeliveryItem: DeliveryItemsProps
+) {
   await prisma.deliveryItems.updateMany({
     where: {
       deliveryId: selectedDeliveryItem.deliveryId,
@@ -187,7 +202,7 @@ export async function useServerUpdateDeliveryForm(
 }
 
 async function updateDeliveryItem(
-  deliveryItem: any,
+  deliveryItem: DeliveryItemsProps,
   name: string | undefined,
   surname: string | undefined,
   email: string | undefined,

@@ -4,6 +4,8 @@ import { VAT_RATE } from "@/lib/utils";
 import { CartItems } from "@prisma/client";
 import { redirect, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { useMemo } from "react";
 
 interface CheckCartProps {
   cart: Cart | null;
@@ -17,19 +19,24 @@ interface Cart {
 
 export default function CheckCart({ cart }: CheckCartProps) {
   const router = useRouter();
-  const total: number = parseInt(formatPrice(cart?.subtotal || 0, "EUR"));
-  const totalTVA = (VAT_RATE * total).toFixed(2);
 
-  const quantity = cart?.cartItems.reduce(
-    (acc, item) => acc + item.quantity,
-    0
-  );
+  const total: number = useMemo(() => {
+    return parseInt(formatPrice(cart?.subtotal || 0, "EUR"));
+  }, [cart?.subtotal]);
+
+  const totalTVA: string = useMemo(() => {
+    return (VAT_RATE * total).toFixed(2);
+  }, [total]);
+
+  const quantity: number | undefined = useMemo(() => {
+    return cart?.cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  }, [cart?.cartItems]);
 
   const cartCheckout = () => {
     if (cart && cart.size !== 0) {
       router.push("/cart/delivery");
     } else {
-      redirect("/cart");
+      toast.error("Aucun article dans le panier");
     }
   };
 

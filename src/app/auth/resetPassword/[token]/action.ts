@@ -1,4 +1,5 @@
 "use server";
+import { env } from "@/lib/env";
 import { PrismaClient } from "@prisma/client";
 import { hash } from "bcrypt";
 import { verify, JwtPayload } from "jsonwebtoken";
@@ -13,7 +14,7 @@ export async function ResetPassword(formData: FormData, token: string) {
   const password = formData.get("password")?.toString();
 
   // Vérifier si le token est valide
-  const secret = process.env.JWT_SECRET!;
+  const secret = env.JWT_SECRET!;
   const decodedToken = verify(token, secret) as DecodedToken;
 
   if (!decodedToken || !decodedToken.userId) {

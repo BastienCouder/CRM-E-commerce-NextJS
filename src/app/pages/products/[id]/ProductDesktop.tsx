@@ -11,9 +11,10 @@ import { useServerAddToCart, useServerAddWishlist } from "./actions";
 import { useAnimationContext } from "@/context/AnimationContext";
 import styles from "@/styles/Utils.module.css";
 import { RxCross2 } from "react-icons/rx";
+import { WishlistItemsProps } from "@/lib/db/wishlist";
 
 interface ProductDesktopProps {
-  wishlistItems: any;
+  wishlistItems: WishlistItemsProps[] | undefined;
   productCategory: string | null | undefined;
   products: {
     id: string;

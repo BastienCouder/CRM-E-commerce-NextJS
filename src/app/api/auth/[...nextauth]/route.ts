@@ -27,9 +27,9 @@ export const authOptions: AuthOptions = {
     },
   },
   secret: env.NEXTAUTH_SECRET,
-  // debug: process.env.NODE_ENV === "development",
+  // debug: env.NODE_ENV === "development",
   callbacks: {
-    async session({ session, user }: any) {
+    async session({ session, user }) {
       session.user.id = user.id;
       return session;
     },

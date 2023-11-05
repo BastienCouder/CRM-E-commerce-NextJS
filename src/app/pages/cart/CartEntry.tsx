@@ -1,6 +1,5 @@
 "use client";
 
-import { CartItemWithProduct } from "@/lib/db/cart";
 import formatPrice from "@/lib/format";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,13 +8,15 @@ import QuantitySelector from "./QuantityUpdate";
 import { DeleteProduct, UpdateProductQuantity } from "./actions";
 import { RxCross2 } from "react-icons/rx";
 import Loading from "@/app/loading";
+import { CartItemsProps } from "@/lib/db/cart";
 
 interface CartEntryProps {
-  cartItem: CartItemWithProduct;
+  cartItem: CartItemsProps;
 }
 
 export default function CartEntry({ cartItem }: CartEntryProps) {
   const { product, quantity, variant } = cartItem;
+
   if (!product || (variant && !variant)) {
     return <Loading />;
   }
@@ -71,7 +72,9 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
       </div>
 
       <div className="justify-end items-center w-full flex flex-col lg:space-y-2 lg:items-start">
-        <h3 className="hidden lg:block lg:text-xs">Quantité</h3>
+        <h3 className="hidden lg:block lg:text-xs">
+          {quantity > 1 ? "Quantités" : "Quantité"}
+        </h3>
         <QuantitySelector
           initialQuantity={quantity}
           onQuantityChange={handleQuantityChange}

@@ -78,7 +78,7 @@ export default function ForgotPassword() {
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center space-y-10">
       <div className="flex flex-col items-center space-y-8">
-        <h2 className="text-3xl">Mot de passe oublié</h2>
+        <h2 className="text-3xl">Réinitialiser le mot de passe</h2>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}

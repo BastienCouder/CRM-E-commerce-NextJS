@@ -84,12 +84,9 @@ export default function CollectionPage({
     });
 
   return (
-    <div className="w-full flex flex-col xl:h-full xl:pt-10">
-      <h1 className="text-4xl md:text-start text-center md:pl-20 mt-12 xl:mt-6 mb-12">
-        Collection
-      </h1>
+    <div className="w-full flex flex-col md:pt-10">
       <div className="w-full flex flex-col xl:flex-row">
-        <div className="xl:bg-zinc-800 xl:block hidden xl:h-screen px-4">
+        <div className="bg-[#191919] xl:block hidden px-4">
           <Filter
             categories={categories}
             colors={colors}
@@ -104,10 +101,23 @@ export default function CollectionPage({
 
         <div className="mt-4 xl:w-3/4 mx-8 md:mx-20 xl:mx-0 xl:mr-12 flex flex-col xl:pl-20 ">
           <div className="mb-4 w-full flex flex-col md:flex-row gap-y-4 md:gap-0 md:justify-between items-start relative">
+            <div className="md:hidden w-full space-y-1 relative">
+              <Input
+                className="w-full md:w-[20rem] bg-zinc-800 p-2 border-none outline-none text-white"
+                type="text"
+                value={searchTerm}
+                onChange={handleSearch}
+                placeholder="Rechercher..."
+              />
+              <div className="absolute text-zinc-900 top-1.5 right-0 px-2 outline-none text-xl cursor-pointer">
+                <AiOutlineSearch size={20} className="text-white mr-1" />
+              </div>
+            </div>
+
             <div className="font-bold">
               Produits : <span>{products.length}</span>
             </div>
-            <div className="space-y-1 relative">
+            <div className="hidden md:block space-y-1 relative">
               <Input
                 className="w-full md:w-[20rem] bg-zinc-800 p-2 border-none outline-none text-white"
                 type="text"
@@ -160,7 +170,7 @@ export default function CollectionPage({
               PriceRangeChange={handlePriceRangeChange}
             />
           </div>
-          <div className="mt-4 mb-8 xl:mb-0 w-full xl:h-[38rem] md:overflow-y-auto pb-4 flex justify-center lg:justify-start flex-wrap gap-8">
+          <ul className="mt-4 mb-8 xl:mb-0 w-full pb-4 flex justify-center lg:justify-start flex-wrap gap-8">
             {filteredProducts.map((product) => (
               <CardProduct
                 product={product}
@@ -169,7 +179,7 @@ export default function CollectionPage({
                 selectedColor={selectedColor}
               />
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </div>

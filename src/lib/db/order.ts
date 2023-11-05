@@ -12,7 +12,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export type OrderWithCartDelivery = Prisma.OrderGetPayload<{
+export type OrderWithOrderItemsProps = Prisma.OrderGetPayload<{
   include: {
     orderItems: {
       include: {
@@ -37,7 +37,7 @@ export type OrderWithCartDelivery = Prisma.OrderGetPayload<{
   };
 }>;
 
-export type OrderItemWithCartDelivery = Prisma.OrderItemsGetPayload<{
+export type OrderItemsProps = Prisma.OrderItemsGetPayload<{
   include: {
     cart: {
       include: {
@@ -58,14 +58,14 @@ export type OrderItemWithCartDelivery = Prisma.OrderItemsGetPayload<{
   };
 }>;
 
-export type ShoppingOrder = OrderWithCartDelivery & {
+export type OrderProps = OrderWithOrderItemsProps & {
   //
 };
 
-export async function getOrder(): Promise<ShoppingOrder | null> {
+export async function getOrder(): Promise<OrderProps | null> {
   const session = await getServerSession(authOptions);
 
-  let order: OrderWithCartDelivery | null = null;
+  let order: OrderWithOrderItemsProps | null = null;
 
   if (session) {
     order = await prisma.order.findFirst({
@@ -100,13 +100,13 @@ export async function getOrder(): Promise<ShoppingOrder | null> {
     });
   }
 
-  return order as ShoppingOrder;
+  return order as OrderProps;
 }
 
 export async function createOrder(
   cartId: string,
   deliveryId: string
-): Promise<ShoppingOrder | null> {
+): Promise<OrderProps | null> {
   const session = await getServerSession(authOptions);
 
   if (session) {

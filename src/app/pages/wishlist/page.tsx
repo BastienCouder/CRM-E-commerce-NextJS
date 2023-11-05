@@ -3,7 +3,7 @@ import WishlistEntry from "./WishlistEntry";
 import { useServerAddToCart } from "./actions";
 
 export const metadata = {
-  title: "Your Cart - E-commerce",
+  title: "Favories - E-commerce",
 };
 
 export default async function Wishlist() {

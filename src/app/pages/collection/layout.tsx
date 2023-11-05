@@ -1,9 +1,9 @@
 export const metadata = {
-  title: "Cart E-commerce",
-  description: "Ceci est le dashboard de mon application.",
+  title: "Collection E-commerce",
+  description: "Ceci est la collection de mon application.",
 };
 
-export default async function CartLayout({
+export default async function CollectionLayout({
   children,
 }: {
   children: React.ReactNode;

@@ -1,23 +1,24 @@
 "use client";
 
-import { ShoppingOrder } from "@/lib/db/order";
+import { CartItemsProps } from "@/lib/db/cart";
+import { OrderProps } from "@/lib/db/order";
 import formatPrice, { formatDate, formatDescription } from "@/lib/format";
 import Image from "next/image";
 import { useState } from "react";
-import { AiFillCreditCard, AiFillHome, AiOutlineUser } from "react-icons/ai";
+import { AiFillCreditCard, AiOutlineUser } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
 
-interface OrderProps {
-  order: ShoppingOrder | null;
+interface OrdersProps {
+  order: OrderProps | null;
 }
 
-export default function Orders({ order }: OrderProps) {
+export default function Orders({ order }: OrdersProps) {
   const [selectedOrderIndex, setSelectedOrderIndex] = useState<number | null>(
     null
   );
 
-  function calculateSubtotal(cartItems: any): number {
-    return cartItems.reduce((acc: number, item: any) => {
+  function calculateSubtotal(cartItems: CartItemsProps[]): number {
+    return cartItems.reduce((acc: number, item: CartItemsProps) => {
       const variantPrice = item.variant ? item.variant.price : null;
       const productPrice = item.product ? item.product.price : null;
       const price =

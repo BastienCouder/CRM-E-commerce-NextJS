@@ -5,9 +5,10 @@ import { Product, ProductVariant, Category } from "@prisma/client";
 import ProductMobile from "./ProductMobile";
 import ProductDesktop from "./ProductDesktop";
 import ProductTablet from "./ProductTablet";
+import { WishlistItemsProps } from "@/lib/db/wishlist";
 
 interface ProductProps {
-  wishlistItems: any;
+  wishlistItems: WishlistItemsProps[] | undefined;
   product: Product & {
     variants: ProductVariant[];
     category: Category | null;
@@ -52,7 +53,7 @@ export default function Product({
     toggleColorVisibility();
   };
   const selectedVariant = product.variants.find(
-    (variant: any) => variant.id === selectedColor
+    (variant: ProductVariant) => variant.id === selectedColor
   );
 
   const productCategory = product ? product.category?.name : null;

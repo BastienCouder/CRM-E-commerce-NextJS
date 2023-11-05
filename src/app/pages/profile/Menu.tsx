@@ -6,13 +6,13 @@ import { BiLogIn } from "react-icons/bi";
 import { Session } from "next-auth";
 import Logout from "@/components/Logout";
 import Orders from "./Orders";
-import { ShoppingOrder } from "@/lib/db/order";
+import { OrderProps } from "@/lib/db/order";
 import { DeliveryProps } from "@/lib/db/delivery";
 import Info from "./ProfilePage";
 
 interface MenuProps {
   session: Session | null;
-  order: ShoppingOrder | null;
+  order: OrderProps | null;
   delivery: DeliveryProps | null;
 }
 

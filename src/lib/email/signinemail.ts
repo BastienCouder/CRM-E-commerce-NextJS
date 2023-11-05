@@ -1,6 +1,8 @@
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { createTransport } from "nodemailer";
+import { env } from "../env";
 
-export async function CustomsendVerificationRequest(params: any) {
+export async function CustomsendVerificationRequest(params: Params) {
   const { identifier, url, provider, theme } = params;
   const { host } = new URL(url);
   // NOTE: You are not required to use `nodemailer`, use whatever you want.
@@ -8,13 +10,13 @@ export async function CustomsendVerificationRequest(params: any) {
   const result = await transport.sendMail({
     to: identifier,
     from: provider.from,
-    subject: `Sign in to ${host}`,
+    subject: `Se connecter à ${host}`,
     text: text({ url, host }),
     html: html({ url, host, theme }),
   });
   const failed = result.rejected.concat(result.pending).filter(Boolean);
   if (failed.length) {
-    throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`);
+    throw new Error(`Email(s) (${failed.join(", ")}) n'a pas pu être envoyé`);
   }
 }
 
@@ -50,7 +52,7 @@ function html(params: { url: string; host: string; theme: Theme }) {
     td,th,div,p,a,h1,h2,h3,h4,h5,h6 {font-family: "Segoe UI", sans-serif; mso-line-height-rule: exactly;}
   </style>
   <![endif]-->
-  <title>Let's get you signed in</title>
+  <title>Se connecter</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" media="screen">
@@ -150,7 +152,7 @@ function html(params: { url: string; host: string; theme: Theme }) {
 </head>
 <body class="dark-bg-gray-900" style="margin: 0; width: 100%; padding: 0; word-break: break-word; -webkit-font-smoothing: antialiased; background-color: #F7F8FA">
   <div style="display: none">
-    Let's get you signed in
+    Se connecter
     &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;
   </div>
   <div role="article" aria-roledescription="email" aria-label="Let's get you signed in" lang="en" style="font-size: 16px; font-size: 1rem; font-size: max(16px, 1rem)">
@@ -179,12 +181,12 @@ function html(params: { url: string; host: string; theme: Theme }) {
                         <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
                             <td>
-                              <a href="https://example.com" class="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #191847">
-                                COMPANY NAME
+                              <a href='${env.NEXTAUTH_URL}' class="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #191847">
+                              NOM DE L'ENTREPRISE
                               </a>
                             </td>
                             <td align="right">
-                              <a href="https://example.com" class="dark-text-gray-900 dark-bg-gray-50 hover-bg-slate-100" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #f9fafb; padding: 7px 12px; text-align: center; font-size: 12px; font-weight: 700; color: #191847; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.06), 0px 1px 3px rgba(0, 0, 0, 0.1)">
+                              <a href='${env.NEXTAUTH_URL}' class="dark-text-gray-900 dark-bg-gray-50 hover-bg-slate-100" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #f9fafb; padding: 7px 12px; text-align: center; font-size: 12px; font-weight: 700; color: #191847; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.06), 0px 1px 3px rgba(0, 0, 0, 0.1)">
                                 <!--[if mso
                                   ]><i
                                     style="
@@ -195,7 +197,7 @@ function html(params: { url: string; host: string; theme: Theme }) {
                                     >&nbsp;</i><!
                                 [endif]-->
                                 <span style="mso-text-raise: 15px">
-                                  Account
+                                  Profil
                                   <!--[if mso
                                     ]><i
                                       style="
@@ -216,39 +218,9 @@ function html(params: { url: string; host: string; theme: Theme }) {
                               </a>
                             </td>
                           </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                  <div role="separator" style="line-height: 40px">&zwnj;</div>
-                  <table class="dark-bg-gray-600" style="width: 100%; border-radius: 8px; background-color: #fff; box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1)" cellpadding="0" cellspacing="0" role="presentation">
-                    <tr>
-                      <td class="sm-px-6" style="padding: 40px">
-                        <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
                             <td>
-                              <h1 class="dark-text-gray-50" style="margin: 0; font-size: 36px; font-weight: 700; line-height: 1; letter-spacing: -0.025em; color: #191847">
-                                Let's get you signed in
-                              </h1>
-                              <div role="separator" style="line-height: 24px">
-                                &zwnj;
-                              </div>
-                              <p class="dark-text-gray-50" style="margin: 0; font-size: 16px; line-height: 26px; color: #191847">
-                                Hi [Customer Name],
-                                <br>
-                                <br>
-                                We use this easy sign-in button so you don't
-                                have to remember or type in yet another long
-                                password.
-                              </p>
-                            </td>
-                          </tr>
-                          <tr role="separator">
-                            <td style="line-height: 24px">&zwnj;</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <a href="${url}" class="sm-block dark-text-primary-500 hover-bg-primary-600 dark-bg-gray-50 dark-hover-bg-gray-50" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #0047FF; padding: 14px 24px; text-align: center; font-size: 16px; font-weight: 700; color: #f9fafb; box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.06), 0px 4px 6px -1px rgba(0, 0, 0, 0.1)">
+                              <a href="${url}" class="sm-block dark-text-primary-500 hover-bg-primary-600 dark-bg-gray-50 dark-hover-bg-gray-50" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #0047FF; padding: 14px 24px; text-align: center; font-size: 16px; font-weight: 700; color: #262627; box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.06), 0px 4px 6px -1px rgba(0, 0, 0, 0.1)">
                                 <!--[if mso
                                   ]><i
                                     style="
@@ -258,7 +230,7 @@ function html(params: { url: string; host: string; theme: Theme }) {
                                     "
                                     >&nbsp;</i><!
                                 [endif]-->
-                                <span style="mso-text-raise: 15px">Sign in</span>
+                                <span style="mso-text-raise: 15px">Se connecter</span>
                                 <!--[if mso
                                   ]><i
                                     style="
@@ -272,14 +244,42 @@ function html(params: { url: string; host: string; theme: Theme }) {
                                 &zwnj;
                               </div>
                               <p style="margin: 0; font-size: 16px">
-                                <span style="font-weight: 700">Or copy and paste the following URL into your
-                                  browser:</span>
+                                <span style="font-weight: 700">Ou copiez et collez l'URL suivante dans votre navigateur :</span>
                                 <br>
                                 <a href="${url}" class="hover-text-primary-600 dark-text-primary-200 dark-hover-text-primary-100" style="text-decoration: none; font-size: 11px; line-height: 26px; color: #0047FF">
                                   ${url}
                                 </a>
                               </p>
                             </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <div role="separator" style="line-height: 40px">&zwnj;</div>
+                  <table class="dark-bg-gray-600" style="width: 100%; border-radius: 8px; background-color: #fff; box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1)" cellpadding="0" cellspacing="0" role="presentation">
+                    <tr>
+                      <td class="sm-px-6" style="padding: 40px">
+                        <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
+                          <tr>
+                            <td>
+                              <h1 class="dark-text-gray-50" style="margin: 0; font-size: 36px; font-weight: 700; line-height: 1; letter-spacing: -0.025em; color: #191847">
+                                Se connecter
+                              </h1>
+                              <div role="separator" style="line-height: 24px">
+                                &zwnj;
+                              </div>
+                              <p class="dark-text-gray-50" style="margin: 0; font-size: 16px; line-height: 26px; color: #191847">
+                                Bonjour,
+                                <br>
+                                <br>
+                                Nous utilisons ce bouton de connexion pour que vous n'ayez pas à vous 
+                                souvenir ou à taper un autre mot de passe trop long.
+                              </p>
+                            </td>
+                          </tr>
+                          <tr role="separator">
+                            <td style="line-height: 24px">&zwnj;</td>
                           </tr>
                         </table>
                       </td>
@@ -293,15 +293,15 @@ function html(params: { url: string; host: string; theme: Theme }) {
           <table class="sm-w-full dark-text-gray-200" style="width: 568px; color: #767E9D" cellpadding="0" cellspacing="0" role="presentation">
             <tr>
               <td style="padding-left: 40px; padding-right: 40px">
-                <a href="https://example.com" class="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #767E9D">
-                  COMPANY NAME
+                <a href="${env.NEXTAUTH_URL}" class="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #767E9D">
+                NOM DE L'ENTREPRISE
                 </a>
                 <div style="line-height: 16px">&zwnj;</div>
                 <table class="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
                   <tr>
                     <td class="sm-block sm-w-full">
-                      <a href="https://example.com" class="sm-block sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; font-weight: 700; color: #767E9D">
-                        Shop
+                      <a href="${env.NEXTAUTH_URL}/collection" class="sm-block sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; font-weight: 700; color: #767E9D">
+                        Boutique
                       </a>
                     </td>
                     <td class="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
@@ -338,8 +338,7 @@ function html(params: { url: string; host: string; theme: Theme }) {
                 </table>
                 <hr class="sm-mt-0 dark-bg-gray-800 dark-text-gray-800" style="margin-top: 12px; margin-bottom: 16px; height: 1px; border-width: 0px; background-color: #DEE2E9; color: #DEE2E9">
                 <p style="margin: 0; font-size: 12px; line-height: 16px">
-                  If you have questions or need help, don't hesitate to contact our
-                  support team!
+                Si vous avez des questions ou besoin d'aide, n'hésitez pas à contacter notre équipe d'assistance !
                   <br>
                   <br>
                   DEMOCO USA Inc, 4 World Trade Center, 150 Greenwich Street, 62nd Floor,
@@ -349,8 +348,8 @@ function html(params: { url: string; host: string; theme: Theme }) {
                 <table class="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
                   <tr>
                     <td class="sm-block sm-w-full">
-                      <a href="https://example.com" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
-                        Terms &amp; conditions
+                      <a href="${env.NEXTAUTH_URL}/mentions-legales" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                      Conditions générales
                       </a>
                     </td>
                     <td class="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
@@ -364,8 +363,8 @@ function html(params: { url: string; host: string; theme: Theme }) {
                       <!--<![endif]-->
                     </td>
                     <td class="sm-block sm-w-full">
-                      <a href="https://example.com" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
-                        Privacy policy
+                      <a href="${env.NEXTAUTH_URL}/politique-de-confidentialite" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                      Politique de confidentialité
                       </a>
                     </td>
                     <td class="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
@@ -379,8 +378,8 @@ function html(params: { url: string; host: string; theme: Theme }) {
                       <!--<![endif]-->
                     </td>
                     <td class="sm-block sm-w-full">
-                      <a href="https://example.com" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
-                        Contact us
+                      <a href="${env.NEXTAUTH_URL}" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                      Contactez nous
                       </a>
                     </td>
                     <td class="sm-block sm-px-0" style="mso-hide: all; display: none; padding-left: 12px; padding-right: 12px">
@@ -390,15 +389,6 @@ function html(params: { url: string; host: string; theme: Theme }) {
                     </td>
                   </tr>
                 </table>
-                <div style="line-height: 16px">&zwnj;</div>
-                <p style="margin: 0; font-size: 12px; line-height: 16px">
-                  This message was sent to name@domain.com. If you don't want to receive
-                  these emails from DEMOCO in the future, you can
-                  <a href="https://example.com" class="hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; font-weight: 700; color: #767E9D">edit your profile</a>
-                  or
-                  <a href="https://example.com" class="hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; font-weight: 700; color: #767E9D">unsubscribe</a>.
-                </p>
-                <div style="line-height: 40px">&zwnj;</div>
               </td>
             </tr>
           </table>

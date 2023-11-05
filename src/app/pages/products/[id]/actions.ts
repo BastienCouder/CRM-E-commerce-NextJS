@@ -2,8 +2,13 @@
 import { prisma } from "@/lib/db/prisma";
 import { revalidatePath } from "next/cache";
 
-import { ShoppingCart, createCart, getCart } from "@/lib/db/cart";
-import { createWishlist, getWishlist } from "@/lib/db/wishlist";
+import { CartItemsProps, CartProps, createCart, getCart } from "@/lib/db/cart";
+import {
+  WishlistItemsProps,
+  WishlistProps,
+  createWishlist,
+  getWishlist,
+} from "@/lib/db/wishlist";
 import { deleteItemFromWishlist } from "../../wishlist/actions";
 export async function useServerAddToCart(
   productId: string,
@@ -54,10 +59,10 @@ export async function useServerAddToCart(
 
   //Add To Cart With Variant
   async function handleAddToCartWithVariant(
-    cart: ShoppingCart,
+    cart: CartProps,
     productId: string,
     variantId: string | null,
-    articleInWishlistVariant: any
+    articleInWishlistVariant: WishlistItemsProps | undefined
   ) {
     const cartItemDataWithVariant = {
       cartId: cart.id,
@@ -79,9 +84,9 @@ export async function useServerAddToCart(
 
   //Add To Cart Without Variant
   async function handleAddToCartWithoutVariant(
-    cart: ShoppingCart,
+    cart: CartProps,
     productId: string,
-    articleInWishlist: any
+    articleInWishlist: WishlistItemsProps | undefined
   ) {
     const cartItemDataWithVariant = {
       cartId: cart.id,
@@ -103,11 +108,11 @@ export async function useServerAddToCart(
   //Update To Cart With Variant
   async function handleUpdateToCartWithVariant(
     productId: string,
-    articleInCartWithVariant: any
+    articleInCartWithVariant: CartItemsProps | undefined
   ) {
     await prisma.cartItems.update({
       where: {
-        id: articleInCartWithVariant.id,
+        id: articleInCartWithVariant?.id,
       },
       data: { quantity: { increment: 1 } },
     });
@@ -117,7 +122,7 @@ export async function useServerAddToCart(
   //Update To Cart Without Variant
   async function handleUpdateToCartWithoutVariant(
     productId: string,
-    articleInCart: any
+    articleInCart: CartItemsProps
   ) {
     await prisma.cartItems.update({
       where: {
@@ -160,7 +165,7 @@ export async function useServerAddWishlist(
 }
 
 //Delete To WishList
-async function handleDeleteFromWishlist(articleInWishlist: any) {
+async function handleDeleteFromWishlist(articleInWishlist: WishlistItemsProps) {
   await prisma.wishlistItems.delete({
     where: {
       id: articleInWishlist.id,
@@ -170,7 +175,7 @@ async function handleDeleteFromWishlist(articleInWishlist: any) {
 
 //Add To WishList
 async function handleAddToWishlist(
-  wishlist: any,
+  wishlist: WishlistProps,
   productId: string,
   variantId: string | null
 ) {

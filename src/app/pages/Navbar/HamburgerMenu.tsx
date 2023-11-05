@@ -3,11 +3,11 @@ import React, { useCallback, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import styles from "@/styles/Hamburger.module.css";
 import NavPage from "@/app/pages/Navbar/Navpage";
-import { ShoppingCart } from "@/lib/db/cart";
+import { CartProps } from "@/lib/db/cart";
 import { Session } from "next-auth";
 
 interface HamburgerMenuProps {
-  cart: ShoppingCart | null;
+  cart: CartProps | null;
   session: Session | null;
 }
 export default function HamburgerMenu({ cart, session }: HamburgerMenuProps) {

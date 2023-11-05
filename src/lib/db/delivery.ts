@@ -4,24 +4,24 @@ import { Prisma, Delivery } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export type DeliveryWithdeliveryItems = Prisma.DeliveryGetPayload<{
+export type DeliveryWithdeliveryItemsProps = Prisma.DeliveryGetPayload<{
   include: {
     deliveryItems: { include: { deliveryOption: true } };
   };
 }>;
 
-export type DeliveryItemWithdeliveryOption = Prisma.DeliveryItemsGetPayload<{
+export type DeliveryItemsProps = Prisma.DeliveryItemsGetPayload<{
   include: { deliveryOption: true };
 }>;
 
-export type DeliveryProps = DeliveryWithdeliveryItems & {
+export type DeliveryProps = DeliveryWithdeliveryItemsProps & {
   ///...
 };
 
 export async function getDelivery(): Promise<DeliveryProps | null> {
   const session = await getServerSession(authOptions);
 
-  let delivery: DeliveryWithdeliveryItems | null = null;
+  let delivery: DeliveryWithdeliveryItemsProps | null = null;
 
   if (session) {
     delivery = await prisma.delivery.findFirst({

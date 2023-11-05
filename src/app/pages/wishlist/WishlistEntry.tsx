@@ -4,12 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 import Loading from "@/app/loading";
-import { WishlistItemWithProduct } from "@/lib/db/wishlist";
 import { useServerAddToCart } from "./actions";
 import AddToCartButton from "@/components/AddToCartButton";
+import { WishlistItemsProps } from "@/lib/db/wishlist";
 
 interface WishlistEntryProps {
-  wishlistItem: WishlistItemWithProduct;
+  wishlistItem: WishlistItemsProps;
   AddToCart: (productId: string, variantId: string) => Promise<void>;
 }
 

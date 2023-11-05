@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import jwt from "jsonwebtoken";
 import PasswordResetForm from "./PasswordResetForm";
+import { env } from "@/lib/env";
 
 interface ResetPasswordPageProps {
   params: {
@@ -15,7 +16,7 @@ export default async function ResetPasswordPage({
 
   if (decodedToken) {
     try {
-      const decoded = jwt.verify(decodedToken, process.env.JWT_SECRET!);
+      const decoded = jwt.verify(decodedToken, env.JWT_SECRET);
 
       console.log(decoded);
     } catch (error) {

@@ -24,12 +24,10 @@ export default function SelectDelivery({
     string | undefined
   >(delivery?.deliveryItems.find((item) => item.Default)?.id);
 
-  const [error, setError] = useState("");
-
   const handleDeliveryChange = (id: string) => {
     setSelectedDeliveryItem(id);
     handleDefaultDeliveryItem(id);
-    toast.success("Addresse de livraison par défaut modifiée avec succès");
+    toast.success("Adresse de livraison par défaut modifiée avec succès");
   };
 
   const handleDefaultDeliveryItem = (id: string) => {
@@ -38,7 +36,7 @@ export default function SelectDelivery({
 
   const handleDeleteDeliveryItem = (id: string) => {
     DeleteDeliveryItem(id);
-    toast.success("Addresse de livraison supprimé avec succès");
+    toast.success("Adresse de livraison supprimé avec succès");
   };
 
   useEffect(() => {
@@ -48,16 +46,18 @@ export default function SelectDelivery({
   }, [delivery]);
 
   const handleSubmit = () => {
-    if (selectedDeliveryItem) {
+    if (!session) {
+      toast.error("Veuillez vous connecter");
+      return;
+    } else if (selectedDeliveryItem) {
       router.push("/cart/payment");
     } else {
-      setError("Ajouter une adresse de livraison");
+      toast.error("Ajouter une adresse de livraison");
     }
   };
   return (
     <>
       <ul className="space-y-4 w-[35rem]">
-        {error ? <small className="text-red-500">{error}</small> : null}
         {session &&
           delivery?.deliveryItems &&
           delivery.deliveryItems.map((deliveryItem) => (

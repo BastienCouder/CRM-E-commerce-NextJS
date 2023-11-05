@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import styles from "@/styles/Like.module.css";
+import { WishlistItemsProps } from "@/lib/db/wishlist";
 
 interface AddToWishlistProps {
   handleColorChange?: (color: string) => void;
@@ -10,7 +11,7 @@ interface AddToWishlistProps {
     productId: string,
     variantId: string | null
   ) => Promise<void>;
-  wishlistItems?: any;
+  wishlistItems?: WishlistItemsProps[];
 }
 
 export default function AddToWishlist({
@@ -32,7 +33,8 @@ export default function AddToWishlist({
   };
 
   const isProductInWishlist = wishlistItems?.find(
-    (item: any) => item.productId === productId && item.variantId === variantId
+    (item: WishlistItemsProps) =>
+      item.productId === productId && item.variantId === variantId
   );
   if (
     isProductInWishlist &&

@@ -79,7 +79,7 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
       console.error("Une erreur s'est produite lors de la connexion : ", error);
       throw error;
     }
-  }, [form]);
+  }, [form, router]);
 
   const register = useCallback(async () => {
     const formData = new FormData();
@@ -90,7 +90,7 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
     try {
       await registerForm(formData);
       login();
-    } catch (error: any) {
+    } catch (error) {
       console.error("An error occurred during registration:", error);
       if (error instanceof Error) {
         return;

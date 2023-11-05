@@ -12,9 +12,10 @@ import { useServerAddToCart, useServerAddWishlist } from "./actions";
 import { BsCaretDownFill } from "react-icons/bs";
 import { useAnimationContext } from "@/context/AnimationContext";
 import styles from "@/styles/Utils.module.css";
+import { WishlistItemsProps } from "@/lib/db/wishlist";
 
 interface ProductMobileProps {
-  wishlistItems: any;
+  wishlistItems: WishlistItemsProps[] | undefined;
   productCategory: string | null | undefined;
 
   products: {
