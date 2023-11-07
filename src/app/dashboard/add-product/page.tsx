@@ -1,12 +1,11 @@
-import FormSubmitButton from "@/components/SubmitButton";
 import { prisma } from "@/lib/db/prisma";
 import { Category } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { notFound, redirect } from "next/navigation";
 import { cache } from "react";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
-import { checkAdminRole } from "@/lib/admin";
-import Input from "@/components/Input";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export const metadata = {
   title: "Add Product - E-commerce",
@@ -14,18 +13,18 @@ export const metadata = {
 };
 
 const getCategory = cache(async () => {
-  const category = await prisma.category.findM();
+  const category = await prisma.category.findMany();
   if (!category) notFound();
   return category;
 });
 
 export default async function AddProductPage() {
   const session = await getServerSession(authOptions);
-  const updatedSession = checkAdminRole(session);
+  // const updatedSession = checkAdminRole(session);
 
-  if (updatedSession && updatedSession.user.role !== "admin") {
-    redirect("/");
-  }
+  // if (updatedSession && updatedSession.user.role !== "admin") {
+  //   redirect("/");
+  // }
 
   const categories = await getCategory();
 
@@ -55,7 +54,6 @@ export default async function AddProductPage() {
         <form action={addProduct} className="space-y-4 w-[40rem]">
           <div className="flex space-x-4">
             <Input
-              label="Name"
               required={true}
               id="name"
               type="text"
@@ -64,7 +62,6 @@ export default async function AddProductPage() {
             />
             <Input
               required={true}
-              label="Price"
               id="price"
               type="number"
               name="price"
@@ -74,7 +71,6 @@ export default async function AddProductPage() {
 
           <Input
             required={true}
-            label="ImageUrl"
             id="imageUrl"
             type="url"
             name="imageUrl"
@@ -106,7 +102,7 @@ export default async function AddProductPage() {
               className="w-full "
             ></textarea>
           </div>
-          <FormSubmitButton>Add Product</FormSubmitButton>
+          <Button>Add Product</Button>
         </form>
       </div>
     </>

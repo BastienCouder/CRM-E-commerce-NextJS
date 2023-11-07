@@ -1,7 +1,6 @@
 import Navbar from "@/app/dashboard/Navbar/Navbar";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { checkAdminRole } from "@/lib/admin";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 export const metadata = {
   title: "Dashboard E-commerce",
@@ -13,12 +12,12 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
-  const AdminSession = checkAdminRole(session);
+  // const session = await getServerSession(authOptions);
+  // const AdminSession = checkAdminRole(session);
 
-  if (!session || (AdminSession && AdminSession.user.role !== "admin")) {
-    redirect("/");
-  }
+  // if (!session || (AdminSession && AdminSession.user.role !== "admin")) {
+  //   redirect("/");
+  // }
 
   return (
     <div className="flex">

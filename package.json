@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -43,6 +43,7 @@
     "react-dom": "experimental",
     "react-hook-form": "^7.47.0",
     "react-icons": "^4.11.0",
+    "react-swipeable": "^7.0.1",
     "sonner": "^1.0.3",
     "stripe": "^14.2.0",
     "tailwind-merge": "^2.0.0",

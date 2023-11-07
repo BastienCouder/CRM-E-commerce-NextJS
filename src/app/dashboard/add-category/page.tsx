@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/db/prisma";
 import { redirect } from "next/navigation";
-import Input from "@/components/Input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export const metadata = {
   title: "Add Category - E-commerce",
@@ -28,8 +28,6 @@ export default async function AddCategoryPage() {
         <h1 className="text-lg mb-3">Add Category</h1>
         <form action={addCategory} className="space-y-4 w-[40rem] mb-4">
           <Input
-            autoComplete={true}
-            label="Category"
             required={true}
             id="category"
             type="text"

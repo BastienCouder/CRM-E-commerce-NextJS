@@ -213,7 +213,7 @@ export default function ProductTablet({
                   transition={{ delay: 0.2, duration: 0.6 }}
                   className="flex uppercase text-xs"
                 >
-                  <span>{selectedVariant?.colorsId}</span>
+                  <span>{selectedVariant?.name}</span>
                 </motion.p>
               </div>
               <div
@@ -346,7 +346,7 @@ export default function ProductTablet({
                   }}
                   className="flex uppercase text-xs"
                 >
-                  <span>{selectedVariant?.colorsId}</span>
+                  <span>{selectedVariant?.name}</span>
                 </motion.p>
               </div>
               <div
@@ -463,7 +463,7 @@ export default function ProductTablet({
                   className="cursor-pointer"
                   onClick={() => handleColorChange(variant.id)}
                 >
-                  {variant.colorsId}
+                  {variant.name}
                 </motion.li>
               ))}
             </ul>

@@ -399,7 +399,7 @@ export default function ProductMobile({
                   className="cursor-pointer"
                   onClick={() => handleColorChange(variant.id)}
                 >
-                  {variant.colorsId}
+                  {variant.name}
                 </motion.li>
               ))}
             </ul>
