@@ -47,9 +47,7 @@ export default function WishlistEntry({ wishlistItem }: WishlistEntryProps) {
           )}
           <Link href={"/products/" + product.id}>
             <p className="font-bold capitalize">{product.name}</p>
-            {variant && (
-              <p className="text-sm capitalize">{variant.colorsId}</p>
-            )}
+            {variant && <p className="text-sm capitalize">{variant.name}</p>}
           </Link>
         </div>
       </div>

@@ -13,20 +13,7 @@ interface ProductProps {
     variants: ProductVariant[];
     category: Category | null;
   };
-  products: {
-    id: string;
-    description: string;
-    imageUrl: string;
-    name: string;
-    price: number;
-    createdAt: Date;
-    updatedAt: Date;
-    categoryId: string | null;
-    category: {
-      id: string;
-      name: string;
-    } | null;
-  }[];
+  products: any;
 }
 
 export default function Product({

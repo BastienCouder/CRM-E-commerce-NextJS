@@ -71,7 +71,7 @@ export default function ProductDesktop({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.2, delay: 0.4 }}
-              className="absolute w-[15rem] space-y-6"
+              className="absolute w-[17rem] space-y-6"
             >
               {products.map((product) => {
                 if (product.category?.name === productCategory) {
@@ -111,7 +111,7 @@ export default function ProductDesktop({
               })}
             </motion.div>
           ) : (
-            <div className="absolute w-[15rem] space-y-6">
+            <div className="absolute w-[17rem] space-y-6">
               {products.map((product) => {
                 if (product.category?.name === productCategory) {
                   const productPath = `/products/${product.id}`;
@@ -136,7 +136,7 @@ export default function ProductDesktop({
                         </motion.div>
                       ) : (
                         <>
-                          <div className="text-center w-full mx-8 -mt-3 font-Noto uppercase">
+                          <div className="text-center text-sm w-full mx-8 -mt-3 font-Noto uppercase">
                             {product.name}
                           </div>
                         </>
@@ -164,7 +164,7 @@ export default function ProductDesktop({
                   Description
                   <span className="w-[8rem] h-[1px] bg-secondary absolute bottom-4 ml-4"></span>
                 </h2>
-                <p className="text-end">{product.description}</p>
+                <p className="text-end w-5/6">{product.description}</p>
               </motion.div>
             </div>
           ) : (
@@ -185,7 +185,7 @@ export default function ProductDesktop({
                     duration: 0.2,
                     delay: 0.1,
                   }}
-                  className="text-end"
+                  className="text-end w-5/6"
                 >
                   {product.description}
                 </motion.p>
@@ -349,7 +349,7 @@ export default function ProductDesktop({
                     transition={{ delay: 0.2, duration: 0.2 }}
                     className="uppercase text-xs"
                   >
-                    {selectedVariant?.colorsId}
+                    {selectedVariant?.name}
                   </motion.p>
                 </motion.div>
                 <motion.div
@@ -405,7 +405,7 @@ export default function ProductDesktop({
                       onClick={toggleColorVisibility}
                       className="cursor-pointer text-3xl justify-center items-center relative flex row-reverse"
                     >
-                      Couleur{" "}
+                      Couleur
                       <BsCaretDownFill
                         size={15}
                         className={`ml-2 ${
@@ -423,7 +423,7 @@ export default function ProductDesktop({
                     transition={{ duration: 0.4 }}
                     className="uppercase text-xs"
                   >
-                    {selectedVariant?.colorsId}
+                    {selectedVariant?.name}
                   </motion.p>
                 </motion.div>
                 <div className="flex flex-col mt-8 gap-y-8">
@@ -504,7 +504,7 @@ export default function ProductDesktop({
                       handleColorChange(variant.id);
                     }}
                   >
-                    {variant.colorsId}
+                    {variant.name}
                   </motion.li>
                 ))}
               </ul>

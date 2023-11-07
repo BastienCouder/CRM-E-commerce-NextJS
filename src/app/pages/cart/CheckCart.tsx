@@ -54,12 +54,12 @@ export default function CheckCart({ cart }: CheckCartProps) {
             {formatPrice(cart?.subtotal || 0, "EUR")}
           </p>
         </div>
-        <div className="bg-secondary w-full h-px"></div>
+        <div className="bg-white w-full h-px"></div>
         <div className="flex space-x-4 items-center">
           <p className="capitalize">Expédition</p>
           <p className="text-sm text-white">Gratuite</p>
         </div>
-        <div className="bg-secondary w-full h-px"></div>
+        <div className="bg-white w-full h-px"></div>
         <div className="flex justify-between">
           <div className="flex items-end space-x-2">
             <p className="capitalize font-bold">total</p>

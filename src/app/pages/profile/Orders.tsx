@@ -1,5 +1,6 @@
 "use client";
 
+import { Separator } from "@/components/ui/separator";
 import { CartItemsProps } from "@/lib/db/cart";
 import { OrderProps } from "@/lib/db/order";
 import formatPrice, { formatDate, formatDescription } from "@/lib/format";
@@ -153,7 +154,7 @@ export default function Orders({ order }: OrdersProps) {
                                       alt={cartItems.product.name}
                                       width={400}
                                       height={400}
-                                      className="rounded-lg w-[90px] h-[90px]"
+                                      className="rounded-lg w-[90px] h-[90px] object-contain"
                                     />
                                   ) : (
                                     <Image
@@ -161,7 +162,7 @@ export default function Orders({ order }: OrdersProps) {
                                       alt={cartItems.product.name}
                                       width={400}
                                       height={400}
-                                      className="rounded-lg w-[90px] h-[90px]"
+                                      className="rounded-lg w-[90px] h-[90px] object-contain"
                                     />
                                   )}
                                 </div>
@@ -173,7 +174,7 @@ export default function Orders({ order }: OrdersProps) {
                                       <>
                                         <span>-</span>
                                         <span className="text-sm">
-                                          {cartItems.variant.colorsId}
+                                          {cartItems.variant.name}
                                         </span>
                                       </>
                                     )}

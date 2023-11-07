@@ -50,7 +50,9 @@ export default function CardProduct({
             </figure>
           </Link>
           <div className="w-full space-y-2 relative">
-            {isNew && <Badge className="absolute left-0 md:left-6">New</Badge>}
+            {isNew && (
+              <Badge className="absolute left-0 md:left-2">Nouveau</Badge>
+            )}
 
             <h2 className="text-2xl text-center">{product.name}</h2>
 

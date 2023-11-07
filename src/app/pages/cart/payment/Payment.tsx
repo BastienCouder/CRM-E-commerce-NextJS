@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 
 interface PaymentProps {
@@ -20,7 +21,7 @@ export default function Payment({
 
   return (
     <>
-      <button
+      <Button
         onClick={() => {
           startTransition(async () => {
             await handleStripePayment(cartId, deliveryId);
@@ -28,8 +29,8 @@ export default function Payment({
           });
         }}
       >
-        creer order
-      </button>
+        Paiement
+      </Button>
     </>
   );
 }

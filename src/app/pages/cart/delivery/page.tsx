@@ -15,7 +15,7 @@ export default async function Delivery() {
   const session = await getServerSession(authOptions);
   const delivery = await getDelivery();
 
-  if (!session || !delivery) {
+  if (!delivery) {
     <Loading />;
   }
   return (

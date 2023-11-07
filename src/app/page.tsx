@@ -66,7 +66,7 @@ export default function Home() {
           transition={{ delay: 0.2, duration: 0.4 }}
           className="z-20 mt-12 md:text-7xl h-0 -ml-32"
         >
-          Titre de l&apos;application
+          Titre du site web
         </motion.h1>
         <Newsletter />
 

@@ -82,10 +82,10 @@ export default function Newsletter() {
       initial={{ opacity: 0, x: 60 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.4, duration: 0.4 }}
-      className="fixed right-0 bottom-24 flex bg-primary/80 p-4 md:p-3 md:space-x-8 space-y-4"
+      className="fixed right-0 bottom-24 flex border-b p-4 md:p-3 md:space-x-8 space-y-4"
     >
       {showForm ? (
-        <div className="w-[30rem] flex space-x-8 p-4">
+        <div className="w-[30rem] bg-primary flex space-x-8 p-4">
           <div className="w-full space-y-4">
             <div
               className="flex gap-2 items-center cursor-pointer"

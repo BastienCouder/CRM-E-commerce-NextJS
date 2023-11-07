@@ -31,14 +31,33 @@ async function main() {
   //   },
   // });
   // console.log(category);
-  const colorId = "6548fc162e085cb98f53e3a2";
-  const categoryId = "6533e2ec992cbcd6500334bc";
-  const productId = "6548fe48162c51153c648d0c";
-  const product = await prisma.product.update({
-    where: {
-      id: productId,
-    },
+  const colorId = "6543ebe837fe0b8d20918e67";
+  const categoryId = "653aa6eef14338a1dca7ff19";
+  // const productId = "6548fe48162c51153c648d0c";
+  // const product = await prisma.product.update({
+  //   where: {
+  //     id: productId,
+  //   },
+  //   data: {
+  //     category: {
+  //       connect: {
+  //         id: categoryId,
+  //       },
+  //     },
+  //     color: {
+  //       connect: {
+  //         id: colorId,
+  //       },
+  //     },
+  //   },
+  // });
+  await prisma.product.create({
     data: {
+      name: "Produit 1",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+      price: 9000,
+      imageUrl: "/images/montre1.png",
       category: {
         connect: {
           id: categoryId,
@@ -49,37 +68,27 @@ async function main() {
           id: colorId,
         },
       },
+      variants: {
+        create: [
+          {
+            name: "or",
+            price: 9000,
+            imageUrl: "/images/montre1.png",
+          },
+          {
+            name: "argent",
+            price: 9000,
+            imageUrl: "/images/variants/montre1-argent.png",
+          },
+          {
+            name: "rose",
+            price: 9000,
+            imageUrl: "/images/variants/montre1-rose.png",
+          },
+        ],
+      },
     },
   });
-  console.log(product);
-  // const product = await prisma.product.create({
-  //   data: {
-  //     name: "Produit 16",
-  //     description:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
-  //     price: 20000,
-  //     imageUrl: "/images/montre16.png",
-  //     variants: {
-  //       create: [
-  //         {
-  //           color: "or",
-  //           price: 20000,
-  //           imageUrl: "/images/montre16.png",
-  //         },
-  //         {
-  //           color: "bronze",
-  //           price: 19000,
-  //           imageUrl: "/images/variants/montre16-bronze.png",
-  //         },
-  //         // {
-  //         //   color: "rose",
-  //         //   price: 800,
-  //         //   imageUrl: "/images/variants/montre1-rose.png",
-  //         // },
-  //       ],
-  //     },
-  //   },
-  // });
   // const deliveryOptions = [
   //   {
   //     name: "Livraison Standard",
