@@ -127,6 +127,7 @@ async function updateCart(cartId: string, userId: string) {
     });
   }
 }
+
 import "@stripe/stripe-js";
 import { loadStripe } from "@stripe/stripe-js/pure";
 import { createStripeSession } from "@/app/api/create-stripe-session/route";

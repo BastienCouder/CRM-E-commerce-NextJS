@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 
-interface PaymentProps {
+interface AddToOrderProps {
   cartId: string;
   deliveryId: string;
   handleStripePayment: (productId: string, variantId: string) => Promise<void>;
@@ -11,12 +11,12 @@ interface PaymentProps {
     variantId: string
   ) => Promise<void>;
 }
-export default function Payment({
+export default function AddToOrder({
   cartId,
   deliveryId,
   handleStripePayment,
   createOrderIncrementation,
-}: PaymentProps) {
+}: AddToOrderProps) {
   const [isPending, startTransition] = useTransition();
 
   return (
