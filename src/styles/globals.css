@@ -44,12 +44,7 @@
 body {
   color: rgb(var(--foreground-rgb));
   /* background: rgb(var(--background-rgb)); */
-  background: #141414;
-  background: linear-gradient(
-    18deg,
-    rgba(22, 22, 23, 1) 0%,
-    rgba(13, 12, 12, 1) 100%
-  );
+  background: linear-gradient(18deg, #18181b 0%, #121214 100%);
   min-height: 100vh;
   font-family: "Noto";
 }

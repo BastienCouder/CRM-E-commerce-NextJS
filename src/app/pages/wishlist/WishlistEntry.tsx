@@ -31,7 +31,7 @@ export default function WishlistEntry({ wishlistItem }: WishlistEntryProps) {
                 alt={product.name}
                 width={200}
                 height={200}
-                className="rounded-lg w-[70px] h-[70px] border-white border-[1px]"
+                className="rounded-lg w-[70px] h-[70px] border-white border-[1px] object-contain"
               />
             </Link>
           ) : (
@@ -41,13 +41,15 @@ export default function WishlistEntry({ wishlistItem }: WishlistEntryProps) {
                 alt={product.name}
                 width={200}
                 height={200}
-                className="rounded-lg w-[70px] h-[70px] border-white border-[1px]"
+                className="rounded-lg w-[70px] h-[70px] border-white border-[1px] object-contain"
               />
             </Link>
           )}
           <Link href={"/products/" + product.id}>
             <p className="font-bold capitalize">{product.name}</p>
-            {variant && <p className="text-sm capitalize">{variant.color}</p>}
+            {variant && (
+              <p className="text-sm capitalize">{variant.colorsId}</p>
+            )}
           </Link>
         </div>
       </div>

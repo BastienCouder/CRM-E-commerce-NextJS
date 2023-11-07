@@ -35,10 +35,10 @@ export default function Menu({ session, order, delivery }: MenuProps) {
             Bonjour {session?.user?.name}
           </h1>
 
-          <div className="flex flex-col gap-2 w-72 text-zinc-500">
+          <div className="flex flex-col gap-2 w-72 text-white">
             <div
               onClick={() => handleMenuItemClick("orders")}
-              className={`cursor-pointer flex items-center gap-4 p-4 pl-0 border-b-2 border-zinc-800 ${
+              className={`cursor-pointer flex items-center gap-4 p-4 pl-0 border-b-2 border-secondary ${
                 selectedMenuItem === "orders" ? "text-white" : ""
               }`}
             >
@@ -49,7 +49,7 @@ export default function Menu({ session, order, delivery }: MenuProps) {
             </div>
             <div
               onClick={() => handleMenuItemClick("userInfo")}
-              className={`cursor-pointer flex items-center gap-4 p-4 pl-0 border-b-2 border-zinc-800 ${
+              className={`cursor-pointer flex items-center gap-4 p-4 pl-0 border-b-2 border-secondary ${
                 selectedMenuItem === "userInfo" ? "text-white" : ""
               }`}
             >
@@ -59,7 +59,7 @@ export default function Menu({ session, order, delivery }: MenuProps) {
               <p>mes informations</p>
             </div>
             <div
-              className={`cursor-pointer flex items-center gap-4 p-4 pl-0 border-b-2 border-zinc-800`}
+              className={`cursor-pointer flex items-center gap-4 p-4 pl-0 border-b-2 border-secondary`}
             >
               <span>
                 <BiLogIn size={24} />

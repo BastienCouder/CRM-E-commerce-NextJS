@@ -90,11 +90,11 @@ export default function ProductDesktop({
                           transition={{ duration: 0.2 }}
                           className="w-full flex justify-center"
                         >
-                          <div className="bg-white h-[1px] w-1/3"></div>
+                          <div className="bg-secondary h-[1px] w-1/3"></div>
                           <div className="text-center w-full mx-4 -mt-3 font-Noto uppercase">
                             {product.name}
                           </div>
-                          <div className="bg-white h-[1px] w-1/3"></div>
+                          <div className="bg-secondary h-[1px] w-1/3"></div>
                         </motion.div>
                       ) : (
                         <>
@@ -128,11 +128,11 @@ export default function ProductDesktop({
                           transition={{ duration: 0.2 }}
                           className="w-full flex justify-center"
                         >
-                          <div className="bg-white h-[1px] w-1/3"></div>
+                          <div className="bg-secondary h-[1px] w-1/3"></div>
                           <div className="text-center w-full mx-4 -mt-3 font-Noto uppercase">
                             {product.name}
                           </div>
-                          <div className="bg-white h-[1px] w-1/3"></div>
+                          <div className="bg-secondary h-[1px] w-1/3"></div>
                         </motion.div>
                       ) : (
                         <>
@@ -162,7 +162,7 @@ export default function ProductDesktop({
               >
                 <h2 className="text-3xl relative">
                   Description
-                  <span className="w-[8rem] h-[1px] bg-white absolute bottom-4 ml-4"></span>
+                  <span className="w-[8rem] h-[1px] bg-secondary absolute bottom-4 ml-4"></span>
                 </h2>
                 <p className="text-end">{product.description}</p>
               </motion.div>
@@ -172,7 +172,7 @@ export default function ProductDesktop({
               <div className="flex flex-col items-end gap-4">
                 <h2 className="text-3xl relative">
                   Description
-                  <span className="w-[8rem] h-[1px] bg-white absolute bottom-4 ml-4"></span>
+                  <span className="w-[8rem] h-[1px] bg-secondary absolute bottom-4 ml-4"></span>
                 </h2>
                 <motion.p
                   initial={{ opacity: 0, x: 20 }}
@@ -212,7 +212,7 @@ export default function ProductDesktop({
                       alt={product.name}
                       width={800}
                       height={2000}
-                      className="z-20 h-[30rem] object-cover absolute top-10"
+                      className="z-20 h-[30rem] object-contain absolute top-10"
                     />
                   ) : (
                     <Image
@@ -220,13 +220,13 @@ export default function ProductDesktop({
                       alt={product.name}
                       width={800}
                       height={2000}
-                      className="z-20 h-[30rem] object-cover absolute top-10"
+                      className="z-20 h-[30rem] object-contain absolute top-10"
                     />
                   )}
                 </motion.figure>
 
                 <motion.div
-                  className="font-Bodoni absolute text-[5rem] top-48 -left-32  uppercase text-white/5"
+                  className="font-Bodoni absolute text-[5rem] top-48 -left-32  uppercase text-secondary/5"
                   initial={{ opacity: 0, x: 50, rotate: -90 }}
                   animate={{ opacity: 1, x: 0, rotate: -90 }}
                   transition={{ duration: 0.6 }}
@@ -240,11 +240,11 @@ export default function ProductDesktop({
                   className="flex justify-center items-center flex-col gap-y-4"
                 >
                   <div className="w-full flex justify-center pb-8 px-16">
-                    <div className="bg-white h-[1px] w-1/2"></div>
+                    <div className="bg-secondary h-[1px] w-1/2"></div>
                     <h1 className="text-center w-full mx-4 -mt-3 font-Noto uppercase">
                       {product.name}
                     </h1>
-                    <div className="bg-white h-[1px] w-1/2"></div>
+                    <div className="bg-secondary h-[1px] w-1/2"></div>
                   </div>
                   <h2 className="text-center font-bold w-full mx-4 -mt-3 font-Noto uppercase">
                     {product.category?.name}
@@ -264,7 +264,7 @@ export default function ProductDesktop({
                       alt={product.name}
                       width={800}
                       height={2000}
-                      className="z-20 h-[30rem] object-cover absolute top-10"
+                      className="z-20 h-[30rem] object-contain absolute top-10"
                     />
                   ) : (
                     <Image
@@ -272,13 +272,13 @@ export default function ProductDesktop({
                       alt={product.name}
                       width={800}
                       height={2000}
-                      className="z-20 h-[30rem] object-cover absolute top-10"
+                      className="z-20 h-[30rem] object-contain absolute top-10"
                     />
                   )}
                 </figure>
 
                 <motion.div
-                  className="font-Bodoni absolute text-[5rem] top-48 -left-32  uppercase text-white/5"
+                  className="font-Bodoni absolute text-[5rem] top-48 -left-32  uppercase text-secondary/5"
                   initial={{ opacity: 0, x: 20, rotate: -90 }}
                   animate={{ opacity: 1, x: 0, rotate: -90 }}
                   transition={{
@@ -294,7 +294,7 @@ export default function ProductDesktop({
                 </motion.div>
                 <div className="flex justify-center items-center flex-col gap-y-4">
                   <div className="w-full flex justify-center pb-8 px-16">
-                    <div className="bg-white h-[1px] w-1/2"></div>
+                    <div className="bg-secondary h-[1px] w-1/2"></div>
                     <motion.h1
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -310,7 +310,7 @@ export default function ProductDesktop({
                     >
                       {product.name}
                     </motion.h1>
-                    <div className="bg-white h-[1px] w-1/2"></div>
+                    <div className="bg-secondary h-[1px] w-1/2"></div>
                   </div>
                   <h2 className="text-center font-bold w-full mx-4 -mt-3 font-Noto uppercase">
                     {product.category?.name}
@@ -339,7 +339,7 @@ export default function ProductDesktop({
                           showColor ? `${styles.rotate}` : ""
                         } : ""}`}
                       />
-                      <span className="w-[8rem] h-[1px] bg-white absolute bottom-4 -left-[8.8rem]"></span>
+                      <span className="w-[8rem] h-[1px] bg-secondary absolute bottom-4 -left-[8.8rem]"></span>
                     </h2>
                   ) : null}
                   <motion.p
@@ -349,7 +349,7 @@ export default function ProductDesktop({
                     transition={{ delay: 0.2, duration: 0.2 }}
                     className="uppercase text-xs"
                   >
-                    {selectedVariant?.color}
+                    {selectedVariant?.colorsId}
                   </motion.p>
                 </motion.div>
                 <motion.div
@@ -412,7 +412,7 @@ export default function ProductDesktop({
                           showColor ? `${styles.rotate}` : ""
                         } : ""}`}
                       />
-                      <span className="w-[8rem] h-[1px] bg-white absolute bottom-4 -left-[8.8rem]"></span>
+                      <span className="w-[8rem] h-[1px] bg-secondary absolute bottom-4 -left-[8.8rem]"></span>
                     </h2>
                   ) : null}
 
@@ -423,7 +423,7 @@ export default function ProductDesktop({
                     transition={{ duration: 0.4 }}
                     className="uppercase text-xs"
                   >
-                    {selectedVariant?.color}
+                    {selectedVariant?.colorsId}
                   </motion.p>
                 </motion.div>
                 <div className="flex flex-col mt-8 gap-y-8">
@@ -480,7 +480,7 @@ export default function ProductDesktop({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="z-20 fixed top-0 h-screen w-screen flex justify-center items-center bg-zinc-900/90"
+              className="z-20 fixed top-0 h-screen w-screen flex justify-center items-center bg-primary/90"
             >
               <div
                 onClick={toggleColorVisibility}
@@ -504,7 +504,7 @@ export default function ProductDesktop({
                       handleColorChange(variant.id);
                     }}
                   >
-                    {variant.color}
+                    {variant.colorsId}
                   </motion.li>
                 ))}
               </ul>

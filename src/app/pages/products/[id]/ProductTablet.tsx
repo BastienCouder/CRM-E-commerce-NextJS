@@ -83,11 +83,11 @@ export default function ProductTablet({
               >
                 <div
                   onClick={toggleColorVisibility}
-                  className="cursor-pointer h-12 w-12 rounded-full bg-white/5 flex justify-center items-center"
+                  className="cursor-pointer h-12 w-12 rounded-full bg-secondary/5 flex justify-center items-center"
                 >
                   <AiOutlinePlus size={20} />
                 </div>
-                <p className="absolute top-20 -right-1 -rotate-90 text-white/50">
+                <p className="absolute top-20 -right-1 -rotate-90 text-secondary/50">
                   Couleur
                 </p>
               </motion.div>
@@ -121,7 +121,7 @@ export default function ProductTablet({
             </motion.figure>
 
             <motion.div
-              className="font-Bodoni absolute text-[5.5rem] top-44 -left-24 sm:-left-24 uppercase text-white/5"
+              className="font-Bodoni absolute text-[5.5rem] top-44 -left-24 sm:-left-24 uppercase text-secondary/5"
               initial={{ opacity: 0, x: 50, rotate: -90 }}
               animate={{ opacity: 1, x: 0, rotate: -90 }}
               transition={{ delay: 0.4, duration: 0.6 }}
@@ -140,11 +140,11 @@ export default function ProductTablet({
               >
                 <div
                   onClick={toggleColorVisibility}
-                  className="cursor-pointer h-12 w-12 rounded-full bg-white/5 flex justify-center items-center"
+                  className="cursor-pointer h-12 w-12 rounded-full bg-secondary/5 flex justify-center items-center"
                 >
                   <AiOutlinePlus size={20} />
                 </div>
-                <p className="absolute top-20 -right-1 -rotate-90 text-white/50">
+                <p className="absolute top-20 -right-1 -rotate-90 text-secondary/50">
                   Couleur
                 </p>
               </motion.div>
@@ -174,7 +174,7 @@ export default function ProductTablet({
             </figure>
 
             <motion.div
-              className="font-Bodoni absolute text-[5.5rem] top-44 -left-24 sm:-left-24 uppercase text-white/5"
+              className="font-Bodoni absolute text-[5.5rem] top-44 -left-24 sm:-left-24 uppercase text-secondary/5"
               initial={{ opacity: 0, x: 20, rotate: -90 }}
               animate={{ opacity: 1, x: 0, rotate: -90 }}
               transition={{
@@ -213,14 +213,14 @@ export default function ProductTablet({
                   transition={{ delay: 0.2, duration: 0.6 }}
                   className="flex uppercase text-xs"
                 >
-                  <span>{selectedVariant?.color}</span>
+                  <span>{selectedVariant?.colorsId}</span>
                 </motion.p>
               </div>
               <div
                 className="flex flex-col space-y-3 cursor-pointer"
                 onClick={toggleCategoriesVisibility}
               >
-                <span className="h-[1.5px] bg-white/70 px-24"></span>
+                <span className="h-[1.5px] bg-secondary/70 px-24"></span>
                 <h2 className="flex gap-1 items-center text-start text-sm w-full font-Noto uppercase">
                   Catégories -
                   <span className="capitalize text-sm">
@@ -233,7 +233,7 @@ export default function ProductTablet({
                     } : ""}`}
                   />
                 </h2>
-                <span className="h-[1.5px] bg-white/70 px-24"></span>
+                <span className="h-[1.5px] bg-secondary/70 px-24"></span>
               </div>
             </motion.div>
             <motion.div
@@ -245,7 +245,7 @@ export default function ProductTablet({
             >
               <h2 className="text-3xl relative">
                 Description
-                <span className="w-[10rem] h-[1px] bg-white absolute bottom-4 -left-48"></span>
+                <span className="w-[10rem] h-[1px] bg-secondary absolute bottom-4 -left-48"></span>
               </h2>
               <p className="w-full pr-12">{product.description}</p>
             </motion.div>
@@ -346,14 +346,14 @@ export default function ProductTablet({
                   }}
                   className="flex uppercase text-xs"
                 >
-                  <span>{selectedVariant?.color}</span>
+                  <span>{selectedVariant?.colorsId}</span>
                 </motion.p>
               </div>
               <div
                 className="flex flex-col space-y-3 cursor-pointer"
                 onClick={toggleCategoriesVisibility}
               >
-                <span className="h-[1.5px] bg-white/70 px-24"></span>
+                <span className="h-[1.5px] bg-secondary/70 px-24"></span>
                 <h2 className="flex gap-1 items-center text-start text-sm w-full font-Noto uppercase">
                   Catégories -
                   <span className="capitalize text-sm">
@@ -366,13 +366,13 @@ export default function ProductTablet({
                     } : ""}`}
                   />
                 </h2>
-                <span className="h-[1.5px] bg-white/70 px-24"></span>
+                <span className="h-[1.5px] bg-secondary/70 px-24"></span>
               </div>
             </div>
             <div className="flex flex-col items-start gap-4">
               <h2 className="text-3xl relative">
                 Description
-                <span className="w-[10rem] h-[1px] bg-white absolute bottom-4 -left-48"></span>
+                <span className="w-[10rem] h-[1px] bg-secondary absolute bottom-4 -left-48"></span>
               </h2>
               <motion.p
                 initial={{ opacity: 0, x: -20 }}
@@ -441,7 +441,7 @@ export default function ProductTablet({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
-            className="z-20 fixed top-0 h-screen w-screen flex justify-center items-center bg-zinc-900/80"
+            className="z-20 fixed top-0 h-screen w-screen flex justify-center items-center bg-primary/80"
           >
             <div
               onClick={toggleColorVisibility}
@@ -463,7 +463,7 @@ export default function ProductTablet({
                   className="cursor-pointer"
                   onClick={() => handleColorChange(variant.id)}
                 >
-                  {variant.color}
+                  {variant.colorsId}
                 </motion.li>
               ))}
             </ul>
@@ -477,7 +477,7 @@ export default function ProductTablet({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="z-20 fixed top-0 h-screen w-screen flex justify-center items-center bg-zinc-900/90"
+            className="z-20 fixed top-0 h-screen w-screen flex justify-center items-center bg-primary/90"
           >
             <div
               onClick={toggleCategoriesVisibility}
@@ -507,11 +507,11 @@ export default function ProductTablet({
                       >
                         {pathname === productPath ? (
                           <>
-                            <div className="bg-white h-[1px] w-1/3"></div>
+                            <div className="bg-secondary h-[1px] w-1/3"></div>
                             <div className="text-center w-full mx-4 -mt-3 font-Noto uppercase">
                               {product.name}
                             </div>
-                            <div className="bg-white h-[1px] w-1/3"></div>
+                            <div className="bg-secondary h-[1px] w-1/3"></div>
                           </>
                         ) : (
                           <>

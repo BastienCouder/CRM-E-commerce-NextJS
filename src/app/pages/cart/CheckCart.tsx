@@ -6,6 +6,7 @@ import { redirect, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useMemo } from "react";
+import { Separator } from "@radix-ui/react-select";
 
 interface CheckCartProps {
   cart: Cart | null;
@@ -42,27 +43,27 @@ export default function CheckCart({ cart }: CheckCartProps) {
 
   return (
     <section className="flex gap-y-8 lg:space-x-12 flex-col-reverse lg:flex-row items-center lg:items-start">
-      <div className="text-sm lg:text-base tracking-wide space-y-4 bg-zinc-800 flex flex-col p-4 w-80">
+      <div className="text-sm lg:text-base tracking-wide space-y-4 bg-third flex flex-col p-4 w-80">
         <h2 className="text-3xl mb-4">Récapitulatif</h2>
         <div className="flex justify-between">
           <div className="flex items-center space-x-3">
             <p className="capitalize">sous total</p>
-            <p className="text-sm text-zinc-500">( {quantity} articles )</p>
+            <p className="text-sm text-white">( {quantity} articles )</p>
           </div>
-          <p className="sm text-zinc-500">
+          <p className="sm text-white">
             {formatPrice(cart?.subtotal || 0, "EUR")}
           </p>
         </div>
-        <div className="bg-zinc-500 w-full h-px"></div>
+        <div className="bg-secondary w-full h-px"></div>
         <div className="flex space-x-4 items-center">
           <p className="capitalize">Expédition</p>
-          <p className="text-sm text-zinc-500">Gratuite</p>
+          <p className="text-sm text-white">Gratuite</p>
         </div>
-        <div className="bg-zinc-500 w-full h-px"></div>
+        <div className="bg-secondary w-full h-px"></div>
         <div className="flex justify-between">
           <div className="flex items-end space-x-2">
             <p className="capitalize font-bold">total</p>
-            <p className="text-xs mb-[2px] text-zinc-500">
+            <p className="text-xs mb-[2px] text-white">
               ({totalTVA} € de <span className="font-bold">TVA</span>)
             </p>
           </div>

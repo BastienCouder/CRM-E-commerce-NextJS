@@ -149,7 +149,7 @@ export default function DeliveryInfo({
           delivery.deliveryItems.map((deliveryItem) => (
             <li
               key={deliveryItem.id}
-              className="flex text-sm border-2 px-8 py-6 border-zinc-800"
+              className="flex text-sm border-2 px-8 py-6 border-secondary"
             >
               <div className="w-60">
                 <div className="flex flex-col font-bold">
@@ -174,8 +174,10 @@ export default function DeliveryInfo({
                 <div className="flex gap-x-4">
                   <div
                     onClick={() => handleDeliveryChange(deliveryItem.id)}
-                    className={`mb-2 h-4 w-4 border-2 border-white cursor-pointer ${
-                      selectedDeliveryItem === deliveryItem.id ? "bg-white" : ""
+                    className={`mb-2 h-4 w-4 border-2 border-secondary cursor-pointer ${
+                      selectedDeliveryItem === deliveryItem.id
+                        ? "bg-secondary"
+                        : ""
                     }`}
                   ></div>
                   {selectedDeliveryItem === deliveryItem.id

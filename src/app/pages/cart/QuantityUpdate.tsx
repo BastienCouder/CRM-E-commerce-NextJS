@@ -31,14 +31,14 @@ const QuantitySelector: React.FC<QuantityProps> = ({
       <div className="flex mt-[1.2rem] space-x-2">
         <button
           onClick={handleDecrement}
-          className="bg-zinc-800 text-white px-2"
+          className="bg-primary text-white px-2"
         >
           -
         </button>
         <p>{quantity}</p>
         <button
           onClick={handleIncrement}
-          className="bg-zinc-800 text-white px-2"
+          className="bg-primary text-white px-2"
         >
           +
         </button>

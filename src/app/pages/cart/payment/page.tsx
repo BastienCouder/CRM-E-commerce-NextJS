@@ -20,9 +20,9 @@ export default async function Delivery() {
 
   return (
     <>
-      hello
       {cart && delivery && (
         <>
+          <h1 className="text-4xl text-center md:text-start">Récapitulatif</h1>
           <Payment
             cartId={cart.id}
             deliveryId={delivery.id}

@@ -9,11 +9,15 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import FormLogin from "./FormLogin";
 import { getDelivery } from "@/lib/db/delivery";
 import SelectDelivery from "./SelectDelivery";
+import Loading from "@/app/loading";
 
 export default async function Delivery() {
   const session = await getServerSession(authOptions);
   const delivery = await getDelivery();
 
+  if (!session || !delivery) {
+    <Loading />;
+  }
   return (
     <>
       <div className="flex">

@@ -44,7 +44,7 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
               alt={product.name}
               width={200}
               height={200}
-              className="rounded-lg w-[70px] h-[70px] border-white border-[1px]"
+              className="rounded-lg w-[70px] h-[70px] object-contain border-white border-[1px]"
             />
           ) : (
             <Image
@@ -52,12 +52,14 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
               alt={product.name}
               width={200}
               height={200}
-              className="rounded-lg w-[70px] h-[70px] border-white border-[1px]"
+              className="rounded-lg w-[70px] h-[70px] object-contain border-white border-[1px]"
             />
           )}
           <Link href={"/products/" + product.id}>
             <p className="font-bold capitalize">{product.name}</p>
-            {variant && <p className="text-sm capitalize">{variant.color}</p>}
+            {variant && (
+              <p className="text-sm capitalize">{variant.colorsId}</p>
+            )}
           </Link>
         </div>
       </div>

@@ -97,7 +97,7 @@ export default function NavPage({ toggleMenu, cart, session }: NavBarProps) {
       };
 
   return (
-    <div className="z-40 fixed h-screen w-screen flex flex-col justify-between bg-[#141414] top-0 left-0">
+    <div className="z-40 fixed h-screen w-screen flex flex-col justify-between bg-[#18181b] top-0 left-0">
       <div className="flex space-x-6 text-[2rem] md:text-[2.5rem] absolute top-7 md:top-6 right-24">
         <motion.div {...iconProfileMotionProps} className="flex items-center">
           <UserMenuButton

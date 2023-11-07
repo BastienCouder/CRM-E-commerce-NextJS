@@ -25,58 +25,61 @@ async function main() {
   // } else {
   //   console.log("Utilisateur non trouvé.");
   // }
-
   // const category = await prisma.color.create({
   //   data: {
-  //     name: "rose",
+  //     name: "bronze",
   //   },
   // });
   // console.log(category);
-
-  // const colorId = "6543ebf1bea5aaa901450acd";
-  // const productId = "65429de57e957726166f5dca";
-  // const product = await prisma.product.update({
-  //   where: {
-  //     id: productId,
-  //   },
-  //   data: {
-  //     color: {
-  //       connect: {
-  //         id: colorId,
-  //       },
-  //     },
-  //   },
-  // });
-  // console.log(product);
-
-  const product = await prisma.product.create({
+  const colorId = "6548fc162e085cb98f53e3a2";
+  const categoryId = "6533e2ec992cbcd6500334bc";
+  const productId = "6548fe48162c51153c648d0c";
+  const product = await prisma.product.update({
+    where: {
+      id: productId,
+    },
     data: {
-      name: "Produit 5",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's .",
-      price: 4000,
-      imageUrl: "/images/montre1-rose.png",
-      variants: {
-        create: [
-          {
-            color: "or",
-            imageUrl: "/images/montre1-or.png",
-          },
-          {
-            color: "argent",
-            price: 1800,
-            imageUrl: "/images/variants/montre1-argent.png",
-          },
-          {
-            color: "rose",
-            price: 1800,
-            imageUrl: "/images/variants/montre1-rose.png",
-          },
-        ],
+      category: {
+        connect: {
+          id: categoryId,
+        },
+      },
+      color: {
+        connect: {
+          id: colorId,
+        },
       },
     },
   });
-
+  console.log(product);
+  // const product = await prisma.product.create({
+  //   data: {
+  //     name: "Produit 16",
+  //     description:
+  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+  //     price: 20000,
+  //     imageUrl: "/images/montre16.png",
+  //     variants: {
+  //       create: [
+  //         {
+  //           color: "or",
+  //           price: 20000,
+  //           imageUrl: "/images/montre16.png",
+  //         },
+  //         {
+  //           color: "bronze",
+  //           price: 19000,
+  //           imageUrl: "/images/variants/montre16-bronze.png",
+  //         },
+  //         // {
+  //         //   color: "rose",
+  //         //   price: 800,
+  //         //   imageUrl: "/images/variants/montre1-rose.png",
+  //         // },
+  //       ],
+  //     },
+  //   },
+  // });
   // const deliveryOptions = [
   //   {
   //     name: "Livraison Standard",
@@ -89,7 +92,6 @@ async function main() {
   //     price: "7.99€",
   //   },
   // ];
-
   //   async function seedDeliveryOptions() {
   //     for (const option of deliveryOptions) {
   //       await prisma.deliveryOptions.create({

@@ -2,15 +2,6 @@
 import { Separator } from "@/components/ui/separator";
 import { Category, Color } from "@prisma/client";
 import { BsCaretDownFill } from "react-icons/bs";
-import { RxCross2 } from "react-icons/rx";
-import formatPrice from "@/lib/format";
-
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 import {
   Sheet,
@@ -19,6 +10,8 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import PriceRangeFilter from "@/components/PriceRangeFilter";
+import AccordionFilter from "@/components/AccordionFilter";
 
 interface FilterProps {
   categories: Category[];
@@ -64,121 +57,33 @@ export default function Filter({
         <div className="w-full flex justify-center h-[4rem] items-center">
           <h2 className="uppercase text-xl font-Noto">Filtres</h2>
         </div>
-        <Separator className="bg-white h-[2px]" />
-        <div className="mt-8 space-y-8">
-          <div className="flex w-full relative">
-            <Accordion
-              className="flex w-full relative"
-              type="single"
-              collapsible
-            >
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="font-Noto">
-                  Catégories
-                </AccordionTrigger>
-                <ul className="w-full">
-                  {categories.map((category) => {
-                    return (
-                      <li key={category.id}>
-                        <AccordionContent
-                          onClick={() => handleCategoryClick(category)}
-                          className="cursor-pointer"
-                        >
-                          <div
-                            className={`text-xs font-Noto uppercase ${
-                              selectedCategory?.id === category.id
-                                ? "text-amber-600"
-                                : "text-white"
-                            }`}
-                          >
-                            {category.name}
-                          </div>
-                        </AccordionContent>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </AccordionItem>
-            </Accordion>
-            {selectedCategory && (
-              <div
-                onClick={handleResetCategory}
-                className="absolute top-5 right-6 cursor-pointer"
-              >
-                <RxCross2 size={15} />
-              </div>
-            )}
-          </div>
-          <div className="flex w-full relative -translate-y-2">
-            <Accordion
-              className="flex w-full relative"
-              type="single"
-              collapsible
-            >
-              <AccordionItem value="item-1" className="relative">
-                <AccordionTrigger className="font-Noto">
-                  Couleurs
-                </AccordionTrigger>
-                <ul className="w-full">
-                  {colors.map((color) => {
-                    return (
-                      <li key={color.id}>
-                        <AccordionContent
-                          onClick={() => handleColorClick(color)}
-                          className="cursor-pointer"
-                        >
-                          <div
-                            className={`text-xs font-Noto uppercase ${
-                              selectedColor?.id === color.id
-                                ? "text-amber-600"
-                                : "text-white"
-                            }`}
-                          >
-                            {color.name}
-                          </div>
-                        </AccordionContent>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </AccordionItem>
-              {selectedColor && (
-                <div
-                  onClick={handleResetColor}
-                  className="absolute top-5 right-6 cursor-pointer"
-                >
-                  <RxCross2 size={15} />
-                </div>
-              )}
-            </Accordion>
-          </div>
+        <Separator className="h-[2px]" />
 
-          <div className="space-y-3">
-            <div className="space-x-2 flex items-center">
-              <p> Prix : </p>
-              <p className="text-sm mt-[1px]">
-                {formatPrice(priceRange, "EUR")}
-              </p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <p className="text-xs">0 €</p>
-              <input
-                type="range"
-                min="1"
-                max="50000"
-                value={priceRange}
-                onChange={PriceRangeChange}
-                className="appearance-none"
-              />
-              <p className="text-xs">500 €</p>
-            </div>
-          </div>
+        <div className="mt-8 space-y-8 flex flex-col w-full relative">
+          <AccordionFilter
+            title="Catégories"
+            items={categories}
+            selectedItem={selectedCategory}
+            onItemClick={handleCategoryClick}
+            onReset={handleResetCategory}
+          />
+          <AccordionFilter
+            title="Couleurs"
+            items={colors}
+            selectedItem={selectedColor}
+            onItemClick={handleColorClick}
+            onReset={handleResetColor}
+          />
+          <PriceRangeFilter
+            priceRange={priceRange}
+            onPriceRangeChange={PriceRangeChange}
+          />
         </div>
       </div>
       <div className="block xl:hidden">
         <Sheet>
           <SheetTrigger>
-            <div className="text-sm md:text-base flex items-center uppercase bg-zinc-800 h-full px-3 py-2 font-Noto">
+            <div className="text-sm md:text-base flex items-center uppercase bg-primary h-full px-3 py-2 font-Noto">
               Filtres
               <BsCaretDownFill size={15} className={`ml-2 `} />
             </div>
@@ -189,102 +94,27 @@ export default function Filter({
                 <div className="w-full flex justify-center h-[4rem] items-center">
                   <h2 className="uppercase text-lg">Filtres</h2>
                 </div>
-                <Separator className="bg-white h-[2px]" />
-                <div className="mt-8 space-y-8">
-                  <div className="flex w-full relative">
-                    <Accordion
-                      className="flex w-full relative"
-                      type="single"
-                      collapsible
-                    >
-                      <AccordionItem value="item-1">
-                        <AccordionTrigger className="font-Noto">
-                          Catégories
-                        </AccordionTrigger>
-                        <ul className="w-full">
-                          {categories.map((category) => {
-                            return (
-                              <li key={category.id}>
-                                <AccordionContent
-                                  onClick={() => handleCategoryClick(category)}
-                                  className="cursor-pointer"
-                                >
-                                  <div className="text-start text-xs font-Noto uppercase">
-                                    {category.name}
-                                  </div>
-                                </AccordionContent>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </AccordionItem>
-                    </Accordion>
-                    {selectedCategory && (
-                      <div
-                        onClick={handleResetCategory}
-                        className="absolute top-5 right-0 cursor-pointer"
-                      >
-                        <RxCross2 size={15} />
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex w-full relative -translate-y-2">
-                    <Accordion
-                      className="flex w-full relative"
-                      type="single"
-                      collapsible
-                    >
-                      <AccordionItem value="item-1" className="relative">
-                        <AccordionTrigger className="font-Noto">
-                          Couleurs
-                        </AccordionTrigger>
-                        <ul className="w-full">
-                          {colors.map((color) => {
-                            return (
-                              <li key={color.id}>
-                                <AccordionContent
-                                  onClick={() => handleColorClick(color)}
-                                  className="cursor-pointer"
-                                >
-                                  <div className="text-start text-xs font-Noto uppercase">
-                                    {color.name}
-                                  </div>
-                                </AccordionContent>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </AccordionItem>
-                      {selectedColor && (
-                        <div
-                          onClick={handleResetColor}
-                          className="absolute top-5 right-0 cursor-pointer"
-                        >
-                          <RxCross2 size={15} />
-                        </div>
-                      )}
-                    </Accordion>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="space-x-2 flex items-center">
-                      <p> Prix : </p>
-                      <p className="text-sm mt-[1px]">
-                        {formatPrice(priceRange, "EUR")}
-                      </p>
-                    </div>
-                    <div className="flex items-center space-x-4">
-                      <p className="text-xs">0 €</p>
-                      <input
-                        type="range"
-                        min="1"
-                        max="50000"
-                        value={priceRange}
-                        onChange={PriceRangeChange}
-                        className="appearance-none"
-                      />
-                      <p className="text-xs">500 €</p>
-                    </div>
-                  </div>
+                <Separator className="bg-secondary h-[2px]" />
+
+                <div className="mt-8 space-y-8 flex flex-col w-full relative">
+                  <AccordionFilter
+                    title="Catégories"
+                    items={categories}
+                    selectedItem={selectedCategory}
+                    onItemClick={handleCategoryClick}
+                    onReset={handleResetCategory}
+                  />
+                  <AccordionFilter
+                    title="Couleurs"
+                    items={colors}
+                    selectedItem={selectedColor}
+                    onItemClick={handleColorClick}
+                    onReset={handleResetColor}
+                  />
+                  <PriceRangeFilter
+                    priceRange={priceRange}
+                    onPriceRangeChange={PriceRangeChange}
+                  />
                 </div>
               </SheetDescription>
             </SheetHeader>

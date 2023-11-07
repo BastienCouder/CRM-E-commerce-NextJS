@@ -28,11 +28,15 @@ const config: Config = {
         background: "",
         foreground: "",
         primary: {
-          DEFAULT: "rgb(var(--primary))",
+          DEFAULT: "#202020",
           foreground: "rgb(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "rgb(var(--secondary))",
+          DEFAULT: "#E6AD89",
+          foreground: "rgb(var(--secondary-foreground))",
+        },
+        third: {
+          DEFAULT: "#202023",
           foreground: "rgb(var(--secondary-foreground))",
         },
         destructive: {

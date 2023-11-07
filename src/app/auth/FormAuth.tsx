@@ -30,6 +30,7 @@ import ShowPassword from "../../components/ShowPassword";
 import { checkPassword } from "./action";
 import { toast } from "sonner";
 import Link from "next/link";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface FormAuthProps {
   registerForm: (formData: FormData) => Promise<void>;
@@ -37,7 +38,9 @@ interface FormAuthProps {
 
 export default function FormAuth({ registerForm }: FormAuthProps) {
   const router = useRouter();
+  const [checkboxChecked, setCheckboxChecked] = useState(false);
   const [variant, setVariant] = useState("login");
+  const [error, setError] = useState("");
 
   const formResolver =
     variant === "login"
@@ -57,6 +60,13 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
 
   const login = useCallback(async () => {
     try {
+      if (!checkboxChecked) {
+        setError("Vous devez accepter les termes et conditions.");
+        return;
+      } else {
+        setError("");
+      }
+
       const email = form.getValues("email");
       const password = form.getValues("password");
 
@@ -72,6 +82,7 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
         if (!isCorrectPassword) {
           toast.error("Le mot de passe est incorrecte");
         } else {
+          setCheckboxChecked(!checkboxChecked);
           router.push("/auth/emailLogin");
         }
       }
@@ -79,15 +90,23 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
       console.error("Une erreur s'est produite lors de la connexion : ", error);
       throw error;
     }
-  }, [form, router]);
+  }, [form, router, checkboxChecked]);
 
   const register = useCallback(async () => {
+    if (!checkboxChecked) {
+      setError("Vous devez accepter les termes et conditions.");
+      return;
+    } else {
+      setError("");
+    }
+
     const formData = new FormData();
     formData.append("username", form.getValues("username"));
     formData.append("email", form.getValues("email"));
     formData.append("password", form.getValues("password"));
 
     try {
+      setCheckboxChecked(!checkboxChecked);
       await registerForm(formData);
       login();
     } catch (error) {
@@ -96,7 +115,11 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
         return;
       }
     }
-  }, [form, login, registerForm]);
+  }, [form, login, registerForm, checkboxChecked]);
+
+  const handleClickCheckbox = useCallback(() => {
+    setCheckboxChecked(!checkboxChecked);
+  }, [checkboxChecked]);
 
   return (
     <>
@@ -104,7 +127,7 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
         <h2 className="text-4xl">
           {variant === "login" ? "Se connecter" : "S'inscrire"}
         </h2>
-        <div className="bg-zinc-800 w-full md:w-1/2 xl:w-1/3 p-8 flex flex-col items-center space-y-4">
+        <div className="bg-primary w-full md:w-1/2 xl:w-1/3 p-8 flex flex-col items-center space-y-4">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(() =>
@@ -112,6 +135,7 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
               )}
               className="w-full flex flex-col justify-center items-center space-y-4"
             >
+              {error ? <small className="text-red-500">{error}</small> : null}
               {variant === "register" && (
                 <>
                   {/* name */}
@@ -172,6 +196,19 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
                   </FormItem>
                 )}
               />
+              <div className="w-full items-top flex space-x-2">
+                <Checkbox id="terms1" onClick={handleClickCheckbox} />
+                <div className="grid gap-1.5 leading-none">
+                  <label
+                    htmlFor="terms1"
+                    className="text-sm font-medium leading-none cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    <Link href={"/politique-de-confidentialite"}>
+                      Accepter les termes et conditions
+                    </Link>
+                  </label>
+                </div>
+              </div>
               <div className="py-4">
                 <Button
                   onClick={variant === "login" ? login : register}

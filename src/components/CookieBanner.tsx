@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 
-function CookieBanner() {
+export default function CookieBanner() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function CookieBanner() {
   }
 
   return (
-    <div className="fixed flex flex-col md:flex-row bottom-0 w-full bg-zinc-800/80 p-4 md:p-6 md:space-x-8 space-y-4">
+    <div className="fixed flex flex-col md:flex-row bottom-0 w-full bg-primary/80 p-4 md:p-6 md:space-x-8 space-y-4">
       <div className="flex flex-col gap-y-2">
         <p className="text-sm md:text-base">
           Nous utilisons des cookies pour améliorer votre expérience. En
@@ -46,5 +46,3 @@ function CookieBanner() {
     </div>
   );
 }
-
-export default CookieBanner;

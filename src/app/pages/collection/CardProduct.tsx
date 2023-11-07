@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import AddToCartButton from "@/components/AddToCartButton";
 import { useServerAddToCart } from "../products/[id]/actions";
+import { useMemo } from "react";
 
 interface CardProductProps {
   product: Product & {
@@ -21,9 +22,13 @@ export default function CardProduct({
   selectedCategory,
   selectedColor,
 }: CardProductProps) {
-  const isNew =
-    Date.now() - new Date(product.createdAt).getTime() <
-    1000 * 60 * 60 * 24 * 7;
+  const isNew = useMemo(() => {
+    return (
+      Date.now() - new Date(product.createdAt).getTime() <
+      1000 * 60 * 60 * 24 * 7
+    );
+  }, [product.createdAt]);
+
   if (
     !selectedCategory ||
     product.categoryId === selectedCategory.id ||

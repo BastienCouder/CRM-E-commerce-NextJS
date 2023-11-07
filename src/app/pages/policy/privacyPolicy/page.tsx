@@ -4,7 +4,7 @@ export default function PrivatyPolicy() {
     <div>
       <div className="container mx-auto p-4">
         <div className="space-y-2">
-          <h1 className="text-2xl font-bold">Politique de Cookies</h1>
+          <h1 className="text-2xl font-bold">Politique de Confidentialité</h1>
 
           <p>
             Vous pouvez choisir de restreindre la collecte ou l&apos;utilisation

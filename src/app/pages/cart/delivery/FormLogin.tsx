@@ -126,7 +126,9 @@ export default function FormLogin({ session }: FormDeliveryProps) {
                 </div>
                 <div className="flex space-x-8 items-center cursor-pointer ">
                   <div
-                    onClick={() => signIn("google", { callbackUrl: "/" })}
+                    onClick={() =>
+                      signIn("google", { callbackUrl: "/cart/delivery" })
+                    }
                     className="flex items-center gap-x-2 cursor-pointer px-4 py-2 border-2 border-white"
                   >
                     Google

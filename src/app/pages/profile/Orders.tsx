@@ -46,7 +46,7 @@ export default function Orders({ order }: OrdersProps) {
               {!isOrderSelected ? (
                 <>
                   {" "}
-                  <div className="flex items-center h-10 px-4 py-2 w-full bg-zinc-800">
+                  <div className="flex items-center h-10 px-4 py-2 w-full bg-primary">
                     <p className="font-bold uppercase text-sm">
                       Commande n°{index + 1}
                     </p>
@@ -100,7 +100,7 @@ export default function Orders({ order }: OrdersProps) {
 
               {isOrderSelected && (
                 <div>
-                  <div className="flex flex-col justify-center h-20 gap-1 px-4 py-2 w-full bg-zinc-800">
+                  <div className="flex flex-col justify-center h-20 gap-1 px-4 py-2 w-full bg-primary">
                     <p className="font-bold uppercase text-sm">
                       Commande n°{index + 1}
                     </p>
@@ -112,7 +112,7 @@ export default function Orders({ order }: OrdersProps) {
                   <div className="p-4">
                     <h2 className="text-lg pb-2">Adresse de livraison</h2>
                     {isOrderSelected && orderItem.deliveryItems && (
-                      <div className="text-sm border-b-2 pb-8 border-zinc-800">
+                      <div className="text-sm border-b-2 pb-8 border-primary">
                         <div className="font-bold capitalize flex space-x-2">
                           <p>{orderItem.deliveryItems.name}</p>
                           <p>{orderItem.deliveryItems.surname}</p>
@@ -173,7 +173,7 @@ export default function Orders({ order }: OrdersProps) {
                                       <>
                                         <span>-</span>
                                         <span className="text-sm">
-                                          {cartItems.variant.color}
+                                          {cartItems.variant.colorsId}
                                         </span>
                                       </>
                                     )}
