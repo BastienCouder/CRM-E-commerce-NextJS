@@ -99,7 +99,9 @@ export default function ForgotPassword() {
                 </FormItem>
               )}
             />
-            <Button size="xl">Réinitialiser le mot de passe</Button>
+            <Button aria-label="Réinitialiser le mot de passe" size="xl">
+              Réinitialiser le mot de passe
+            </Button>
           </form>
         </Form>
       </div>

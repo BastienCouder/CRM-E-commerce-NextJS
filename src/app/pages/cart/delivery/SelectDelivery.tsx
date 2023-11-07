@@ -108,7 +108,9 @@ export default function SelectDelivery({
             </li>
           ))}
       </ul>
-      <Button onClick={handleSubmit}>Valider</Button>
+      <Button aria-label="Valider" onClick={handleSubmit}>
+        Valider
+      </Button>
       <Toaster expand={false} position="bottom-left" />
     </>
   );

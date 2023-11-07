@@ -185,12 +185,14 @@ export default function DeliveryInfo({
                     : ""}
                 </div>
                 <button
+                  aria-label="modifier"
                   onClick={toggleFormVisibility}
                   className="text-blue-500 cursor-pointer w-28 px-3 py-2 border-[1px] border-blue-500"
                 >
                   modifier
                 </button>
                 <button
+                  aria-label="supprimer"
                   onClick={() => handleDeleteDeliveryItem(deliveryItem.id)}
                   className="text-red-600 cursor-pointer w-28 px-3 py-2 border-[1px] border-red-600"
                 >
@@ -335,7 +337,7 @@ export default function DeliveryInfo({
                 </FormItem>
               )}
             />
-            <Button>Modifier</Button>
+            <Button aria-label="modifier">Modifier</Button>
           </form>
         </Form>
       )}

@@ -19,6 +19,7 @@ export default function AddToCartButton({
   return (
     <>
       <Button
+        aria-label="Ajouter au panier"
         size="xl"
         onClick={() => {
           startTransition(async () => {

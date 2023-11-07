@@ -12,7 +12,9 @@ export default async function sendEmailLogin() {
           </p>
           <p className="text-center">Un mail de connexion vous a été envoyé</p>
           <Link href="mailto:" className="flex justify-center">
-            <Button size="xl">Confirmer l&apos;email</Button>
+            <Button aria-label="Envoyer l'email" size="xl">
+              Confirmer l&apos;email
+            </Button>
           </Link>
         </div>
       </div>

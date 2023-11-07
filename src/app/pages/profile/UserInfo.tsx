@@ -95,7 +95,9 @@ export default function UserInfo({ session }: UserInfoProps) {
             )}
           />
 
-          <Button size="xl">Modifier le profil</Button>
+          <Button aria-label="modifier le profil" size="xl">
+            Modifier le profil
+          </Button>
         </form>
       </Form>
       <Separator />
@@ -103,7 +105,9 @@ export default function UserInfo({ session }: UserInfoProps) {
         <h2 className="text-2xl">Mot de passe :</h2>
         <div>
           <Link href="/auth/forgotPassword">
-            <Button size="xl">Modifier le mot de passe</Button>
+            <Button aria-label="modifier le mot de passe" size="xl">
+              Modifier le mot de passe
+            </Button>
           </Link>
         </div>
       </div>

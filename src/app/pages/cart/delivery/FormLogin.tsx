@@ -117,7 +117,9 @@ export default function FormLogin({ session }: FormDeliveryProps) {
                   )}
                 />
                 <div className="py-4">
-                  <Button size="lg">Se connecter</Button>
+                  <Button aria-label="se connecter" size="lg">
+                    Se connecter
+                  </Button>
                 </div>
                 <div className="w-full flex items-center">
                   <div className="w-1/2 h-px bg-white"></div>

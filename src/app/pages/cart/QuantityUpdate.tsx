@@ -30,6 +30,7 @@ const QuantitySelector: React.FC<QuantityProps> = ({
     <div className="lg:h-[55px] justify-start">
       <div className="flex mt-[1.2rem] space-x-2">
         <button
+          aria-label="incrémenter"
           onClick={handleDecrement}
           className="bg-primary text-white px-2"
         >
@@ -37,6 +38,7 @@ const QuantitySelector: React.FC<QuantityProps> = ({
         </button>
         <p>{quantity}</p>
         <button
+          aria-label="décrementer"
           onClick={handleIncrement}
           className="bg-primary text-white px-2"
         >

@@ -24,7 +24,7 @@ export default function HamburgerMenu({ cart, session }: HamburgerMenuProps) {
     <>
       <div className={styles.navbar}>
         {!isMenuOpen && <div className={styles.navTitle}>Menu</div>}
-        <button onClick={toggleMenu} className={buttonClass}>
+        <button aria-label="menu" onClick={toggleMenu} className={buttonClass}>
           <div className={styles.bar1}></div>
           <div className={styles.bar2}></div>
           <div className={styles.bar3}></div>

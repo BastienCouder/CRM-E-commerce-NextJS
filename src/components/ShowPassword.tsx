@@ -28,6 +28,7 @@ export default function ShowPassword({
         onChange={(e) => setPassword(e.target.value)}
       />
       <button
+        aria-label="Montrer mot de passe"
         type="button"
         onClick={togglePasswordVisibility}
         className="absolute text-zinc-900 top-1.5 right-0 px-2 outline-none text-xl cursor-pointer"

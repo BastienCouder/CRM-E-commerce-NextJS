@@ -2,11 +2,10 @@
 import formatPrice from "@/lib/format";
 import { VAT_RATE } from "@/lib/utils";
 import { CartItems } from "@prisma/client";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useMemo } from "react";
-import { Separator } from "@radix-ui/react-select";
 
 interface CheckCartProps {
   cart: Cart | null;
@@ -70,7 +69,9 @@ export default function CheckCart({ cart }: CheckCartProps) {
           <p>Total: {formatPrice(cart?.subtotal || 0, "EUR")}</p>
         </div>
         <div className="pt-4">
-          <Button onClick={cartCheckout}>Valider</Button>
+          <Button aria-label="Valider" onClick={cartCheckout}>
+            Valider
+          </Button>
         </div>
       </div>
       {/* <div className="">

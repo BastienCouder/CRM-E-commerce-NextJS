@@ -110,7 +110,9 @@ export default function PasswordResetForm({ token }: PasswordResetProps) {
               )}
             />
 
-            <Button size="xl">Réinitialiser le mot de passe</Button>
+            <Button aria-label="Réinitialiser le mot de passe" size="xl">
+              Réinitialiser le mot de passe
+            </Button>
           </form>
         </Form>
       </div>

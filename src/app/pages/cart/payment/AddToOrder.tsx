@@ -22,6 +22,7 @@ export default function AddToOrder({
   return (
     <>
       <Button
+        aria-label="Proceder au paiment"
         onClick={() => {
           startTransition(async () => {
             await handleStripePayment(cartId, deliveryId);

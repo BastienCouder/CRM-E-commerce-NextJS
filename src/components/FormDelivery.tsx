@@ -96,6 +96,7 @@ export default function FormDelivery({
   return (
     <>
       <Button
+        aria-label="Fermer ou Ajouter une adresse de livraison"
         size="xl"
         onClick={toggleFormVisibility}
         className="border-zinc-800 border-2"
@@ -238,7 +239,9 @@ export default function FormDelivery({
               )}
             />
             <div className="pt-4">
-              <Button type="submit">Ajouter</Button>
+              <Button aria-label="ajouter" type="submit">
+                Ajouter
+              </Button>
             </div>
           </form>
         </Form>

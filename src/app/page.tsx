@@ -70,23 +70,25 @@ export default function Home() {
       >
         <div>
           <div
-            className={`absolute md:relative top-36 md:top-0 w-[15rem] md:w-[25rem] xl:w-[35rem] ${styles.scale}`}
+            className={`absolute md:relative top-36 md:top-0 ${styles.scale}`}
           >
             <Image
               src={"/images/watch-2.jpg"}
               alt=""
               width={1000}
               height={1000}
+              className="w-[15rem] md:w-[25rem] xl:w-[35rem]"
             ></Image>
           </div>
           <div
-            className={`absolute top-52 left-32 md:top-52 md:left-64 xl:left-80 w-[20rem] md:w-[25rem] xl:w-[30rem] ${styles.scale}`}
+            className={`absolute top-52 left-32 md:top-52 md:left-64 xl:left-80 ${styles.scale}`}
           >
             <Image
               src={"/images/watch3-2.jpg"}
               alt=""
               width={1000}
               height={1000}
+              className="w-[20rem] md:w-[25rem] xl:w-[30rem] "
             ></Image>
           </div>
         </div>

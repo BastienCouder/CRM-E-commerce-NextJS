@@ -102,7 +102,7 @@ export default async function AddProductPage() {
               className="w-full "
             ></textarea>
           </div>
-          <Button>Add Product</Button>
+          <Button aria-label="Ajouter Produit">Add Product</Button>
         </form>
       </div>
     </>

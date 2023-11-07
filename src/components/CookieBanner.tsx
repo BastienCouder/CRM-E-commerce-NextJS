@@ -41,7 +41,9 @@ export default function CookieBanner() {
         </div>
       </div>
       <div>
-        <Button onClick={handleAcceptCookies}>Accepter</Button>
+        <Button aria-label="Accepter cookies" onClick={handleAcceptCookies}>
+          Accepter
+        </Button>
       </div>
     </div>
   );

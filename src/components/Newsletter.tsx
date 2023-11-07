@@ -134,14 +134,20 @@ export default function Newsletter() {
                   </div>
                 </div>
                 <div className="py-4">
-                  <Button size="lg">S&apos;abonner</Button>
+                  <Button aria-label="s'abonner" size="lg">
+                    S&apos;abonner
+                  </Button>
                 </div>
               </form>
             </Form>{" "}
           </div>
         </div>
       ) : (
-        <button onClick={handleShowForm} className="flex gap-4 items-center">
+        <button
+          aria-label="Newsletter"
+          onClick={handleShowForm}
+          className="flex gap-4 items-center"
+        >
           <BsCaretLeftFill
             size={15}
             className={`ml-2 ${showForm ? `${styles.rotate}` : ""} : ""}`}

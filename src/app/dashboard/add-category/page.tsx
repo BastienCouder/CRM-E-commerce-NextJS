@@ -34,7 +34,7 @@ export default async function AddCategoryPage() {
             name="category"
             placeholder="Categorie"
           />
-          <Button>Add Category</Button>
+          <Button aria-label="Ajouter une catégorie">Add Category</Button>
         </form>
       </div>
     </>

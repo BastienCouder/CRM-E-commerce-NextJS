@@ -211,6 +211,7 @@ export default function FormAuth({ registerForm }: FormAuthProps) {
               </div>
               <div className="py-4">
                 <Button
+                  aria-label="connexion ou insription"
                   onClick={variant === "login" ? login : register}
                   size="lg"
                 >

@@ -90,7 +90,7 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
       </div>
       <div className="lg:h-[27px] justify-start items-center flex flex-col lg:space-y-6 lg:items-start">
         <div className="h-full "></div>
-        <button onClick={handleDelete} className=" px-2">
+        <button aria-label="fermer" onClick={handleDelete} className=" px-2">
           <RxCross2 />
         </button>
       </div>
