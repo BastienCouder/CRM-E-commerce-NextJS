@@ -5,15 +5,15 @@ Ce projet est un site e-commerce factice.
 
 ## Fonctionnalités
 
-Création d'un compte utilisateur
-Modification de profil
-Authentification
-Recherche de produits + filtres + tries
-Panier local ou utilisateur
-Wishlist local ou utilisateur
-Form de Livraison
-Paiement avec Stripe
-Historique de commande
+-Création d'un compte utilisateur
+-Modification de profil
+-Authentification
+-Recherche de produits + filtres + tries
+-Panier local ou utilisateur
+-Wishlist local ou utilisateur
+-Form de Livraison
+-Paiement avec Stripe
+-Historique de commande
 
 ### Pré-requis
 
