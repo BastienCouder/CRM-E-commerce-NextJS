@@ -31,7 +31,7 @@ Ce qu'il est requis pour commencer avec le projet...
 ## Auteurs
 Listez le(s) auteur(s) du projet ici !
 * **Bastien Couder** _alias_ [@BastienCouder](https://github.com/BastienCOuder)
-* 
+  
 Il s'agit d'un projet [Next.js](https://nextjs.org/) démarré avec [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Démarrage
