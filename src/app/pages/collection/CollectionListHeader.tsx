@@ -29,17 +29,15 @@ export default function ProductListHeader({
     <div className="mb-4 w-full flex flex-col md:flex-row gap-y-4 md:gap-0 md:justify-between items-start relative">
       <div className="md:hidden w-full space-y-2 relative">
         <Search searchTerm={searchTerm} onSearchChange={onSearchChange} />
-        <div className="absolute text-zinc-900 top-1.5 right-0 px-2 outline-none text-xl cursor-pointer">
-          <AiOutlineSearch size={20} className="text-white mr-1" />
-        </div>
       </div>
 
       <div className="font-bold">
         Produits : <span>{productsCount}</span>
       </div>
 
-      <Search searchTerm={searchTerm} onSearchChange={onSearchChange} />
-
+      <div className="hidden md:block">
+        <Search searchTerm={searchTerm} onSearchChange={onSearchChange} />
+      </div>
       <Accordion className="-mt-4 w-[10rem]" type="single" collapsible>
         <AccordionItem value="item-1" className="relative">
           <AccordionTrigger className="text-sm md:text-base font-Noto">

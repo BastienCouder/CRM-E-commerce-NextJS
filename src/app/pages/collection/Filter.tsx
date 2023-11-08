@@ -94,7 +94,7 @@ export default function Filter({
                 <div className="w-full flex justify-center h-[4rem] items-center">
                   <h2 className="uppercase text-lg">Filtres</h2>
                 </div>
-                <Separator className="bg-secondary h-[2px]" />
+                <Separator className="h-[2px]" />
 
                 <div className="mt-8 space-y-8 flex flex-col w-full relative">
                   <AccordionFilter

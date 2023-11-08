@@ -12,7 +12,7 @@ export default function Search({ searchTerm, onSearchChange }: SearchProps) {
   };
 
   return (
-    <div className="hidden md:block space-y-1 relative">
+    <div className="space-y-1 relative">
       <Input
         className="w-full md:w-[20rem] bg-primary p-2 border-none outline-none text-white"
         type="text"
