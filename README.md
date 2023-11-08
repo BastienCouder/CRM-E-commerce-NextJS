@@ -1,5 +1,5 @@
 # E-commerce NextJS
-Ce projet est un clone d'Instagram qui permet aux utilisateurs de partager des photos et de les commenter ou de les liker.
+Ce projet est un site e-commerce factice.
 
 [![forthebadge](https://forthebadge.com/images/badges/made-with-next-13.svg)](https://forthebadge.com)
 
