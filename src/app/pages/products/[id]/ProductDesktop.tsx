@@ -212,7 +212,7 @@ export default function ProductDesktop({
                       alt={product.name}
                       width={800}
                       height={2000}
-                      className="z-20 h-[30rem] object-contain absolute top-10"
+                      className="z-20  h-[25rem] w-[25rem]  object-contain absolute top-24"
                     />
                   ) : (
                     <Image
@@ -220,7 +220,7 @@ export default function ProductDesktop({
                       alt={product.name}
                       width={800}
                       height={2000}
-                      className="z-20 h-[30rem] object-contain absolute top-10"
+                      className="z-20  h-[25rem] w-[25rem]  object-contain absolute top-24"
                     />
                   )}
                 </motion.figure>
@@ -264,7 +264,7 @@ export default function ProductDesktop({
                       alt={product.name}
                       width={800}
                       height={2000}
-                      className="z-20 h-[30rem] object-contain absolute top-10"
+                      className="z-20 h-[25rem] w-[25rem] object-contain absolute top-24"
                     />
                   ) : (
                     <Image
@@ -272,7 +272,7 @@ export default function ProductDesktop({
                       alt={product.name}
                       width={800}
                       height={2000}
-                      className="z-20 h-[30rem] object-contain absolute top-10"
+                      className="z-20 h-[25rem] w-[25rem] object-contain absolute top-24"
                     />
                   )}
                 </figure>

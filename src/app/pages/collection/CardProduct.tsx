@@ -45,7 +45,7 @@ export default function CardProduct({
                 alt={product.name}
                 width={800}
                 height={400}
-                className="h-52 object-contain"
+                className="h-52 w-52 object-contain"
               />
             </figure>
           </Link>

@@ -79,7 +79,7 @@ export default function ProductTablet({
                 initial={{ opacity: 0, x: 30, y: 0 }}
                 animate={{ opacity: 1, x: 0, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
-                className="z-20 absolute top-10 right-10 "
+                className="z-20 absolute top-12 right-10 "
               >
                 <div
                   onClick={toggleColorVisibility}
@@ -107,7 +107,7 @@ export default function ProductTablet({
                   alt={product.name}
                   width={800}
                   height={2000}
-                  className="z-10 h-[40rem] relative object-contain"
+                  className="z-10 h-[30rem] w-[30rem] relative object-contain mt-12"
                 />
               ) : (
                 <Image
@@ -115,7 +115,7 @@ export default function ProductTablet({
                   alt={product.name}
                   width={800}
                   height={2000}
-                  className="z-10 h-[40rem] relative object-contain"
+                  className="z-10 h-[30rem] w-[30rem] relative object-contain mt-12"
                 />
               )}
             </motion.figure>
@@ -160,7 +160,7 @@ export default function ProductTablet({
                   alt={product.name}
                   width={800}
                   height={2000}
-                  className="z-10 h-[40rem] relative object-contain"
+                  className="z-10 h-[30rem] w-[30rem] relative object-contain mt-12"
                 />
               ) : (
                 <Image
@@ -168,7 +168,7 @@ export default function ProductTablet({
                   alt={product.name}
                   width={800}
                   height={2000}
-                  className="z-10 h-[40rem] relative object-contain"
+                  className="z-10 h-[30rem] w-[30rem] relative object-contain mt-12"
                 />
               )}
             </figure>

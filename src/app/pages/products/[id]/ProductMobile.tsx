@@ -72,9 +72,9 @@ export default function ProductMobile({
 
   return (
     <>
-      <div className="flex flex-col h-full py-16 justify-center">
+      <div className="flex flex-col h-full py-16 space-y-4 justify-center">
         {!disableAnimation ? (
-          <div className="relative">
+          <div className="relative flex justify-center">
             <motion.div
               key={selectedColor}
               initial={{ opacity: 0.5, y: -550 }}
@@ -91,7 +91,7 @@ export default function ProductMobile({
                   alt={product.name}
                   width={800}
                   height={2000}
-                  className="z-20 h-[30rem] object-contain"
+                  className="z-20 h-[22rem] w-[22rem] object-contain"
                 />
               ) : (
                 <Image
@@ -99,7 +99,7 @@ export default function ProductMobile({
                   alt={product.name}
                   width={800}
                   height={2000}
-                  className="z-20 h-[30rem] object-contain"
+                  className="z-20 h-[22rem] w-[22rem] object-contain"
                 />
               )}
             </motion.div>
@@ -119,7 +119,7 @@ export default function ProductMobile({
                 animate={{ opacity: 1, x: 0, y: 0 }}
                 exit={{ opacity: 0, x: 30, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
-                className="absolute top-10 right-10 "
+                className="absolute top-10 right-8"
               >
                 <div
                   onClick={toggleColorVisibility}
@@ -146,7 +146,7 @@ export default function ProductMobile({
                   alt={product.name}
                   width={800}
                   height={2000}
-                  className="z-20 h-[30rem] object-contain"
+                  className="z-20 h-[22rem] w-[22rem] object-contain"
                 />
               ) : (
                 <Image
@@ -154,7 +154,7 @@ export default function ProductMobile({
                   alt={product.name}
                   width={800}
                   height={2000}
-                  className="z-20 h-[30rem] object-contain"
+                  className="z-20 h-[22rem] w-[22rem] object-contain"
                 />
               )}
             </figure>
@@ -175,7 +175,7 @@ export default function ProductMobile({
               {product.name}
             </motion.div>
             {product.variants.length > 0 ? (
-              <div className="absolute top-10 right-10 ">
+              <div className="absolute top-10 right-8">
                 <div
                   onClick={toggleColorVisibility}
                   className="cursor-pointer h-12 w-12 rounded-full bg-secondary/5 flex justify-center items-center"
