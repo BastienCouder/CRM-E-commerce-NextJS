@@ -25,7 +25,7 @@ Ce qu'il est requis pour commencer avec le projet...
 ## Fabriqué avec
 
 * [tailwind.css](tailwindcss.com) - Framework CSS (front-end)
-* [NextJs](https://fr.legacy.reactjs.org/)  - Librairie Javascript (front-end)nd)
+* [NextJs](https://fr.legacy.reactjs.org/)  - Librairie Javascript (front-end)
 * [MongoDB](https://www.mongodb.com/fr-fr) - Base de données (NoSQL)
 
 ## Auteurs
