@@ -76,6 +76,15 @@ export default function ProductMobile({
         {!disableAnimation ? (
           <div className="relative flex justify-center">
             <motion.div
+              className="font-Bodoni absolute text-[4.5rem] top-32 -left-24 -left-20 uppercase text-secondary/5"
+              initial={{ opacity: 0, x: 50, rotate: -90 }}
+              animate={{ opacity: 1, x: 0, rotate: -90 }}
+              exit={{ opacity: 0, x: 50, rotate: -90 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
+              {product.name}
+            </motion.div>
+            <motion.div
               key={selectedColor}
               initial={{ opacity: 0.5, y: -550 }}
               animate={{ opacity: 1, y: 0 }}
@@ -104,15 +113,6 @@ export default function ProductMobile({
               )}
             </motion.div>
 
-            <motion.div
-              className="font-Bodoni absolute text-[4.5rem] top-32 -left-24 sm:-left-20 uppercase text-secondary/5"
-              initial={{ opacity: 0, x: 50, rotate: -90 }}
-              animate={{ opacity: 1, x: 0, rotate: -90 }}
-              exit={{ opacity: 0, x: 50, rotate: -90 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              {product.name}
-            </motion.div>
             {product.variants.length > 0 ? (
               <motion.div
                 initial={{ opacity: 0, x: 30, y: 0 }}
@@ -204,7 +204,7 @@ export default function ProductMobile({
               className="flex flex-col space-y-3 cursor-pointer"
               onClick={toggleCategoriesVisibility}
             >
-              <span className="h-[1.5px] bg-secondary/70 px-24"></span>
+              <span className="h-[1.5px] bg-white px-24"></span>
               <h2 className="flex gap-1 items-center text-start text-sm w-full font-Noto uppercase">
                 Catégories -
                 <span className="capitalize text-sm">
@@ -217,7 +217,7 @@ export default function ProductMobile({
                   } : ""}`}
                 />
               </h2>
-              <span className="h-[1.5px] bg-secondary/70 px-24"></span>
+              <span className="h-[1.5px] bg-white px-24"></span>
             </div>
           </motion.div>
         ) : (

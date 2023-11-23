@@ -10,7 +10,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "border-none outline-none relative uppercase tracking-[4px]",
+        default: "border-[1px] outline-none relative uppercase tracking-[4px]",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
@@ -51,14 +51,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        <div className={buttonStyles.buttonLeft}></div>
-        <div className={buttonStyles.buttonTopLeft}></div>
-        <div className={buttonStyles.buttonBottomLeft}></div>
-        <div className={buttonStyles.buttonTop}></div>
-        <div className={buttonStyles.buttonBottom}></div>
-        <div className={buttonStyles.buttonRight}></div>
-        <div className={buttonStyles.buttonTopRight}></div>
-        <div className={buttonStyles.buttonBottomRight}></div>
         {children}
       </Comp>
     );
