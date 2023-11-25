@@ -4,6 +4,7 @@ import {
   ArrowUpIcon,
   CheckCheck,
   X,
+  XSquare,
 } from "lucide-react";
 
 export const names = [
@@ -75,6 +76,11 @@ export const statuses = [
     value: "unavailable",
     label: "Unavailable",
     icon: X,
+  },
+  {
+    value: "delete",
+    label: "delete",
+    icon: XSquare,
   },
 ];
 

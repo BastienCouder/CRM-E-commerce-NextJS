@@ -1,3 +1,4 @@
+"use server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { checkUserRole } from "@/middlewares/Admin";
 import { Product } from "@prisma/client";
@@ -31,9 +32,7 @@ export async function getProducts(): Promise<ProductProps[] | null> {
   }
 }
 
-export async function createProduct(
-  productData: Product
-): Promise<Product | null> {
+export async function createProduct(): Promise<ProductProps | null> {
   try {
     const session = await getServerSession(authOptions);
     const admin = await checkUserRole();
@@ -44,7 +43,12 @@ export async function createProduct(
     }
 
     const createdProduct = await prisma.product.create({
-      data: productData,
+      data: {
+        name: "",
+        description: "",
+        imageUrl: "",
+        price: 0,
+      },
     });
 
     return createdProduct;
@@ -75,30 +79,6 @@ export async function updateProduct(
     return updatedProduct;
   } catch (error) {
     console.error("Erreur lors de la mise à jour du produit :", error);
-    return null;
-  }
-}
-
-export async function SoftDeleteProduct(
-  productId: string
-): Promise<Product | null> {
-  try {
-    const session = await getServerSession(authOptions);
-    const admin = await checkUserRole();
-
-    if (!session || !admin) {
-      console.error("Utilisateur non autorisé pour la suppression du produit.");
-      return null;
-    }
-
-    const deletedProduct = await prisma.product.update({
-      where: { id: productId },
-      data: { deleteAt: new Date() },
-    });
-
-    return deletedProduct;
-  } catch (error) {
-    console.error("Erreur lors de la suppression du produit :", error);
     return null;
   }
 }

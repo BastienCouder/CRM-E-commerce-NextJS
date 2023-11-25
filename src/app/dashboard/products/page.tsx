@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { columns } from "./components/Columns";
 import { DataTable } from "./components/DataTable";
-import { SoftDeleteProduct, getProducts } from "../lib/db/product";
+import { getProducts } from "../lib/db/product";
 import { productSchema } from "../lib/zod";
 import { z } from "zod";
 

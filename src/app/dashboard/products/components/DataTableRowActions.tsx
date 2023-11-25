@@ -1,6 +1,6 @@
 "use client";
 
-import { Delete, FoldHorizontalIcon } from "lucide-react";
+import { FoldHorizontalIcon } from "lucide-react";
 import { Row } from "@tanstack/react-table";
 
 import {
@@ -10,7 +10,6 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -19,30 +18,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { productSchema } from "../../lib/zod";
 import { names } from "../data/data";
-
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Product } from "@prisma/client";
-import { SoftDeleteProduct } from "../../lib/db/product";
+import SoftDeleteProduct from "./SoftDeleteProduct";
+import { useServerSoftDeleteProduct } from "../action";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
-  // SoftDelete: (productId: string) => Promise<Product | null>;
 }
 
 export function DataTableRowActions<TData>({
   row,
-}: // SoftDelete,
-DataTableRowActionsProps<TData>) {
+}: DataTableRowActionsProps<TData>) {
   const product = productSchema.parse(row.original);
 
   return (
@@ -74,36 +59,11 @@ DataTableRowActionsProps<TData>) {
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-          <AlertDialog>
-            <AlertDialogTrigger className="flex w-full items-center">
-              Delete
-              <DropdownMenuShortcut>
-                <Delete size={15} />
-              </DropdownMenuShortcut>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Êtes-vous absolument sûr ?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Cette action pourra être annulée ultérieurement.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction>Continue</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </div>
+        <SoftDeleteProduct
+          productId={product.id}
+          SoftDeleteProduct={useServerSoftDeleteProduct}
+        />
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
-
-export async function getStaticProps(productId: string) {
-  const deletedProduct = await SoftDeleteProduct(productId);
-  return {
-    props: { deletedProduct },
-  };
 }
