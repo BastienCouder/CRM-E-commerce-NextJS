@@ -5,10 +5,10 @@ export default function SettingsAppearancePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium">Appearance</h3>
+        <h3 className="text-lg font-medium">Apparence</h3>
         <p className="text-sm text-muted-foreground">
-          Customize the appearance of the app. Automatically switch between day
-          and night themes.
+          Personnaliser l&apos;apparence de l&apos;application. Basculer
+          automatiquement entre les thèmes et la nuit.
         </p>
       </div>
       <Separator />

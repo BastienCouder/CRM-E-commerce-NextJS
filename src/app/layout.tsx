@@ -1,13 +1,25 @@
-import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import Navbar from "./pages/Navbar/Navbar";
 import SessionProvider from "../context/SessionProvider";
 import { AnimationProvider } from "../context/AnimationContext";
 import { Toaster } from "sonner";
 import CookieBanner from "@/components/CookieBanner";
+import { cn } from "@/lib/utils";
 require("dotenv").config();
+import { Inter as FontSans, Roboto } from "next/font/google";
+import { FontProvider } from "@/context/FontContext";
+import { ThemeProviders } from "@/context/ThemeContext";
 
-const inter = Inter({ subsets: ["latin"] });
+export const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+export const fontRoboto = Roboto({
+  subsets: ["latin"],
+  weight: "500",
+  variable: "--font-roboto",
+});
 
 export const metadata = {
   title: "E-commerce",
@@ -21,11 +33,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body className={`${inter.className}`}>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable,
+          fontRoboto.variable
+        )}
+      >
         <SessionProvider>
+          <Navbar />
           <AnimationProvider>
-            <Navbar />
-            <main>{children}</main>
+            <FontProvider>
+              <ThemeProviders>
+                <main>{children}</main>
+              </ThemeProviders>
+            </FontProvider>
             <CookieBanner />
           </AnimationProvider>
         </SessionProvider>

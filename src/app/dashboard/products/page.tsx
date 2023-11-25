@@ -1,28 +1,35 @@
-import { promises as fs } from "fs";
-import path from "path";
 import { Metadata } from "next";
-
-import { z } from "zod";
-import { taskSchema } from "./lib/zod";
 import { columns } from "./components/Columns";
 import { DataTable } from "./components/DataTable";
-import { tasks } from "./data/task";
+import { SoftDeleteProduct, getProducts } from "../lib/db/product";
+import { productSchema } from "../lib/zod";
+import { z } from "zod";
 
 export const metadata: Metadata = {
   title: "Dashboard - Products",
   description: "Example dashboard app built using the components.",
 };
 
-async function getTasks() {
-  return z.array(taskSchema).parse(tasks);
+async function getfetchProducts() {
+  try {
+    const data = await getProducts();
+    if (Array.isArray(data)) {
+      return z.array(productSchema).parse(data);
+    } else {
+      console.error("Erreur: Les données ne sont pas un tableau.");
+      return [];
+    }
+  } catch (error) {
+    console.error("Erreur lors de la récupération des produits :", error);
+    return [];
+  }
 }
 
 export default async function ProductsPage() {
-  const tasks = await getTasks();
+  const products = await getfetchProducts();
   return (
     <>
-      Products
-      <DataTable data={tasks} columns={columns} />
+      <DataTable data={products as any} columns={columns} />
     </>
   );
 }

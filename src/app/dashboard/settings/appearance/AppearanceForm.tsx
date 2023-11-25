@@ -20,14 +20,15 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "@/components/ui/use-toast";
 import { useTheme } from "next-themes";
 import { ChevronDownIcon } from "lucide-react";
+import { useFont } from "@/context/FontContext";
 
 const appearanceFormSchema = z.object({
   theme: z.enum(["light", "dark"], {
-    required_error: "Please select a theme.",
+    required_error: "Veuillez sélectionner un thème.",
   }),
-  font: z.enum(["inter", "manrope", "system"], {
-    invalid_type_error: "Select a font",
-    required_error: "Please select a font.",
+  font: z.enum(["fontSans", "fontRoboto"], {
+    invalid_type_error: "Sélectionnez une police",
+    required_error: "Veuillez sélectionner une police.",
   }),
 });
 
@@ -38,18 +39,23 @@ const defaultValues: Partial<AppearanceFormValues> = {
 };
 
 export function AppearanceForm() {
-  const { theme, setTheme } = useTheme();
   const form = useForm<AppearanceFormValues>({
     resolver: zodResolver(appearanceFormSchema),
     defaultValues,
   });
 
+  const { setTheme } = useTheme();
+  const { setFont } = useFont();
+  const fontOptions = [
+    { value: "fontSans", label: "Inter" },
+    { value: "fontRoboto", label: "Roboto" },
+  ];
+
   function onSubmit(data: AppearanceFormValues) {
     setTheme(data.theme);
-    console.log("clikc");
-
+    setFont(data.font);
     toast({
-      title: "You submitted the following values:",
+      title: "Vous avez soumis les valeurs suivantes :",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
@@ -60,7 +66,7 @@ export function AppearanceForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className={`space-y-8 `}>
         <FormField
           control={form.control}
           name="font"
@@ -76,15 +82,18 @@ export function AppearanceForm() {
                     )}
                     {...field}
                   >
-                    <option value="inter">Inter</option>
-                    <option value="manrope">Manrope</option>
-                    <option value="system">System</option>
+                    {fontOptions.map((font) => (
+                      <option key={font.value} value={font.value}>
+                        {font.label}
+                      </option>
+                    ))}
                   </select>
                 </FormControl>
                 <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
               </div>
               <FormDescription>
-                Set the font you want to use in the dashboard.
+                Définissez la police que vous souhaitez utiliser dans le tableau
+                de bord.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -97,7 +106,7 @@ export function AppearanceForm() {
             <FormItem className="space-y-1">
               <FormLabel>Theme</FormLabel>
               <FormDescription>
-                Select the theme for the dashboard.
+                Sélectionnez le thème du tableau de bord.
               </FormDescription>
               <FormMessage />
               <RadioGroup
@@ -162,7 +171,9 @@ export function AppearanceForm() {
           )}
         />
 
-        <Button type="submit">Update preferences</Button>
+        <Button size="xl" type="submit">
+          Mise à jour des préférences
+        </Button>
       </form>
     </Form>
   );

@@ -5,6 +5,7 @@ import Loading from "@/app/loading";
 
 export default async function Home() {
   const products = await prisma.product.findMany({
+    // where: { status: "available" },
     include: { category: true, color: true, variants: true },
   });
 

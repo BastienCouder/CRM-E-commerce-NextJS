@@ -1,6 +1,4 @@
 "use client";
-
-import { CrossIcon } from "lucide-react";
 import { Table } from "@tanstack/react-table";
 
 import { Input } from "@/components/ui/input";
@@ -8,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { DataTableFacetedFilter } from "./DataTableFacetedFilter";
 import { priorities, statuses } from "../data/data";
 import { DataTableViewOptions } from "./DataTableViewOptions";
+import { X } from "lucide-react";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -22,10 +21,10 @@ export function DataTableToolbar<TData>({
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filter tasks..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter products..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
@@ -50,7 +49,7 @@ export function DataTableToolbar<TData>({
             className="h-8 px-2 lg:px-3"
           >
             Reset
-            <CrossIcon className="ml-2 h-4 w-4" />
+            <X className="ml-2 h-4 w-4" />
           </Button>
         )}
       </div>

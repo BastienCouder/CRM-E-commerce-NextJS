@@ -2,15 +2,24 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import { labels, priorities, statuses } from "../data/data";
+import {
+  names,
+  images,
+  prices,
+  stocks,
+  priorities,
+  statuses,
+} from "../data/data";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { Task } from "../lib/zod";
 import { DataTableColumnHeader } from "./DataTableColumnHeader";
 import { DataTableRowActions } from "./DataTableRowActions";
+import { Product } from "@prisma/client";
+import formatPrice from "@/lib/format";
+import Image from "next/image";
 
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<Product>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -36,29 +45,101 @@ export const columns: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
+    accessorKey: "index",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Task" />
+      <DataTableColumnHeader column={column} title="Produits" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+    cell: ({ row }) => <div className="w-[80px]">{row.index + 1}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "title",
+    accessorKey: "image",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Title" />
+      <DataTableColumnHeader column={column} title="Image" />
     ),
     cell: ({ row }) => {
-      const label = labels.find(
-        (label: any) => label.value === row.original.label
+      const imageUrl = images.find(
+        (image: any) => image.value === row.original.imageUrl
+      );
+
+      return (
+        <div className="min-w-[120px] flex space-x-2">
+          {imageUrl && <Badge variant="outline">{imageUrl.label}</Badge>}
+          <Image
+            className="rounded-lg w-[50px] h-[50px] object-contain border-white border-[1px]"
+            src={row.original.imageUrl!}
+            alt={row.getValue("name")}
+            width={500}
+            height={500}
+          />
+        </div>
+      );
+    },
+    enableHiding: false,
+    enableSorting: false,
+  },
+  {
+    accessorKey: "name",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Nom" />
+    ),
+    cell: ({ row }) => {
+      const name = names.find((name: any) => name.value === row.original.name);
+
+      return (
+        <div className="flex space-x-2">
+          {name && <Badge variant="outline">{name.label}</Badge>}
+          <span className="max-w-[500px] truncate font-medium">
+            {row.getValue("name")}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "stock",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Stock" />
+    ),
+    cell: ({ row }) => {
+      const stockValue = row.original.stock;
+      const stock = stocks.find(
+        (stockItem) => parseInt(stockItem.value) === stockValue
       );
 
       return (
         <div className="flex space-x-2">
-          {label && <Badge variant="outline">{label.label}</Badge>}
+          {stock && <Badge variant="outline">{stock.label}</Badge>}
+          <span
+            className={`max-w-[500px] truncate font-medium ${
+              stockValue === 0 ? "text-red-500" : ""
+            }`}
+          >
+            {stockValue ? stockValue : "Rupture de stock"}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "price",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Prix" />
+    ),
+    cell: ({ row }) => {
+      const priceValue = row.original.price;
+      const formattedPrice = formatPrice(priceValue!, "EUR");
+
+      const price = prices.find(
+        (priceItem: any) => priceItem.value === row.original.price
+      );
+
+      return (
+        <div className="flex space-x-2">
+          {price && <Badge variant="outline">{price.label}</Badge>}
           <span className="max-w-[500px] truncate font-medium">
-            {row.getValue("title")}
+            {formattedPrice}
           </span>
         </div>
       );
@@ -79,7 +160,7 @@ export const columns: ColumnDef<Task>[] = [
       }
 
       return (
-        <div className="flex w-[100px] items-center">
+        <div className="flex items-center">
           {status.icon && (
             <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
           )}

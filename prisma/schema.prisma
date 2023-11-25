@@ -52,9 +52,11 @@ model User {
     name           String?
     email          String?    @unique
     emailVerified  DateTime?
-    role           String?
+    account        String?
     hashedPassword String?
-    image          String?
+    avatar         String?
+    language       String?
+    birthDate      String?
     createdAt      DateTime   @default(now())
     updatedAt      DateTime   @updatedAt
     accounts       Account[]
@@ -72,7 +74,12 @@ model Product {
     description   String
     imageUrl      String
     name          String
+    status        String?
+    label         String?
+    priority      String?
     price         Int
+    stock         Int?
+    deleteAt      DateTime?
     createdAt     DateTime         @default(now())
     updatedAt     DateTime         @updatedAt
     CartItems     CartItems[]

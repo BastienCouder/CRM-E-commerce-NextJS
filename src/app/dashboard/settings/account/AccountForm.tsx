@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon, CheckIcon } from "lucide-react";
+import { CalendarIcon, CheckIcon, ChevronDown } from "lucide-react";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -49,25 +49,24 @@ const accountFormSchema = z.object({
   name: z
     .string()
     .min(2, {
-      message: "Name must be at least 2 characters.",
+      message: "Le nom doit comporter au moins 2 caractères.",
     })
     .max(30, {
-      message: "Name must not be longer than 30 characters.",
+      message: "Le nom ne doit pas comporter plus de 30 caractères.",
     }),
   dob: z.date({
-    required_error: "A date of birth is required.",
+    required_error: "Une date de naissance est requise.",
   }),
   language: z.string({
-    required_error: "Please select a language.",
+    required_error: "Veuillez sélectionner une langue.",
   }),
 });
 
 type AccountFormValues = z.infer<typeof accountFormSchema>;
 
-// This can come from your database or API.
 const defaultValues: Partial<AccountFormValues> = {
-  // name: "Your name",
-  // dob: new Date("2023-01-23"),
+  name: "Your name",
+  dob: new Date("2023-01-23"),
 };
 
 export function AccountForm() {
@@ -97,11 +96,11 @@ export function AccountForm() {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Your name" {...field} />
+                <Input placeholder="Votre nom" {...field} />
               </FormControl>
               <FormDescription>
-                This is the name that will be displayed on your profile and in
-                emails.
+                C&apos;est le nom qui sera affiché sur votre profil et dans vos
+                courriels.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -112,7 +111,7 @@ export function AccountForm() {
           name="dob"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Date of birth</FormLabel>
+              <FormLabel>Date de naissance</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -126,7 +125,7 @@ export function AccountForm() {
                       {field.value ? (
                         format(field.value, "PPP")
                       ) : (
-                        <span>Pick a date</span>
+                        <span>Choisissez une date</span>
                       )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
@@ -145,7 +144,7 @@ export function AccountForm() {
                 </PopoverContent>
               </Popover>
               <FormDescription>
-                Your date of birth is used to calculate your age.
+                Votre date de naissance est utilisée pour calculer votre âge.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -156,7 +155,7 @@ export function AccountForm() {
           name="language"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Language</FormLabel>
+              <FormLabel>Langages</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -173,14 +172,16 @@ export function AccountForm() {
                             (language) => language.value === field.value
                           )?.label
                         : "Select language"}
-                      {/* <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
+                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
                 <PopoverContent className="w-[200px] p-0">
                   <Command>
                     <CommandInput placeholder="Search language..." />
-                    <CommandEmpty>No language found.</CommandEmpty>
+                    <CommandEmpty>
+                      Aucune langue n&apos;a été trouvée.
+                    </CommandEmpty>
                     <CommandGroup>
                       {languages.map((language) => (
                         <CommandItem
@@ -206,13 +207,16 @@ export function AccountForm() {
                 </PopoverContent>
               </Popover>
               <FormDescription>
-                This is the language that will be used in the dashboard.
+                Il s&apos;agit de la langue qui sera utilisée dans le tableau de
+                bord.
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Update account</Button>
+        <Button size="xl" type="submit">
+          Mise à jour du compte
+        </Button>
       </form>
     </Form>
   );

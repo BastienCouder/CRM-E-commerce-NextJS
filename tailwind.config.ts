@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+const { fontFamily } = require("tailwindcss/defaultTheme");
 
 const config: Config = {
   darkMode: ["class"],
@@ -68,8 +69,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        Bodoni: ["Bodoni", "serif"],
-        Noto: ["Noto", "serif"],
+        sans: ["var(--font-sans)", ...fontFamily.sans],
       },
       keyframes: {
         "accordion-down": {

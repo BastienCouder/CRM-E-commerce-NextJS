@@ -40,23 +40,23 @@
   }
 
   .dark {
-    --background: 0, 0, 0;
+    --background: 32, 32, 32;
     --foreground: 221, 229, 236;
-    --card: 0, 0, 0;
+    --card: 38, 38, 38;
     --card-foreground: 221, 229, 236;
-    --popover: 0, 0, 0;
+    --popover: 38, 38, 38;
     --popover-foreground: 221, 229, 236;
-    --primary: 237, 240, 245;
+    --primary: 45, 45, 45;
     --primary-foreground: 255, 255, 255;
     --secondary: 242, 244, 248;
     --secondary-foreground: 237, 240, 245;
-    --muted: 32, 32, 32;
+    --muted: 45, 45, 45;
     --muted-foreground: 215, 219, 235;
-    --accent: 32, 32, 32;
+    --accent: 45, 45, 45;
     --accent-foreground: 237, 240, 245;
     --destructive: 153, 78, 129;
     --destructive-foreground: 255, 255, 255;
-    --border: 32, 32, 32;
+    --border: 242, 244, 248;
     --input: 242, 244, 248;
     --ring: 207, 224, 234;
     --radius: 0.5rem;

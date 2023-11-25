@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
+import { ArrowDownIcon, ArrowUpIcon, EyeOff } from "lucide-react";
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -32,16 +32,15 @@ export function DataTableColumnHeader<TData, TValue>({
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            size="lg"
-            className="-ml-3 h-8 data-[state=open]:bg-accent"
+            size="default"
+            className="-ml-[1.2rem] h-8 data-[state=open]:bg-accent flex justify-start "
           >
             <span>{title}</span>
             {column.getIsSorted() === "desc" ? (
               <ArrowDownIcon className="ml-2 h-4 w-4" />
             ) : column.getIsSorted() === "asc" ? (
               <ArrowUpIcon className="ml-2 h-4 w-4" />
-            ) : //   <CaretSortIcon className="ml-2 h-4 w-4" />
-            null}
+            ) : null}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
@@ -55,8 +54,8 @@ export function DataTableColumnHeader<TData, TValue>({
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
-            {/* <EyeNoneIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" /> */}
-            Hide
+            <EyeOff className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Cacher
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
