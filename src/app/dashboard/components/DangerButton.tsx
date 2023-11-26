@@ -12,24 +12,22 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { DropdownMenuShortcut } from "@/components/ui/dropdown-menu";
 import { Product } from "@prisma/client";
-import { Delete } from "lucide-react";
 
-interface SoftDeleteProductProps {
-  productId: string;
-  DeleteProduct: (productId: string) => Promise<Product>;
+interface DangerButtonProps {
+  productId?: string;
+  DeleteProduct?: (productId: string) => Promise<Product>;
 }
 
 export default function DangerButton({
   productId,
   DeleteProduct,
-}: SoftDeleteProductProps) {
+}: DangerButtonProps) {
   return (
     <div className="relative flex select-none items-center rounded-sm py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
       <AlertDialog>
         <AlertDialogTrigger className="flex items-center">
-          <Button variant="destructive" size="lg">
+          <Button variant="destructive" size="xl">
             Supprimer définitivement
           </Button>
         </AlertDialogTrigger>
@@ -43,13 +41,15 @@ export default function DangerButton({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Annuler</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={async () => {
-                await DeleteProduct(productId);
-              }}
-            >
-              Continue
-            </AlertDialogAction>
+            {productId && DeleteProduct ? (
+              <AlertDialogAction
+                onClick={async () => {
+                  await DeleteProduct(productId);
+                }}
+              >
+                Continuer
+              </AlertDialogAction>
+            ) : null}
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

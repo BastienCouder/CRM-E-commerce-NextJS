@@ -41,6 +41,10 @@ const config: Config = {
           DEFAULT: "rgb(var(--destructive))",
           foreground: "rgb(var(--destructive-foreground))",
         },
+        destructive2: {
+          DEFAULT: "rgb(var(--destructive2))",
+          foreground: "rgb(var(--destructive-foreground))",
+        },
         muted: {
           DEFAULT: "rgb(var(--muted))",
           foreground: "rgb(var(--muted-foreground))",

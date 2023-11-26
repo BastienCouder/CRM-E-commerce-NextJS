@@ -10,9 +10,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "border-[1px] outline-none relative uppercase tracking-[4px]",
-        destructive: "bg-destructive text-destructive-foreground",
+        destructive:
+          "bg-destructive hover:bg-destructive2 uppercase text-sm text-destructive-foreground tracking-[2px]",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "bg-accent border-accent border tracking-[2px] uppercase text-sm hover:text-accent-foreground",
+        delete:
+          "bg-accent border-accent border tracking-[2px] uppercase text-sm hover:bg-destructive hover:border-destructive hover:border hover:text-accent-foreground",
+
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",

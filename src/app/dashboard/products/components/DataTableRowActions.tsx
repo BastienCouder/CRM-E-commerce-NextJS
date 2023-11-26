@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { productSchema } from "../../lib/zod";
 import { names } from "../data/data";
-import SoftDeleteProduct from "./SoftDeleteProduct";
+import SoftDelete from "../../components/SoftDelete";
 import { useServerSoftDeleteProduct } from "../action";
 import Link from "next/link";
 
@@ -62,9 +62,10 @@ export function DataTableRowActions<TData>({
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <SoftDeleteProduct
+        <SoftDelete
           productId={product.id}
           SoftDeleteProduct={useServerSoftDeleteProduct}
+          type="actions"
         />
       </DropdownMenuContent>
     </DropdownMenu>
