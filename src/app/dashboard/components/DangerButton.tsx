@@ -11,40 +11,41 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import { DropdownMenuShortcut } from "@/components/ui/dropdown-menu";
 import { Product } from "@prisma/client";
 import { Delete } from "lucide-react";
 
 interface SoftDeleteProductProps {
   productId: string;
-  SoftDeleteProduct: (productId: string) => Promise<Product>;
+  DeleteProduct: (productId: string) => Promise<Product>;
 }
 
-export default function SoftDeleteProduct({
+export default function DangerButton({
   productId,
-  SoftDeleteProduct,
+  DeleteProduct,
 }: SoftDeleteProductProps) {
   return (
-    <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+    <div className="relative flex select-none items-center rounded-sm py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
       <AlertDialog>
-        <AlertDialogTrigger className="flex w-full items-center">
-          Supprimer
-          <DropdownMenuShortcut>
-            <Delete size={15} />
-          </DropdownMenuShortcut>
+        <AlertDialogTrigger className="flex items-center">
+          <Button variant="destructive" size="lg">
+            Supprimer définitivement
+          </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Êtes-vous absolument sûr ?</AlertDialogTitle>
             <AlertDialogDescription>
-              Cette action pourra être annulée ultérieurement.
+              Cette action ne pourra pas être annulée ultérieurement et sera
+              irréversible.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Annuler</AlertDialogCancel>
             <AlertDialogAction
               onClick={async () => {
-                await SoftDeleteProduct(productId);
+                await DeleteProduct(productId);
               }}
             >
               Continue

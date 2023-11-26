@@ -74,12 +74,12 @@ export const statuses = [
   },
   {
     value: "unavailable",
-    label: "Unavailable",
+    label: "Indisponible",
     icon: X,
   },
   {
     value: "delete",
-    label: "delete",
+    label: "Supprimer",
     icon: XSquare,
   },
 ];

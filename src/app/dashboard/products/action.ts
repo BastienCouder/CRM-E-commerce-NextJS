@@ -69,3 +69,31 @@ export async function useServerSoftDeleteProduct(productId: string) {
     return null;
   }
 }
+
+export async function useServerDeleteProduct(productId: string) {
+  try {
+    const products = (await getProducts()) ?? (await createProduct());
+
+    if (Array.isArray(products)) {
+      const product = products.find((item) => item.id === productId);
+
+      if (!product) {
+        console.error("Product not found.");
+        return null;
+      }
+
+      const deletedProduct = await prisma.product.delete({
+        where: { id: productId },
+      });
+
+      revalidatePath(`/products/${productId}`);
+      return deletedProduct;
+    } else {
+      console.error("Products is not an array.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Erreur lors de la suppression du produit :", error);
+    return null;
+  }
+}

@@ -20,6 +20,7 @@ import { productSchema } from "../../lib/zod";
 import { names } from "../data/data";
 import SoftDeleteProduct from "./SoftDeleteProduct";
 import { useServerSoftDeleteProduct } from "../action";
+import Link from "next/link";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -42,7 +43,9 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Modifier</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link href={`/dashboard/products/${product.id}`}>Modifier</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem>Faire une copy</DropdownMenuItem>
         <DropdownMenuItem>Favories</DropdownMenuItem>
         <DropdownMenuSeparator />
