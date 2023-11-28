@@ -7,24 +7,23 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import { Button } from "@/components/ui/button";
 import { productSchema } from "../../lib/zod";
-import { names } from "../data/data";
 import SoftDelete from "../../components/SoftDelete";
 import Link from "next/link";
 import {
+  useServerDuplicateProduct,
   useServerSoftDeleteProduct,
   useServerUpdateProductFavourites,
+  useServerUpdateProductLabel,
 } from "../[id]/action";
 import Favories from "../../components/Favorites";
+import Duplicate from "../../components/Duplicate";
+import Label from "../../components/Label";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -50,7 +49,14 @@ export function DataTableRowActions<TData>({
         <DropdownMenuItem>
           <Link href={`/dashboard/products/${product.id}`}>Modifier</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>Faire une copy</DropdownMenuItem>
+        <DropdownMenuItem>
+          {" "}
+          <Duplicate
+            productId={product.id}
+            DuplicateProduct={useServerDuplicateProduct}
+            type="actions"
+          />
+        </DropdownMenuItem>
         <DropdownMenuItem>
           <Favories
             productId={product.id}
@@ -60,19 +66,14 @@ export function DataTableRowActions<TData>({
           />{" "}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Noms</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={product.label || undefined}>
-              {names.map((label: any) => (
-                <DropdownMenuRadioItem key={label.value} value={label.value}>
-                  {label.label}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
+        <Label
+          productId={product.id}
+          UpdateLabelProduct={useServerUpdateProductLabel}
+          type="actions"
+          productLabel={product.label}
+        />
         <DropdownMenuSeparator />
+
         <SoftDelete
           productId={product.id}
           SoftDeleteProduct={useServerSoftDeleteProduct}

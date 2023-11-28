@@ -119,6 +119,40 @@ export async function useServerUpdateProductStatus(
   }
 }
 
+export async function useServerUpdateProductLabel(
+  productId: string,
+  newLabel: string
+) {
+  try {
+    const product = await prisma.product.findUnique({
+      where: { id: productId },
+    });
+
+    if (!product) {
+      console.error("Product not found.");
+      return null;
+    }
+
+    const updatedProduct = await prisma.product.update({
+      where: { id: productId },
+      data: {
+        label: newLabel,
+      },
+    });
+
+    revalidatePath(`/products`);
+    revalidatePath(`/products/${productId}`);
+
+    return updatedProduct;
+  } catch (error) {
+    console.error(
+      "Erreur lors de la mise à jour du statut du produit :",
+      error
+    );
+    return null;
+  }
+}
+
 export async function useServerUpdateProductFavourites(
   productId: string,
   newFavourites: string
@@ -156,7 +190,7 @@ export async function useServerUpdateProductFavourites(
   }
 }
 
-export async function useDuplicateProduct(productId: string) {
+export async function useServerDuplicateProduct(productId: string) {
   try {
     const productToDuplicate = await prisma.product.findUnique({
       where: { id: productId },

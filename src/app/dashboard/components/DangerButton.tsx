@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Product } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 interface DangerButtonProps {
   productId?: string;
@@ -23,6 +24,7 @@ export default function DangerButton({
   productId,
   DeleteProduct,
 }: DangerButtonProps) {
+  const router = useRouter();
   return (
     <div className="relative flex select-none items-center rounded-sm py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
       <AlertDialog>
@@ -45,6 +47,7 @@ export default function DangerButton({
               <AlertDialogAction
                 onClick={async () => {
                   await DeleteProduct(productId);
+                  router.push("/dashboard/products");
                 }}
               >
                 Continuer

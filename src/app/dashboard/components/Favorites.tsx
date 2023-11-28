@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Product } from "@prisma/client";
 import { Star } from "lucide-react";
 
-interface RestoreProps {
+interface FavoritesProps {
   productId: string;
   productPriority: string | null;
   FavoriteProduct: (
@@ -14,12 +14,12 @@ interface RestoreProps {
   type: string;
 }
 
-export default function Favories({
+export default function Favorites({
   type,
   productPriority,
   FavoriteProduct,
   productId,
-}: RestoreProps) {
+}: FavoritesProps) {
   return (
     <>
       {type === "actions" && (

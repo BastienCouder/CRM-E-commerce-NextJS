@@ -1,68 +1,17 @@
-import {
-  ArrowDownIcon,
-  ArrowRightIcon,
-  ArrowUpIcon,
-  CheckCheck,
-  X,
-  XSquare,
-} from "lucide-react";
+import { BadgePlus, CheckCheck, Star, X, XSquare } from "lucide-react";
 
-export const names = [
+export const labels = [
   {
     value: "bug",
     label: "Bug",
   },
   {
-    value: "feature",
-    label: "Feature",
+    value: "monitoring",
+    label: "Surveillance",
   },
   {
-    value: "documentation",
-    label: "Documentation",
-  },
-];
-
-export const stocks = [
-  {
-    value: "bug",
-    label: "Bug",
-  },
-  {
-    value: "feature",
-    label: "Feature",
-  },
-  {
-    value: "documentation",
-    label: "Documentation",
-  },
-];
-
-export const images = [
-  {
-    value: "bug",
-    label: "Bug",
-  },
-  {
-    value: "feature",
-    label: "Feature",
-  },
-  {
-    value: "documentation",
-    label: "Documentation",
-  },
-];
-export const prices = [
-  {
-    value: "bug",
-    label: "Bug",
-  },
-  {
-    value: "feature",
-    label: "Feature",
-  },
-  {
-    value: "documentation",
-    label: "Documentation",
+    value: "correct",
+    label: "Correct",
   },
 ];
 
@@ -88,11 +37,11 @@ export const priorities = [
   {
     label: "Favorie",
     value: "favorites",
-    icon: ArrowDownIcon,
+    icon: Star,
   },
   {
     label: "Nouveautés",
     value: "new",
-    icon: ArrowRightIcon,
+    icon: BadgePlus,
   },
 ];
