@@ -17,6 +17,10 @@ export async function getProducts(): Promise<ProductProps[] | null> {
     try {
       const products = await prisma.product.findMany({
         where: { deleteAt: null || undefined },
+        include: {
+          category: true,
+          variants: true,
+        },
       });
 
       return products as ProductProps[];

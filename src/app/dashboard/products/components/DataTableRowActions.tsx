@@ -19,8 +19,12 @@ import { Button } from "@/components/ui/button";
 import { productSchema } from "../../lib/zod";
 import { names } from "../data/data";
 import SoftDelete from "../../components/SoftDelete";
-import { useServerSoftDeleteProduct } from "../action";
 import Link from "next/link";
+import {
+  useServerSoftDeleteProduct,
+  useServerUpdateProductFavourites,
+} from "../[id]/action";
+import Favories from "../../components/Favorites";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -47,7 +51,14 @@ export function DataTableRowActions<TData>({
           <Link href={`/dashboard/products/${product.id}`}>Modifier</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>Faire une copy</DropdownMenuItem>
-        <DropdownMenuItem>Favories</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Favories
+            productId={product.id}
+            FavoriteProduct={useServerUpdateProductFavourites}
+            type="actions"
+            productPriority={product.priority}
+          />{" "}
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Noms</DropdownMenuSubTrigger>

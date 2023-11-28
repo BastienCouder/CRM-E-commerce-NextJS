@@ -19,14 +19,6 @@ export default function ProductLayout({
       href: `/dashboard/products/${id}`,
     },
     {
-      title: "Seo",
-      href: `/dashboard/products/${id}/seo`,
-    },
-    {
-      title: "Prix",
-      href: `/dashboard/products/${id}/price`,
-    },
-    {
       title: "Dérivés",
       href: `/dashboard/products/${id}/variants`,
     },
@@ -42,7 +34,7 @@ export default function ProductLayout({
         <div className="space-y-0.5">
           <h2 className="text-2xl font-bold trackin ,g-tight">Produit</h2>
           <p className="text-muted-foreground">
-            Gérer les paramètres du produit et définir vos préférences.
+            Gérer les paramètres du produit et définissez vos préférences.
           </p>
         </div>
         <Separator className="my-6" />

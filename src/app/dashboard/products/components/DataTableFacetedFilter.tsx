@@ -45,38 +45,31 @@ export function DataTableFacetedFilter<TData, TValue>({
         <Button variant="outline" size="lg" className="h-8 border-dashed">
           <PlusCircleIcon className="mr-2 h-4 w-4" />
           {title}
-          {selectedValues?.size > 0 && (
+          {selectedValues?.size >= 2 ? (
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />
               <Badge
                 variant="secondary"
-                className="rounded-sm px-1 font-normal lg:hidden"
+                className="rounded-sm px-1 font-normal"
               >
                 {selectedValues.size}
               </Badge>
-              <div className="hidden space-x-1 lg:flex">
-                {selectedValues.size > 2 ? (
+            </>
+          ) : (
+            options
+              .filter((option) => selectedValues.has(option.value))
+              .map((option) => (
+                <>
+                  <Separator orientation="vertical" className="mx-2 h-4" />
                   <Badge
                     variant="secondary"
+                    key={option.value}
                     className="rounded-sm px-1 font-normal"
                   >
-                    {selectedValues.size} selected
+                    {option.label}
                   </Badge>
-                ) : (
-                  options
-                    .filter((option) => selectedValues.has(option.value))
-                    .map((option) => (
-                      <Badge
-                        variant="secondary"
-                        key={option.value}
-                        className="rounded-sm px-1 font-normal"
-                      >
-                        {option.label}
-                      </Badge>
-                    ))
-                )}
-              </div>
-            </>
+                </>
+              ))
           )}
         </Button>
       </PopoverTrigger>
@@ -134,7 +127,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                     onSelect={() => column?.setFilterValue(undefined)}
                     className="justify-center text-center"
                   >
-                    Clear filters
+                    Effacer les filtres
                   </CommandItem>
                 </CommandGroup>
               </>

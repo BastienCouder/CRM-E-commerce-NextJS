@@ -4,11 +4,7 @@ import { MainNav } from "./components/MainNav";
 import { UserNav } from "./components/UserNav";
 import { Search } from "./components/Search";
 import { Toaster } from "@/components/ui/toaster";
-import { ThemeProviders } from "@/context/ThemeContext";
-import { FontProvider } from "@/context/FontContext";
 import { checkUserRole } from "@/middlewares/Admin";
-import { error } from "console";
-import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Dashboard",

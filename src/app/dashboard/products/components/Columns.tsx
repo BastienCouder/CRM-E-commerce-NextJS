@@ -6,14 +6,15 @@ import {
   images,
   prices,
   stocks,
-  priorities,
   statuses,
+  priorities,
 } from "../data/data";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { DataTableColumnHeader } from "./DataTableColumnHeader";
 import { DataTableRowActions } from "./DataTableRowActions";
+
 import formatPrice from "@/lib/format";
 import Image from "next/image";
 
@@ -78,7 +79,7 @@ export const columns: ColumnDef<any>[] = [
     enableSorting: false,
   },
   {
-    accessorKey: "name",
+    accessorKey: "nom",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Nom" />
     ),
@@ -89,7 +90,7 @@ export const columns: ColumnDef<any>[] = [
         <div className="flex space-x-2">
           {name && <Badge variant="outline">{name.label}</Badge>}
           <span className="max-w-[500px] truncate font-medium">
-            {row.getValue("name")}
+            {row.original.name}
           </span>
         </div>
       );
@@ -121,7 +122,7 @@ export const columns: ColumnDef<any>[] = [
     },
   },
   {
-    accessorKey: "price",
+    accessorKey: "prix",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Prix" />
     ),
@@ -149,47 +150,58 @@ export const columns: ColumnDef<any>[] = [
       <DataTableColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => {
+      const statusValue = row.original.status;
       const status = statuses.find(
-        (status: any) => status.value === row.getValue("status")
+        (statusItem) => statusItem.value === statusValue
       );
 
-      if (!status) {
-        return null;
-      }
-
       return (
-        <div className="flex items-center">
-          {status.icon && (
-            <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+        <div className="flex space-x-2">
+          {status && (
+            <Badge
+              variant="outline"
+              className={`${
+                status.value === "available"
+                  ? "bg-green-800"
+                  : status.value === "unavailable"
+                  ? "bg-blue-800"
+                  : "bg-destructive"
+              }`}
+            >
+              {status.label}
+            </Badge>
           )}
-          <span>{status.label}</span>
         </div>
       );
     },
+
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
     },
   },
   {
-    accessorKey: "priority",
+    accessorKey: "privilège",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Priority" />
+      <DataTableColumnHeader column={column} title="Privilège" />
     ),
     cell: ({ row }) => {
+      const priorityValue = row.original.priority;
       const priority = priorities.find(
-        (priority: any) => priority.value === row.getValue("priority")
+        (priorityItem) => priorityItem.value === priorityValue
       );
 
-      if (!priority) {
-        return null;
-      }
-
       return (
-        <div className="flex items-center">
-          {priority.icon && (
-            <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+        <div className="flex space-x-2">
+          {priority && (
+            <Badge
+              variant="outline"
+              className={`${
+                priority.value === "favorites" ? "bg-amber-700" : ""
+              }`}
+            >
+              {priority.label}
+            </Badge>
           )}
-          <span>{priority.label}</span>
         </div>
       );
     },
