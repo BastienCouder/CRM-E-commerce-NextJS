@@ -3,36 +3,6 @@ import { revalidatePath } from "next/cache";
 import { createProduct, getProducts } from "../../lib/db/product";
 import { findCategoryIdByName } from "../../lib/utils";
 
-export async function useServerRestoreProduct(productId: string) {
-  console.log("restoredProduct");
-
-  try {
-    const products = (await getProducts()) ?? (await createProduct());
-
-    if (Array.isArray(products)) {
-      const product = products.find((item) => item.id === productId);
-
-      if (!product) {
-        console.error("Product not found.");
-        return null;
-      }
-
-      const restoredProduct = await prisma.product.update({
-        where: { id: productId },
-        data: { deleteAt: null, status: "available" },
-      });
-
-      revalidatePath(`/dashboard/products`);
-      revalidatePath(`/products`);
-      revalidatePath(`/dashboard/products/${productId}`);
-
-      return restoredProduct;
-    }
-  } catch (error) {
-    console.error("Erreur lors de la restauration du produit :", error);
-    return null;
-  }
-}
 export async function useServerUpdateProduct(
   productId: string,
   formData: FormData

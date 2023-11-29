@@ -1,9 +1,5 @@
 "use client";
-import DangerButton from "@/app/dashboard/components/DangerButton";
 import { Separator } from "@/components/ui/separator";
-
-import SoftDeleteProduct from "../../../components/SoftDelete";
-
 import {
   Select,
   SelectContent,
@@ -12,11 +8,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Restore from "@/app/dashboard/components/Restore";
-import { useServerRestoreProduct } from "../action";
 import { ProductProps } from "@/app/dashboard/lib/db/product";
 import { Product } from "@prisma/client";
-import { useServerDelete, useServerSoftDelete } from "@/app/dashboard/actions";
+import {
+  useServerDelete,
+  useServerRestore,
+  useServerSoftDelete,
+} from "@/app/dashboard/actions";
 import SoftDelete from "../../../components/SoftDelete";
+import DangerDelete from "@/app/dashboard/components/DangerDelete";
 
 interface ProductSettingsFormProps {
   productId: string;
@@ -75,8 +75,8 @@ export default async function ProductSettingsForm({
               </p>
             </div>
             <Restore
-              productId={product.id}
-              RestoreProduct={useServerRestoreProduct}
+              itemId={product.id}
+              RestoreProduct={useServerRestore}
               type="settings"
             />
           </div>
@@ -112,7 +112,7 @@ export default async function ProductSettingsForm({
             donnée. Attention cette action est irréversible.
           </p>
         </div>
-        <DangerButton itemId={productId} Delete={useServerDelete} />
+        <DangerDelete itemId={productId} Delete={useServerDelete} />
       </div>
     </>
   );

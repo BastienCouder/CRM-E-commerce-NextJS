@@ -13,17 +13,14 @@ import { statuses as orderStatuses } from "../orders/data/data";
 interface StatusProps {
   itemId: string;
   itemStatus: string | null;
-  data: string;
-  UpdateStatusItem: (
-    itemId: string,
-    newStatus: string
-  ) => Promise<Product | Order>;
+  UpdateStatus: (itemId: string, newStatus: string) => Promise<Product | Order>;
   type: string;
+  data: string;
 }
 
 export default function Status({
   type,
-  UpdateStatusItem,
+  UpdateStatus,
   itemId,
   itemStatus,
   data,
@@ -40,18 +37,20 @@ export default function Status({
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               <DropdownMenuRadioGroup value={itemStatus || undefined}>
-                {statuses.map((status: any) => (
-                  <DropdownMenuRadioItem
-                    key={status.value}
-                    value={status.value}
-                    className="cursor-pointer"
-                    onClick={async () => {
-                      await UpdateStatusItem(itemId, status.value);
-                    }}
-                  >
-                    {status.label}
-                  </DropdownMenuRadioItem>
-                ))}
+                {statuses
+                  .filter((status) => status.value !== "delete")
+                  .map((status: any) => (
+                    <DropdownMenuRadioItem
+                      key={status.value}
+                      value={status.value}
+                      className="cursor-pointer"
+                      onClick={async () => {
+                        await UpdateStatus(itemId, status.value);
+                      }}
+                    >
+                      {status.label}
+                    </DropdownMenuRadioItem>
+                  ))}
               </DropdownMenuRadioGroup>
             </DropdownMenuSubContent>
           </DropdownMenuSub>

@@ -12,10 +12,9 @@ import { Button } from "@/components/ui/button";
 import { FoldHorizontalIcon } from "lucide-react";
 import Link from "next/link";
 import Status from "../../components/Status";
-import { useServerUpdateProductStatus } from "../actions";
 
 import SoftDelete from "../../components/SoftDelete";
-import { useServerSoftDelete } from "../../actions";
+import { useServerSoftDelete, useServerUpdateStatus } from "../../actions";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -41,26 +40,10 @@ export function DataTableRowActions<TData>({
         <DropdownMenuItem>
           <Link href={`/dashboard/orders/${order.id}`}>Voir le détail</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          {" "}
-          {/* <Duplicate
-            productId={product.id}
-            DuplicateProduct={useServerDuplicateProduct}
-            type="actions"
-          /> */}
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          {/* <Favories
-            productId={product.id}
-            FavoriteProduct={useServerUpdateProductFavourites}
-            type="actions"
-            productPriority={product.priority}
-          />{" "} */}
-        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <Status
           itemId={order.id}
-          UpdateStatusItem={useServerUpdateProductStatus}
+          UpdateStatus={useServerUpdateStatus}
           type="actions"
           data="orders"
           itemStatus={order.status}

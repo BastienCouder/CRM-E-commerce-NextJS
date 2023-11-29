@@ -1,31 +1,18 @@
 "use client";
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { DropdownMenuShortcut } from "@/components/ui/dropdown-menu";
-import { Product } from "@prisma/client";
-import { Delete } from "lucide-react";
+import { Order, Product } from "@prisma/client";
 
 interface RestoreProps {
-  productId: string;
-  RestoreProduct: (productId: string) => Promise<Product>;
+  itemId: string;
+  RestoreProduct: (itemId: string) => Promise<Product | Order>;
   type: string;
 }
 
 export default function Restore({
   type,
   RestoreProduct,
-  productId,
+  itemId,
 }: RestoreProps) {
   return (
     <div className="relative flex cursor-default select-none items-center rounded-sm py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
@@ -34,7 +21,7 @@ export default function Restore({
           variant="outline"
           size="lg"
           onClick={async () => {
-            await RestoreProduct(productId);
+            await RestoreProduct(itemId);
           }}
         >
           Restorer

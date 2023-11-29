@@ -18,12 +18,11 @@ import Link from "next/link";
 import {
   useServerDuplicateProduct,
   useServerUpdateProductFavourites,
-  useServerUpdateProductLabel,
 } from "../[id]/action";
 import Favories from "../../components/Favorites";
 import Duplicate from "../../components/Duplicate";
-import Label from "../../components/Label";
-import { useServerSoftDelete } from "../../actions";
+import { useServerSoftDelete, useServerUpdateStatus } from "../../actions";
+import Status from "../../components/Status";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -66,11 +65,12 @@ export function DataTableRowActions<TData>({
           />{" "}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <Label
-          productId={product.id}
-          UpdateLabelProduct={useServerUpdateProductLabel}
+        <Status
+          itemId={product.id}
+          UpdateStatus={useServerUpdateStatus}
           type="actions"
-          productLabel={product.label}
+          data="products"
+          itemStatus={product.status}
         />
         <DropdownMenuSeparator />
 

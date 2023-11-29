@@ -1,7 +1,7 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { statuses, priorities, labels } from "../data/data";
+import { statuses, priorities } from "../data/data";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -74,13 +74,8 @@ export const columns: ColumnDef<any>[] = [
       <DataTableColumnHeader column={column} title="Nom" />
     ),
     cell: ({ row }) => {
-      const label = labels.find(
-        (label: any) => label.value === row.original.label
-      );
-      const name = row.getValue("nom") === row.original.name;
       return (
         <div className="flex space-x-2 items-center">
-          {label && <Badge variant="outline">{label?.label}</Badge>}
           <span className="max-w-[500px] truncate font-medium">
             {row.original.name}
           </span>
@@ -146,8 +141,6 @@ export const columns: ColumnDef<any>[] = [
               className={`${
                 status.value === "available"
                   ? "border-green-800"
-                  : status.value === "unavailable"
-                  ? "border-blue-800"
                   : "border-destructive"
               }`}
             >

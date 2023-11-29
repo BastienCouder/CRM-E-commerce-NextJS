@@ -1,19 +1,4 @@
-import { BadgePlus, CheckCheck, Star, X, XSquare } from "lucide-react";
-
-export const labels = [
-  {
-    value: "bug",
-    label: "Bug",
-  },
-  {
-    value: "monitoring",
-    label: "Surveillance",
-  },
-  {
-    value: "correct",
-    label: "Correct",
-  },
-];
+import { BadgePlus, CheckCheck, Star, X } from "lucide-react";
 
 export const statuses = [
   {
@@ -29,7 +14,7 @@ export const statuses = [
   {
     value: "delete",
     label: "Supprimer",
-    icon: XSquare,
+    icon: X,
   },
 ];
 

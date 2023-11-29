@@ -15,12 +15,12 @@ import { Button } from "@/components/ui/button";
 import { Order, Product } from "@prisma/client";
 import { useRouter } from "next/navigation";
 
-interface DangerButtonProps {
+interface DangerDeleteProps {
   itemId: string;
   Delete: (itemId: string) => Promise<Product | Order>;
 }
 
-export default function DangerButton({ itemId, Delete }: DangerButtonProps) {
+export default function DangerDelete({ itemId, Delete }: DangerDeleteProps) {
   const router = useRouter();
   return (
     <div className="relative flex select-none items-center rounded-sm py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
