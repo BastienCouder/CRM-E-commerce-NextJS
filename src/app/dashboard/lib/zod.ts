@@ -77,7 +77,7 @@ export const orderSchema = z.object({
     city: z.string(),
     // deliveryOption: z.nullable(z.object({})),
   }),
-  subtotal: z.number().nullable(),
+  subtotal: z.number(),
 });
 
 export type Order = z.infer<typeof orderSchema>;

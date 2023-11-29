@@ -31,7 +31,7 @@ export function MainNav({
             item.href !== "/dashboard" && pathname.startsWith(item.href)
               ? "bg-muted hover:bg-muted"
               : "hover:bg-muted",
-            "justify-start text-sm font-medium py-3 px-4 w-28"
+            "justify-start text-sm font-medium py-2 px-4 w-28"
           )}
         >
           {item.label}

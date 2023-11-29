@@ -142,7 +142,7 @@ export async function useServerRestore(itemId: string) {
     } else if (order) {
       const restoredOrder = await prisma.orderItems.update({
         where: { id: itemId },
-        data: { deleteAt: null, status: "active" },
+        data: { deleteAt: null, status: "waiting" },
       });
 
       revalidatePath(`/dashboard/orders`);

@@ -4,7 +4,7 @@ import { Table } from "@tanstack/react-table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DataTableFacetedFilter } from "./DataTableFacetedFilter";
-import { priorities, statuses } from "../data/data";
+import { statuses } from "../data/data";
 import { DataTableViewOptions } from "./DataTableViewOptions";
 import { X } from "lucide-react";
 
@@ -33,13 +33,6 @@ export function DataTableToolbar<TData>({
             column={table.getColumn("status")}
             title="Status"
             options={statuses}
-          />
-        )}
-        {table.getColumn("privilège") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("privilège")}
-            title="Privilège"
-            options={priorities}
           />
         )}
         {isFiltered && (

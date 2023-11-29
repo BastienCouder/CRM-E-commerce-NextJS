@@ -5,7 +5,6 @@ import {
   MoreHorizontal,
   Star,
   X,
-  XSquare,
 } from "lucide-react";
 
 export const statuses = [
@@ -38,18 +37,5 @@ export const statuses = [
     value: "delete",
     label: "Supprimée",
     icon: X,
-  },
-];
-
-export const priorities = [
-  {
-    label: "Favorie",
-    value: "favorites",
-    icon: Star,
-  },
-  {
-    label: "Nouveautés",
-    value: "new",
-    icon: BadgePlus,
   },
 ];

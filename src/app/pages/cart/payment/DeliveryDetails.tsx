@@ -1,5 +1,4 @@
 "use client";
-import { DeliveryItemsProps } from "@/lib/db/delivery";
 
 interface DeliveryDetailsProps {
   deliveryItem: any;

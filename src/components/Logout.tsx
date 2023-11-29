@@ -16,7 +16,7 @@ export default function AccountMenu({ visible }: AccountMenuProps) {
       onClick={() => signOut({ callbackUrl: "/" })}
       className="w-16 cursor-pointer"
     >
-      Deconnexion
+      Déconnexion
     </div>
   );
 }

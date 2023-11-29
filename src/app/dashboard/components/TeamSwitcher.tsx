@@ -48,7 +48,7 @@ const groups = [
     label: "Personal Account",
     teams: [
       {
-        label: "Alicia Koch",
+        label: "BastienCdr",
         value: "personal",
       },
     ],
@@ -94,12 +94,9 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
             aria-label="Select a team"
             className={cn("w-[200px] justify-between", className)}
           >
-            <Avatar className="mr-2 h-5 w-5">
-              <AvatarImage
-                src={`https://avatar.vercel.sh/${selectedTeam.value}.png`}
-                alt={selectedTeam.label}
-              />
-              <AvatarFallback>SC</AvatarFallback>
+            <Avatar className="mr-2 h-5 w-8">
+              <AvatarImage src={``} alt={selectedTeam.label} />
+              <AvatarFallback>BC</AvatarFallback>
             </Avatar>
             {selectedTeam.label}
             {/* <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" /> */}

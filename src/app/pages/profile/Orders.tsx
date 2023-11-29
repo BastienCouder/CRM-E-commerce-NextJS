@@ -3,6 +3,7 @@
 import { CartItemsProps } from "@/lib/db/cart";
 import { OrderProps } from "@/lib/db/order";
 import formatPrice, { formatDate, formatDescription } from "@/lib/format";
+import { handleStatusChange } from "@/lib/utils";
 import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -17,23 +18,6 @@ export default function Orders({ order }: OrdersProps) {
   const [selectedOrderIndex, setSelectedOrderIndex] = useState<number | null>(
     null
   );
-
-  function handleStatusChange(value: string): string {
-    switch (value) {
-      case "waiting":
-        return "En attente";
-      case "in progress":
-        return "En cours";
-      case "delivered":
-        return "Livrée";
-      case "cancel":
-        return "Annulée";
-      case "refunded":
-        return "Remboursée";
-      default:
-        return "Annulée";
-    }
-  }
 
   function calculateSubtotal(cartItems: CartItemsProps[]): number {
     return cartItems.reduce((acc: number, item: CartItemsProps) => {

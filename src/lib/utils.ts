@@ -25,3 +25,20 @@ export function generateOrderNumber(): string {
 
   return orderNumber;
 }
+
+export function handleStatusChange(value: string): string {
+  switch (value) {
+    case "waiting":
+      return "En attente";
+    case "in progress":
+      return "En cours";
+    case "delivered":
+      return "Livrée";
+    case "cancel":
+      return "Annulée";
+    case "refunded":
+      return "Remboursée";
+    default:
+      return "Annulée";
+  }
+}
