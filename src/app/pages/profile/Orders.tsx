@@ -148,7 +148,7 @@ export default function Orders({ order }: OrdersProps) {
                     <h2 className="text-lg pb-2">Status de la commande</h2>
 
                     <div className="text-sm border-b-2 pb-8 border-primary">
-                      <div className="font-bold capitalize flex space-x-2">
+                      <div className="font-bold flex space-x-2">
                         <p
                           className={`border p-1 ${
                             orderItem.status === "delivered"

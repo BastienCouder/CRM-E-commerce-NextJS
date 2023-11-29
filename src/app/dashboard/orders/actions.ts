@@ -5,8 +5,6 @@ export async function useServerUpdateProductStatus(
   orderId: string,
   newStatus: string
 ) {
-  console.log("succes");
-
   try {
     const order = await prisma.orderItems.findUnique({
       where: { id: orderId },

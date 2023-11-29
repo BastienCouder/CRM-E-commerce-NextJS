@@ -12,13 +12,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Restore from "@/app/dashboard/components/Restore";
-import {
-  useServerDeleteProduct,
-  useServerRestoreProduct,
-  useServerSoftDeleteProduct,
-} from "../action";
+import { useServerRestoreProduct } from "../action";
 import { ProductProps } from "@/app/dashboard/lib/db/product";
 import { Product } from "@prisma/client";
+import { useServerDelete, useServerSoftDelete } from "@/app/dashboard/actions";
+import SoftDelete from "../../../components/SoftDelete";
 
 interface ProductSettingsFormProps {
   productId: string;
@@ -95,9 +93,9 @@ export default async function ProductSettingsForm({
                 votre base de donnée.
               </p>
             </div>
-            <SoftDeleteProduct
-              productId={productId}
-              SoftDeleteProduct={useServerSoftDeleteProduct}
+            <SoftDelete
+              itemId={productId}
+              SoftDelete={useServerSoftDelete}
               type="settings"
             />
           </div>
@@ -114,10 +112,7 @@ export default async function ProductSettingsForm({
             donnée. Attention cette action est irréversible.
           </p>
         </div>
-        <DangerButton
-          productId={productId}
-          DeleteProduct={useServerDeleteProduct}
-        />
+        <DangerButton itemId={productId} Delete={useServerDelete} />
       </div>
     </>
   );

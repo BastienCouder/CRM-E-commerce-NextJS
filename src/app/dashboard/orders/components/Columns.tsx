@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { DataTableColumnHeader } from "./DataTableColumnHeader";
 import { DataTableRowActions } from "./DataTableRowActions";
 
-import formatPrice from "@/lib/format";
+import formatPrice, { formatDate } from "@/lib/format";
 import Image from "next/image";
 
 export const columns: ColumnDef<any>[] = [
@@ -42,7 +42,7 @@ export const columns: ColumnDef<any>[] = [
       <DataTableColumnHeader column={column} title="Commandes" />
     ),
     cell: ({ row }) => (
-      <div className="w-[120px]">{row.original.orderNumber}</div>
+      <div className="w-[140px]">{row.original.orderNumber}</div>
     ),
     enableSorting: false,
     enableHiding: false,
@@ -133,27 +133,20 @@ export const columns: ColumnDef<any>[] = [
     },
   },
   {
-    accessorKey: "privilège",
+    accessorKey: "création",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Privilège" />
+      <DataTableColumnHeader column={column} title="Création" />
     ),
     cell: ({ row }) => {
-      const priorityValue = row.original.priority;
-      const priority = priorities.find(
-        (priorityItem) => priorityItem.value === priorityValue
-      );
+      const dateValue = new Date(row.original.createdAt);
+      const formattedDate = formatDate(dateValue);
 
       return (
         <div className="flex space-x-2">
-          {priority && (
-            <Badge
-              variant="outline"
-              className={`${
-                priority.value === "favorites" ? "border-amber-700" : ""
-              }`}
-            >
-              {priority.label}
-            </Badge>
+          {formattedDate && (
+            <span className="max-w-[500px] lowercase truncate flex font-medium">
+              {formattedDate}
+            </span>
           )}
         </div>
       );

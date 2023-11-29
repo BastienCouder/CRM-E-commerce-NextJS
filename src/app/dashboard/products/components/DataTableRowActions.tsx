@@ -17,13 +17,13 @@ import SoftDelete from "../../components/SoftDelete";
 import Link from "next/link";
 import {
   useServerDuplicateProduct,
-  useServerSoftDeleteProduct,
   useServerUpdateProductFavourites,
   useServerUpdateProductLabel,
 } from "../[id]/action";
 import Favories from "../../components/Favorites";
 import Duplicate from "../../components/Duplicate";
 import Label from "../../components/Label";
+import { useServerSoftDelete } from "../../actions";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -75,8 +75,8 @@ export function DataTableRowActions<TData>({
         <DropdownMenuSeparator />
 
         <SoftDelete
-          productId={product.id}
-          SoftDeleteProduct={useServerSoftDeleteProduct}
+          itemId={product.id}
+          SoftDelete={useServerSoftDelete}
           type="actions"
         />
       </DropdownMenuContent>

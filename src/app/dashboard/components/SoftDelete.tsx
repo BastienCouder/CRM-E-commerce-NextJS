@@ -15,18 +15,19 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenuShortcut } from "@/components/ui/dropdown-menu";
 import { Product } from "@prisma/client";
 import { Delete } from "lucide-react";
+import { Order } from "../lib/zod";
 
-interface SoftDeleteProductProps {
-  productId: string;
-  SoftDeleteProduct: (productId: string) => Promise<Product>;
+interface SoftDeleteProps {
+  itemId: string;
+  SoftDelete: (itemId: string) => Promise<Product | Order>;
   type: string;
 }
 
-export default function SoftDeleteProduct({
-  productId,
-  SoftDeleteProduct,
+export default function SoftDelete({
+  itemId,
+  SoftDelete,
   type,
-}: SoftDeleteProductProps) {
+}: SoftDeleteProps) {
   return (
     <div className="relative flex cursor-default select-none items-center rounded-sm py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
       <AlertDialog>
@@ -56,7 +57,7 @@ export default function SoftDeleteProduct({
             <AlertDialogCancel>Annuler</AlertDialogCancel>
             <AlertDialogAction
               onClick={async () => {
-                await SoftDeleteProduct(productId);
+                await SoftDelete(itemId);
               }}
             >
               Continuer

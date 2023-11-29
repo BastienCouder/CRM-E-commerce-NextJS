@@ -12,18 +12,15 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Product } from "@prisma/client";
+import { Order, Product } from "@prisma/client";
 import { useRouter } from "next/navigation";
 
 interface DangerButtonProps {
-  productId?: string;
-  DeleteProduct?: (productId: string) => Promise<Product>;
+  itemId: string;
+  Delete: (itemId: string) => Promise<Product | Order>;
 }
 
-export default function DangerButton({
-  productId,
-  DeleteProduct,
-}: DangerButtonProps) {
+export default function DangerButton({ itemId, Delete }: DangerButtonProps) {
   const router = useRouter();
   return (
     <div className="relative flex select-none items-center rounded-sm py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
@@ -43,11 +40,11 @@ export default function DangerButton({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Annuler</AlertDialogCancel>
-            {productId && DeleteProduct ? (
+            {itemId && Delete ? (
               <AlertDialogAction
                 onClick={async () => {
-                  await DeleteProduct(productId);
-                  router.push("/dashboard/products");
+                  await Delete(itemId);
+                  router.push("/dashboard");
                 }}
               >
                 Continuer

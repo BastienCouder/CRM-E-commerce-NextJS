@@ -34,6 +34,11 @@ export const statuses = [
     label: "Remboursée",
     icon: X,
   },
+  {
+    value: "delete",
+    label: "Supprimée",
+    icon: X,
+  },
 ];
 
 export const priorities = [

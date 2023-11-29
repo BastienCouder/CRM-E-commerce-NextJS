@@ -11,8 +11,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { FoldHorizontalIcon } from "lucide-react";
 import Link from "next/link";
-import Statuses from "../../components/Statuses";
+import Status from "../../components/Status";
 import { useServerUpdateProductStatus } from "../actions";
+
+import SoftDelete from "../../components/SoftDelete";
+import { useServerSoftDelete } from "../../actions";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -55,7 +58,7 @@ export function DataTableRowActions<TData>({
           />{" "} */}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <Statuses
+        <Status
           itemId={order.id}
           UpdateStatusItem={useServerUpdateProductStatus}
           type="actions"
@@ -64,11 +67,11 @@ export function DataTableRowActions<TData>({
         />
         <DropdownMenuSeparator />
 
-        {/* <SoftDelete
-          productId={product.id}
-          SoftDeleteProduct={useServerSoftDeleteProduct}
+        <SoftDelete
+          itemId={order.id}
+          SoftDelete={useServerSoftDelete}
           type="actions"
-        /> */}
+        />
       </DropdownMenuContent>
     </DropdownMenu>
   );

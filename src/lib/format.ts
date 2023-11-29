@@ -19,6 +19,9 @@ export function formatDate(date: Date): string {
     year: "numeric",
     month: "long",
     day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
   };
 
   return date.toLocaleString(undefined, options);

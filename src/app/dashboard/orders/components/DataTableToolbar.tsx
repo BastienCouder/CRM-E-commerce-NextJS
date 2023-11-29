@@ -44,7 +44,7 @@ export function DataTableToolbar<TData>({
         )}
         {isFiltered && (
           <Button
-            variant="ghost"
+            variant="outline"
             onClick={() => table.resetColumnFilters()}
             className="h-8 px-2 lg:px-3"
           >

@@ -10,7 +10,7 @@ import { DropdownMenuSubTrigger } from "@radix-ui/react-dropdown-menu";
 import { statuses as productStatuses } from "../products/data/data";
 import { statuses as orderStatuses } from "../orders/data/data";
 
-interface StatusesProps {
+interface StatusProps {
   itemId: string;
   itemStatus: string | null;
   data: string;
@@ -21,13 +21,13 @@ interface StatusesProps {
   type: string;
 }
 
-export default function Statuses({
+export default function Status({
   type,
   UpdateStatusItem,
   itemId,
   itemStatus,
   data,
-}: StatusesProps) {
+}: StatusProps) {
   const statuses = data === "products" ? productStatuses : orderStatuses;
 
   return (
