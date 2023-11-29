@@ -41,8 +41,8 @@ export default function RootLayout({
         )}
       >
         <SessionProvider>
-          <Navbar />
           <AnimationProvider>
+            <Navbar />
             <FontProvider>
               <ThemeProviders>
                 <main>{children}</main>

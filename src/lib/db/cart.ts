@@ -28,7 +28,7 @@ export async function getCart(): Promise<CartProps | null> {
     cart = await prisma.cart.findFirst({
       where: {
         userId: session.user.id,
-        isPaid: false,
+        deleteAt: null,
       },
       include: {
         cartItems: { include: { product: true, variant: true } },
@@ -75,11 +75,11 @@ export async function createCart(): Promise<CartProps> {
   let newCart: Cart;
   if (session) {
     newCart = await prisma.cart.create({
-      data: { userId: session.user.id, isPaid: false },
+      data: { userId: session.user.id, deleteAt: null },
     });
   } else {
     newCart = await prisma.cart.create({
-      data: { isPaid: false },
+      data: { deleteAt: null },
     });
   }
 
@@ -135,7 +135,6 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
       await tx.cart.create({
         data: {
           userId,
-          isPaid: false,
           cartItems: {
             createMany: {
               data: localCart.cartItems.map((item) => ({

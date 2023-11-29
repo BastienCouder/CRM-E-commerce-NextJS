@@ -67,7 +67,7 @@ async function updateOrderItem(
           orderId: order?.id,
           cartId,
           deliveryItemsId: deliveryItem.id,
-          isPaid: false,
+          deleteAt: new Date(),
         },
       });
     }
@@ -96,12 +96,16 @@ async function createOrderItem(
     const deliveryItem = deliveryItemId.deliveryItems[0];
 
     if (deliveryItem) {
+      const orderNumber = generateOrderNumber();
+
       await prisma.orderItems.create({
         data: {
+          orderNumber,
           orderId: order?.id,
           cartId,
           deliveryItemsId: deliveryItem.id,
-          isPaid: false,
+          status: "waiting",
+          deleteAt: null,
         },
       });
     }
@@ -112,7 +116,6 @@ async function updateCart(cartId: string, userId: string) {
   const cart = await prisma.cart.findUnique({
     where: {
       id: cartId,
-      isPaid: false,
     },
     include: { cartItems: true },
   });
@@ -123,7 +126,7 @@ async function updateCart(cartId: string, userId: string) {
         id: cartId,
         userId,
       },
-      data: { isPaid: true },
+      data: { deleteAt: new Date() },
     });
   }
 }
@@ -132,6 +135,7 @@ import "@stripe/stripe-js";
 import { loadStripe } from "@stripe/stripe-js/pure";
 import { createStripeSession } from "@/app/api/create-stripe-session/route";
 import { env } from "@/lib/env";
+import { generateOrderNumber } from "@/lib/utils";
 
 export async function handleStripePayment(carId: string, deliveryId: string) {
   if (carId && deliveryId) {

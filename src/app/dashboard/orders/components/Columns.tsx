@@ -1,7 +1,7 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { statuses, priorities, labels } from "../data/data";
+import { statuses, priorities } from "../data/data";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -39,34 +39,13 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "index",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Produits" />
+      <DataTableColumnHeader column={column} title="Commandes" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.index + 1}</div>,
+    cell: ({ row }) => (
+      <div className="w-[120px]">{row.original.orderNumber}</div>
+    ),
     enableSorting: false,
     enableHiding: false,
-  },
-  {
-    accessorKey: "image",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Image" />
-    ),
-    cell: ({ row }) => {
-      const imageUrl = row.original.imageUrl;
-
-      return (
-        <div className="min-w-[120px] flex space-x-2">
-          <Image
-            className="rounded-lg w-[50px] h-[50px] object-contain border-white border-[1px]"
-            src={imageUrl}
-            alt={row.getValue("nom")}
-            width={500}
-            height={500}
-          />
-        </div>
-      );
-    },
-    enableHiding: false,
-    enableSorting: false,
   },
   {
     accessorKey: "nom",
@@ -74,36 +53,25 @@ export const columns: ColumnDef<any>[] = [
       <DataTableColumnHeader column={column} title="Nom" />
     ),
     cell: ({ row }) => {
-      const label = labels.find(
-        (label: any) => label.value === row.original.label
-      );
-      const name = row.getValue("nom") === row.original.name;
       return (
         <div className="flex space-x-2 items-center">
-          {label && <Badge variant="outline">{label?.label}</Badge>}
-          <span className="max-w-[500px] truncate font-medium">
-            {row.original.name}
+          <span className="max-w-[500px] capitalize truncate flex font-medium">
+            {row.original.cart.user.name}
           </span>
         </div>
       );
     },
   },
   {
-    accessorKey: "stock",
+    accessorKey: "email",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Stock" />
+      <DataTableColumnHeader column={column} title="Email" />
     ),
     cell: ({ row }) => {
-      const stock = row.original.stock;
-
       return (
-        <div className="flex space-x-2">
-          <span
-            className={`max-w-[500px] truncate font-medium ${
-              stock === 0 ? "text-red-500" : ""
-            }`}
-          >
-            {stock ? stock : "Rupture de stock"}
+        <div className="flex space-x-2 items-center">
+          <span className="max-w-[500px] lowercase truncate flex font-medium">
+            {row.original.cart.user.email}
           </span>
         </div>
       );
@@ -115,7 +83,7 @@ export const columns: ColumnDef<any>[] = [
       <DataTableColumnHeader column={column} title="Prix" />
     ),
     cell: ({ row }) => {
-      const price = row.original.price;
+      const price = row.original.subtotal;
       const formattedPrice = formatPrice(price!, "EUR");
 
       return (
@@ -144,10 +112,12 @@ export const columns: ColumnDef<any>[] = [
             <Badge
               variant="outline"
               className={`${
-                status.value === "available"
+                status.value === "delivered"
                   ? "border-green-800"
-                  : status.value === "unavailable"
+                  : status.value === "in progress"
                   ? "border-blue-800"
+                  : status.value === "waiting"
+                  ? "border-amber-700"
                   : "border-destructive"
               }`}
             >

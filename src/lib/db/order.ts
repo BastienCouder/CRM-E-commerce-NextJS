@@ -9,6 +9,7 @@ import {
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { PrismaClient } from "@prisma/client";
+import { generateOrderNumber } from "../utils";
 
 const prisma = new PrismaClient();
 
@@ -87,9 +88,6 @@ export async function getOrder(): Promise<OrderProps | null> {
             },
 
             deliveryItems: {
-              where: {
-                OR: [{ SoftDelete: true }, { SoftDelete: false }],
-              },
               include: {
                 deliveryOption: true,
               },
@@ -110,11 +108,20 @@ export async function createOrder(
   const session = await getServerSession(authOptions);
 
   if (session) {
+    const orderNumber = generateOrderNumber();
+
     const newOrder = await prisma.order.create({
       data: {
         userId: session.user.id,
         orderItems: {
-          create: [{ cartId, deliveryItemsId: deliveryId, isPaid: false }],
+          create: [
+            {
+              cartId,
+              deliveryItemsId: deliveryId,
+              orderNumber,
+              deleteAt: null,
+            },
+          ],
         },
       },
       include: {

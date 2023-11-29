@@ -27,11 +27,12 @@ export async function getDelivery(): Promise<DeliveryProps | null> {
     delivery = await prisma.delivery.findFirst({
       where: {
         userId: session.user.id,
+        deleteAt: null,
       },
       include: {
         deliveryItems: {
           where: {
-            SoftDelete: false,
+            deleteAt: null,
           },
           include: {
             deliveryOption: true,
@@ -68,11 +69,11 @@ export async function createDelivery(): Promise<DeliveryProps> {
   let newDelivery: Delivery;
   if (session) {
     newDelivery = await prisma.delivery.create({
-      data: { userId: session.user.id },
+      data: { userId: session.user.id, deleteAt: null },
     });
   } else {
     newDelivery = await prisma.delivery.create({
-      data: {},
+      data: { deleteAt: null },
     });
   }
 

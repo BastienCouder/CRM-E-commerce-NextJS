@@ -30,7 +30,7 @@ export default function Label({
       {type === "actions" && (
         <div className="flex w-full items-center px-2 text-sm">
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger className="hover:border-none hover:outline-none">
+            <DropdownMenuSubTrigger className="hover:border-none">
               État
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>

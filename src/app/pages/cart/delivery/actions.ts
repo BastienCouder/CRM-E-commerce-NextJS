@@ -53,6 +53,7 @@ async function validateAndCreateDeliveryItem(
       city,
       country,
       tel,
+      deleteAt: null,
     },
   });
 
@@ -138,7 +139,7 @@ async function softDeleteDeliveryItem(deliveryItemId: string) {
       id: deliveryItemId,
     },
     data: {
-      SoftDelete: true,
+      deleteAt: new Date(),
       Default: false,
     },
   });
@@ -149,7 +150,6 @@ async function updateDefaultDelivery(deliveryId: string) {
     where: {
       deliveryId,
       Default: false,
-      SoftDelete: false,
     },
   });
 

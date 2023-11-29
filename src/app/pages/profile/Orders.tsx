@@ -1,9 +1,9 @@
 "use client";
 
-import { Separator } from "@/components/ui/separator";
 import { CartItemsProps } from "@/lib/db/cart";
 import { OrderProps } from "@/lib/db/order";
 import formatPrice, { formatDate, formatDescription } from "@/lib/format";
+import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { AiFillCreditCard, AiOutlineUser } from "react-icons/ai";
@@ -17,6 +17,23 @@ export default function Orders({ order }: OrdersProps) {
   const [selectedOrderIndex, setSelectedOrderIndex] = useState<number | null>(
     null
   );
+
+  function handleStatusChange(value: string): string {
+    switch (value) {
+      case "waiting":
+        return "En attente";
+      case "in progress":
+        return "En cours";
+      case "delivered":
+        return "Livrée";
+      case "cancel":
+        return "Annulée";
+      case "refunded":
+        return "Remboursée";
+      default:
+        return "Annulée";
+    }
+  }
 
   function calculateSubtotal(cartItems: CartItemsProps[]): number {
     return cartItems.reduce((acc: number, item: CartItemsProps) => {
@@ -37,7 +54,7 @@ export default function Orders({ order }: OrdersProps) {
     <div className="my-12">
       <ul className="space-y-8">
         {order?.orderItems.map((orderItem, index) => {
-          const dateValue = new Date(orderItem.createdAt);
+          const dateValue = new Date(orderItem.createdAt!);
           const formattedDate = formatDate(dateValue);
           const isOrderSelected = selectedOrderIndex === index;
           const subtotal: number = calculateSubtotal(orderItem.cart.cartItems);
@@ -46,41 +63,58 @@ export default function Orders({ order }: OrdersProps) {
             <li key={index} className="w-[40rem] border-[1px] border-white">
               {!isOrderSelected ? (
                 <>
-                  {" "}
                   <div className="flex items-center h-10 px-4 py-2 w-full bg-primary">
                     <p className="font-bold uppercase text-sm">
-                      Commande n°{index + 1}
+                      Commande n°{orderItem.orderNumber}
                     </p>
                   </div>
-                  <div className="flex">
-                    <div className="space-y-4 p-4">
-                      <div className="flex items-center gap-3">
-                        <BiTimeFive size={20} />
-                        <div className="flex gap-2">
-                          <p>Date de la commande :</p>
-                          <p className="font-bold">{formattedDate}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <AiOutlineUser size={20} />
-                        <div className="flex gap-2">
-                          <p>Envoyé à </p>
-                          <div className="flex gap-2 font-bold">
-                            {orderItem.deliveryItems && (
-                              <div className="space-x-2 capitalize">
-                                <span>{orderItem.deliveryItems.name}</span>
-                                <span>{orderItem.deliveryItems.surname}</span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <AiFillCreditCard size={20} />
-                        {formatPrice(subtotal, "EUR")}
+                  <div className="space-y-4 p-4">
+                    <div className="flex items-center gap-3">
+                      <BiTimeFive size={20} />
+                      <div className="flex gap-2">
+                        <p>Date de la commande :</p>
+                        <p className="font-bold">{formattedDate}</p>
                       </div>
                     </div>
-                    <div className="space-y-4 p-4"></div>
+                    <div className="flex items-center gap-3">
+                      <MoreHorizontal size={20} />
+                      <div className="flex gap-2">
+                        <p>Status de la commande :</p>
+                        <p
+                          className={`border px-1 ${
+                            orderItem.status === "delivered"
+                              ? "border-green-800"
+                              : orderItem.status === "in progress"
+                              ? "border-blue-800"
+                              : orderItem.status === "waiting"
+                              ? "border-amber-700"
+                              : "border-destructive"
+                          }`}
+                        >
+                          {handleStatusChange(orderItem.status!)}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <AiOutlineUser size={20} />
+                      <div className="flex gap-2">
+                        <p>Envoyé à </p>
+                        <div className="flex gap-2 font-bold">
+                          {orderItem.deliveryItems && (
+                            <div className="space-x-2 capitalize">
+                              <span>{orderItem.deliveryItems.name}</span>
+                              <span className="uppercase">
+                                {orderItem.deliveryItems.surname}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <AiFillCreditCard size={20} />
+                      {formatPrice(subtotal, "EUR")}
+                    </div>
                   </div>
                   <div className="px-4 pb-4 w-32">
                     <p
@@ -103,7 +137,7 @@ export default function Orders({ order }: OrdersProps) {
                 <div>
                   <div className="flex flex-col justify-center h-20 gap-1 px-4 py-2 w-full bg-primary">
                     <p className="font-bold uppercase text-sm">
-                      Commande n°{index + 1}
+                      Commande n°{orderItem.orderNumber}
                     </p>
                     <p className="text-sm">
                       Date de la commande:{" "}
@@ -111,7 +145,27 @@ export default function Orders({ order }: OrdersProps) {
                     </p>
                   </div>
                   <div className="p-4">
-                    <h2 className="text-lg pb-2">Adresse de livraison</h2>
+                    <h2 className="text-lg pb-2">Status de la commande</h2>
+
+                    <div className="text-sm border-b-2 pb-8 border-primary">
+                      <div className="font-bold capitalize flex space-x-2">
+                        <p
+                          className={`border p-1 ${
+                            orderItem.status === "delivered"
+                              ? "border-green-800"
+                              : orderItem.status === "in progress"
+                              ? "border-blue-800"
+                              : orderItem.status === "waiting"
+                              ? "border-amber-700"
+                              : "border-destructive"
+                          }`}
+                        >
+                          {handleStatusChange(orderItem.status!)}
+                        </p>
+                      </div>
+                    </div>
+
+                    <h2 className="text-lg mt-8 pb-2">Adresse de livraison</h2>
                     {isOrderSelected && orderItem.deliveryItems && (
                       <div className="text-sm border-b-2 pb-8 border-primary">
                         <div className="font-bold capitalize flex space-x-2">

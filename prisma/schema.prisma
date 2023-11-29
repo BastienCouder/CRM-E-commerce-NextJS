@@ -54,17 +54,18 @@ model User {
     emailVerified  DateTime?
     account        String?
     hashedPassword String?
-    avatar         String?
+    image          String?
     language       String?
     birthDate      String?
-    createdAt      DateTime   @default(now())
-    updatedAt      DateTime   @updatedAt
+    createdAt      DateTime?  @default(now())
+    updatedAt      DateTime?  @updatedAt
     accounts       Account[]
     sessions       Session[]
     Cart           Cart[]
     Wishlist       Wishlist[]
     Delivery       Delivery[]
     Order          Order[]
+    deleteAt       DateTime?
 
     @@map("users")
 }
@@ -80,8 +81,8 @@ model Product {
     price         Int
     stock         Int?
     deleteAt      DateTime?
-    createdAt     DateTime         @default(now())
-    updatedAt     DateTime         @updatedAt
+    createdAt     DateTime?        @default(now())
+    updatedAt     DateTime?        @updatedAt
     CartItems     CartItems[]
     categoryId    String?          @db.ObjectId
     category      Category?        @relation(fields: [categoryId], references: [id])
@@ -102,22 +103,31 @@ model ProductVariant {
     product       Product?        @relation(fields: [productId], references: [id])
     CartItems     CartItems[]
     WishlistItems WishlistItems[]
+    createdAt     DateTime?       @default(now())
+    updatedAt     DateTime?       @updatedAt
+    deleteAt      DateTime?
 
     @@map("products_variants")
 }
 
 model Category {
-    id       String    @id @default(auto()) @map("_id") @db.ObjectId
-    name     String?
-    products Product[]
+    id        String    @id @default(auto()) @map("_id") @db.ObjectId
+    name      String?
+    products  Product[]
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+    deleteAt  DateTime?
 
     @@map("categories")
 }
 
 model Color {
-    id       String    @id @default(auto()) @map("_id") @db.ObjectId
-    name     String?
-    products Product[]
+    id        String    @id @default(auto()) @map("_id") @db.ObjectId
+    name      String?
+    products  Product[]
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+    deleteAt  DateTime?
 
     @@map("colors")
 }
@@ -125,12 +135,12 @@ model Color {
 model Cart {
     id         String       @id @default(auto()) @map("_id") @db.ObjectId
     user       User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
-    createdAt  DateTime     @default(now())
-    updatedAt  DateTime     @updatedAt
+    createdAt  DateTime?    @default(now())
+    updatedAt  DateTime?    @updatedAt
     userId     String?      @db.ObjectId
     cartItems  CartItems[]
     OrderItems OrderItems[]
-    isPaid     Boolean
+    deleteAt   DateTime?
 
     @@map("carts")
 }
@@ -144,8 +154,9 @@ model CartItems {
     quantity  Int
     cartId    String          @db.ObjectId
     cart      Cart            @relation(fields: [cartId], references: [id], onDelete: Cascade)
-    createdAt DateTime        @default(now())
-    updatedAt DateTime        @updatedAt
+    createdAt DateTime?       @default(now())
+    updatedAt DateTime?       @updatedAt
+    deleteAt  DateTime?
 
     @@map("carts_items")
 }
@@ -155,8 +166,9 @@ model Wishlist {
     userId        String?         @db.ObjectId
     wishlistItems WishlistItems[]
     user          User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
-    createdAt     DateTime        @default(now())
-    updatedAt     DateTime        @updatedAt
+    createdAt     DateTime?       @default(now())
+    updatedAt     DateTime?       @updatedAt
+    deleteAt      DateTime?
 
     @@map("wishlists")
 }
@@ -169,8 +181,9 @@ model WishlistItems {
     product    Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
     wishlistId String          @db.ObjectId
     wishlist   Wishlist        @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
-    createdAt  DateTime        @default(now())
-    updatedAt  DateTime        @updatedAt
+    createdAt  DateTime?       @default(now())
+    updatedAt  DateTime?       @updatedAt
+    deleteAt   DateTime?
 
     @@map("wishlist_items")
 }
@@ -179,8 +192,9 @@ model Delivery {
     id            String          @id @default(auto()) @map("_id") @db.ObjectId
     userId        String?         @db.ObjectId
     user          User?           @relation(fields: [userId], references: [id])
-    createdAt     DateTime        @default(now())
-    updatedAt     DateTime        @updatedAt
+    createdAt     DateTime?       @default(now())
+    updatedAt     DateTime?       @updatedAt
+    deleteAt      DateTime?
     deliveryItems DeliveryItems[]
 
     @@map("deliveries")
@@ -195,7 +209,7 @@ model DeliveryItems {
     deliveryOptionId String?         @db.ObjectId
     deliveryOption   DeliveryOption? @relation(fields: [deliveryOptionId], references: [id], onDelete: Cascade)
     Default          Boolean         @default(true)
-    SoftDelete       Boolean         @default(false)
+    deleteAt         DateTime?
     name             String
     surname          String
     email            String
@@ -220,24 +234,27 @@ model Order {
     id         String       @id @default(auto()) @map("_id") @db.ObjectId
     userId     String?      @db.ObjectId
     user       User?        @relation(fields: [userId], references: [id])
-    createdAt  DateTime     @default(now())
-    updatedAt  DateTime     @updatedAt
+    createdAt  DateTime?    @default(now())
+    updatedAt  DateTime?    @updatedAt
     orderItems OrderItems[]
+    deleteAt   DateTime?
 
     @@map("orders")
 }
 
 model OrderItems {
     id              String         @id @default(auto()) @map("_id") @db.ObjectId
+    orderNumber     String
     orderId         String?        @db.ObjectId
     order           Order?         @relation(fields: [orderId], references: [id], onDelete: Cascade)
     cartId          String         @db.ObjectId
     cart            Cart           @relation(fields: [cartId], references: [id], onDelete: Cascade)
-    isPaid          Boolean
-    createdAt       DateTime       @default(now())
-    updatedAt       DateTime       @updatedAt
+    status          String?
+    createdAt       DateTime?      @default(now())
+    updatedAt       DateTime?      @updatedAt
     deliveryItems   DeliveryItems? @relation(fields: [deliveryItemsId], references: [id])
     deliveryItemsId String?        @db.ObjectId
+    deleteAt        DateTime?
 
     @@map("orders_items")
 }

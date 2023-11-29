@@ -13,7 +13,7 @@ export async function getProducts(): Promise<ProductProps[] | null> {
   const session = await getServerSession(authOptions);
   const admin = await checkUserRole();
 
-  if (!session && !admin) {
+  if (!admin) {
     try {
       const products = await prisma.product.findMany({
         where: { deleteAt: null || undefined },
@@ -58,31 +58,6 @@ export async function createProduct(): Promise<ProductProps | null> {
     return createdProduct;
   } catch (error) {
     console.error("Erreur lors de la création du produit :", error);
-    return null;
-  }
-}
-
-export async function updateProduct(
-  productId: string,
-  updatedData: Partial<Product>
-): Promise<Product | null> {
-  try {
-    const session = await getServerSession(authOptions);
-    const admin = await checkUserRole();
-
-    if (!session || !admin) {
-      console.error("Utilisateur non autorisé pour la mise à jour du produit.");
-      return null;
-    }
-
-    const updatedProduct = await prisma.product.update({
-      where: { id: productId },
-      data: updatedData,
-    });
-
-    return updatedProduct;
-  } catch (error) {
-    console.error("Erreur lors de la mise à jour du produit :", error);
     return null;
   }
 }

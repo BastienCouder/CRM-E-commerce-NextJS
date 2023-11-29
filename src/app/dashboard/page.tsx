@@ -12,10 +12,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CalendarDateRangePicker } from "./components/DateRangePicker";
-import TeamSwitcher from "./components/TeamSwitcher";
-import { MainNav } from "./components/MainNav";
-import { UserNav } from "./components/UserNav";
-import { Search } from "./components/Search";
 import { Overview } from "./components/Overview";
 import { RecentSales } from "./components/RecentSales";
 
