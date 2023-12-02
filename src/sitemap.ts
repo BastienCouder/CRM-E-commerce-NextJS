@@ -1,6 +1,7 @@
 import { ProductProps, getProducts } from "./app/dashboard/lib/db/product";
+import { env } from "./lib/env";
 
-const URL = "https://localhost:3000";
+const URL = `${env.NEXTAUTH_URL}`;
 
 export default async function sitemap() {
   try {
