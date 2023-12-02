@@ -5,7 +5,6 @@ import { AnimationProvider } from "../context/AnimationContext";
 import { Toaster } from "sonner";
 import CookieBanner from "@/components/CookieBanner";
 import { cn } from "@/lib/utils";
-require("dotenv").config();
 import { Inter as FontSans, Roboto } from "next/font/google";
 import { FontProvider } from "@/context/FontContext";
 import { ThemeProviders } from "@/context/ThemeContext";

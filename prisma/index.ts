@@ -51,68 +51,68 @@ async function main() {
   //     },
   //   },
   // });
-  await prisma.product.create({
-    data: {
-      name: "Produit 1",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
-      price: 9000,
-      imageUrl: "/images/montre1.png",
-      category: {
-        connect: {
-          id: categoryId,
-        },
-      },
-      color: {
-        connect: {
-          id: colorId,
-        },
-      },
-      variants: {
-        create: [
-          {
-            name: "or",
-            price: 9000,
-            imageUrl: "/images/montre1.png",
-          },
-          {
-            name: "argent",
-            price: 9000,
-            imageUrl: "/images/variants/montre1-argent.png",
-          },
-          {
-            name: "rose",
-            price: 9000,
-            imageUrl: "/images/variants/montre1-rose.png",
-          },
-        ],
-      },
-    },
-  });
-  // const deliveryOptions = [
-  //   {
-  //     name: "Livraison Standard",
-  //     description: "Livraison en 3-5 jours ouvrables",
-  //     price: "2.99€",
-  //   },
-  //   {
-  //     name: "Livraison Express",
-  //     description: "Livraison en 1-2 jours ouvrables",
-  //     price: "7.99€",
-  //   },
-  // ];
-  //   async function seedDeliveryOptions() {
-  //     for (const option of deliveryOptions) {
-  //       await prisma.deliveryOptions.create({
-  //         data: {
-  //           name: option.name,
-  //           description: option.description,
-  //           price: option.price,
+  // await prisma.product.create({
+  //   data: {
+  //     name: "Produit 1",
+  //     description:
+  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+  //     price: 9000,
+  //     imageUrl: "/images/montre1.png",
+  //     category: {
+  //       connect: {
+  //         id: categoryId,
+  //       },
+  //     },
+  //     color: {
+  //       connect: {
+  //         id: colorId,
+  //       },
+  //     },
+  //     variants: {
+  //       create: [
+  //         {
+  //           name: "or",
+  //           price: 9000,
+  //           imageUrl: "/images/montre1.png",
   //         },
-  //       });
-  //     }
-  //   }
-  //   seedDeliveryOptions();
+  //         {
+  //           name: "argent",
+  //           price: 9000,
+  //           imageUrl: "/images/variants/montre1-argent.png",
+  //         },
+  //         {
+  //           name: "rose",
+  //           price: 9000,
+  //           imageUrl: "/images/variants/montre1-rose.png",
+  //         },
+  //       ],
+  //     },
+  //   },
+  // });
+  const deliveryOptions = [
+    {
+      name: "Livraison Standard",
+      description: "Livraison en 3-5 jours ouvrables",
+      price: 299,
+    },
+    {
+      name: "Livraison Express",
+      description: "Livraison en 1-2 jours ouvrables",
+      price: 799,
+    },
+  ];
+  async function seedDeliveryOptions() {
+    for (const option of deliveryOptions) {
+      await prisma.deliveryOption.create({
+        data: {
+          name: option.name,
+          description: option.description,
+          price: option.price,
+        },
+      });
+    }
+  }
+  seedDeliveryOptions();
 }
 main()
   .catch(async (e) => {

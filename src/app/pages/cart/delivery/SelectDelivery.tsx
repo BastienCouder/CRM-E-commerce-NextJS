@@ -1,7 +1,7 @@
 "use client";
 import { DeliveryProps } from "@/lib/db/delivery";
 import { Session } from "next-auth";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -24,17 +24,17 @@ export default function SelectDelivery({
     string | undefined
   >(delivery?.deliveryItems.find((item) => item.Default)?.id);
 
-  const handleDeliveryChange = (id: string) => {
+  const handleDeliveryChange: (id: string) => void = (id: string) => {
     setSelectedDeliveryItem(id);
     handleDefaultDeliveryItem(id);
     toast.success("Adresse de livraison par défaut modifiée avec succès");
   };
 
-  const handleDefaultDeliveryItem = (id: string) => {
+  const handleDefaultDeliveryItem: (id: string) => void = (id: string) => {
     setDefaultDeliveryItem(id);
   };
 
-  const handleDeleteDeliveryItem = (id: string) => {
+  const handleDeleteDeliveryItem: (id: string) => void = (id: string) => {
     DeleteDeliveryItem(id);
     toast.success("Adresse de livraison supprimé avec succès");
   };
@@ -45,7 +45,7 @@ export default function SelectDelivery({
     );
   }, [delivery]);
 
-  const handleSubmit = () => {
+  const handleSubmit: MouseEventHandler<HTMLButtonElement> = () => {
     if (!session) {
       toast.error("Veuillez vous connecter");
       return;
@@ -111,7 +111,6 @@ export default function SelectDelivery({
       <Button aria-label="Valider" onClick={handleSubmit}>
         Valider
       </Button>
-      <Toaster expand={false} position="bottom-left" />
     </>
   );
 }

@@ -8,15 +8,19 @@ import {
 import { validateEmail } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 
-export async function useServerDeliveryForm(formData: FormData) {
+export async function useServerDeliveryForm(
+  formData: FormData,
+  deliveryOption: string
+) {
   const delivery = (await getDelivery()) ?? (await createDelivery());
-  validateAndCreateDeliveryItem(delivery, formData);
+  validateAndCreateDeliveryItem(delivery, formData, deliveryOption);
   revalidatePath("/cart/delivery");
 }
 
 async function validateAndCreateDeliveryItem(
   delivery: DeliveryProps,
-  formData: FormData
+  formData: FormData,
+  deliveryOption: string
 ) {
   const { name, email, surname, address, postcode, city, country, tel } =
     getFormDataValues(formData);
@@ -54,6 +58,9 @@ async function validateAndCreateDeliveryItem(
       country,
       tel,
       deleteAt: null,
+      deliveryOption: {
+        connect: { id: deliveryOption },
+      },
     },
   });
 

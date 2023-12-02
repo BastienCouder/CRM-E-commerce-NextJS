@@ -29,13 +29,19 @@ import {
   DeliveryValues,
   defaultDeliveryValues,
 } from "@/lib/zod";
+import { DeliveryOption } from "@prisma/client";
 
 interface FormDeliveryProps {
-  deliveryForm: (formData: FormData) => Promise<void>;
+  deliveryOption: DeliveryOption[];
+  deliveryForm: (
+    formData: FormData,
+    selectedDeliveryOption: DeliveryOption
+  ) => Promise<void>;
   session: Session | null;
 }
 
 export default function FormDelivery({
+  deliveryOption,
   deliveryForm,
   session,
 }: FormDeliveryProps) {
@@ -61,6 +67,9 @@ export default function FormDelivery({
     "Royaume-uni",
   ];
 
+  const [selectedDeliveryOption, setSelectedDeliveryOption] =
+    useState<DeliveryOption | null>(null);
+
   const onSubmit = async (data: DeliveryValues) => {
     if (!session || !session.user) {
       setError("Veuillez vous connecter");
@@ -78,7 +87,7 @@ export default function FormDelivery({
     formData.append("tel", data.tel);
 
     try {
-      await deliveryForm(formData);
+      await deliveryForm(formData, selectedDeliveryOption!);
       toggleFormVisibility();
       toast.success("Addresse de livraison ajoutée avec succès");
       form.reset();
@@ -246,6 +255,32 @@ export default function FormDelivery({
           </form>
         </Form>
       )}
+      <div className="mt-4">
+        <label
+          htmlFor="deliveryOption"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Choix de livraison
+        </label>
+        <select
+          id="deliveryOption"
+          name="deliveryOption"
+          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          value={selectedDeliveryOption?.id || ""}
+          onChange={(e) => {
+            const selectedOption = deliveryOption.find(
+              (option) => option.id === e.target.value
+            );
+            setSelectedDeliveryOption(selectedOption || null);
+          }}
+        >
+          {deliveryOption.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.name}
+            </option>
+          ))}
+        </select>
+      </div>
     </>
   );
 }

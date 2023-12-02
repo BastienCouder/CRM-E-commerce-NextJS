@@ -226,6 +226,12 @@ model DeliveryItems {
 model DeliveryOption {
     id            String          @id @default(auto()) @map("_id") @db.ObjectId
     DeliveryItems DeliveryItems[]
+    name          String
+    description   String
+    price         Int
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
+    deleteAt      DateTime?
 
     @@map("delivery_options")
 }

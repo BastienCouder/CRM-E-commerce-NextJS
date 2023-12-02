@@ -14,6 +14,10 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: "/robots.txt",
+        destination: "/api/robots",
+      },
+      {
         source: "/profile",
         destination: "/pages/profile",
       },
@@ -22,8 +26,8 @@ const nextConfig = {
         destination: "/pages/cart",
       },
       {
-        source: "/collection",
-        destination: "/pages/collection",
+        source: "/store",
+        destination: "/pages/store",
       },
       {
         source: "/cart/delivery",

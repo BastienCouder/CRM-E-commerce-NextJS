@@ -5,6 +5,7 @@ import styles from "@/styles/Hamburger.module.css";
 import NavPage from "@/app/pages/Navbar/Navpage";
 import { CartProps } from "@/lib/db/cart";
 import { Session } from "next-auth";
+import { usePathname } from "next/navigation";
 
 interface HamburgerMenuProps {
   cart: CartProps | null;
@@ -20,23 +21,38 @@ export default function HamburgerMenu({ cart, session }: HamburgerMenuProps) {
     ? `${styles["burger-button"]} ${styles["active"]}`
     : styles["burger-button"];
 
+  const pathname = usePathname();
+  const isDashboardPage = pathname.startsWith("/dashboard");
+
   return (
     <>
-      <div className={styles.navbar}>
-        {!isMenuOpen && <div className={styles.navTitle}>Menu</div>}
-        <button aria-label="menu" onClick={toggleMenu} className={buttonClass}>
-          <div className={styles.bar1}></div>
-          <div className={styles.bar2}></div>
-          <div className={styles.bar3}></div>
-        </button>
-      </div>
-      <AnimatePresence>
-        {isMenuOpen && (
-          <div>
-            <NavPage toggleMenu={toggleMenu} cart={cart} session={session} />
+      {!isDashboardPage && (
+        <>
+          <div className={styles.navbar}>
+            {!isMenuOpen && <div className={styles.navTitle}>Menu</div>}
+            <button
+              aria-label="menu"
+              onClick={toggleMenu}
+              className={buttonClass}
+            >
+              <div className={styles.bar1}></div>
+              <div className={styles.bar2}></div>
+              <div className={styles.bar3}></div>
+            </button>
           </div>
-        )}
-      </AnimatePresence>
+          <AnimatePresence>
+            {isMenuOpen && (
+              <div>
+                <NavPage
+                  toggleMenu={toggleMenu}
+                  cart={cart}
+                  session={session}
+                />
+              </div>
+            )}
+          </AnimatePresence>
+        </>
+      )}
     </>
   );
 }

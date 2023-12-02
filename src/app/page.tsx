@@ -55,7 +55,7 @@ export default function Home() {
 
   useEffect(() => {
     if (scrollCount >= 6) {
-      router.push("/collection");
+      router.push("/store");
     }
   }, [scrollCount, router]);
 
@@ -104,7 +104,7 @@ export default function Home() {
 
         <div
           className="block cursor-pointer"
-          onClick={() => router.push("/collection")}
+          onClick={() => router.push("/store")}
         >
           {scrollCount >= 3 ? (
             <motion.div
