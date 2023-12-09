@@ -1,12 +1,12 @@
 import { prisma } from "@/lib/db/prisma";
-import { startOfMonth, subMonths, format, eachMonthOfInterval } from "date-fns";
+import { format, eachMonthOfInterval } from "date-fns";
 import { revalidatePath } from "next/cache";
-import { OrderProps } from "../lib/db/orders";
 import { CartItemsProps } from "@/lib/db/cart";
 import { OrderItemsProps } from "@/lib/db/order";
+import { env } from "@/lib/env";
 
-interface AnalyticsData {
-  date: string;
+export interface AnalyticsData {
+  date?: string;
   orderItems?: number;
   subtotal?: number;
 }
@@ -19,8 +19,8 @@ export interface useServerReadAnalyticsSaleProps {
 export async function useServerReadAnalyticsSale(): Promise<useServerReadAnalyticsSaleProps> {
   try {
     const endDate = new Date();
-    const startDate = subMonths(endDate, 11);
-
+    const siteCreationDate = new Date(env.CREATE_WEBSITE || "");
+    const startDate = siteCreationDate < endDate ? siteCreationDate : endDate;
     const orderItems = await prisma.orderItems.findMany({
       include: {
         cart: {

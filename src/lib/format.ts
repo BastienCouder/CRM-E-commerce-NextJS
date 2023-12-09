@@ -33,7 +33,10 @@ export const formatDateMonth = (
 ) => {
   const date = new Date(dateString);
 
-  const options: Intl.DateTimeFormatOptions = { month: format };
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: format,
+  };
 
   return new Intl.DateTimeFormat("fr-FR", options).format(date);
 };

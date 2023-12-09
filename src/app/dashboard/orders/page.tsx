@@ -5,7 +5,7 @@ import { orderSchema } from "../lib/zod";
 import { DataTable } from "./components/DataTable";
 import { columns } from "./components/Columns";
 import { useServerReadAnalyticsSale } from "./actions";
-import SaleChart from "./components/SaleChart";
+import AnalyticsOrder from "./components/AnalyticsOrder";
 
 export const metadata: Metadata = {
   title: "Dashboard - Products",
@@ -33,9 +33,7 @@ export default async function ProductsPage() {
   const analyticsData = await useServerReadAnalyticsSale();
   return (
     <>
-      <div className="w-1/2 border p-4 mb-4 rounded-lg">
-        <SaleChart analyticsData={analyticsData} />
-      </div>
+      <AnalyticsOrder analyticsData={analyticsData} />
       <DataTable data={orders} columns={columns} />
     </>
   );

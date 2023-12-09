@@ -1,33 +1,56 @@
-import React, { useState, ChangeEvent } from "react";
+"use client";
+import { Button } from "@/components/ui/button";
 
 interface DateFilterProps {
-  onFilterChange: (monthsBack: number) => void;
+  onFilterChange: (startDate: Date) => void;
+  siteCreationDate: Date;
 }
 
-const DateFilter: React.FC<DateFilterProps> = ({ onFilterChange }) => {
-  const [monthsBack, setMonthsBack] = useState<number>(3);
+const generateFilterButton = (
+  text: string,
+  monthsBack: number,
+  onClick: (monthsBack: number) => void,
+  customClasses: string = ""
+) => (
+  <Button
+    variant="outline"
+    className={`p-1 text-xs ${customClasses}`}
+    size="sm"
+    onClick={() => onClick(monthsBack)}
+  >
+    {text}
+  </Button>
+);
 
-  const handleFilterChange = (): void => {
-    onFilterChange(monthsBack);
+export default function DateFilter({
+  onFilterChange,
+  siteCreationDate,
+}: DateFilterProps) {
+  const applyFilter = (monthsBack: number): void => {
+    const endDate = new Date();
+    let startDate = new Date(
+      endDate.getFullYear(),
+      endDate.getMonth() - monthsBack,
+      endDate.getDate()
+    );
+    onFilterChange(startDate);
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setMonthsBack(parseInt(e.target.value, 10));
+  const applyFromBeginning = () => {
+    onFilterChange(siteCreationDate);
   };
 
   return (
-    <div>
-      <label htmlFor="monthsBack">Mois en arrière :</label>
-      <input
-        type="number"
-        id="monthsBack"
-        name="monthsBack"
-        value={monthsBack}
-        onChange={handleInputChange}
-      />
-      <button onClick={handleFilterChange}>Appliquer le filtre</button>
+    <div className="flex gap-x-2">
+      <div className="flex flex-col gap-y-2">
+        {generateFilterButton("1 Mois", 1, applyFilter)}
+        {generateFilterButton("3 Mois", 3, applyFilter)}
+      </div>
+      <div className="flex flex-col gap-y-2">
+        {generateFilterButton("6 Mois", 6, applyFilter)}
+        {generateFilterButton("12 Mois", 12, applyFilter)}
+      </div>
+      {generateFilterButton("Depuis le début", 0, applyFromBeginning, "w-44")}
     </div>
   );
-};
-
-export default DateFilter;
+}
