@@ -6,7 +6,6 @@ import { cache } from "react";
 import CartItem from "./CartItem";
 import DeliveryDetails from "./DeliveryDetails";
 import TotalOrder from "./TotalOrder";
-import { orderSchema } from "../../lib/zod";
 import { calculateSubtotal } from "../../lib/utils";
 
 interface OrderPageProps {

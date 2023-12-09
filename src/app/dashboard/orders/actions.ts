@@ -81,8 +81,7 @@ export async function useServerReadAnalyticsSale(): Promise<useServerReadAnalyti
     );
 
     revalidatePath(`/dashboard`);
-    console.log(orderItemsData);
-    console.log("Global Total:", maxTotal);
+
     return {
       Data: orderItemsData,
       maxTotal,

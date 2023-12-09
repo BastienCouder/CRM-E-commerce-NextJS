@@ -8,7 +8,7 @@ export function findCategoryIdByName(
   return category?.id;
 }
 
-export const calculateSubtotal = (order: any): number => {
+export const calculateSubtotal = (order: any) => {
   return (
     order.cart?.cartItems.reduce((acc: number, item: any) => {
       const variantPrice = item.variant ? item.variant.price : null;

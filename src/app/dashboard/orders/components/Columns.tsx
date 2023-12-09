@@ -10,6 +10,7 @@ import { DataTableRowActions } from "./DataTableRowActions";
 
 import formatPrice, { formatDate } from "@/lib/format";
 import Image from "next/image";
+import { calculateSubtotal } from "../../lib/utils";
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -83,7 +84,7 @@ export const columns: ColumnDef<any>[] = [
       <DataTableColumnHeader column={column} title="Prix" />
     ),
     cell: ({ row }) => {
-      const price = row.original.subtotal;
+      const price = calculateSubtotal(row.original);
       const formattedPrice = formatPrice(price!, "EUR");
 
       return (

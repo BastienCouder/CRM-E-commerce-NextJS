@@ -1,11 +1,4 @@
-import {
-  BadgePlus,
-  CheckCheck,
-  Loader,
-  MoreHorizontal,
-  Star,
-  X,
-} from "lucide-react";
+import { CheckCheck, Loader, MoreHorizontal, X } from "lucide-react";
 
 export const statuses = [
   {
