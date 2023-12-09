@@ -27,6 +27,7 @@ async function getfetchProducts() {
 
 export default async function ProductsPage() {
   const products = await getfetchProducts();
+
   return (
     <>
       <DataTable data={products as any} columns={columns} />

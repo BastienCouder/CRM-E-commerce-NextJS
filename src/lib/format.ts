@@ -27,8 +27,19 @@ export function formatDate(date: Date): string {
   return date.toLocaleString(undefined, options);
 }
 
+export const formatDateMonth = (
+  dateString: string,
+  format: "short" | "long" = "short"
+) => {
+  const date = new Date(dateString);
+
+  const options: Intl.DateTimeFormatOptions = { month: format };
+
+  return new Intl.DateTimeFormat("fr-FR", options).format(date);
+};
+
 export function formatDescription(description: string): string {
-  const words = description.split(" ");
+  const words: string[] = description.split(" ");
   if (words.length <= 20) {
     return description;
   }

@@ -1,7 +1,7 @@
 import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "./prisma";
 import { Prisma, Wishlist, WishlistItems } from "@prisma/client";
-import { getServerSession } from "next-auth";
+import { Session, getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export type WishlistWithWishlistItemsProps = Prisma.WishlistGetPayload<{
@@ -16,10 +16,11 @@ export type WishlistItemsProps = Prisma.WishlistItemsGetPayload<{
 
 export type WishlistProps = WishlistWithWishlistItemsProps & {
   ///...
+  size: number;
 };
 
 export async function getWishlist(): Promise<WishlistProps | null> {
-  const session = await getServerSession(authOptions);
+  const session: Session | null = await getServerSession(authOptions);
 
   let wishlist: WishlistWithWishlistItemsProps | null = null;
 
@@ -33,7 +34,8 @@ export async function getWishlist(): Promise<WishlistProps | null> {
       },
     });
   } else {
-    const localWishlistId = cookies().get("localWishlistId")?.value;
+    const localWishlistId: string | undefined =
+      cookies().get("localWishlistId")?.value;
     wishlist = localWishlistId
       ? await prisma.wishlist.findUnique({
           where: { id: localWishlistId },
@@ -52,11 +54,12 @@ export async function getWishlist(): Promise<WishlistProps | null> {
 
   return {
     ...wishlist,
+    size: wishlist.wishlistItems.reduce((acc) => acc + 1, 0),
   };
 }
 
 export async function createWishlist(): Promise<WishlistProps> {
-  const session = await getServerSession(authOptions);
+  const session: Session | null = await getServerSession(authOptions);
 
   let newWishlist: Wishlist;
   if (session) {
@@ -73,12 +76,14 @@ export async function createWishlist(): Promise<WishlistProps> {
 
   return {
     ...newWishlist,
+    size: 0,
     wishlistItems: [],
   };
 }
 
 export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
-  const localWishlistId = cookies().get("localWishlistId")?.value;
+  const localWishlistId: string | undefined =
+    cookies().get("localWishlistId")?.value;
   const localWishlist = localWishlistId
     ? await prisma.wishlist.findUnique({
         where: { id: localWishlistId },

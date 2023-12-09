@@ -12,7 +12,7 @@ export function ThemeProviders({ children }: ThemeProvidersProps) {
     <ThemeProvider
       attribute="class"
       themes={["light", "dark"]}
-      defaultTheme="light"
+      defaultTheme="dark"
     >
       {children}
     </ThemeProvider>

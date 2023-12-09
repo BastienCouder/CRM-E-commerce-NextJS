@@ -3,6 +3,7 @@ import { prisma } from "./prisma";
 import { Cart, CartItems, Prisma } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { Session } from "next-auth";
 
 export type CartWithCartItemsProps = Prisma.CartGetPayload<{
   include: {
@@ -35,7 +36,7 @@ export async function getCart(): Promise<CartProps | null> {
       },
     });
   } else {
-    const localCartId = cookies().get("localCartId")?.value;
+    const localCartId: string | undefined = cookies().get("localCartId")?.value;
     cart = localCartId
       ? await prisma.cart.findUnique({
           where: { id: localCartId },
@@ -56,9 +57,13 @@ export async function getCart(): Promise<CartProps | null> {
     ...cart,
     size: cart.cartItems.reduce((acc, item) => acc + item.quantity, 0),
     subtotal: cart.cartItems.reduce((acc, item) => {
-      const variantPrice = item.variant ? item.variant.price : null;
-      const productPrice = item.product ? item.product.price : null;
-      const price =
+      const variantPrice: number | null = item.variant
+        ? item.variant.price
+        : null;
+      const productPrice: number | null = item.product
+        ? item.product.price
+        : null;
+      const price: number | null =
         variantPrice !== null
           ? variantPrice
           : productPrice !== null
@@ -70,7 +75,7 @@ export async function getCart(): Promise<CartProps | null> {
 }
 
 export async function createCart(): Promise<CartProps> {
-  const session = await getServerSession(authOptions);
+  const session: Session | null = await getServerSession(authOptions);
 
   let newCart: Cart;
   if (session) {
@@ -94,7 +99,7 @@ export async function createCart(): Promise<CartProps> {
 }
 
 export async function mergeAnonymousCartIntoUserCart(userId: string) {
-  const localCartId = cookies().get("localCartId")?.value;
+  const localCartId: string | undefined = cookies().get("localCartId")?.value;
 
   const localCart = localCartId
     ? await prisma.cart.findUnique({

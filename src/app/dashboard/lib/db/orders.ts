@@ -8,7 +8,7 @@ import { OrderItems } from "@prisma/client";
 
 export type OrderProps = OrderItems & {
   ///
-  subtotal: number;
+  subtotal?: number;
 };
 
 export async function getOrders(): Promise<OrderProps[] | null> {
@@ -39,7 +39,7 @@ export async function getOrders(): Promise<OrderProps[] | null> {
         },
       });
 
-      const subtotal = orders.reduce((acc, order) => {
+      const subtotal: number = orders.reduce((acc, order) => {
         const cart = order.cart;
         if (cart) {
           const cartItems = cart.cartItems;

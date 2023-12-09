@@ -12,7 +12,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CalendarDateRangePicker } from "./components/DateRangePicker";
-import { Overview } from "./components/Overview";
 import { RecentSales } from "./components/RecentSales";
 
 export const metadata: Metadata = {
@@ -153,9 +152,7 @@ export default function DashboardPage() {
                 <CardHeader>
                   <CardTitle>Overview</CardTitle>
                 </CardHeader>
-                <CardContent className="pl-2">
-                  <Overview />
-                </CardContent>
+                <CardContent className="pl-2"></CardContent>
               </Card>
               <Card className="col-span-3">
                 <CardHeader>

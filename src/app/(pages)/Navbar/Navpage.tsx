@@ -2,8 +2,8 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import styles from "@/styles/Nav.module.css";
-import ShoppingCartButton from "@/app/pages/Navbar/components/ShoppingCartButton";
-import UserMenuButton from "@/app/pages/Navbar/components/UserMenuButton";
+import ShoppingCartButton from "@/app/(pages)/Navbar/components/ShoppingCartButton";
+import UserMenuButton from "@/app/(pages)/Navbar/components/UserMenuButton";
 import { Session } from "next-auth";
 import { useDisableAnimation } from "@/hooks/useDisableAnimation";
 import WishlistButton from "./components/WishlistButton";

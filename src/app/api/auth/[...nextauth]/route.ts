@@ -1,13 +1,13 @@
 import { AuthOptions } from "next-auth";
-import { PrismaClient, User } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { env } from "@/lib/env";
 import { authProviders } from "./authProviders";
-import NextAuth from "next-auth/next";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { Adapter } from "next-auth/adapters";
 import { mergeAnonymousCartIntoUserCart } from "@/lib/db/cart";
 import { mergeAnonymousWishlistIntoUserCart } from "@/lib/db/wishlist";
 import { randomBytes, randomUUID } from "crypto";
+import NextAuth from "next-auth/next";
 // import { mergeAnonymousDeliveryIntoUserCart } from "@/lib/db/delivery";
 
 const prisma = new PrismaClient();

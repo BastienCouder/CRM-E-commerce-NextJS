@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import Navbar from "./pages/Navbar/Navbar";
+import Navbar from "./(pages)/Navbar/Navbar";
 import SessionProvider from "../context/SessionProvider";
 import { AnimationProvider } from "../context/AnimationContext";
 import { Toaster } from "sonner";

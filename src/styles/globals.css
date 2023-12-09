@@ -40,7 +40,7 @@
   }
 
   .dark {
-    --background: 32, 32, 32;
+    --background: 20, 20, 20;
     --foreground: 221, 229, 236;
     --card: 38, 38, 38;
     --card-foreground: 221, 229, 236;

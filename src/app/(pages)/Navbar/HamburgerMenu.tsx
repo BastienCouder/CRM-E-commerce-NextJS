@@ -2,7 +2,7 @@
 import React, { useCallback, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import styles from "@/styles/Hamburger.module.css";
-import NavPage from "@/app/pages/Navbar/Navpage";
+import NavPage from "@/app/(pages)/Navbar/Navpage";
 import { CartProps } from "@/lib/db/cart";
 import { Session } from "next-auth";
 import { usePathname } from "next/navigation";

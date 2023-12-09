@@ -26,7 +26,6 @@ export async function createStripeSession(cartId: string, deliveryId: string) {
   const cart = await prisma.cart.findUnique({
     where: {
       id: cartId,
-      isPaid: false,
     },
     include: { cartItems: true },
   });

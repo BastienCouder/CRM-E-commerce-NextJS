@@ -6,7 +6,7 @@ import {
   DeliveryOption,
   User,
 } from "@prisma/client";
-import { getServerSession } from "next-auth";
+import { Session, getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { PrismaClient } from "@prisma/client";
 import { generateOrderNumber } from "../utils";
@@ -64,7 +64,7 @@ export type OrderProps = OrderWithOrderItemsProps & {
 };
 
 export async function getOrder(): Promise<OrderProps | null> {
-  const session = await getServerSession(authOptions);
+  const session: Session | null = await getServerSession(authOptions);
 
   let order: OrderWithOrderItemsProps | null = null;
 
@@ -105,12 +105,12 @@ export async function createOrder(
   cartId: string,
   deliveryId: string
 ): Promise<OrderProps | null> {
-  const session = await getServerSession(authOptions);
+  const session: Session | null = await getServerSession(authOptions);
 
   if (session) {
-    const orderNumber = generateOrderNumber();
+    const orderNumber: string = generateOrderNumber();
 
-    const newOrder = await prisma.order.create({
+    const newOrder: OrderProps = await prisma.order.create({
       data: {
         userId: session.user.id,
         orderItems: {

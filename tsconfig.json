@@ -23,6 +23,6 @@
       "@/*": ["./src/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/AnimationContext.ts", "jest.config.mjs", "__tests__/index.test.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/AnimationContext.ts", "jest.config.cjs", "__tests__/index.test.ts", "src/lib/db/cart.ts"],
   "exclude": ["node_modules"]
 }
