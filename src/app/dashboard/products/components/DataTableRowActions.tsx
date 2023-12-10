@@ -59,7 +59,7 @@ export function DataTableRowActions<TData>({
         <DropdownMenuItem>
           <Favories
             productId={product.id}
-            FavoriteProduct={useServerUpdateProductFavourites}
+            Favorite={useServerUpdateProductFavourites}
             type="actions"
             productPriority={product.priority}
           />{" "}

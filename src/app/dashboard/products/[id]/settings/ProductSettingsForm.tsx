@@ -27,7 +27,7 @@ interface ProductSettingsFormProps {
   ) => Promise<Product | null>;
 }
 
-export default async function ProductSettingsForm({
+export default function ProductSettingsForm({
   productId,
   product,
   UpdateProductStatus,
@@ -76,7 +76,7 @@ export default async function ProductSettingsForm({
             </div>
             <Restore
               itemId={product.id}
-              RestoreProduct={useServerRestore}
+              RestoreItem={useServerRestore}
               type="settings"
             />
           </div>

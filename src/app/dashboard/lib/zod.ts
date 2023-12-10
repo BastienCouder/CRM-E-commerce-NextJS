@@ -8,7 +8,7 @@ export const productSchema = z.object({
   stock: z.number().nullable(),
   status: z.string().nullable(),
   price: z.number(),
-  priority: z.string().nullable(),
+  priority: z.array(z.string()).nullable(),
 });
 
 export type Product = z.infer<typeof productSchema>;

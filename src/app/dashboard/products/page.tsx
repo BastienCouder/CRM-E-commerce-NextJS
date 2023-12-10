@@ -4,6 +4,8 @@ import { DataTable } from "./components/DataTable";
 import { getProducts } from "../lib/db/product";
 import { productSchema } from "../lib/zod";
 import { z } from "zod";
+import { useServerReadAnalyticsProducts } from "./action";
+import AnalyticsOrder from "./AnalyticsProducts";
 
 export const metadata: Metadata = {
   title: "Dashboard - Products",

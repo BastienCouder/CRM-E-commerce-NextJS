@@ -7,15 +7,24 @@ import { DataTableFacetedFilter } from "./DataTableFacetedFilter";
 import { priorities, statuses } from "../data/data";
 import { DataTableViewOptions } from "./DataTableViewOptions";
 import { Plus, X } from "lucide-react";
+import SoftDelete from "../../components/SoftDelete";
+import { useServerSoftDelete } from "../../actions";
 
 interface DataTableToolbarProps<TData> {
-  table: Table<TData>;
+  table: Table<any>;
 }
 
 export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+  const isSelected = Object.keys(table.getState().rowSelection).length > 0;
+  const allRows = table.getRowModel().rows;
+
+  const selectedRows = allRows.filter(
+    (row) => table.getState().rowSelection[row.id]
+  );
+  const selectedRowIds = selectedRows.map((row) => row.original.id);
 
   return (
     <div className="flex items-center justify-between">
@@ -51,6 +60,15 @@ export function DataTableToolbar<TData>({
             Réinitialiser
             <X className="ml-2 h-4 w-4" />
           </Button>
+        )}
+        {isSelected && (
+          <>
+            <SoftDelete
+              itemId={selectedRowIds}
+              SoftDelete={useServerSoftDelete}
+              type="toolbar"
+            />
+          </>
         )}
         <Button
           variant="outline"

@@ -75,7 +75,7 @@ export default function OrderSettingsForm({
             </div>
             <Restore
               itemId={order.id}
-              Restore={useServerRestore}
+              RestoreItem={useServerRestore}
               type="settings"
             />
           </div>

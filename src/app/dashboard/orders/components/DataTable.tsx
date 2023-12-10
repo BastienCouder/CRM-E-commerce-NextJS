@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import {
-  CellContext,
   ColumnDef,
   ColumnFiltersState,
   SortingState,

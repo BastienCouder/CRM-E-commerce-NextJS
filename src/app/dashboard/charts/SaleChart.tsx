@@ -7,12 +7,40 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
-import CustomTooltip from "../../components/CustomTooltip";
+import styles from "../../../styles/CustomTooltip.module.css";
+
 import formatPrice, { formatDateMonth } from "@/lib/format";
 
 interface SaleChartProps {
   analyticsData: any;
 }
+
+interface CustomTooltipProps {
+  active?: any;
+  payload: any;
+}
+
+const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className={styles.customTooltip}>
+        <div className={styles.tooltipDetails}>
+          <p className={styles.label}>
+            {formatDateMonth(payload[0].payload.date, "long")}
+          </p>
+
+          {payload[0].payload.subtotal ? (
+            <p>Total {formatPrice(payload[0].payload.subtotal, "EUR")}</p>
+          ) : (
+            <p>Aucune ventes</p>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+};
 
 export default function SaleChart({ analyticsData }: SaleChartProps) {
   const { Data, maxSubtotal } = analyticsData;
@@ -51,7 +79,7 @@ export default function SaleChart({ analyticsData }: SaleChartProps) {
           <Tooltip
             cursor={{ fill: "#202020" }}
             formatter={formatPrice}
-            content={<CustomTooltip payload={Data} type="price" />}
+            content={<CustomTooltip payload={Data} />}
           />
 
           <Bar dataKey="subtotal" fill="#f5f5f5" radius={[4, 4, 0, 0]} />

@@ -2,6 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { createProduct, getProducts } from "../../lib/db/product";
 import { findCategoryIdByName } from "../../lib/utils";
+import { Product } from "@prisma/client";
 
 export async function useServerUpdateProduct(
   productId: string,
@@ -126,11 +127,10 @@ export async function useServerUpdateProductLabel(
     return null;
   }
 }
-
 export async function useServerUpdateProductFavourites(
   productId: string,
-  newFavourites: string
-) {
+  newFavorite: string
+): Promise<Product | null> {
   try {
     const product = await prisma.product.findUnique({
       where: { id: productId },
@@ -141,15 +141,24 @@ export async function useServerUpdateProductFavourites(
       return null;
     }
 
-    const priorityValue =
-      product.priority === "favorites" ? null : newFavourites;
+    let updatedPriority;
+    if (product.priority && product.priority.includes(newFavorite)) {
+      // Retirer "favorie" du tableau
+      updatedPriority = product.priority.filter(
+        (p: string) => p !== newFavorite
+      );
+    } else {
+      // Ajouter "favorie" au tableau, en conservant les autres valeurs
+      updatedPriority = product.priority
+        ? [...product.priority, newFavorite]
+        : [newFavorite];
+    }
 
     const updatedProduct = await prisma.product.update({
       where: { id: productId },
-      data: {
-        priority: priorityValue,
-      },
+      data: { priority: updatedPriority },
     });
+    console.log(updatedProduct);
 
     revalidatePath(`/dashboard/products`);
     revalidatePath(`/products`);

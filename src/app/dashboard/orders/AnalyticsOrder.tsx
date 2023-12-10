@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 
 import DateFilter from "../components/DateFilter";
-import SaleLenghtChart from "./components/SaleLenghtChart";
+import SaleLenghtChart from "../charts/SaleLenghtChart";
 import StatCard from "../components/StatCard";
 
 interface AnalyticsOrderProps {

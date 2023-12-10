@@ -1,5 +1,5 @@
 "use client";
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, Row } from "@tanstack/react-table";
 
 import { statuses, priorities } from "../data/data";
 
@@ -156,33 +156,36 @@ export const columns: ColumnDef<any>[] = [
     },
   },
   {
-    accessorKey: "privilège",
+    accessorKey: "priority",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Privilège" />
     ),
     cell: ({ row }) => {
-      const priorityValue = row.original.priority;
-      const priority = priorities.find(
-        (priorityItem) => priorityItem.value === priorityValue
-      );
-
       return (
         <div className="flex space-x-2">
-          {priority && (
-            <Badge
-              variant="outline"
-              className={`${
-                priority.value === "favorites" ? "border-amber-700" : ""
-              }`}
-            >
-              {priority.label}
-            </Badge>
-          )}
+          {row.original.priority.map((priorityValue: string) => {
+            const priority = priorities.find(
+              (priorityItem) => priorityItem.value === priorityValue
+            );
+
+            return (
+              <Badge
+                key={priorityValue}
+                variant="outline"
+                className={`${
+                  priority?.value === "favorites" ? "border-amber-700" : ""
+                }`}
+              >
+                {priority?.label}
+              </Badge>
+            );
+          })}
         </div>
       );
     },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
+    filterFn: (row: Row<any>, id: string, value: string[]) => {
+      const rowValue = row.getValue(id) as string[];
+      return value.some((val: string) => rowValue.includes(val));
     },
   },
   {

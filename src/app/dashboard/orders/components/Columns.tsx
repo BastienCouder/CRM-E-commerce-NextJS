@@ -37,7 +37,6 @@ export const columns: ColumnDef<any>[] = [
     enableSorting: false,
     enableHiding: false,
   },
-
   {
     accessorKey: "index",
     header: ({ column }) => (
@@ -86,6 +85,7 @@ export const columns: ColumnDef<any>[] = [
     ),
     cell: ({ row }) => {
       const price = calculateSubtotal(row.original);
+
       const formattedPrice = formatPrice(price!, "EUR");
 
       return (

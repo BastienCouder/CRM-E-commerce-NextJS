@@ -10,7 +10,7 @@ import SoftDelete from "../../components/SoftDelete";
 import { useServerSoftDelete } from "../../actions";
 
 interface DataTableToolbarProps<TData> {
-  table: Table<TData>;
+  table: Table<any>;
 }
 
 export function DataTableToolbar<TData>({

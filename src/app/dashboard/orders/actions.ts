@@ -11,7 +11,7 @@ export interface AnalyticsData {
   subtotal?: number;
 }
 
-export interface useServerReadAnalyticsSaleProps {
+export interface useServerReadAnalyticsOrdersProps {
   Data: AnalyticsData[];
   maxSubtotal: number;
   maxOrderItems: number;
@@ -21,7 +21,7 @@ export interface useServerReadAnalyticsSaleProps {
   orderCountDifferencePercent: number;
 }
 
-export async function useServerReadAnalyticsSale(): Promise<useServerReadAnalyticsSaleProps> {
+export async function useServerReadAnalyticsOrders(): Promise<useServerReadAnalyticsOrdersProps> {
   try {
     const endDate = new Date();
     const siteCreationDate = new Date(env.CREATE_WEBSITE || "");

@@ -7,12 +7,40 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
-import CustomTooltip from "../../components/CustomTooltip";
-import { formatDateMonth } from "@/lib/format";
+
+import formatPrice, { formatDateMonth } from "@/lib/format";
+import styles from "../../../styles/CustomTooltip.module.css";
 
 interface SaleLenghtChartProps {
   analyticsData: any;
 }
+
+interface CustomTooltipProps {
+  active?: any;
+  payload: any;
+}
+
+const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className={styles.customTooltip}>
+        <div className={styles.tooltipDetails}>
+          <p className={styles.label}>
+            {formatDateMonth(payload[0].payload.date, "long")}
+          </p>
+
+          {payload[0].payload.orderItems ? (
+            <p>Total {payload[0].payload.orderItems}</p>
+          ) : (
+            <p>Aucune ventes</p>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+};
 
 export default function SaleLenghtChart({
   analyticsData,
@@ -47,7 +75,7 @@ export default function SaleLenghtChart({
 
           <Tooltip
             cursor={{ fill: "#202020" }}
-            content={<CustomTooltip payload={Data} type="nbr" />}
+            content={<CustomTooltip payload={Data} />}
           />
 
           <Bar dataKey="orderItems" fill="#f5f5f5" radius={[4, 4, 0, 0]} />

@@ -77,7 +77,7 @@ model Product {
     name          String
     status        String?
     label         String?
-    priority      String?
+    priority      String[]
     price         Int
     stock         Int?
     deleteAt      DateTime?
