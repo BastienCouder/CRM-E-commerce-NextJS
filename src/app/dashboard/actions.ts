@@ -48,42 +48,61 @@ export async function useServerUpdateStatus(itemId: string, newStatus: string) {
   }
 }
 
-export async function useServerSoftDelete(itemId: string) {
+export async function useServerSoftDelete(itemId: string | string[]) {
   try {
-    const product = await prisma.product.findUnique({
-      where: { id: itemId },
-    });
-
-    const order = await prisma.orderItems.findUnique({
-      where: { id: itemId },
-    });
-
-    if (product) {
-      const deletedProduct = await prisma.product.update({
-        where: { id: itemId },
+    const deleteProduct = async (id: string) => {
+      await prisma.product.update({
+        where: { id },
         data: { deleteAt: new Date(), status: "delete" },
       });
-
       revalidatePath(`/dashboard/products`);
       revalidatePath(`/products`);
-      revalidatePath(`/dashboard/products/${itemId}`);
-      return deletedProduct;
-    } else if (order) {
-      const deletedOrder = await prisma.orderItems.update({
-        where: { id: itemId },
+      revalidatePath(`/dashboard/products/${id}`);
+    };
+
+    const deleteOrder = async (id: string) => {
+      await prisma.orderItems.update({
+        where: { id },
         data: { deleteAt: new Date(), status: "delete" },
       });
+      revalidatePath(`/orders`);
+      revalidatePath(`/orders/${id}`);
+    };
 
-      revalidatePath(`/dashboard/orders`);
-      revalidatePath(`/dashboard/orders/${itemId}`);
-      return deletedOrder;
+    if (Array.isArray(itemId)) {
+      await Promise.all(
+        itemId.map(async (id) => {
+          const product = await prisma.product.findUnique({ where: { id } });
+          const order = await prisma.orderItems.findUnique({ where: { id } });
+
+          if (product) {
+            await deleteProduct(id);
+          } else if (order) {
+            await deleteOrder(id);
+          }
+        })
+      );
     } else {
-      throw Error("Item not found.");
+      const product = await prisma.product.findUnique({
+        where: { id: itemId },
+      });
+      const order = await prisma.orderItems.findUnique({
+        where: { id: itemId },
+      });
+
+      if (product) {
+        await deleteProduct(itemId);
+      } else if (order) {
+        await deleteOrder(itemId);
+      } else {
+        throw Error("Item not found.");
+      }
     }
   } catch (error: any) {
     throw Error("Erreur lors de la suppression :", error);
   }
 }
+
 export async function useServerDelete(itemId: string) {
   try {
     const product = await prisma.product.findUnique({

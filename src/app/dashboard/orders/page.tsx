@@ -5,7 +5,7 @@ import { orderSchema } from "../lib/zod";
 import { DataTable } from "./components/DataTable";
 import { columns } from "./components/Columns";
 import { useServerReadAnalyticsSale } from "./actions";
-import AnalyticsOrder from "./components/AnalyticsOrder";
+import AnalyticsOrder from "./AnalyticsOrder";
 
 export const metadata: Metadata = {
   title: "Dashboard - Products",
@@ -31,6 +31,7 @@ async function getfetchProducts() {
 export default async function ProductsPage() {
   const orders = await getfetchProducts();
   const analyticsData = await useServerReadAnalyticsSale();
+
   return (
     <>
       <AnalyticsOrder analyticsData={analyticsData} />

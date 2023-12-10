@@ -25,7 +25,7 @@ interface OrderSettingsFormProps {
   UpdateStatus: (itemId: string, newStatus: string) => Promise<Order | null>;
 }
 
-export default async function OrderSettingsForm({
+export default function OrderSettingsForm({
   orderId,
   order,
   UpdateStatus,

@@ -42,7 +42,7 @@
   .dark {
     --background: 20, 20, 20;
     --foreground: 221, 229, 236;
-    --card: 38, 38, 38;
+    --card: 20, 20, 20;
     --card-foreground: 221, 229, 236;
     --popover: 38, 38, 38;
     --popover-foreground: 221, 229, 236;

@@ -195,7 +195,7 @@ export default function ProductInformationsForm({
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
-                    <p>Définisez l'image de votre produit.</p>
+                    <p>Définisez l&apos;image de votre produit.</p>
                   </div>
                   <FormDescription>
                     <Image

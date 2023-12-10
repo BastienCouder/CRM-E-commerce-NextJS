@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { DataTableFacetedFilter } from "./DataTableFacetedFilter";
 import { priorities, statuses } from "../data/data";
 import { DataTableViewOptions } from "./DataTableViewOptions";
-import { X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -44,7 +44,7 @@ export function DataTableToolbar<TData>({
         )}
         {isFiltered && (
           <Button
-            variant="ghost"
+            variant="outline"
             onClick={() => table.resetColumnFilters()}
             className="h-8 px-2 lg:px-3"
           >
@@ -52,6 +52,15 @@ export function DataTableToolbar<TData>({
             <X className="ml-2 h-4 w-4" />
           </Button>
         )}
+        <Button
+          variant="outline"
+          size="xl"
+          onClick={() => table.resetColumnFilters()}
+          className="h-8 px-2 lg:px-3"
+        >
+          Creer un produit
+          <Plus className="ml-2 h-4 w-4" />
+        </Button>
       </div>
       <DataTableViewOptions table={table} />
     </div>

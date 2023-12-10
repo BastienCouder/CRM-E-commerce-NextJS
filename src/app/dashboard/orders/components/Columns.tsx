@@ -37,6 +37,7 @@ export const columns: ColumnDef<any>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+
   {
     accessorKey: "index",
     header: ({ column }) => (

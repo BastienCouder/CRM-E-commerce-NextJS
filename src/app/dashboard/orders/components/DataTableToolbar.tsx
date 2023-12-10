@@ -1,12 +1,13 @@
 "use client";
 import { Table } from "@tanstack/react-table";
-
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DataTableFacetedFilter } from "./DataTableFacetedFilter";
 import { statuses } from "../data/data";
 import { DataTableViewOptions } from "./DataTableViewOptions";
 import { X } from "lucide-react";
+import SoftDelete from "../../components/SoftDelete";
+import { useServerSoftDelete } from "../../actions";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -16,7 +17,13 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+  const isSelected = Object.keys(table.getState().rowSelection).length > 0;
+  const allRows = table.getRowModel().rows;
 
+  const selectedRows = allRows.filter(
+    (row) => table.getState().rowSelection[row.id]
+  );
+  const selectedRowIds = selectedRows.map((row) => row.original.id);
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
@@ -44,6 +51,16 @@ export function DataTableToolbar<TData>({
             Réinitialiser
             <X className="ml-2 h-4 w-4" />
           </Button>
+        )}
+
+        {isSelected && (
+          <>
+            <SoftDelete
+              itemId={selectedRowIds}
+              SoftDelete={useServerSoftDelete}
+              type="toolbar"
+            />
+          </>
         )}
       </div>
       <DataTableViewOptions table={table} />

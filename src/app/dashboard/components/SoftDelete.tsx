@@ -13,13 +13,12 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuShortcut } from "@/components/ui/dropdown-menu";
-import { Product } from "@prisma/client";
-import { Delete } from "lucide-react";
-import { Order } from "../lib/zod";
+import { Product, Order } from "@prisma/client";
+import { Delete, X } from "lucide-react";
 
 interface SoftDeleteProps {
-  itemId: string;
-  SoftDelete: (itemId: string) => Promise<Product | Order>;
+  itemId: string | string[];
+  SoftDelete: (itemId: string) => Promise<any>;
   type: string;
 }
 
@@ -28,6 +27,14 @@ export default function SoftDelete({
   SoftDelete,
   type,
 }: SoftDeleteProps) {
+  const handleDelete = async () => {
+    if (Array.isArray(itemId)) {
+      await Promise.all(itemId.map((id) => SoftDelete(id)));
+    } else {
+      await SoftDelete(itemId);
+    }
+  };
+
   return (
     <div className="relative flex cursor-default select-none items-center rounded-sm py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
       <AlertDialog>
@@ -46,6 +53,15 @@ export default function SoftDelete({
             </Button>
           </AlertDialogTrigger>
         )}
+        {type === "toolbar" && (
+          <AlertDialogTrigger>
+            <Button variant="delete" size="lg" className="h-8 px-2 lg:px-3">
+              Supprimer
+              <X className="ml-2 h-4 w-4" />
+            </Button>
+          </AlertDialogTrigger>
+        )}
+
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Êtes-vous absolument sûr ?</AlertDialogTitle>
@@ -55,11 +71,7 @@ export default function SoftDelete({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Annuler</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={async () => {
-                await SoftDelete(itemId);
-              }}
-            >
+            <AlertDialogAction onClick={handleDelete}>
               Continuer
             </AlertDialogAction>
           </AlertDialogFooter>
