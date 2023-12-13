@@ -20,7 +20,7 @@ import { BsCaretLeftFill } from "react-icons/bs";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-//Account
+//Newsletter
 export const NewsletterFormSchema = z.object({
   email: z
     .string({
@@ -36,7 +36,11 @@ export const NewsletterFormSchema = z.object({
 export type NewsletterFormValues = z.infer<typeof NewsletterFormSchema>;
 export const defaultNewsletterFormValues: Partial<NewsletterFormValues> = {};
 
-export default function Newsletter() {
+interface NewsletterProps {
+  SubscribeToNewsletter: any;
+}
+
+export default function Newsletter({ SubscribeToNewsletter }: NewsletterProps) {
   const [showForm, setShowForm] = useState(false);
   const [checkboxChecked, setCheckboxChecked] = useState(false);
   const [error, setError] = useState("");
@@ -55,6 +59,7 @@ export default function Newsletter() {
       const formData = new FormData();
       formData.append("email", data.email);
 
+      await SubscribeToNewsletter(formData);
       toast.success("Inscription à la newsletter avec succcès");
       setError("");
       setShowForm(!showForm);

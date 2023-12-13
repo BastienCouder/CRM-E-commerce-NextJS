@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import OrderSettingsForm from "./OrderSettingsForm";
 import { useServerUpdateStatus } from "@/app/dashboard/actions";
 
-const getOrder = cache(async (id: string) => {
+const getOrderItem = cache(async (id: string) => {
   const order = await prisma.orderItems.findUnique({
     where: { id },
     include: {
@@ -25,7 +25,7 @@ interface orderSettingsPageProps {
 export default async function OrderSettingsPage({
   params: { id },
 }: orderSettingsPageProps) {
-  const order = await getOrder(id);
+  const order = await getOrderItem(id);
 
   return (
     <>

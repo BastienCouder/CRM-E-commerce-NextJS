@@ -82,6 +82,7 @@ export const columns: ColumnDef<any>[] = [
         </div>
       );
     },
+    enableSorting: true,
   },
   {
     accessorKey: "stock",
@@ -103,6 +104,7 @@ export const columns: ColumnDef<any>[] = [
         </div>
       );
     },
+    enableSorting: true,
   },
   {
     accessorKey: "prix",
@@ -121,6 +123,7 @@ export const columns: ColumnDef<any>[] = [
         </div>
       );
     },
+    enableSorting: true,
   },
   {
     accessorKey: "status",
@@ -154,9 +157,10 @@ export const columns: ColumnDef<any>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
     },
+    enableSorting: true,
   },
   {
-    accessorKey: "priority",
+    accessorKey: "privilège",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Privilège" />
     ),
@@ -173,7 +177,11 @@ export const columns: ColumnDef<any>[] = [
                 key={priorityValue}
                 variant="outline"
                 className={`${
-                  priority?.value === "favorites" ? "border-amber-700" : ""
+                  priority?.value === "favorie"
+                    ? "border-amber-700"
+                    : priority?.value === "best seller"
+                    ? "border-blue-700"
+                    : "border-violet-700"
                 }`}
               >
                 {priority?.label}
@@ -183,10 +191,14 @@ export const columns: ColumnDef<any>[] = [
         </div>
       );
     },
-    filterFn: (row: Row<any>, id: string, value: string[]) => {
-      const rowValue = row.getValue(id) as string[];
-      return value.some((val: string) => rowValue.includes(val));
+    filterFn: (row, id, value) => {
+      const rowValue = row.getValue(id);
+      if (Array.isArray(rowValue)) {
+        return value.some((val: string) => rowValue.includes(val));
+      }
+      return false;
     },
+    enableSorting: true,
   },
   {
     id: "actions",

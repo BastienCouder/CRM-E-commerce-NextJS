@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Restore from "@/app/dashboard/components/Restore";
-import { ProductProps } from "@/app/dashboard/lib/db/product";
+import { ProductProps } from "@/lib/db/product";
 import { Product } from "@prisma/client";
 import {
   useServerDelete,

@@ -8,7 +8,7 @@ const navItems = [
   { href: "/dashboard", label: "Overview" },
   { href: "/dashboard/orders", label: "Commandes" },
   { href: "/dashboard/products", label: "Produits" },
-  { href: "/dashboard/settings", label: "Options" },
+  { href: "/dashboard/users", label: "Utilisateurs" },
 ];
 
 export function MainNav({
@@ -31,7 +31,7 @@ export function MainNav({
             item.href !== "/dashboard" && pathname.startsWith(item.href)
               ? "bg-muted hover:bg-muted"
               : "hover:bg-muted",
-            "justify-start text-sm font-medium py-2 px-4 w-28"
+            "border border-muted justify-start text-sm font-medium py-2 px-4 w-28"
           )}
         >
           {item.label}

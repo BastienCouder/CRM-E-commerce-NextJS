@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from "react";
 
 import DateFilter from "../components/DateFilter";
-import SaleLenghtChart from "../charts/SaleLenghtChart";
+
 import StatCard from "../components/StatCard";
+import OrdersLengthChart from "../components/charts/OrdersLengthChart";
 
 interface AnalyticsOrderProps {
   analyticsData: any;
@@ -20,7 +21,7 @@ export default function AnalyticsOrder({ analyticsData }: AnalyticsOrderProps) {
 
   const handleFilterChange = (startDate: Date): void => {
     const endDate = new Date();
-    const filtered = analyticsData.Data.filter((data: any) => {
+    const filtered = analyticsData.data.filter((data: any) => {
       const dataDate = new Date(data.date);
       return dataDate >= startDate && dataDate <= endDate;
     });
@@ -30,13 +31,13 @@ export default function AnalyticsOrder({ analyticsData }: AnalyticsOrderProps) {
       0
     );
 
-    setFilteredData({ Data: filtered, maxTotal });
+    setFilteredData({ data: filtered, maxTotal });
   };
 
   return (
     <div className="flex space-x-4">
-      <div className="w-1/2 border p-4 mb-6 rounded-lg">
-        <SaleLenghtChart analyticsData={filteredData} />
+      <div className="w-1/2 border p-4 mb-6 rounded-lg pb-10 h-[18rem]">
+        <OrdersLengthChart analyticsData={filteredData} />
       </div>
       <div className="space-y-4">
         <div className="flex flex-col gap-y-2">
@@ -44,6 +45,7 @@ export default function AnalyticsOrder({ analyticsData }: AnalyticsOrderProps) {
           <DateFilter
             onFilterChange={handleFilterChange}
             siteCreationDate={siteCreationDate}
+            type="orders"
           />
         </div>
         <div className="flex flex-col gap-y-2">

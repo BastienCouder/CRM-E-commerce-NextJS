@@ -1,4 +1,5 @@
 import { Category } from "@prisma/client";
+import { subDays, subMonths, subYears } from "date-fns";
 
 export function findCategoryIdByName(
   categoryName: string,
@@ -24,3 +25,24 @@ export const calculateSubtotal = (order: any) => {
     }, 0) || 0
   );
 };
+
+export function getStartDateForFilter(
+  filterType: "day" | "week" | "month" | "year" | "sinceCreation",
+  siteCreationDate: Date
+): Date {
+  const now = new Date();
+  switch (filterType) {
+    case "day":
+      return subDays(now, 1);
+    case "week":
+      return subDays(now, 7);
+    case "month":
+      return subMonths(now, 1);
+    case "year":
+      return subYears(now, 1);
+    case "sinceCreation":
+      return siteCreationDate;
+    default:
+      throw new Error("Type de filtre non valide");
+  }
+}

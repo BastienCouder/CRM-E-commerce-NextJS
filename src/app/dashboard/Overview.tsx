@@ -6,11 +6,13 @@ import Analytics from "./Analytics";
 interface OverviewProps {
   analyticsProductsData: any;
   analyticsOrdersData: any;
+  analyticsWishlistCartOrderData: any;
 }
 
 export default function Overview({
   analyticsProductsData,
   analyticsOrdersData,
+  analyticsWishlistCartOrderData,
 }: OverviewProps) {
   const [activeTab, setActiveTab] = useState("overview");
 
@@ -55,6 +57,7 @@ export default function Overview({
             <Analytics
               analyticsProductsData={analyticsProductsData}
               analyticsOrdersData={analyticsOrdersData}
+              analyticsWishlistCartOrderData={analyticsWishlistCartOrderData}
             />
           </TabsContent>
           <TabsContent value="reports">

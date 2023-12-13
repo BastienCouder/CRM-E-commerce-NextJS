@@ -54,6 +54,7 @@ model User {
     emailVerified  DateTime?
     account        String?
     hashedPassword String?
+    newsletter     Boolean?
     image          String?
     language       String?
     birthDate      String?

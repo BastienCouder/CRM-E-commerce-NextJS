@@ -27,7 +27,6 @@ export async function checkIfEmailExists(email: string) {
 
   return !!existingUser;
 }
-
 //Check LoginEmail
 export async function checkEmail(email: { email: string }) {
   const user = await prisma.user.findUnique({

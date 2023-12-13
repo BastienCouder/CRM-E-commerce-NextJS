@@ -7,7 +7,9 @@ import { Session } from "next-auth";
 
 export type CartWithCartItemsProps = Prisma.CartGetPayload<{
   include: {
-    cartItems: { include: { product: true; variant: true } };
+    cartItems: {
+      include: { product: true; variant: true };
+    };
   };
 }>;
 
@@ -32,7 +34,10 @@ export async function getCart(): Promise<CartProps | null> {
         deleteAt: null,
       },
       include: {
-        cartItems: { include: { product: true, variant: true } },
+        cartItems: {
+          where: { deleteAt: null },
+          include: { product: true, variant: true },
+        },
       },
     });
   } else {
@@ -42,6 +47,7 @@ export async function getCart(): Promise<CartProps | null> {
           where: { id: localCartId },
           include: {
             cartItems: {
+              where: { deleteAt: null },
               include: { product: true, variant: true },
             },
           },
@@ -104,7 +110,12 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
   const localCart = localCartId
     ? await prisma.cart.findUnique({
         where: { id: localCartId },
-        include: { cartItems: { include: { product: true, variant: true } } },
+        include: {
+          cartItems: {
+            where: { deleteAt: null },
+            include: { product: true, variant: true },
+          },
+        },
       })
     : null;
 
@@ -114,7 +125,12 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
 
   const userCart = await prisma.cart.findFirst({
     where: { userId },
-    include: { cartItems: { include: { product: true, variant: true } } },
+    include: {
+      cartItems: {
+        where: { deleteAt: null },
+        include: { product: true, variant: true },
+      },
+    },
   });
 
   await prisma.$transaction(async (tx) => {

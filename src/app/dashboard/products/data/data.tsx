@@ -1,4 +1,4 @@
-import { BadgePlus, CheckCheck, Star, X } from "lucide-react";
+import { BadgePlus, CheckCheck, Plus, Star, X } from "lucide-react";
 
 export const statuses = [
   {
@@ -19,14 +19,7 @@ export const statuses = [
 ];
 
 export const priorities = [
-  {
-    label: "Favorie",
-    value: "favorites",
-    icon: Star,
-  },
-  {
-    label: "Nouveautés",
-    value: "new",
-    icon: BadgePlus,
-  },
+  { value: "best seller", label: "Best Seller", icon: BadgePlus },
+  { value: "favorie", label: "Favorie", icon: Star },
+  { value: "new", label: "Nouveau", icon: Plus },
 ];

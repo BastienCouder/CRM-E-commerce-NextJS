@@ -14,7 +14,7 @@ interface OrderPageProps {
   };
 }
 
-const getOrder = cache(async (id: string) => {
+const getOrderItem = cache(async (id: string) => {
   const order = await prisma.orderItems.findUnique({
     where: { id },
 
@@ -22,6 +22,7 @@ const getOrder = cache(async (id: string) => {
       cart: {
         include: {
           cartItems: {
+            where: { deleteAt: null },
             include: {
               product: { include: { variants: true, category: true } },
             },
@@ -44,7 +45,7 @@ const getOrder = cache(async (id: string) => {
 export async function generateMetadata({
   params: { id },
 }: OrderPageProps): Promise<Metadata> {
-  const order = await getOrder(id);
+  const order = await getOrderItem(id);
 
   return {
     title: "Dashboard - commande n°" + order.orderNumber + " - E-commerce",
@@ -52,7 +53,7 @@ export async function generateMetadata({
 }
 
 export default async function OrderPage({ params: { id } }: OrderPageProps) {
-  const order = await getOrder(id);
+  const order = await getOrderItem(id);
 
   return (
     <>

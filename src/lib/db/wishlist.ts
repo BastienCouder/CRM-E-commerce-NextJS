@@ -30,7 +30,10 @@ export async function getWishlist(): Promise<WishlistProps | null> {
         userId: session.user.id,
       },
       include: {
-        wishlistItems: { include: { product: true, variant: true } },
+        wishlistItems: {
+          where: { deleteAt: null },
+          include: { product: true, variant: true },
+        },
       },
     });
   } else {
@@ -88,7 +91,10 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
     ? await prisma.wishlist.findUnique({
         where: { id: localWishlistId },
         include: {
-          wishlistItems: { include: { product: true, variant: true } },
+          wishlistItems: {
+            where: { deleteAt: null },
+            include: { product: true, variant: true },
+          },
         },
       })
     : null;
@@ -99,7 +105,12 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
 
   const userWishlist = await prisma.wishlist.findFirst({
     where: { userId },
-    include: { wishlistItems: { include: { product: true, variant: true } } },
+    include: {
+      wishlistItems: {
+        where: { deleteAt: null },
+        include: { product: true, variant: true },
+      },
+    },
   });
 
   await prisma.$transaction(async (tx) => {

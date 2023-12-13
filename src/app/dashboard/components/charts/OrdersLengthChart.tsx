@@ -1,4 +1,5 @@
 "use client";
+import { formatDateMonth } from "@/lib/format";
 import {
   Bar,
   BarChart,
@@ -8,10 +9,7 @@ import {
   Tooltip,
 } from "recharts";
 
-import formatPrice, { formatDateMonth } from "@/lib/format";
-import styles from "../../../styles/CustomTooltip.module.css";
-
-interface SaleLenghtChartProps {
+interface OrdersLengthChartProps {
   analyticsData: any;
 }
 
@@ -23,18 +21,16 @@ interface CustomTooltipProps {
 const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
-      <div className={styles.customTooltip}>
-        <div className={styles.tooltipDetails}>
-          <p className={styles.label}>
-            {formatDateMonth(payload[0].payload.date, "long")}
-          </p>
+      <div className="p-3 text-[#000] text-sm bg-white rounded-lg">
+        <p className="font-bold">
+          {formatDateMonth(payload[0].payload.date, "long")}
+        </p>
 
-          {payload[0].payload.orderItems ? (
-            <p>Total {payload[0].payload.orderItems}</p>
-          ) : (
-            <p>Aucune ventes</p>
-          )}
-        </div>
+        {payload[0].payload.orderItems ? (
+          <p>Total : {payload[0].payload.orderItems}</p>
+        ) : (
+          <p>Aucune ventes</p>
+        )}
       </div>
     );
   }
@@ -42,16 +38,16 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   return null;
 };
 
-export default function SaleLenghtChart({
+export default function OrdersLengthChart({
   analyticsData,
-}: SaleLenghtChartProps) {
-  const { Data, maxOrderItems } = analyticsData;
+}: OrdersLengthChartProps) {
+  const { data, maxOrderItems } = analyticsData;
 
   return (
     <>
       <h2 className="mb-2">Nombres de commandes</h2>
-      <ResponsiveContainer width="100%" height={250}>
-        <BarChart data={Data}>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data}>
           <XAxis
             dataKey="date"
             tickFormatter={(value) => formatDateMonth(value, "short")}
@@ -75,7 +71,7 @@ export default function SaleLenghtChart({
 
           <Tooltip
             cursor={{ fill: "#202020" }}
-            content={<CustomTooltip payload={Data} />}
+            content={<CustomTooltip payload={data} />}
           />
 
           <Bar dataKey="orderItems" fill="#f5f5f5" radius={[4, 4, 0, 0]} />

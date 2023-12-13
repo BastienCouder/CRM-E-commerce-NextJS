@@ -1,11 +1,4 @@
-import {
-  Prisma,
-  Order,
-  Cart,
-  Delivery,
-  DeliveryOption,
-  User,
-} from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { Session, getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { PrismaClient } from "@prisma/client";
@@ -79,6 +72,7 @@ export async function getOrder(): Promise<OrderProps | null> {
             cart: {
               include: {
                 cartItems: {
+                  where: { deleteAt: null },
                   include: {
                     product: true,
                     variant: true,
@@ -130,6 +124,7 @@ export async function createOrder(
             cart: {
               include: {
                 cartItems: {
+                  where: { deleteAt: null },
                   include: {
                     product: true,
                   },

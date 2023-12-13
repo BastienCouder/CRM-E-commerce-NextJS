@@ -1,11 +1,13 @@
 import { Metadata } from "next";
-import { getOrders } from "../lib/db/orders";
+
 import { z } from "zod";
 import { orderSchema } from "../lib/zod";
 import { DataTable } from "./components/DataTable";
 import { columns } from "./components/Columns";
 import { useServerReadAnalyticsOrders } from "./actions";
 import AnalyticsOrder from "./AnalyticsOrder";
+
+import { getOrderItems } from "../../../lib/db/orderItem";
 
 export const metadata: Metadata = {
   title: "Dashboard - Products",
@@ -14,7 +16,7 @@ export const metadata: Metadata = {
 
 async function getfetchProducts() {
   try {
-    const data = await getOrders();
+    const data = await getOrderItems();
 
     if (Array.isArray(data)) {
       return z.array(orderSchema).parse(data);
@@ -30,11 +32,10 @@ async function getfetchProducts() {
 
 export default async function ProductsPage() {
   const orders = await getfetchProducts();
-  const analyticsData = await useServerReadAnalyticsOrders();
 
   return (
     <>
-      <AnalyticsOrder analyticsData={analyticsData} />
+      <AnalyticsOrder analyticsData={await useServerReadAnalyticsOrders()} />
       <DataTable data={orders} columns={columns} />
     </>
   );

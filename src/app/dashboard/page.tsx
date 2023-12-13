@@ -1,7 +1,10 @@
 import { Metadata } from "next";
 import Overview from "./Overview";
 import { useServerReadAnalyticsOrders } from "./orders/actions";
-import { useServerReadAnalyticsProducts } from "./products/action";
+import {
+  useServerReadAnalyticsProducts,
+  useServerReadAnalyticsWishlistCartOrder,
+} from "./products/action";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -11,6 +14,8 @@ export const metadata: Metadata = {
 export default async function DashboardPage() {
   const analyticsProductsData = await useServerReadAnalyticsProducts();
   const analyticsOrdersData = await useServerReadAnalyticsOrders();
+  const analyticsWishlistCartOrderData =
+    await useServerReadAnalyticsWishlistCartOrder();
 
   return (
     <>
@@ -18,6 +23,7 @@ export default async function DashboardPage() {
         <Overview
           analyticsProductsData={analyticsProductsData}
           analyticsOrdersData={analyticsOrdersData}
+          analyticsWishlistCartOrderData={analyticsWishlistCartOrderData}
         />
       </div>
     </>

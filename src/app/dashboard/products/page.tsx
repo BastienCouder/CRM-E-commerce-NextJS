@@ -1,11 +1,10 @@
 import { Metadata } from "next";
 import { columns } from "./components/Columns";
 import { DataTable } from "./components/DataTable";
-import { getProducts } from "../lib/db/product";
+import { getProducts } from "../../../lib/db/product";
 import { productSchema } from "../lib/zod";
 import { z } from "zod";
-import { useServerReadAnalyticsProducts } from "./action";
-import AnalyticsOrder from "./AnalyticsProducts";
+// import { useServerNewPriorityToRecentProducts } from "./action";
 
 export const metadata: Metadata = {
   title: "Dashboard - Products",
@@ -29,6 +28,7 @@ async function getfetchProducts() {
 
 export default async function ProductsPage() {
   const products = await getfetchProducts();
+  // await useServerNewPriorityToRecentProducts();
 
   return (
     <>

@@ -53,6 +53,7 @@ async function handleAddToCartWithVariant(
     productId,
     variantId,
     quantity: 1,
+    deleteAt: null,
   };
   await prisma.cartItems.create({
     data: cartItemDataWithVariant,
@@ -75,17 +76,14 @@ async function handleAddToCartWithoutVariant(
     cartId: cart.id,
     productId,
     quantity: 1,
+    deleteAt: null,
   };
   await prisma.cartItems.create({
     data: cartItemData,
   });
 
   if (articleInWishlistInCart) {
-    await prisma.wishlistItems.delete({
-      where: {
-        id: articleInWishlistInCart?.id,
-      },
-    });
+    await deleteItemFromWishlist(articleInWishlistInCart);
   }
 
   revalidatePath("/wishlist");
@@ -93,9 +91,10 @@ async function handleAddToCartWithoutVariant(
 
 //Delete Item From Whishlist
 export async function deleteItemFromWishlist(item: WishlistItemsProps) {
-  await prisma.wishlistItems.delete({
+  await prisma.wishlistItems.update({
     where: {
       id: item.id,
     },
+    data: { deleteAt: new Date() },
   });
 }

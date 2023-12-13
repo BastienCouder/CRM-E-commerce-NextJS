@@ -12,7 +12,7 @@ export interface AnalyticsData {
 }
 
 export interface useServerReadAnalyticsOrdersProps {
-  Data: AnalyticsData[];
+  data: AnalyticsData[];
   maxSubtotal: number;
   maxOrderItems: number;
   currentMonthSubtotal: number;
@@ -24,6 +24,7 @@ export interface useServerReadAnalyticsOrdersProps {
 export async function useServerReadAnalyticsOrders(): Promise<useServerReadAnalyticsOrdersProps> {
   try {
     const endDate = new Date();
+
     const siteCreationDate = new Date(env.CREATE_WEBSITE || "");
     const startDate = siteCreationDate < endDate ? siteCreationDate : endDate;
     const orderItems = await prisma.orderItems.findMany({
@@ -31,6 +32,7 @@ export async function useServerReadAnalyticsOrders(): Promise<useServerReadAnaly
         cart: {
           include: {
             cartItems: {
+              where: { deleteAt: null },
               include: {
                 product: true,
                 variant: true,
@@ -136,7 +138,7 @@ export async function useServerReadAnalyticsOrders(): Promise<useServerReadAnaly
     revalidatePath(`/dashboard/orders`);
 
     return {
-      Data: orderItemsData,
+      data: orderItemsData,
       maxSubtotal,
       maxOrderItems,
       currentMonthSubtotal,

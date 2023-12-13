@@ -10,6 +10,7 @@ import {
   getWishlist,
 } from "@/lib/db/wishlist";
 import { deleteItemFromWishlist } from "../../wishlist/actions";
+
 export async function useServerAddToCart(
   productId: string,
   variantId: string | null
@@ -69,6 +70,7 @@ export async function useServerAddToCart(
       productId,
       variantId,
       quantity: 1,
+      deleteAt: null,
     };
     await prisma.cartItems.create({
       data: cartItemDataWithVariant,
@@ -92,6 +94,7 @@ export async function useServerAddToCart(
       cartId: cart.id,
       productId,
       quantity: 1,
+      deleteAt: null,
     };
     await prisma.cartItems.create({
       data: cartItemDataWithVariant,
@@ -166,10 +169,11 @@ export async function useServerAddWishlist(
 
 //Delete To WishList
 async function handleDeleteFromWishlist(articleInWishlist: WishlistItemsProps) {
-  await prisma.wishlistItems.delete({
+  await prisma.wishlistItems.update({
     where: {
       id: articleInWishlist.id,
     },
+    data: { deleteAt: new Date() },
   });
 }
 
@@ -184,6 +188,7 @@ async function handleAddToWishlist(
       wishlistId: wishlist.id,
       productId,
       variantId,
+      deleteAt: null,
     },
   });
 }

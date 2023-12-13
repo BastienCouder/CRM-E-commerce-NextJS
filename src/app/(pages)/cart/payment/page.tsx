@@ -8,11 +8,13 @@ import DeliveryDetails from "./DeliveryDetails";
 import CartItem from "./CartItem";
 import { createOrderIncrementation, handleStripePayment } from "./action";
 import AddToOrder from "./AddToOrder";
+import { log } from "console";
 
 export default async function Payment() {
   // const session = getServerSession(authOptions);
   const cart = await getCart();
   const delivery = await getDelivery();
+  console.log(cart);
 
   // if (!session) {
   //   redirect("/auth");

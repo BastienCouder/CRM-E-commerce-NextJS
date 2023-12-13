@@ -1,4 +1,4 @@
-import { ProductProps, getProducts } from "./app/dashboard/lib/db/product";
+import { ProductProps, getProducts } from "./lib/db/product";
 import { env } from "./lib/env";
 
 const URL = `${env.NEXTAUTH_URL}`;

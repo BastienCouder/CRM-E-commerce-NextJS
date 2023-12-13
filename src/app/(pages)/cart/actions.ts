@@ -50,10 +50,11 @@ async function updateItemIncrementFromCart(
 
 //Delete Item From Whishlist
 async function deleteItemIncrementFromCart(item: CartItemsProps | undefined) {
-  await prisma.cartItems.delete({
+  await prisma.cartItems.update({
     where: {
       id: item?.id,
     },
+    data: { deleteAt: new Date() },
   });
 }
 
@@ -72,16 +73,18 @@ export async function DeleteProduct(
   );
 
   if (articleVariantInCart) {
-    await prisma.cartItems.delete({
+    await prisma.cartItems.update({
       where: {
         id: articleVariantInCart.id,
       },
+      data: { deleteAt: new Date() },
     });
   } else {
-    await prisma.cartItems.delete({
+    await prisma.cartItems.update({
       where: {
         id: articleInCart?.id,
       },
+      data: { deleteAt: new Date() },
     });
   }
   revalidatePath("/cart");

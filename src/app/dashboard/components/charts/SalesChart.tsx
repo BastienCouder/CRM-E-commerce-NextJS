@@ -7,11 +7,10 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
-import styles from "../../../styles/CustomTooltip.module.css";
 
 import formatPrice, { formatDateMonth } from "@/lib/format";
 
-interface SaleChartProps {
+interface SalesChartProps {
   analyticsData: any;
 }
 
@@ -23,18 +22,16 @@ interface CustomTooltipProps {
 const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
-      <div className={styles.customTooltip}>
-        <div className={styles.tooltipDetails}>
-          <p className={styles.label}>
-            {formatDateMonth(payload[0].payload.date, "long")}
-          </p>
+      <div className="p-3 text-[#000] text-sm bg-white rounded-lg">
+        <p className="font-bold">
+          {formatDateMonth(payload[0].payload.date, "long")}
+        </p>
 
-          {payload[0].payload.subtotal ? (
-            <p>Total {formatPrice(payload[0].payload.subtotal, "EUR")}</p>
-          ) : (
-            <p>Aucune ventes</p>
-          )}
-        </div>
+        {payload[0].payload.subtotal ? (
+          <p>Total {formatPrice(payload[0].payload.subtotal, "EUR")}</p>
+        ) : (
+          <p>Aucune ventes</p>
+        )}
       </div>
     );
   }
@@ -42,8 +39,8 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   return null;
 };
 
-export default function SaleChart({ analyticsData }: SaleChartProps) {
-  const { Data, maxSubtotal } = analyticsData;
+export default function SalesChart({ analyticsData }: SalesChartProps) {
+  const { data, maxSubtotal } = analyticsData;
 
   const yTickFormatter = (value: number) => {
     return formatPrice(value, "EUR");
@@ -51,9 +48,9 @@ export default function SaleChart({ analyticsData }: SaleChartProps) {
 
   return (
     <>
-      <h2 className="mb-2">Total des ventes</h2>
-      <ResponsiveContainer width="100%" height={250}>
-        <BarChart data={Data}>
+      <h2 className="mb-2">Total des revenus</h2>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data}>
           <XAxis
             dataKey="date"
             tickFormatter={(value) => formatDateMonth(value, "short")}
@@ -79,7 +76,7 @@ export default function SaleChart({ analyticsData }: SaleChartProps) {
           <Tooltip
             cursor={{ fill: "#202020" }}
             formatter={formatPrice}
-            content={<CustomTooltip payload={Data} />}
+            content={<CustomTooltip payload={data} />}
           />
 
           <Bar dataKey="subtotal" fill="#f5f5f5" radius={[4, 4, 0, 0]} />

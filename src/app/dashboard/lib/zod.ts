@@ -13,6 +13,34 @@ export const productSchema = z.object({
 
 export type Product = z.infer<typeof productSchema>;
 
+export const categorySchema = z.object({
+  id: z.string(),
+  name: z.string().optional(),
+  // other fields...
+});
+
+export const variantSchema = z.object({
+  id: z.string(),
+  name: z.string().optional(),
+  price: z.number().optional(),
+  imageUrl: z.string().optional(),
+  // other fields...
+});
+
+export const cartItemSchema = z.object({
+  // Define the schema for cart items
+});
+
+export const wishlistItemSchema = z.object({
+  // Define the schema for wishlist items
+});
+
+const colorSchema = z.object({
+  id: z.string(),
+  name: z.string().optional(),
+  // other fields...
+});
+
 export const orderSchema = z.object({
   id: z.string(),
   createdAt: z.date(),
@@ -47,7 +75,7 @@ export const orderSchema = z.object({
           name: z.string(),
           status: z.string().nullable(),
           label: z.string().nullable(),
-          priority: z.string().nullable(),
+          priority: z.array(z.string()),
           price: z.number(),
           stock: z.number().nullable(),
           deleteAt: z.date().nullable(),

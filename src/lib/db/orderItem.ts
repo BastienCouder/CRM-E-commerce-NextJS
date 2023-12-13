@@ -11,7 +11,7 @@ export type OrderProps = OrderItems & {
   subtotal?: number;
 };
 
-export async function getOrders(): Promise<OrderProps[] | null> {
+export async function getOrderItems(): Promise<OrderProps[] | null> {
   const session = await getServerSession(authOptions);
   const admin = await checkUserRole();
 
@@ -23,6 +23,7 @@ export async function getOrders(): Promise<OrderProps[] | null> {
             include: {
               user: true,
               cartItems: {
+                where: { deleteAt: null },
                 include: {
                   product: true,
                   variant: true,
@@ -75,29 +76,3 @@ export async function getOrders(): Promise<OrderProps[] | null> {
     return null;
   }
 }
-
-// export async function createOrder(): Promise<OrderProps | null> {
-//   try {
-//     const session = await getServerSession(authOptions);
-//     const admin = await checkUserRole();
-
-//     if (!session || !admin) {
-//       console.error("Utilisateur non autorisé pour la création de produits.");
-//       return null;
-//     }
-
-//     const createdProduct = await prisma.product.create({
-//       data: {
-//         name: "",
-//         description: "",
-//         imageUrl: "",
-//         price: 0,
-//       },
-//     });
-
-//     return createdProduct;
-//   } catch (error) {
-//     console.error("Erreur lors de la création du produit :", error);
-//     return null;
-//   }
-// }

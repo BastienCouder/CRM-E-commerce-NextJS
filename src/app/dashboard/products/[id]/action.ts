@@ -1,6 +1,6 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { createProduct, getProducts } from "../../lib/db/product";
+import { createProduct, getProducts } from "../../../../lib/db/product";
 import { findCategoryIdByName } from "../../lib/utils";
 import { Product } from "@prisma/client";
 

@@ -27,8 +27,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-import { ProductProps } from "../../lib/db/product";
-import { Category, Product, ProductVariant } from "@prisma/client";
+import { ProductProps } from "../../../../lib/db/product";
+import { Category, ProductVariant } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
 import formatPrice from "@/lib/format";
 import Image from "next/image";
@@ -122,6 +122,7 @@ export default function ProductInformationsForm({
       console.error("Error submitting values:", error);
     }
   };
+
   return (
     <>
       <Separator />
