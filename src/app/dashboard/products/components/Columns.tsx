@@ -56,7 +56,7 @@ export const columns: ColumnDef<any>[] = [
       return (
         <div className="min-w-[120px] flex space-x-2">
           <Image
-            className="rounded-lg w-[50px] h-[50px] object-contain border-white border-[1px]"
+            className="rounded-lg w-[50px] h-[50px] object-contain border-white/50 border-[1px]"
             src={imageUrl}
             alt={row.getValue("nom")}
             width={500}

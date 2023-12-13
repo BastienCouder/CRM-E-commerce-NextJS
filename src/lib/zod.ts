@@ -5,6 +5,21 @@ import {
 } from "@/app/auth/action";
 import * as z from "zod";
 
+export const UserSchema = z.object({
+  id: z.string(),
+  name: z.string().nullable(),
+  email: z.string().email().nullable(),
+  emailVerified: z.date().nullable(),
+  account: z.string().nullable(),
+  newsletter: z.boolean().nullable(),
+  image: z.string().nullable(),
+  language: z.string().nullable(),
+  birthDate: z.string().nullable(),
+  createdAt: z.date().nullable(),
+  updatedAt: z.date().nullable(),
+  deleteAt: z.date().nullable(),
+});
+
 //Register
 export const RegisterSchema = z.object({
   username: z

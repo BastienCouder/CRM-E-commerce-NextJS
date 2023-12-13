@@ -43,14 +43,14 @@ export default function Analytics({
         />
         <article className="flex flex-col space-y-4 w-full">
           <div className="flex space-x-4">
-            <div className="border-2 border-muted p-4 rounded-lg pb-10 w-[45rem] h-[20rem]">
+            <div className="bg-muted p-5 rounded-lg pb-12 w-[48rem] h-[20rem]">
               <SalesChart analyticsData={filteredOrdersData} />
             </div>
-            <div className="border-2 border-muted p-4 rounded-lg  w-[25rem] h-[20rem]">
+            <div className="bg-muted p-4 rounded-lg  w-[25rem] h-[20rem]">
               <TopProductChart analyticsData={analyticsProductsData} />
             </div>
           </div>
-          <div className="border-2 border-muted p-4 rounded-lg w-[40rem]  h-[25rem]">
+          <div className="bg-muted  p-4 rounded-lg w-[40rem]  h-[25rem]">
             <WhislistCartOrderLength
               analyticsData={analyticsWishlistCartOrderData}
             />

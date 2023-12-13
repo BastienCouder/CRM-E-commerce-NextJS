@@ -78,7 +78,7 @@ export default function WhislistCartOrderLength({
         <select
           value={selectedProductId}
           onChange={handleSelectChange}
-          className="w-[250px] p-2 bg-background border outline-none"
+          className="w-[250px] p-2 bg-background rounded-lg outline-none"
         >
           {data
             .sort((a, b) => a.name.localeCompare(b.name))

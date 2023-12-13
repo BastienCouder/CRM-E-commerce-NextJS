@@ -53,18 +53,17 @@ export default function OrdersLengthChart({
             tickFormatter={(value) => formatDateMonth(value, "short")}
             style={{
               fontSize: "0.8rem",
-              fontFamily: "Arial",
+              fill: "#f5f5f5",
             }}
             tickLine={false}
             axisLine={true}
           />
           <YAxis
-            domain={[0, maxOrderItems + maxOrderItems / 4]}
             scale="linear"
             tickLine={false}
             style={{
               fontSize: "0.8rem",
-              fontFamily: "Arial",
+              fill: "#f5f5f5",
             }}
             axisLine={true}
           />

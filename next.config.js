@@ -4,9 +4,15 @@ const withFonts = require("next-fonts");
 
 const nextConfig = {
   images: {
-    domains: ["plus.unsplash.com"],
+    domains: [
+      "plus.unsplash.com",
+      "lh3.googleusercontent.com",
+      "other-allowed-domain.com",
+    ],
     remotePatterns: [{ hostname: "images.unsplash.com" }],
+    domains: ["lh3.googleusercontent.com", "other-allowed-domain.com"],
   },
+
   experimental: {
     serverActions: true,
   },

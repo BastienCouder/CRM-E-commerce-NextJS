@@ -36,7 +36,7 @@ export default function AnalyticsOrder({ analyticsData }: AnalyticsOrderProps) {
 
   return (
     <div className="flex space-x-4">
-      <div className="w-1/2 border p-4 mb-6 rounded-lg pb-10 h-[18rem]">
+      <div className="w-[50rem] bg-card p-4 mb-6 rounded-lg pb-10 h-[18rem]">
         <OrdersLengthChart analyticsData={filteredData} />
       </div>
       <div className="space-y-4">
