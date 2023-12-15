@@ -1,5 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+
 import { useTransition } from "react";
 
 interface AddToOrderProps {
@@ -18,7 +20,7 @@ export default function AddToOrder({
   createOrderIncrementation,
 }: AddToOrderProps) {
   const [isPending, startTransition] = useTransition();
-
+  const router = useRouter();
   return (
     <>
       <Button
@@ -27,6 +29,7 @@ export default function AddToOrder({
           startTransition(async () => {
             await handleStripePayment(cartId, deliveryId);
             await createOrderIncrementation(cartId, deliveryId);
+            router.push("/profile");
           });
         }}
       >

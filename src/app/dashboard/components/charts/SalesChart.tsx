@@ -6,13 +6,45 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  Legend,
 } from "recharts";
 
 import formatPrice, { formatDateMonth } from "@/lib/format";
+import { BarChart2 } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 interface SalesChartProps {
   analyticsData: any;
 }
+
+interface CustomLegendProps {
+  payload: Array<{
+    value: string;
+    type: string;
+    id: string;
+  }>;
+}
+
+const CustomLegend: React.FC<CustomLegendProps> = ({ payload }) => {
+  return (
+    <ul
+      className="flex gap-x-4 w-full justify-center"
+      style={{ listStyleType: "none", padding: 0, margin: 0 }}
+    >
+      {payload.map((entry, index) => (
+        <li
+          key={`item-${index}`}
+          style={{ display: "flex", alignItems: "center", marginBottom: 4 }}
+        >
+          <BarChart2 size={15} />
+          <span style={{ fontSize: "0.8rem", marginLeft: 5 }}>
+            {entry.value}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 interface CustomTooltipProps {
   active?: any;
@@ -40,7 +72,7 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
 };
 
 export default function SalesChart({ analyticsData }: SalesChartProps) {
-  const { data, maxSubtotal } = analyticsData;
+  const { data } = analyticsData;
 
   const yTickFormatter = (value: number) => {
     return formatPrice(value, "EUR");
@@ -49,8 +81,14 @@ export default function SalesChart({ analyticsData }: SalesChartProps) {
   return (
     <>
       <h2 className="mb-2">Total des revenus</h2>
+      <Separator className="bg-white/50" />
+
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data}>
+        <BarChart data={data} className="mt-2">
+          <Legend
+            verticalAlign="top"
+            content={<CustomLegend payload={data} />}
+          />
           <XAxis
             dataKey="date"
             tickFormatter={(value) => formatDateMonth(value, "short")}
@@ -78,7 +116,12 @@ export default function SalesChart({ analyticsData }: SalesChartProps) {
             content={<CustomTooltip payload={data} />}
           />
 
-          <Bar dataKey="subtotal" fill="#f5f5f5" radius={[4, 4, 0, 0]} />
+          <Bar
+            dataKey="subtotal"
+            fill="#f5f5f5"
+            radius={[4, 4, 0, 0]}
+            name="Total des ventes"
+          />
         </BarChart>
       </ResponsiveContainer>
     </>

@@ -38,7 +38,7 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "index",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Produits" />
+      <DataTableColumnHeader column={column} title="Utilisateurs" />
     ),
     cell: ({ row }) => <div className="w-[80px]">{row.index + 1}</div>,
     enableSorting: false,

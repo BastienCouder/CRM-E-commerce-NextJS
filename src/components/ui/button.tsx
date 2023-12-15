@@ -13,7 +13,7 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive hover:bg-destructive2 uppercase text-sm text-destructive-foreground tracking-[2px]",
         outline:
-          "bg-accent border-accent border tracking-[2px] uppercase text-sm hover:text-accent-foreground",
+          "bg-primary border-none border tracking-[2px] uppercase text-sm hover:text-accent-foreground",
         delete:
           "bg-accent border-accent border tracking-[2px] uppercase text-sm hover:bg-destructive hover:border-destructive hover:border hover:text-accent-foreground",
 

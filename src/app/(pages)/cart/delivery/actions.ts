@@ -58,9 +58,6 @@ async function validateAndCreateDeliveryItem(
       country,
       tel,
       deleteAt: null,
-      deliveryOption: {
-        connect: { id: deliveryOption },
-      },
     },
   });
 

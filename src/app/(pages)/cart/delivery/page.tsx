@@ -15,8 +15,6 @@ export default async function Delivery() {
   const session = await getServerSession(authOptions);
   const delivery = await getDelivery();
 
-  const deliveryOption = await prisma.deliveryOption.findMany({});
-
   if (!delivery) {
     <Loading />;
   }
@@ -30,7 +28,6 @@ export default async function Delivery() {
             <FormDelivery
               deliveryForm={useServerDeliveryForm}
               session={session}
-              deliveryOption={deliveryOption}
             />
           </div>
           <SelectDelivery

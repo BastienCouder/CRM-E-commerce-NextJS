@@ -26,8 +26,8 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
           {formatDateMonth(payload[0].payload.date, "long")}
         </p>
 
-        {payload[0].payload.orderItems ? (
-          <p>Total : {payload[0].payload.orderItems}</p>
+        {payload[0].payload.totalNocanceledOrders ? (
+          <p>Total : {payload[0].payload.totalNocanceledOrders}</p>
         ) : (
           <p>Aucune ventes</p>
         )}
@@ -41,7 +41,7 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
 export default function OrdersLengthChart({
   analyticsData,
 }: OrdersLengthChartProps) {
-  const { data, maxOrderItems } = analyticsData;
+  const { data } = analyticsData;
 
   return (
     <>
@@ -60,11 +60,11 @@ export default function OrdersLengthChart({
           />
           <YAxis
             scale="linear"
-            tickLine={false}
             style={{
               fontSize: "0.8rem",
               fill: "#f5f5f5",
             }}
+            tickLine={false}
             axisLine={true}
           />
 
@@ -73,7 +73,11 @@ export default function OrdersLengthChart({
             content={<CustomTooltip payload={data} />}
           />
 
-          <Bar dataKey="orderItems" fill="#f5f5f5" radius={[4, 4, 0, 0]} />
+          <Bar
+            dataKey="totalNocanceledOrders"
+            fill="#f5f5f5"
+            radius={[4, 4, 0, 0]}
+          />
         </BarChart>
       </ResponsiveContainer>
     </>

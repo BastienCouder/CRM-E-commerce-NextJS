@@ -44,6 +44,7 @@ export async function getWishlist(): Promise<WishlistProps | null> {
           where: { id: localWishlistId },
           include: {
             wishlistItems: {
+              where: { deleteAt: null },
               include: { product: true, variant: true },
             },
           },
@@ -92,7 +93,6 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
         where: { id: localWishlistId },
         include: {
           wishlistItems: {
-            where: { deleteAt: null },
             include: { product: true, variant: true },
           },
         },
@@ -107,7 +107,6 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
     where: { userId },
     include: {
       wishlistItems: {
-        where: { deleteAt: null },
         include: { product: true, variant: true },
       },
     },
@@ -129,6 +128,7 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
           wishlistId: userWishlist.id,
           variantId: item.variantId,
           productId: item.productId,
+          deleteAt: null,
         })),
       });
     } else {
@@ -140,6 +140,7 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
               data: localWishlist.wishlistItems.map((item) => ({
                 variantId: item.variantId,
                 productId: item.productId,
+                deleteAt: null,
               })),
             },
           },

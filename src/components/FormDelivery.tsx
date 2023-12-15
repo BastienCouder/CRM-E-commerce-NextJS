@@ -32,16 +32,11 @@ import {
 import { DeliveryOption } from "@prisma/client";
 
 interface FormDeliveryProps {
-  deliveryOption: DeliveryOption[];
-  deliveryForm: (
-    formData: FormData,
-    selectedDeliveryOption: DeliveryOption
-  ) => Promise<void>;
+  deliveryForm: any;
   session: Session | null;
 }
 
 export default function FormDelivery({
-  deliveryOption,
   deliveryForm,
   session,
 }: FormDeliveryProps) {
@@ -255,7 +250,7 @@ export default function FormDelivery({
           </form>
         </Form>
       )}
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <label
           htmlFor="deliveryOption"
           className="block text-sm font-medium text-gray-700"
@@ -280,7 +275,7 @@ export default function FormDelivery({
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
     </>
   );
 }

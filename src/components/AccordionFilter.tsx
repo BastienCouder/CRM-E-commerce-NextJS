@@ -10,7 +10,7 @@ import { Category } from "@prisma/client";
 
 interface AccordionFilterProps {
   title: string;
-  items: { id: string; name: string | null }[];
+  items: any[];
   selectedItem: { id: string; name: string | null } | null;
   onItemClick: (category: Category) => void;
   onReset: () => void;

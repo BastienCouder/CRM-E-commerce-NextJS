@@ -33,6 +33,19 @@ export async function useServerUpdateStatus(itemId: string, newStatus: string) {
         },
       });
 
+      if (
+        updatedOrderItem.status === "cancel" ||
+        updatedOrderItem.status === "refunded"
+      ) {
+        await prisma.orderItems.update({
+          where: { id: itemId },
+          data: {
+            status: newStatus,
+            deleteAt: new Date(),
+          },
+        });
+      }
+
       revalidatePath(`/dashboard/orders`);
       revalidatePath(`/dashboard/orders/${itemId}`);
 
@@ -65,7 +78,7 @@ export async function useServerSoftDelete(itemId: string | string[]) {
         where: { id },
         data: { deleteAt: new Date(), status: "delete" },
       });
-      revalidatePath(`/orders`);
+      await revalidatePath(`/orders`);
       revalidatePath(`/orders/${id}`);
     };
 

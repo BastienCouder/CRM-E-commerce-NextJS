@@ -24,6 +24,7 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const order = orderSchema.parse(row.original);
+  console.log(order);
 
   return (
     <DropdownMenu>
@@ -40,21 +41,24 @@ export function DataTableRowActions<TData>({
         <DropdownMenuItem>
           <Link href={`/dashboard/orders/${order.id}`}>Voir le détail</Link>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <Status
-          itemId={order.id}
-          UpdateStatus={useServerUpdateStatus}
-          type="actions"
-          data="orders"
-          itemStatus={order.status}
-        />
-        <DropdownMenuSeparator />
-
-        <SoftDelete
-          itemId={order.id}
-          SoftDelete={useServerSoftDelete}
-          type="actions"
-        />
+        {order.deleteAt === null && (
+          <>
+            <DropdownMenuSeparator />
+            <Status
+              itemId={order.id}
+              UpdateStatus={useServerUpdateStatus}
+              type="actions"
+              data="orders"
+              itemStatus={order.status}
+            />
+            <DropdownMenuSeparator />
+            <SoftDelete
+              itemId={order.id}
+              SoftDelete={useServerSoftDelete}
+              type="actions"
+            />
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

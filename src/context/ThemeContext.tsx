@@ -11,7 +11,16 @@ export function ThemeProviders({ children }: ThemeProvidersProps) {
   return (
     <ThemeProvider
       attribute="class"
-      themes={["light", "dark"]}
+      themes={[
+        "ice",
+        "forest",
+        "violet",
+        "boisée",
+        "fée",
+        "earth",
+        "light",
+        "dark",
+      ]}
       defaultTheme="dark"
     >
       {children}

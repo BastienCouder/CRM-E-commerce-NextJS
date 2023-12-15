@@ -112,7 +112,6 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
         where: { id: localCartId },
         include: {
           cartItems: {
-            where: { deleteAt: null },
             include: { product: true, variant: true },
           },
         },
@@ -127,7 +126,6 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
     where: { userId },
     include: {
       cartItems: {
-        where: { deleteAt: null },
         include: { product: true, variant: true },
       },
     },
@@ -150,6 +148,7 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
           productId: item.productId,
           variantId: item.variantId,
           quantity: item.quantity,
+          deleteAt: null,
         })),
       });
     } else {
@@ -162,6 +161,7 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
                 variantId: item.variantId,
                 productId: item.productId,
                 quantity: item.quantity,
+                deleteAt: null,
               })),
             },
           },

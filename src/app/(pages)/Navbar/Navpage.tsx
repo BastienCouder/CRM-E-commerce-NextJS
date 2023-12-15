@@ -17,7 +17,7 @@ interface NavBarProps {
 
 const mainNavData = [
   { name: "Accueil", path: "/" },
-  { name: `Collection`, path: "/collection" },
+  { name: `Collection`, path: "/store" },
 ];
 
 const footerNavData = [

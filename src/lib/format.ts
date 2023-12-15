@@ -34,7 +34,6 @@ export const formatDateMonth = (
   const date = new Date(dateString);
 
   const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
     month: format,
   };
 

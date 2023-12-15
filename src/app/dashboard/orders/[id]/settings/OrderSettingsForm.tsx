@@ -44,6 +44,7 @@ export default function OrderSettingsForm({
           onValueChange={async (newStatus) => {
             await UpdateStatus(order.id, newStatus);
           }}
+          disabled={order.status === "delete"}
         >
           <SelectTrigger
             className="w-[180px]"

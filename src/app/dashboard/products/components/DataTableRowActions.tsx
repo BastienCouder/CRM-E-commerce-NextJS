@@ -48,37 +48,39 @@ export function DataTableRowActions<TData>({
         <DropdownMenuItem>
           <Link href={`/dashboard/products/${product.id}`}>Modifier</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          {" "}
-          <Duplicate
-            productId={product.id}
-            DuplicateProduct={useServerDuplicateProduct}
-            type="actions"
-          />
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Favories
-            productId={product.id}
-            Favorite={useServerUpdateProductFavourites}
-            type="actions"
-            productPriority={product.priority}
-          />{" "}
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <Status
-          itemId={product.id}
-          UpdateStatus={useServerUpdateStatus}
-          type="actions"
-          data="products"
-          itemStatus={product.status}
-        />
-        <DropdownMenuSeparator />
-
-        <SoftDelete
-          itemId={product.id}
-          SoftDelete={useServerSoftDelete}
-          type="actions"
-        />
+        {product.deleteAt === null && (
+          <>
+            <DropdownMenuItem>
+              <Duplicate
+                productId={product.id}
+                DuplicateProduct={useServerDuplicateProduct}
+                type="actions"
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Favories
+                productId={product.id}
+                Favorite={useServerUpdateProductFavourites}
+                type="actions"
+                productPriority={product.priority}
+              />
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <Status
+              itemId={product.id}
+              UpdateStatus={useServerUpdateStatus}
+              type="actions"
+              data="products"
+              itemStatus={product.status}
+            />
+            <DropdownMenuSeparator />
+            <SoftDelete
+              itemId={product.id}
+              SoftDelete={useServerSoftDelete}
+              type="actions"
+            />
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -24,13 +24,16 @@ export default function Analytics({
     setFilteredOrdersData(analyticsOrdersData);
   }, [analyticsOrdersData, analyticsProductsData]);
 
-  const handleFilterChange = (startDate: Date): void => {
-    const filteredOrders = analyticsOrdersData.data.filter((data: any) => {
+  const handleFilterChange = (
+    startDate: Date,
+    endDate: Date = new Date()
+  ): void => {
+    const filteredOrders: any = analyticsOrdersData.data.filter((data: any) => {
       const dataDate = new Date(data.date);
-      return dataDate >= startDate && dataDate <= new Date();
+      return dataDate >= startDate && dataDate <= endDate;
     });
 
-    setFilteredOrdersData({ data: filteredOrders });
+    setFilteredOrdersData({ ...analyticsOrdersData, data: filteredOrders });
   };
 
   return (

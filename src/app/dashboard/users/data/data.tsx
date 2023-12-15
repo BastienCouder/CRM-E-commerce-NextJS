@@ -7,7 +7,7 @@ export const newsletters = [
     icon: CheckCheck,
   },
   {
-    value: false,
+    value: null,
     label: "Non",
     icon: X,
   },

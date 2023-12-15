@@ -24,7 +24,7 @@ export default function CardProduct({
 }: CardProductProps) {
   const isNew = useMemo(() => {
     return (
-      Date.now() - new Date(product.createdAt).getTime() <
+      Date.now() - new Date(product.createdAt!).getTime() <
       1000 * 60 * 60 * 24 * 7
     );
   }, [product.createdAt]);

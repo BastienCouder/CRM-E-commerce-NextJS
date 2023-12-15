@@ -1,32 +1,48 @@
 import { prisma } from "@/lib/db/prisma";
-import { format, eachMonthOfInterval, startOfMonth, subMonths } from "date-fns";
+import {
+  format,
+  eachMonthOfInterval,
+  startOfMonth,
+  subMonths,
+  startOfYear,
+  endOfYear,
+  differenceInDays,
+  eachDayOfInterval,
+  eachWeekOfInterval,
+  addDays,
+  addWeeks,
+  addMonths,
+} from "date-fns";
 import { revalidatePath } from "next/cache";
 import { CartItemsProps } from "@/lib/db/cart";
 import { OrderItemsProps } from "@/lib/db/order";
-import { env } from "@/lib/env";
 
 export interface AnalyticsData {
   date?: string;
-  orderItems?: number;
   subtotal?: number;
+  totalOrders?: number;
+  totalNocanceledOrders?: number;
 }
 
 export interface useServerReadAnalyticsOrdersProps {
   data: AnalyticsData[];
   maxSubtotal: number;
-  maxOrderItems: number;
+  maxOrder: number;
   currentMonthSubtotal: number;
   currentMonthOrderCount: number;
   subtotalDifferencePercent: number;
   orderCountDifferencePercent: number;
 }
 
-export async function useServerReadAnalyticsOrders(): Promise<useServerReadAnalyticsOrdersProps> {
+export async function useServerReadAnalyticsOrders(
+  startDateParam?: Date,
+  endDateParam?: Date
+): Promise<useServerReadAnalyticsOrdersProps> {
   try {
-    const endDate = new Date();
+    const currentDate = new Date();
+    const startDate = startDateParam || startOfYear(currentDate);
+    const endDate = endDateParam || endOfYear(currentDate);
 
-    const siteCreationDate = new Date(env.CREATE_WEBSITE || "");
-    const startDate = siteCreationDate < endDate ? siteCreationDate : endDate;
     const orderItems = await prisma.orderItems.findMany({
       include: {
         cart: {
@@ -53,33 +69,61 @@ export async function useServerReadAnalyticsOrders(): Promise<useServerReadAnaly
         },
       },
     });
+    const daysDifference = differenceInDays(endDate, startDate);
+    let intervalFunction = eachMonthOfInterval;
 
-    const allMonths = eachMonthOfInterval({
+    if (daysDifference <= 1) {
+      intervalFunction = eachDayOfInterval;
+    } else if (daysDifference <= 7) {
+      intervalFunction = eachWeekOfInterval;
+    }
+
+    const allIntervals = intervalFunction({
       start: startDate,
       end: endDate,
     });
 
-    const orderItemsData: AnalyticsData[] = allMonths.map((month) => {
-      const monthEndDate = new Date(month);
-      monthEndDate.setMonth(monthEndDate.getMonth() + 1);
+    let orderItemsData: AnalyticsData[] = allIntervals.map((intervalStart) => {
+      let intervalEnd: Date;
+      if (intervalFunction === eachDayOfInterval) {
+        intervalEnd = addDays(intervalStart, 1);
+      } else if (intervalFunction === eachWeekOfInterval) {
+        intervalEnd = addWeeks(intervalStart, 1);
+      } else {
+        intervalEnd = addMonths(intervalStart, 1);
+      }
 
-      const filteredOrders = orderItems.filter(
+      const intervalOrders = orderItems.filter(
         (orderItem: OrderItemsProps) =>
-          new Date(orderItem.createdAt!) >= month &&
-          new Date(orderItem.createdAt!) < monthEndDate
+          new Date(orderItem.createdAt!) >= intervalStart &&
+          new Date(orderItem.createdAt!) < intervalEnd
       );
 
-      const cartItems = filteredOrders.reduce(
-        (items, orderItem) => items.concat(orderItem.cart?.cartItems || []),
-        [] as CartItemsProps[]
-      );
+      const activeCartItems = intervalOrders
+        .filter((orderItem) => orderItem.deleteAt === null)
+        .reduce(
+          (items, orderItem) => items.concat(orderItem.cart?.cartItems || []),
+          [] as CartItemsProps[]
+        );
 
-      const subtotal = calculateSubtotal(cartItems);
+      const subtotal = calculateSubtotal(activeCartItems);
+      const orderCount = intervalOrders.length;
+      const noCanceledOrderCount = intervalOrders.filter(
+        (orderItem) => orderItem.deleteAt === null
+      ).length;
+
+      let dateFormat = "yyyy-MM";
+      if (intervalFunction === eachDayOfInterval) {
+        dateFormat = "yyyy-MM-dd";
+      } else if (intervalFunction === eachWeekOfInterval) {
+        dateFormat = "yyyy-'W'Iso";
+      }
 
       return {
-        date: format(month, "yyyy-MM-dd"),
-        orderItems: filteredOrders.length,
+        date: format(intervalStart, dateFormat),
         subtotal: subtotal || 0,
+        totalOrders: orderCount,
+        totalNocanceledOrders: noCanceledOrderCount,
       };
     });
 
@@ -87,10 +131,9 @@ export async function useServerReadAnalyticsOrders(): Promise<useServerReadAnaly
       ...orderItemsData.map((item) => item.subtotal || 0)
     );
 
-    const maxOrderItems = Math.max(
-      ...orderItemsData.map((item) => item.orderItems || 0)
+    const maxOrder = Math.max(
+      ...orderItemsData.map((item) => item.totalNocanceledOrders || 0)
     );
-
     const lastMonthStart = startOfMonth(subMonths(new Date(), 1));
     const lastMonthEnd = startOfMonth(new Date());
 
@@ -110,17 +153,23 @@ export async function useServerReadAnalyticsOrders(): Promise<useServerReadAnaly
     const lastMonthOrderCount = lastMonthOrders.length;
 
     const currentMonthStart = startOfMonth(new Date());
-    const currentMonthOrders = orderItems.filter(
-      (orderItem) =>
-        new Date(orderItem.createdAt!) >= currentMonthStart &&
-        new Date(orderItem.createdAt!) <= endDate
-    );
+
+    const currentMonthOrders = orderItems.filter((orderItem) => {
+      const createdAtDate = new Date(orderItem.createdAt!);
+      return (
+        orderItem.deleteAt === null &&
+        createdAtDate >= currentMonthStart &&
+        createdAtDate <= endDate
+      );
+    });
 
     const currentMonthSubtotal = calculateSubtotal(
-      currentMonthOrders.reduce(
-        (items, orderItem) => items.concat(orderItem.cart?.cartItems || []),
-        [] as CartItemsProps[]
-      )
+      currentMonthOrders
+        .filter((orderItem) => orderItem.deleteAt === null)
+        .reduce(
+          (items, orderItem) => items.concat(orderItem.cart?.cartItems || []),
+          [] as CartItemsProps[]
+        )
     );
 
     const currentMonthOrderCount = currentMonthOrders.length;
@@ -140,7 +189,7 @@ export async function useServerReadAnalyticsOrders(): Promise<useServerReadAnaly
     return {
       data: orderItemsData,
       maxSubtotal,
-      maxOrderItems,
+      maxOrder,
       currentMonthSubtotal,
       currentMonthOrderCount,
       subtotalDifferencePercent,
