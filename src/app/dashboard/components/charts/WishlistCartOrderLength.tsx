@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   Radar,
   RadarChart,
@@ -9,41 +9,61 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import {
+  AnalyticsProductsData,
+  useServerReadAnalyticsWishlistCartOrderProps,
+} from "../../products/action";
 
-interface ProductAnalytics {
-  productId: string;
-  name: string;
-  wishlistCount: number;
-  cartCount: number;
-  orderCount: number;
-}
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface WhislistCartOrderLengthProps {
-  analyticsData: { data: ProductAnalytics[] };
+  analyticsData: useServerReadAnalyticsWishlistCartOrderProps;
 }
 
-const CustomTooltip = ({ active, payload, label }: any) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="bg-white p-3">
-        <p className="text-background">{`${label} : ${payload[0].value}`}</p>
-      </div>
-    );
-  }
+interface CustomTooltipProps {
+  active?: boolean;
+  label?: string;
+  payload?: { payload: AnalyticsProductsData }[];
+}
 
-  return null;
+const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
+  if (!active || !payload || payload.length === 0) return null;
+  const { totalSales } = payload[0].payload;
+
+  return (
+    <div className="bg-white p-3">
+      <p className="text-background">{`${label} : ${totalSales}`}</p>
+    </div>
+  );
 };
 
 export default function WhislistCartOrderLength({
   analyticsData: { data },
 }: WhislistCartOrderLengthProps) {
-  const [selectedProductId, setSelectedProductId] = useState(() =>
-    data.length ? data[Math.floor(Math.random() * data.length)].productId : ""
+  const [selectedProductId, setSelectedProductId] = useState("");
+
+  useEffect(() => {
+    setSelectedProductId(
+      data.length ? data[Math.floor(Math.random() * data.length)].productId : ""
+    );
+  }, [data]);
+
+  const sortedData = useMemo(
+    () => data.sort((a, b) => a.name.localeCompare(b.name)),
+    [data]
   );
 
   const selectedProduct = useMemo(
-    () => data.find((item) => item.productId === selectedProductId) || data[0],
-    [selectedProductId, data]
+    () =>
+      sortedData.find((item) => item.productId === selectedProductId) ||
+      sortedData[0],
+    [selectedProductId, sortedData]
   );
 
   const chartData = useMemo(
@@ -58,51 +78,48 @@ export default function WhislistCartOrderLength({
         A: selectedProduct.cartCount,
         fullMark: 100,
       },
-      {
-        subject: "Commander",
-        A: selectedProduct.orderCount,
-        fullMark: 100,
-      },
+      { subject: "Commander", A: selectedProduct.orderCount, fullMark: 100 },
     ],
     [selectedProduct]
   );
 
-  const handleSelectChange = useCallback((event: any) => {
-    setSelectedProductId(event.target.value);
-  }, []);
+  const handleSelectChange = (value: string) => {
+    setSelectedProductId(value);
+  };
 
   return (
     <>
       <h2 className="mb-2">Total des interactions produit</h2>
       <div className="mb-4">
-        <select
-          value={selectedProductId}
-          onChange={handleSelectChange}
-          className="w-[250px] p-2 bg-background rounded-lg outline-none"
-        >
-          {data
-            .sort((a, b) => a.name.localeCompare(b.name))
-            .map((product) => (
-              <option
-                key={product.productId}
-                value={product.productId}
-                className="bg-background"
-              >
+        <Select onValueChange={handleSelectChange}>
+          <SelectTrigger className="w-[180px] rounded-lg">
+            <SelectValue placeholder={selectedProduct.name} />
+          </SelectTrigger>
+          <SelectContent>
+            {sortedData.map((product) => (
+              <SelectItem key={product.productId} value={product.productId}>
                 {product.name}
-              </option>
+              </SelectItem>
             ))}
-        </select>
+          </SelectContent>
+        </Select>
       </div>
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart cx="50%" cy="50%" outerRadius="80%" data={chartData}>
           <PolarGrid />
-          <PolarAngleAxis dataKey="subject" />
-          <PolarRadiusAxis angle={30} />
+          <PolarAngleAxis
+            dataKey="subject"
+            tick={{ fill: "rgb(var(--foreground))" }}
+          />
+          <PolarRadiusAxis
+            angle={30}
+            tick={{ fill: "rgb(var(--foreground))" }}
+          />
           <Radar
             name="Metrics"
             dataKey="A"
-            stroke="#fff"
-            fill="#fff"
+            stroke="rgb(var(--chart1))"
+            fill="rgb(var(--chart1))"
             fillOpacity={0.6}
           />
           <Tooltip content={<CustomTooltip />} />

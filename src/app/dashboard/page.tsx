@@ -18,7 +18,6 @@ export default async function DashboardPage() {
   const analyticsUsersData = await useServerReadAnalyticsUsers();
   const analyticsWishlistCartOrderData =
     await useServerReadAnalyticsWishlistCartOrder();
-  console.log(analyticsUsersData);
 
   return (
     <>

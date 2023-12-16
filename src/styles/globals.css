@@ -21,27 +21,32 @@
     --foreground: 221, 229, 236;
     --card: 45, 45, 45;
     --card-foreground: 221, 229, 236;
-    --popover: 38, 38, 38;
+    --popover: 45, 45, 45;
     --popover-foreground: 221, 229, 236;
     --primary: 45, 45, 45;
     --primary-foreground: 255, 255, 255;
-    --secondary: 242, 244, 248;
-    --secondary-foreground: 237, 240, 245;
-    --muted: 45, 45, 45;
+    --secondary: 210, 167, 142;
+    --secondary-foreground: 45, 45, 45;
+    --muted: 40, 40, 40;
     --muted-foreground: 215, 219, 235;
-    --accent: 45, 45, 45;
-    --accent-foreground: 237, 240, 245;
+    --accent: 210, 167, 142;
+    --accent-foreground: 45, 45, 45;
     --destructive: 178, 34, 34;
     --destructive2: 139, 0, 0;
     --destructive-foreground: 255, 255, 255;
     --border: 242, 244, 248;
-    --input: 242, 244, 248;
+    --input: 45, 45, 45;
     --ring: 207, 224, 234;
     --radius: 0.5rem;
+    --chart1: 210, 167, 142;
+    --chart2: 215, 148, 91;
+    --chart3: 235, 248, 246;
+    --chart4: 34, 108, 104;
+    --chart5: 22, 83, 78;
   }
 
   .ice {
-    --background: 40, 65, 77;
+    --background: 25, 57, 72;
     --foreground: 216, 248, 247;
     --card: 75, 99, 119;
     --card-foreground: 216, 248, 247;
@@ -53,15 +58,20 @@
     --secondary-foreground: 216, 248, 247;
     --muted: 90, 117, 140;
     --muted-foreground: 216, 248, 247;
-    --accent: 90, 117, 140;
+    --accent: 112, 157, 166;
     --accent-foreground: 216, 248, 247;
     --destructive: 178, 34, 34;
     --destructive2: 139, 0, 0;
     --destructive-foreground: 255, 255, 255;
     --border: 242, 244, 248;
-    --input: 242, 244, 248;
+    --input: 75, 99, 119;
     --ring: 207, 224, 234;
     --radius: 0.5rem;
+    --chart1: 25, 57, 72;
+    --chart2: 112, 157, 166;
+    --chart3: 235, 248, 246;
+    --chart4: 34, 108, 104;
+    --chart5: 22, 83, 78;
   }
 }
 

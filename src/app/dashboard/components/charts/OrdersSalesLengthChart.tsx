@@ -1,8 +1,8 @@
 "use client";
+
 import { Separator } from "@/components/ui/separator";
 import { formatDateMonth } from "@/lib/format";
-import { AreaChart, BarChart2, Euro, LineChart } from "lucide-react";
-
+import { LineChart, AreaChart } from "lucide-react";
 import {
   ResponsiveContainer,
   XAxis,
@@ -13,7 +13,7 @@ import {
   Line,
 } from "recharts";
 
-interface OrdersLengthSalesChartProps {
+interface OrdersSalesLengthChartProps {
   analyticsData: any;
 }
 
@@ -25,23 +25,28 @@ interface CustomLegendProps {
   }>;
 }
 
-const CustomLegend: React.FC<CustomLegendProps> = ({ payload }) => {
+const axisStyle = {
+  fontSize: "0.8rem",
+  fill: "rgb(var(--foreground))",
+};
+
+const CustomLegend = ({ payload }: CustomLegendProps) => {
   return (
-    <ul
-      className="flex gap-x-4 w-full justify-center"
-      style={{ listStyleType: "none", padding: 0, margin: 0 }}
-    >
+    <ul className="flex gap-x-4 w-full justify-center list-none p-0 m-0">
       {payload.map((entry, index) => (
-        <li
-          key={`item-${index}`}
-          style={{ display: "flex", alignItems: "center", marginBottom: 4 }}
-        >
+        <li key={`item-${index}`} className="flex items-center mb-1">
           {entry.value === "Nombres de ventes" ? (
-            <LineChart size={15} />
+            <LineChart size={15} color="rgb(var(--chart2))" />
           ) : (
-            <AreaChart size={15} />
+            <AreaChart size={15} color="rgb(var(--chart1))" />
           )}
-          <span style={{ fontSize: "0.8rem", marginLeft: 5 }}>
+          <span
+            className={`ml-1 text-sm ${
+              entry.value === "Nombres de ventes"
+                ? "text-chart2"
+                : "text-chart1"
+            }`}
+          >
             {entry.value}
           </span>
         </li>
@@ -50,15 +55,15 @@ const CustomLegend: React.FC<CustomLegendProps> = ({ payload }) => {
   );
 };
 
-export default function OrdersLengthSalesChart({
+export default function OrdersSalesLengthChart({
   analyticsData,
-}: OrdersLengthSalesChartProps) {
+}: OrdersSalesLengthChartProps) {
   const { data } = analyticsData;
 
   return (
     <>
       <h2 className="mb-2">Analyses des ventes</h2>
-      <Separator className="bg-white/50" />
+      <Separator className="bg-[rgba(var(--foreground),0.5)]" />
 
       <ResponsiveContainer width={750} height={320}>
         <ComposedChart data={data} className="mt-2">
@@ -66,39 +71,32 @@ export default function OrdersLengthSalesChart({
             verticalAlign="top"
             content={<CustomLegend payload={data} />}
           />
-
           <XAxis
-            style={{
-              fontSize: "0.8rem",
-              fill: "#f5f5f5",
-            }}
             dataKey="date"
             scale="band"
             tickLine={false}
-            axisLine={true}
+            axisLine={{ stroke: "rgb(var(--foreground))" }}
+            style={axisStyle}
             tickFormatter={(value) => formatDateMonth(value, "short")}
           />
           <YAxis
-            style={{
-              fontSize: "0.8rem",
-              fill: "#f5f5f5",
-            }}
             scale="linear"
             tickLine={false}
-            axisLine={true}
+            axisLine={{ stroke: "rgb(var(--foreground))" }}
+            style={axisStyle}
           />
           <Area
             type="monotone"
             name="Nombres de ventes"
             dataKey="totalOrders"
-            fill="#fff"
+            fill="rgb(var(--chart1))"
             stroke="none"
           />
           <Line
             type="monotone"
             name="Nombres de commandes"
             dataKey="totalNocanceledOrders"
-            stroke="#fff"
+            stroke="rgb(var(--chart2))"
             strokeWidth={3}
             dot={false}
           />

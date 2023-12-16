@@ -7,6 +7,7 @@ import CookieBanner from "@/components/CookieBanner";
 import { cn } from "@/lib/utils";
 import { Inter as FontSans, Roboto } from "next/font/google";
 import { FontProvider } from "@/context/FontContext";
+import { AnalyticsProvider } from "@/context/AnalyticsContext";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -39,13 +40,15 @@ export default function RootLayout({
         )}
       >
         <SessionProvider>
-          <AnimationProvider>
-            <Navbar />
-            <FontProvider>
-              <main>{children}</main>
-            </FontProvider>
-            <CookieBanner />
-          </AnimationProvider>
+          <AnalyticsProvider>
+            <AnimationProvider>
+              <Navbar />
+              <FontProvider>
+                <main>{children}</main>
+              </FontProvider>
+              <CookieBanner />
+            </AnimationProvider>
+          </AnalyticsProvider>
         </SessionProvider>
         <Toaster expand={false} position="bottom-left" />
       </body>

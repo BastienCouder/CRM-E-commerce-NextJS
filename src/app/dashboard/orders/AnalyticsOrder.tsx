@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 import DateFilter from "../components/DateFilter";
 
-import StatCard from "../components/StatCard";
+import StatCard from "../components/StatsCard";
 import OrdersLengthChart from "../components/charts/OrdersLengthChart";
 import { addDays } from "date-fns";
 import { CalendarDateRangePicker } from "../components/DateRangePicker";

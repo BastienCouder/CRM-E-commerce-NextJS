@@ -1,8 +1,9 @@
 import { prisma } from "@/lib/db/prisma";
 import { env } from "@/lib/env";
+import { subMonths, startOfMonth, endOfMonth } from "date-fns";
 import { revalidatePath } from "next/cache";
 
-export interface AnalyticsData {
+export interface AnalyticsProductsData {
   date: Date;
   productId: string;
   priority: string[];
@@ -11,16 +12,26 @@ export interface AnalyticsData {
 }
 
 export interface useServerReadAnalyticsProductsProps {
-  data: AnalyticsData[];
-  topProducts: AnalyticsData[];
+  data: AnalyticsProductsData[];
+  topProducts: AnalyticsProductsData[];
   totalSales: number;
+  totalProductsSales: number;
+  currentMonthSales: number;
+  lastMonthSales: number;
+  salesGrowthPercentage: number;
 }
 
 export async function useServerReadAnalyticsProducts(): Promise<useServerReadAnalyticsProductsProps> {
   try {
     const endDate = new Date();
-    const siteCreationDate = new Date(env.CREATE_WEBSITE || "");
-    const startDate = siteCreationDate < endDate ? siteCreationDate : endDate;
+    const startDate = new Date(env.CREATE_WEBSITE || "");
+    const currentMonthStart = startOfMonth(endDate);
+    const lastMonthStart = startOfMonth(subMonths(endDate, 1));
+    const lastMonthEnd = endOfMonth(subMonths(endDate, 1));
+
+    let currentMonthSales = 0;
+    let lastMonthSales = 0;
+    let totalProductsSold = 0;
 
     const orderItems = await prisma.orderItems.findMany({
       include: {
@@ -42,8 +53,14 @@ export async function useServerReadAnalyticsProducts(): Promise<useServerReadAna
       },
     });
 
-    const productSalesMap: Record<string, AnalyticsData> = {};
+    const productSalesMap: Record<string, AnalyticsProductsData> = {};
     orderItems.forEach((orderItem) => {
+      const orderDate = new Date(orderItem.createdAt!);
+      const isCurrentMonth =
+        orderDate >= currentMonthStart && orderDate <= endDate;
+      const isLastMonth =
+        orderDate >= lastMonthStart && orderDate < lastMonthEnd;
+
       orderItem.cart.cartItems.forEach((cartItem) => {
         const productId = cartItem.product.id;
         const productName = cartItem.product.name;
@@ -51,23 +68,27 @@ export async function useServerReadAnalyticsProducts(): Promise<useServerReadAna
           ? cartItem.product.priority
           : [cartItem.product.priority];
         const productPrice = cartItem.product.price;
+        const productSales = productPrice * cartItem.quantity;
+        const productQuantity = cartItem.quantity;
+        totalProductsSold += productQuantity;
+
+        if (isCurrentMonth) currentMonthSales += productQuantity;
+        if (isLastMonth) lastMonthSales += productQuantity;
 
         if (!productSalesMap[productId]) {
           productSalesMap[productId] = {
-            date: new Date(orderItem.createdAt!),
+            date: orderDate,
             productId,
             priority: productPriority,
             name: productName,
             totalSales: 0,
           };
         }
-        productSalesMap[productId].totalSales +=
-          productPrice * cartItem.quantity;
+        productSalesMap[productId].totalSales += productSales;
       });
     });
 
     const productSalesArray = Object.values(productSalesMap);
-
     const topProducts = productSalesArray
       .sort((a, b) => b.totalSales - a.totalSales)
       .slice(0, 5);
@@ -94,18 +115,25 @@ export async function useServerReadAnalyticsProducts(): Promise<useServerReadAna
       )
     );
 
-    const totalSales = productSalesArray.reduce(
+    const totalSales: number = productSalesArray.reduce(
       (acc, product) => acc + product.totalSales,
       0
     );
+    const salesGrowthPercentage: number =
+      lastMonthSales === 0
+        ? 0
+        : ((currentMonthSales - lastMonthSales) / lastMonthSales) * 100;
 
-    revalidatePath(`/dashboard`);
-    revalidatePath(`/dashboard/products`);
+    revalidatePath("/dashboard");
 
     return {
       data: productSalesArray,
       topProducts,
       totalSales,
+      totalProductsSales: totalProductsSold,
+      currentMonthSales,
+      lastMonthSales,
+      salesGrowthPercentage,
     };
   } catch (error: any) {
     throw new Error(
@@ -142,7 +170,7 @@ export async function useServerReadAnalyticsProducts(): Promise<useServerReadAna
 //   await Promise.all(updatePromises);
 // }
 
-interface ProductAnalytics {
+export interface AnalyticsWishlistCartOrder {
   productId: string;
   name: string;
   nameVariant?: string;
@@ -152,11 +180,11 @@ interface ProductAnalytics {
   date: Date;
 }
 
-export interface UseServerReadAnalyticsWishlistCartOrderProps {
-  data: ProductAnalytics[];
+export interface useServerReadAnalyticsWishlistCartOrderProps {
+  data: AnalyticsWishlistCartOrder[];
 }
 
-export async function useServerReadAnalyticsWishlistCartOrder(): Promise<UseServerReadAnalyticsWishlistCartOrderProps> {
+export async function useServerReadAnalyticsWishlistCartOrder(): Promise<useServerReadAnalyticsWishlistCartOrderProps> {
   try {
     const endDate = new Date();
     const siteCreationDate = new Date(env.CREATE_WEBSITE || "");
@@ -201,7 +229,7 @@ export async function useServerReadAnalyticsWishlistCartOrder(): Promise<UseServ
       }),
     ]);
 
-    let productAnalyticsMap: Record<string, ProductAnalytics> = {};
+    let productAnalyticsMap: Record<string, AnalyticsWishlistCartOrder> = {};
 
     orderItems.forEach(({ cart }) => {
       cart.cartItems.forEach(({ product, variant }) => {

@@ -1,8 +1,6 @@
-"use client";
 import { Separator } from "@/components/ui/separator";
 import { formatDateMonth } from "@/lib/format";
 import { AreaChart } from "lucide-react";
-
 import {
   ResponsiveContainer,
   XAxis,
@@ -24,26 +22,20 @@ interface CustomLegendProps {
   }>;
 }
 
-const CustomLegend: React.FC<CustomLegendProps> = ({ payload }) => {
+const CustomLegend = ({ payload }: CustomLegendProps) => {
   return (
-    <ul
-      className="flex gap-x-4 w-full justify-center"
-      style={{ listStyleType: "none", padding: 0, margin: 0 }}
-    >
+    <ul className="flex gap-x-4 w-full justify-center list-none p-0 m-0">
       {payload.map((entry, index) => (
-        <li
-          key={`item-${index}`}
-          style={{ display: "flex", alignItems: "center", marginBottom: 4 }}
-        >
-          <AreaChart size={15} />
-          <span style={{ fontSize: "0.8rem", marginLeft: 5 }}>
-            {entry.value}
-          </span>
+        <li key={index} className="flex items-center mb-1">
+          <AreaChart size={15} color="rgb(var(--chart1))" />
+          <span className="ml-1 text-sm text-chart1">{entry.value}</span>
         </li>
       ))}
     </ul>
   );
 };
+
+const axisStyle = { fontSize: "0.8rem", fill: "rgb(var(--foreground))" };
 
 export default function NewsletterLengthChart({
   analyticsData,
@@ -55,7 +47,7 @@ export default function NewsletterLengthChart({
       <h2 className="mb-2">
         {totalUsers > 1 ? "Nombre d'abonnés" : "Nombre d'abonné"}
       </h2>
-      <Separator className="bg-white/50" />
+      <Separator className="bg-[rgba(var(--foreground),0.5)]" />
 
       <ResponsiveContainer width={750} height={320}>
         <ComposedChart data={data} className="mt-2">
@@ -63,32 +55,25 @@ export default function NewsletterLengthChart({
             verticalAlign="top"
             content={<CustomLegend payload={data} />}
           />
-
           <XAxis
-            style={{
-              fontSize: "0.8rem",
-              fill: "#f5f5f5",
-            }}
             dataKey="date"
             scale="band"
             tickLine={false}
-            axisLine={true}
+            axisLine={{ stroke: "rgb(var(--foreground))" }}
+            style={axisStyle}
             tickFormatter={(value) => formatDateMonth(value, "short")}
           />
           <YAxis
-            style={{
-              fontSize: "0.8rem",
-              fill: "#f5f5f5",
-            }}
             scale="linear"
             tickLine={false}
-            axisLine={true}
+            style={axisStyle}
+            axisLine={{ stroke: "rgb(var(--foreground))" }}
           />
           <Area
             type="monotone"
             name="Nombres de nouveau abonnées"
             dataKey="newsletterSubscribersCount"
-            fill="#fff"
+            fill="rgb(var(--chart1))"
             stroke="none"
           />
         </ComposedChart>

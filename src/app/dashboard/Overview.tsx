@@ -1,6 +1,6 @@
 "use client";
-import StatCard from "./components/StatCard";
-import OrdersLengthSalesChart from "./components/charts/OrdersLengthSalesChart";
+import StatsCard from "./components/StatsCard";
+import OrdersLengthSalesChart from "./components/charts/OrdersSalesLengthChart";
 
 interface OverviewProps {
   analyticsProductsData: any;
@@ -19,24 +19,32 @@ export default function Overview({
     <>
       <article className="space-y-4">
         <section className="flex w-full space-x-4">
-          <StatCard
-            title="Revenu Total"
+          <StatsCard
+            title="Revenu total"
             data={analyticsOrdersData}
             value={analyticsOrdersData.maxSubtotal}
             secondaryText={`${analyticsOrdersData.subtotalDifferencePercent}`}
             type="price"
             variant="bars"
-          />{" "}
-          <StatCard
-            title="Utilisateurs Total"
+          />
+          <StatsCard
+            title="Utilisateurs total"
             data={analyticsUsersData}
             value={analyticsUsersData.totalUsers}
             secondaryText={`${analyticsUsersData.monthlyGrowthPercentage}`}
             type="nbr"
-            variant="bars"
+            variant="line"
+          />
+          <StatsCard
+            title="Produit vendus au total"
+            data={analyticsProductsData}
+            value={analyticsProductsData.totalProductsSales}
+            secondaryText={`${analyticsProductsData.salesGrowthPercentage}`}
+            type="nbr"
+            variant="area"
           />
         </section>
-        <div className="p-4 rounded-lg bg-card">
+        <div className="w-[50rem] p-4 rounded-lg bg-card">
           <OrdersLengthSalesChart analyticsData={analyticsOrdersData} />
         </div>
       </article>

@@ -2,6 +2,7 @@ import z from "zod";
 
 export const envSchema = z.object({
   CREATE_WEBSITE: z.string().nonempty(),
+  NEXT_PUBLIC_GA_ID: z.string().nonempty(),
   DATABASE_URL: z.string().nonempty(),
   NEXTAUTH_URL: z.string().nonempty(),
   GOOGLE_ID: z.string().nonempty(),

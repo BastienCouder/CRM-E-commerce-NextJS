@@ -8,29 +8,37 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
+import {
+  AnalyticsOrdersData,
+  useServerReadAnalyticsOrdersProps,
+} from "../../orders/actions";
 
 interface OrdersLengthChartProps {
-  analyticsData: any;
+  analyticsData: useServerReadAnalyticsOrdersProps;
 }
 
+const axisStyle = {
+  fontSize: "0.8rem",
+  fill: "rgb(var(--foreground))",
+};
+
 interface CustomTooltipProps {
-  active?: any;
-  payload: any;
+  active?: boolean;
+  payload?: { payload: AnalyticsOrdersData }[];
 }
 
 const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
-    return (
-      <div className="p-3 text-[#000] text-sm bg-white rounded-lg">
-        <p className="font-bold">
-          {formatDateMonth(payload[0].payload.date, "long")}
-        </p>
+    const { date, totalNocanceledOrders } = payload[0].payload;
 
-        {payload[0].payload.totalNocanceledOrders ? (
-          <p>Total : {payload[0].payload.totalNocanceledOrders}</p>
-        ) : (
-          <p>Aucune ventes</p>
-        )}
+    return (
+      <div className="p-3 text-background text-sm bg-foreground rounded-lg">
+        <p className="font-bold">{formatDateMonth(date, "long")}</p>
+        <p>
+          {totalNocanceledOrders
+            ? `Total : ${totalNocanceledOrders}`
+            : "Aucune ventes"}
+        </p>
       </div>
     );
   }
@@ -51,31 +59,23 @@ export default function OrdersLengthChart({
           <XAxis
             dataKey="date"
             tickFormatter={(value) => formatDateMonth(value, "short")}
-            style={{
-              fontSize: "0.8rem",
-              fill: "#f5f5f5",
-            }}
+            style={axisStyle}
             tickLine={false}
-            axisLine={true}
+            axisLine={{ stroke: "rgb(var(--foreground))" }}
           />
           <YAxis
             scale="linear"
-            style={{
-              fontSize: "0.8rem",
-              fill: "#f5f5f5",
-            }}
+            style={axisStyle}
             tickLine={false}
-            axisLine={true}
+            axisLine={{ stroke: "rgb(var(--foreground))" }}
           />
-
           <Tooltip
-            cursor={{ fill: "#202020" }}
-            content={<CustomTooltip payload={data} />}
+            cursor={{ fill: "rgb(var(--muted))" }}
+            content={<CustomTooltip />}
           />
-
           <Bar
             dataKey="totalNocanceledOrders"
-            fill="#f5f5f5"
+            fill="rgb(var(--chart1))"
             radius={[4, 4, 0, 0]}
           />
         </BarChart>

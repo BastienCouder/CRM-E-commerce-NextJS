@@ -1,15 +1,14 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import formatPrice, { formatDateMonth } from "@/lib/format";
+import formatPrice from "@/lib/format";
 import {
+  AreaChart,
   ArrowDownCircle,
   ArrowUpCircle,
   BarChart2,
-  BarChart3,
-  Euro,
+  LineChart,
 } from "lucide-react";
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 interface StatCardProps {
   title: string;
@@ -20,7 +19,7 @@ interface StatCardProps {
   variant?: string;
 }
 
-export default function StatCard({
+export default function StatsCard({
   title,
   data,
   value,
@@ -36,14 +35,6 @@ export default function StatCard({
 
   const IconComponent = isPositive ? ArrowUpCircle : ArrowDownCircle;
 
-  const currentDate = new Date();
-  const endDate = new Date(currentDate);
-  const startDate = new Date(currentDate.setMonth(currentDate.getMonth() - 6));
-  const filteredData = data.data.filter((data: any) => {
-    const dataDate = new Date(data.date);
-    return dataDate >= startDate && dataDate <= endDate;
-  });
-
   return (
     <>
       <Card className="flex w-80">
@@ -58,8 +49,8 @@ export default function StatCard({
               <div className="text-xl font-bold">
                 {type === "price" ? formatPrice(Number(value), "EUR") : value}
               </div>
-              <p className="flex flex-col text-xs text-muted-foreground">
-                <span className="flex gap-x-1">
+              <p className="flex flex-col text-xs ">
+                <span className="flex gap-x-1 font-bold text-secondary">
                   {!isNaN(number) && <IconComponent size={13} />}
                   {formattedSecondaryText}
                 </span>
@@ -69,7 +60,15 @@ export default function StatCard({
           </CardContent>
         </div>
         <div className="h-full flex items-center -ml-4">
-          {variant === "bars" && <BarChart2 size={90} />}
+          {variant === "bars" && (
+            <BarChart2 size={90} color="rgb(var(--chart1))" />
+          )}
+          {variant === "area" && (
+            <AreaChart size={90} color="rgb(var(--chart1))" />
+          )}
+          {variant === "line" && (
+            <LineChart size={90} color="rgb(var(--chart1))" />
+          )}
         </div>
       </Card>
     </>
