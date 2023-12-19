@@ -2,8 +2,8 @@ import { Metadata } from "next";
 
 import { z } from "zod";
 import { orderSchema } from "../lib/zod";
-import { DataTable } from "./components/DataTable";
-import { columns } from "./components/Columns";
+import { DataTable } from "../components/tables/DataTable";
+import { columns } from "./data/Columns";
 import { useServerReadAnalyticsOrders } from "./actions";
 import AnalyticsOrder from "./AnalyticsOrder";
 
@@ -36,7 +36,7 @@ export default async function ProductsPage() {
   return (
     <>
       <AnalyticsOrder analyticsData={await useServerReadAnalyticsOrders()} />
-      <DataTable data={orders} columns={columns} />
+      <DataTable data={orders} columns={columns} variant="orders" />
     </>
   );
 }

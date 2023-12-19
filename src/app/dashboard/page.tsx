@@ -4,7 +4,7 @@ import {
   useServerReadAnalyticsProducts,
   useServerReadAnalyticsWishlistCartOrder,
 } from "./products/action";
-import OverviewNav from "./OverviewNav";
+import OverviewNav from "./components/OverviewNav";
 import { useServerReadAnalyticsUsers } from "./users/action";
 
 export const metadata: Metadata = {
@@ -13,20 +13,14 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardPage() {
-  const analyticsProductsData = await useServerReadAnalyticsProducts();
-  const analyticsOrdersData = await useServerReadAnalyticsOrders();
-  const analyticsUsersData = await useServerReadAnalyticsUsers();
-  const analyticsWishlistCartOrderData =
-    await useServerReadAnalyticsWishlistCartOrder();
-
   return (
     <>
       <div className="flex-1 space-y-4">
         <OverviewNav
-          analyticsProductsData={analyticsProductsData}
-          analyticsOrdersData={analyticsOrdersData}
-          analyticsUsersData={analyticsUsersData}
-          analyticsWishlistCartOrderData={analyticsWishlistCartOrderData}
+          analyticsProductsData={await useServerReadAnalyticsProducts()}
+          analyticsOrdersData={await useServerReadAnalyticsOrders()}
+          analyticsUsersData={await useServerReadAnalyticsUsers()}
+          analyticsWishlistCartOrderData={await useServerReadAnalyticsWishlistCartOrder()}
         />
       </div>
     </>

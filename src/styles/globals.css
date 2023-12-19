@@ -24,7 +24,7 @@
     --popover: 45, 45, 45;
     --popover-foreground: 221, 229, 236;
     --primary: 45, 45, 45;
-    --primary-foreground: 255, 255, 255;
+    --primary-foreground: 221, 229, 236;
     --secondary: 210, 167, 142;
     --secondary-foreground: 45, 45, 45;
     --muted: 40, 40, 40;
@@ -39,8 +39,8 @@
     --ring: 207, 224, 234;
     --radius: 0.5rem;
     --chart1: 210, 167, 142;
-    --chart2: 215, 148, 91;
-    --chart3: 235, 248, 246;
+    --chart2: 117, 93, 67;
+    --chart3: 173, 143, 95;
     --chart4: 34, 108, 104;
     --chart5: 22, 83, 78;
   }
@@ -67,7 +67,7 @@
     --input: 75, 99, 119;
     --ring: 207, 224, 234;
     --radius: 0.5rem;
-    --chart1: 25, 57, 72;
+    --chart1: 112, 157, 166;
     --chart2: 112, 157, 166;
     --chart3: 235, 248, 246;
     --chart4: 34, 108, 104;

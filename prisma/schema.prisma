@@ -265,3 +265,15 @@ model OrderItems {
 
     @@map("orders_items")
 }
+
+model UserLocation {
+    id        String    @id @default(auto()) @map("_id") @db.ObjectId
+    latitude  Float
+    longitude Float
+    platform  String
+    userAgent String
+    createdAt DateTime  @default(now())
+    deleteAt  DateTime?
+
+    @@map("UserLocation")
+}

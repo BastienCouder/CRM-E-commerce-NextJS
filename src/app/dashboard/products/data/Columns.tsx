@@ -1,15 +1,15 @@
 "use client";
-import { ColumnDef, Row } from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 
-import { statuses, priorities } from "../data/data";
+import { statusesProducts, priorities } from "./data";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { DataTableColumnHeader } from "./DataTableColumnHeader";
-import { DataTableRowActions } from "./DataTableRowActions";
+import { DataTableColumnHeader } from "../../components/tables/DataTableColumnHeader";
 
 import formatPrice from "@/lib/format";
 import Image from "next/image";
+import { DataTableRowActions } from "../../components/tables/DataTableRowActions";
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -69,7 +69,7 @@ export const columns: ColumnDef<any>[] = [
     enableSorting: false,
   },
   {
-    accessorKey: "nom",
+    accessorKey: "name",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Nom" />
     ),
@@ -107,7 +107,7 @@ export const columns: ColumnDef<any>[] = [
     enableSorting: true,
   },
   {
-    accessorKey: "prix",
+    accessorKey: "price",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Prix" />
     ),
@@ -132,7 +132,8 @@ export const columns: ColumnDef<any>[] = [
     ),
     cell: ({ row }) => {
       const statusValue = row.original.status;
-      const status = statuses.find(
+
+      const status = statusesProducts.find(
         (statusItem) => statusItem.value === statusValue
       );
 
@@ -160,11 +161,12 @@ export const columns: ColumnDef<any>[] = [
     enableSorting: true,
   },
   {
-    accessorKey: "privilège",
+    accessorKey: "priority",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Privilège" />
     ),
     cell: ({ row }) => {
+      console.log(row.original.priority);
       return (
         <div className="flex space-x-2">
           {row.original.priority.map((priorityValue: string) => {
@@ -174,7 +176,7 @@ export const columns: ColumnDef<any>[] = [
 
             return (
               <Badge
-                key={priorityValue}
+                key={priority?.value}
                 variant="outline"
                 className={`${
                   priority?.value === "favorie"
@@ -193,6 +195,7 @@ export const columns: ColumnDef<any>[] = [
     },
     filterFn: (row, id, value) => {
       const rowValue = row.getValue(id);
+      console.log(value, row, id);
       if (Array.isArray(rowValue)) {
         return value.some((val: string) => rowValue.includes(val));
       }
@@ -202,6 +205,6 @@ export const columns: ColumnDef<any>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <DataTableRowActions row={row} variant="products" />,
   },
 ];

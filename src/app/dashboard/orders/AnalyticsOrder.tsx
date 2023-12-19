@@ -31,8 +31,8 @@ export default function AnalyticsOrder({ analyticsData }: AnalyticsOrderProps) {
   };
 
   return (
-    <div className="flex space-x-4">
-      <div className="w-[50rem] bg-card p-4 mb-6 rounded-lg pb-10 h-[18rem]">
+    <div className="w-full flex space-x-4">
+      <div className="w-full bg-card p-4 mb-6 rounded-lg pb-10 h-[18rem]">
         <OrdersLengthChart analyticsData={filteredData} />
       </div>
       <div className="space-y-4">
@@ -46,7 +46,7 @@ export default function AnalyticsOrder({ analyticsData }: AnalyticsOrderProps) {
         </div>
         <div className="flex flex-col gap-y-2">
           <h2>Ce mois ci :</h2>
-          <div className="w-full flex gap-x-4">
+          <div className="flex gap-x-4">
             <StatCard
               title="Revenu Total"
               data={analyticsData}
@@ -62,6 +62,7 @@ export default function AnalyticsOrder({ analyticsData }: AnalyticsOrderProps) {
               value={analyticsData.currentMonthOrderCount}
               secondaryText={`${analyticsData.orderCountDifferencePercent}% par rapport au mois dernier`}
               type="nbr"
+              variant="area"
             />
           </div>
         </div>

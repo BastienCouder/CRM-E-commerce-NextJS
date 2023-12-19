@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import {
-  CellContext,
   ColumnDef,
   ColumnFiltersState,
   SortingState,
@@ -31,11 +30,13 @@ import { DataTablePagination } from "./DataTablePagination";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  variant: "orders" | "products";
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  variant,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -69,8 +70,8 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} />
-      <div className="rounded-md bg-muted">
+      <DataTableToolbar table={table} variant={variant} />
+      <div className="rounded-md bg-card">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -113,7 +114,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Aucun résultats.
+                  Aucun résultat.
                 </TableCell>
               </TableRow>
             )}

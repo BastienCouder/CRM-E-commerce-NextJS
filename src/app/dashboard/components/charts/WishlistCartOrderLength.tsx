@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import {
   AnalyticsProductsData,
+  AnalyticsWishlistCartOrder,
   useServerReadAnalyticsWishlistCartOrderProps,
 } from "../../products/action";
 
@@ -29,16 +30,32 @@ interface WhislistCartOrderLengthProps {
 interface CustomTooltipProps {
   active?: boolean;
   label?: string;
-  payload?: { payload: AnalyticsProductsData }[];
+  payload?: { payload: AnalyticsWishlistCartOrder }[];
 }
 
 const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   if (!active || !payload || payload.length === 0) return null;
-  const { totalSales } = payload[0].payload;
+  const { wishlistCount, cartCount, orderCount } = payload[0].payload;
+  let dataToDisplay;
+  switch (label) {
+    case "J'aime":
+    case "J'aimes":
+      dataToDisplay = `${wishlistCount}`;
+      break;
+    case "Mise en Panier":
+      dataToDisplay = `${cartCount}`;
+      break;
+    case "Commander":
+      dataToDisplay = `${orderCount}`;
+      break;
+    default:
+      dataToDisplay = "Donnée non disponible";
+  }
 
   return (
-    <div className="bg-white p-3">
-      <p className="text-background">{`${label} : ${totalSales}`}</p>
+    <div className="p-3 text-background text-sm bg-foreground rounded-lg">
+      <p className="font-bold">{label}</p>
+      <p>Total :{dataToDisplay}</p>
     </div>
   );
 };
@@ -72,13 +89,20 @@ export default function WhislistCartOrderLength({
         subject: selectedProduct.wishlistCount > 1 ? "J'aimes" : "J'aime",
         A: selectedProduct.wishlistCount,
         fullMark: 100,
+        ...selectedProduct,
       },
       {
         subject: "Mise en Panier",
         A: selectedProduct.cartCount,
         fullMark: 100,
+        ...selectedProduct,
       },
-      { subject: "Commander", A: selectedProduct.orderCount, fullMark: 100 },
+      {
+        subject: "Commander",
+        A: selectedProduct.orderCount,
+        fullMark: 100,
+        ...selectedProduct,
+      },
     ],
     [selectedProduct]
   );

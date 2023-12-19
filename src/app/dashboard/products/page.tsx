@@ -1,9 +1,10 @@
 import { Metadata } from "next";
-import { columns } from "./components/Columns";
-import { DataTable } from "./components/DataTable";
+import { columns } from "./data/Columns";
+
 import { getProducts } from "../../../lib/db/product";
 import { productSchema } from "../lib/zod";
 import { z } from "zod";
+import { DataTable } from "../components/tables/DataTable";
 // import { useServerNewPriorityToRecentProducts } from "./action";
 
 export const metadata: Metadata = {
@@ -32,7 +33,7 @@ export default async function ProductsPage() {
 
   return (
     <>
-      <DataTable data={products as any} columns={columns} />
+      <DataTable data={products as any} columns={columns} variant="products" />
     </>
   );
 }

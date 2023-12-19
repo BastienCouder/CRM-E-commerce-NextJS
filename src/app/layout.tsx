@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { Inter as FontSans, Roboto } from "next/font/google";
 import { FontProvider } from "@/context/FontContext";
 import { AnalyticsProvider } from "@/context/AnalyticsContext";
+import { GeoProvider } from "@/context/GeoContext";
 
 export const fontSans = FontSans({
   subsets: ["latin"],

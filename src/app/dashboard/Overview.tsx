@@ -1,6 +1,9 @@
 "use client";
+import { useEffect, useState } from "react";
 import StatsCard from "./components/StatsCard";
 import OrdersLengthSalesChart from "./components/charts/OrdersSalesLengthChart";
+import { useServerGeoData } from "./actions";
+import { useGeo } from "@/context/GeoContext";
 
 interface OverviewProps {
   analyticsProductsData: any;
@@ -8,12 +11,10 @@ interface OverviewProps {
   analyticsUsersData: any;
   analyticsWishlistCartOrderData: any;
 }
-
 export default function Overview({
   analyticsProductsData,
   analyticsUsersData,
   analyticsOrdersData,
-  analyticsWishlistCartOrderData,
 }: OverviewProps) {
   return (
     <>
@@ -34,6 +35,14 @@ export default function Overview({
             secondaryText={`${analyticsUsersData.monthlyGrowthPercentage}`}
             type="nbr"
             variant="line"
+          />
+          <StatsCard
+            title="Produit vendus au total"
+            data={analyticsProductsData}
+            value={analyticsProductsData.totalProductsSales}
+            secondaryText={`${analyticsProductsData.salesGrowthPercentage}`}
+            type="nbr"
+            variant="area"
           />
           <StatsCard
             title="Produit vendus au total"

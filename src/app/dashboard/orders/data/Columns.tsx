@@ -1,16 +1,13 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
-
-import { statuses } from "../data/data";
-
+import { statusesOrders } from "./data";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { DataTableColumnHeader } from "./DataTableColumnHeader";
-import { DataTableRowActions } from "./DataTableRowActions";
+import { DataTableColumnHeader } from "../../components/tables/DataTableColumnHeader";
 
 import formatPrice, { formatDate } from "@/lib/format";
-import Image from "next/image";
 import { calculateSubtotal } from "../../lib/utils";
+import { DataTableRowActions } from "../../components/tables/DataTableRowActions";
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -96,6 +93,9 @@ export const columns: ColumnDef<any>[] = [
         </div>
       );
     },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
     accessorKey: "status",
@@ -104,7 +104,7 @@ export const columns: ColumnDef<any>[] = [
     ),
     cell: ({ row }) => {
       const statusValue = row.original.status;
-      const status = statuses.find(
+      const status = statusesOrders.find(
         (statusItem) => statusItem.value === statusValue
       );
 
@@ -159,6 +159,6 @@ export const columns: ColumnDef<any>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <DataTableRowActions row={row} variant="orders" />,
   },
 ];

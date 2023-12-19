@@ -65,7 +65,7 @@ export function CalendarDateRangePicker({
                 format(date.from, "LLL dd, y", { locale: fr })
               )
             ) : (
-              <span>Pick a date</span>
+              <span>Chosir une date</span>
             )}
           </Button>
         </PopoverTrigger>

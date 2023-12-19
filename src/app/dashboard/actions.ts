@@ -188,3 +188,19 @@ export async function useServerRestore(itemId: string) {
     throw Error("Erreur lors de la restauration de l'élément :", error);
   }
 }
+
+export async function useServerGeoData(data: any) {
+  try {
+    const newEntry = await prisma.userLocation.create({
+      data: {
+        latitude: data.latitude,
+        longitude: data.longitude,
+        platform: data.platform,
+        userAgent: data.userAgent,
+      },
+    });
+    return newEntry;
+  } catch (error: any) {
+    throw new Error("Erreur lors de l'enregistrement des données :", error);
+  }
+}

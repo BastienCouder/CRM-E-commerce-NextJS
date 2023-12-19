@@ -24,9 +24,7 @@ export default function ShoppingCartButton({
       }}
     >
       <AiOutlineShopping size={34} />
-      <Badge className="text-primary absolute top-0 -right-2">
-        {cart?.size || 0}
-      </Badge>
+      <Badge className="absolute top-0 -right-2">{cart?.size || 0}</Badge>
     </Link>
   );
 }
