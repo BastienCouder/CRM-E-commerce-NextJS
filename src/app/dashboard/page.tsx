@@ -1,11 +1,11 @@
 import { Metadata } from "next";
-import { useServerReadAnalyticsOrders } from "./orders/actions";
+import OverviewNav from "../../components/dashboard/OverviewNav";
 import {
   useServerReadAnalyticsProducts,
   useServerReadAnalyticsWishlistCartOrder,
-} from "./products/action";
-import OverviewNav from "./components/OverviewNav";
-import { useServerReadAnalyticsUsers } from "./users/action";
+} from "./management/products/action";
+import { useServerReadAnalyticsOrders } from "./management/orders/actions";
+import { useServerReadAnalyticsUsers } from "./management/users/action";
 
 export const metadata: Metadata = {
   title: "Dashboard",

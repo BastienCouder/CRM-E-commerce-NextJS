@@ -1,5 +1,5 @@
 "use client";
-import NewsletterLengthChart from "./components/charts/NewsletterLengthChart";
+import NewsletterLengthChart from "../../components/charts/NewsletterLengthChart";
 
 interface NewsletterProps {
   analyticsUsersData: any;

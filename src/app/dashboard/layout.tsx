@@ -1,15 +1,11 @@
 import React from "react";
-import TeamSwitcher from "./components/TeamSwitcher";
-import { MainNav } from "./components/MainNav";
-import { UserNav } from "./components/UserNav";
-import { Search } from "./components/Search";
 import { Toaster } from "@/components/ui/toaster";
 import { checkUserRole } from "@/middlewares/Admin";
 import { Moon, Settings, User } from "lucide-react";
 import Link from "next/link";
-import ColorCircles from "./components/ColorCircles";
 import { ThemeProviders } from "@/context/ThemeContext";
 import { Separator } from "@/components/ui/separator";
+import { MainNav } from "@/components/dashboard/MainNav";
 
 export const metadata = {
   title: "Dashboard",
@@ -45,7 +41,7 @@ export default function DashboardLayout({
       <ThemeProviders>
         <div className={`hidden flex md:flex`}>
           <div className="w-[12rem] border-r">
-            <div className="flex flex-col h-screen items-center space-y-12 py-4 overflow-y-auto">
+            <div className="flex flex-col h-screen items-center space-y-12 py-4">
               <div className="flex flex-col gap-y-2 items-center">
                 <h2 className="text-base">Dashboard</h2>
                 <Separator className="w-5/6" />
@@ -77,7 +73,9 @@ export default function DashboardLayout({
               </div>
             </div>
           </div>
-          <div className=" w-full mt-4 pb-10 px-4">{children}</div>
+          <div className="overflow-y-auto h-screen w-full mt-4 pb-10 px-4">
+            {children}
+          </div>
           <Toaster />
         </div>
       </ThemeProviders>

@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import SalesChart from "./components/charts/SalesChart";
-import TopProductChart from "./components/charts/TopProductsChart";
-import DateFilter from "./components/DateFilter";
-import WhislistCartOrderLength from "./components/charts/WishlistCartOrderLength";
+import SalesChart from "../../components/charts/SalesChart";
+import TopProductChart from "../../components/charts/TopProductsChart";
+import DateFilter from "../../components/dashboard/DateFilter";
+import WhislistCartOrderLength from "../../components/charts/WishlistCartOrderLength";
 
 interface AnalyticsProps {
   analyticsProductsData: any;
