@@ -1,13 +1,13 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
-import { statusesOrders } from "./data";
+import { statuses } from "./data";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { DataTableColumnHeader } from "../../components/tables/DataTableColumnHeader";
 
 import formatPrice, { formatDate } from "@/lib/format";
 import { calculateSubtotal } from "../../lib/utils";
-import { DataTableRowActions } from "../../components/tables/DataTableRowActions";
+import { DataTableRowActions } from "../components/DataTableRowActions";
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -46,7 +46,7 @@ export const columns: ColumnDef<any>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "nom",
+    accessorKey: "name",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Nom" />
     ),
@@ -76,7 +76,7 @@ export const columns: ColumnDef<any>[] = [
     },
   },
   {
-    accessorKey: "prix",
+    accessorKey: "price",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Prix" />
     ),
@@ -104,7 +104,7 @@ export const columns: ColumnDef<any>[] = [
     ),
     cell: ({ row }) => {
       const statusValue = row.original.status;
-      const status = statusesOrders.find(
+      const status = statuses.find(
         (statusItem) => statusItem.value === statusValue
       );
 
@@ -135,7 +135,7 @@ export const columns: ColumnDef<any>[] = [
     },
   },
   {
-    accessorKey: "création",
+    accessorKey: "createAt",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Création" />
     ),
@@ -159,6 +159,6 @@ export const columns: ColumnDef<any>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} variant="orders" />,
+    cell: ({ row }) => <DataTableRowActions row={row} />,
   },
 ];

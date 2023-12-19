@@ -1,6 +1,6 @@
 import { CheckCheck, Loader, MoreHorizontal, X } from "lucide-react";
 
-export const statusesOrders = [
+export const statuses = [
   {
     value: "waiting",
     label: "En attente",

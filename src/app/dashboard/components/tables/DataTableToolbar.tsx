@@ -2,13 +2,16 @@ import { Table } from "@tanstack/react-table";
 
 import SoftDelete from "../SoftDelete";
 import { useServerSoftDelete } from "../../actions";
-import { statusesOrders } from "../../orders/data/data";
+import { statuses as orderStatuses } from "../../orders/data/data";
 import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "./DataTableFacetedFilter";
 import { Button } from "@/components/ui/button";
 import { Plus, X } from "lucide-react";
 import { DataTableViewOptions } from "./DataTableViewOptions";
-import { priorities, statusesProducts } from "../../products/data/data";
+import {
+  priorities,
+  statuses as productStatuses,
+} from "../../products/data/data";
 
 interface DataTableToolbarProps<TData> {
   table: Table<any>;
@@ -31,9 +34,9 @@ export function DataTableToolbar<TData>({
       <div className="flex flex-1 items-center space-x-2">
         <Input
           placeholder={variant === "orders" ? "Commandes..." : "Produits..."}
-          value={(table.getColumn("nom")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event: any) =>
-            table.getColumn("nom")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
@@ -41,7 +44,7 @@ export function DataTableToolbar<TData>({
           <DataTableFacetedFilter
             column={table.getColumn("status")}
             title="Status"
-            options={variant === "orders" ? statusesOrders : statusesProducts}
+            options={variant === "orders" ? orderStatuses : productStatuses}
           />
         )}
         {variant === "products" && table.getColumn("priority") && (

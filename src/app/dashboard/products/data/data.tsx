@@ -1,6 +1,6 @@
 import { BadgePlus, CheckCheck, Plus, Star, X } from "lucide-react";
 
-export const statusesProducts = [
+export const statuses = [
   {
     value: "available",
     label: "Disponible",

@@ -1,7 +1,7 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { statusesProducts, priorities } from "./data";
+import { statuses, priorities } from "./data";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +9,7 @@ import { DataTableColumnHeader } from "../../components/tables/DataTableColumnHe
 
 import formatPrice from "@/lib/format";
 import Image from "next/image";
-import { DataTableRowActions } from "../../components/tables/DataTableRowActions";
+import { DataTableRowActions } from "../components/DataTableRowActions";
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -133,7 +133,7 @@ export const columns: ColumnDef<any>[] = [
     cell: ({ row }) => {
       const statusValue = row.original.status;
 
-      const status = statusesProducts.find(
+      const status = statuses.find(
         (statusItem) => statusItem.value === statusValue
       );
 
@@ -205,6 +205,6 @@ export const columns: ColumnDef<any>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} variant="products" />,
+    cell: ({ row }) => <DataTableRowActions row={row} />,
   },
 ];

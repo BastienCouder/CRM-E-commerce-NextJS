@@ -44,14 +44,6 @@ export default function Overview({
             type="nbr"
             variant="area"
           />
-          <StatsCard
-            title="Produit vendus au total"
-            data={analyticsProductsData}
-            value={analyticsProductsData.totalProductsSales}
-            secondaryText={`${analyticsProductsData.salesGrowthPercentage}`}
-            type="nbr"
-            variant="area"
-          />
         </section>
         <div className="w-[50rem] p-4 rounded-lg bg-card">
           <OrdersLengthSalesChart analyticsData={analyticsOrdersData} />
