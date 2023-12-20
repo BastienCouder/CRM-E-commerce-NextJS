@@ -1,13 +1,15 @@
 "use client";
-import CardProduct from "./CardProduct";
-import Filter from "./Filter";
+
+import Filter from "../../../components/Filter";
 import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
-import ProductListHeader from "./CollectionListHeader";
+
 import { motion } from "framer-motion";
 import { Category, Color, Product, ProductVariant } from "@/lib/DbSchema";
+import CardProduct from "@/components/CardProduct";
+import StoreListHeader from "../../../components/StoreListHeader";
 
-interface CollectionProps {
+interface StoreProps {
   products: (Product & {
     variants: ProductVariant[] | null;
   })[];
@@ -15,11 +17,7 @@ interface CollectionProps {
   colors: Color[];
 }
 
-export default function Collection({
-  products,
-  categories,
-  colors,
-}: CollectionProps) {
+export default function Store({ products, categories, colors }: StoreProps) {
   const [filterData, setFilterData] = useState({
     selectedCategory: null as Category | null,
     selectedColor: null as Color | null,
@@ -99,7 +97,7 @@ export default function Collection({
       className="w-full flex flex-col md:pt-10"
     >
       <div className="w-full flex flex-col xl:flex-row">
-        <div className="bg-third xl:block hidden px-4">
+        <div className="bg-third xl:block hidden px-4  bg-card">
           <Filter
             categories={categories}
             colors={colors}
@@ -113,7 +111,7 @@ export default function Collection({
         </div>
 
         <div className="mt-4 xl:w-3/4 mx-8 md:mx-20 xl:mx-0 xl:mr-12 flex flex-col xl:pl-20 ">
-          <ProductListHeader
+          <StoreListHeader
             searchTerm={searchTerm}
             onSearchChange={handleSearch}
             productsCount={filteredProducts.length}
@@ -123,7 +121,7 @@ export default function Collection({
           />
 
           <Separator />
-          <div className="xl:hidden">
+          <div className="xl:hidden bg-card">
             <Filter
               categories={categories}
               colors={colors}

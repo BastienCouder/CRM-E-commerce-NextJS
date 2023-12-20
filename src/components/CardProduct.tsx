@@ -2,12 +2,11 @@
 import Link from "next/link";
 import PriceTag from "@/helpers/PriceTag";
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import AddToCartButton from "@/components/AddToCartButton";
-import { useServerAddToCart } from "../products/[id]/actions";
-import { useMemo } from "react";
+
 import { Category, Color, Product } from "@/lib/DbSchema";
+import { useServerAddToCart } from "@/app/(pages)/wishlist/actions";
 
 interface CardProductProps {
   product: Product;
@@ -20,13 +19,6 @@ export default function CardProduct({
   selectedCategory,
   selectedColor,
 }: CardProductProps) {
-  const isNew = useMemo(() => {
-    return (
-      Date.now() - new Date(product.createdAt!).getTime() <
-      1000 * 60 * 60 * 24 * 7
-    );
-  }, [product.createdAt]);
-
   if (
     !selectedCategory ||
     product.category === selectedCategory ||
@@ -48,9 +40,9 @@ export default function CardProduct({
             </figure>
           </Link>
           <div className="w-full space-y-2 relative">
-            {isNew && (
+            {/* {product.category && (
               <Badge className="absolute left-0 md:left-2">Nouveau</Badge>
-            )}
+            )} */}
 
             <h2 className="text-2xl text-center">{product.name}</h2>
 

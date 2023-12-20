@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuShortcut } from "@/components/ui/dropdown-menu";
-import { Product, Order } from "@prisma/client";
 import { Delete, X } from "lucide-react";
 
 interface SoftDeleteProps {

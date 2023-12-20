@@ -1,10 +1,10 @@
 import { prisma } from "@/lib/db/prisma";
 import React from "react";
-import Collection from "./Collection";
+import Store from "./Store";
 import Loading from "@/app/loading";
 import { CategoryEnum, ColorEnum, ProductSchema } from "@/lib/DbSchema";
 
-export default async function Store() {
+export default async function StorePage() {
   const rawProducts = await prisma.product.findMany({
     where: { status: "available" },
     include: { variants: true },
@@ -15,12 +15,12 @@ export default async function Store() {
   if (products) {
     <Loading />;
   }
-
   const categories = CategoryEnum.options;
   const colors = ColorEnum.options;
+
   return (
     <>
-      <Collection products={products} categories={categories} colors={colors} />
+      <Store products={products} categories={categories} colors={colors} />
     </>
   );
 }

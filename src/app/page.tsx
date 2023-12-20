@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Newsletter from "@/components/Newsletter";
-import styles from "@/styles/Utils.module.css";
+import styles from "@/styles/keyframes.module.css";
 import { useServersubscribeToNewsletter } from "@/lib/email/action";
 
 export default function Home() {

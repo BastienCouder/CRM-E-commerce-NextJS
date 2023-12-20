@@ -37,7 +37,7 @@ export default function WishlistEntry({ wishlistItem }: WishlistEntryProps) {
           ) : (
             <Link href={"/products/" + product.id}>
               <Image
-                src={product.imageUrl}
+                src={product.imageUrl!}
                 alt={product.name}
                 width={200}
                 height={200}

@@ -8,7 +8,7 @@ import {
 import Search from "@/components/Search";
 import { ChangeEvent } from "react";
 
-interface ProductListHeaderProps {
+interface StoreListHeaderProps {
   searchTerm: string;
   onSearchChange: (e: ChangeEvent<HTMLInputElement>) => void;
   productsCount: number;
@@ -17,14 +17,14 @@ interface ProductListHeaderProps {
   onSortReverseAlphabetically: () => void;
 }
 
-export default function ProductListHeader({
+export default function StoreListHeader({
   searchTerm,
   onSearchChange,
   productsCount,
   selectedSort,
   onSortAlphabetically,
   onSortReverseAlphabetically,
-}: ProductListHeaderProps) {
+}: StoreListHeaderProps) {
   return (
     <div className="mb-4 w-full flex flex-col md:flex-row gap-y-4 md:gap-0 md:justify-between items-start relative">
       <div className="md:hidden w-full space-y-2 relative">
