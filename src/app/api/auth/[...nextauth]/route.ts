@@ -1,5 +1,6 @@
 import { AuthOptions } from "next-auth";
-import { PrismaClient } from "@prisma/client";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+
 import { env } from "@/lib/env";
 import { authProviders } from "./authProviders";
 import { mergeAnonymousCartIntoUserCart } from "@/lib/db/cart";
@@ -8,6 +9,7 @@ import NextAuth from "next-auth/next";
 // import { mergeAnonymousDeliveryIntoUserCart } from "@/lib/db/delivery";
 
 export const authOptions: AuthOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: authProviders,
 
   pages: {
@@ -30,7 +32,7 @@ export const authOptions: AuthOptions = {
       return session;
     },
     async jwt({ token, user }) {
-      const dbUser = prisma.user.findFirst({
+      const dbUser = await prisma.user.findFirst({
         where: {
           email: token.email,
         },
@@ -50,6 +52,7 @@ export const authOptions: AuthOptions = {
       };
     },
   },
+
   events: {
     async signIn({ user }) {
       await mergeAnonymousCartIntoUserCart(user.id);

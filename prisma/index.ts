@@ -3,36 +3,35 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function main() {
-  // const userId = "6533a2555cf192fe1e2cbe6a";
-  // const user = await prisma.user.findUnique({
-  //   where: {
-  //     id: userId,
-  //   },
-  // });
-  // if (user) {
-  //   // Mise à jour du champ "isAdmin" pour définir l'utilisateur comme administrateur
-  //   const updatedUser = await prisma.user.update({
-  //     where: {
-  //       id: userId,
-  //     },
-  //     data: {
-  //       role: "admin",
-  //     },
-  //   });
-  //   console.log(
-  //     `L'utilisateur ${updatedUser.username} est maintenant administrateur.`
-  //   );
-  // } else {
-  //   console.log("Utilisateur non trouvé.");
-  // }
+  const userId = "656627b29828ecd93ff6ec7f";
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+  if (user) {
+    // Mise à jour du champ "isAdmin" pour définir l'utilisateur comme administrateur
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        role: "ADMIN",
+      },
+    });
+    console.log(`L'utilisateur  est maintenant administrateur.`);
+  } else {
+    console.log("Utilisateur non trouvé.");
+  }
   // const category = await prisma.color.create({
   //   data: {
   //     name: "bronze",
   //   },
   // });
   // console.log(category);
-  const colorId = "6543ebe837fe0b8d20918e67";
-  const categoryId = "653aa6eef14338a1dca7ff19";
+  // const colorId = "6543ebe837fe0b8d20918e67";
+  // const categoryId = "653aa6eef14338a1dca7ff19";
   // const productId = "6548fe48162c51153c648d0c";
   // const product = await prisma.product.update({
   //   where: {

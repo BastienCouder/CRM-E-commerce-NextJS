@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [{ hostname: "images.unsplash.com" }],
-    domains: ["lh3.googleusercontent.com", "other-allowed-domain.com"],
+    remotePatterns: [
+      { hostname: "images.unsplash.com" },
+      { hostname: "lh3.googleusercontent.com" },
+      { hostname: "other-allowed-domain.com" },
+    ],
   },
 
   async rewrites() {

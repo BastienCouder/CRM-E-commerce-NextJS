@@ -16,10 +16,10 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
-  // if (session?.user.role !== "ADMIN") {
-  //   throw new Error("error");
-  // }
-  console.log(session?.user.role === "ADMIN");
+  if (session?.user.role !== "ADMIN") {
+    throw new Error("error");
+  }
+  console.log(session?.user);
 
   return (
     <>
