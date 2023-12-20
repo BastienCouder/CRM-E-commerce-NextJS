@@ -6,23 +6,23 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { RxCross2 } from "react-icons/rx";
-import { Category } from "@prisma/client";
+import { Category, Color } from "@/lib/DbSchema";
 
-interface AccordionFilterProps {
+interface AccordionFilterProps<T> {
   title: string;
-  items: any[];
-  selectedItem: { id: string; name: string | null } | null;
-  onItemClick: (category: Category) => void;
+  items: T[];
+  selectedItem: T | null;
+  onItemClick: (item: T) => void;
   onReset: () => void;
 }
 
-export default function AccordionFilter({
+export default function AccordionFilter<T extends Category | Color>({
   title,
   items,
   selectedItem,
   onItemClick,
   onReset,
-}: AccordionFilterProps) {
+}: AccordionFilterProps<T>) {
   return (
     <div className="flex w-full relative">
       <Accordion className="flex w-full relative" type="single" collapsible>
@@ -31,19 +31,17 @@ export default function AccordionFilter({
           <ul className="w-full">
             {items.map((item) => {
               return (
-                <li key={item.id}>
+                <li key={item}>
                   <AccordionContent
                     onClick={() => onItemClick(item)}
                     className="cursor-pointer"
                   >
                     <div
                       className={`text-xs font-Noto text-start uppercase ${
-                        selectedItem?.id === item.id
-                          ? "text-secondary"
-                          : "text-white"
+                        selectedItem === item ? "text-secondary" : "text-white"
                       }`}
                     >
-                      {item.name}
+                      {item}
                     </div>
                   </AccordionContent>
                 </li>

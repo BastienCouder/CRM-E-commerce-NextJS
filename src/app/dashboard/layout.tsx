@@ -19,7 +19,6 @@ export default async function DashboardLayout({
   if (session?.user.role !== "ADMIN") {
     throw new Error("error");
   }
-  console.log(session?.user);
 
   return (
     <>

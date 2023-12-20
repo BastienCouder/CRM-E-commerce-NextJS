@@ -2,14 +2,13 @@
 import CardProduct from "./CardProduct";
 import Filter from "./Filter";
 import { useState } from "react";
-import { Category, Product, Color, ProductVariant } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
 import ProductListHeader from "./CollectionListHeader";
 import { motion } from "framer-motion";
+import { Category, Color, Product, ProductVariant } from "@/lib/DbSchema";
 
 interface CollectionProps {
   products: (Product & {
-    category: Category | null;
     variants: ProductVariant[] | null;
   })[];
   categories: Category[];
@@ -25,7 +24,6 @@ export default function Collection({
     selectedCategory: null as Category | null,
     selectedColor: null as Color | null,
     sortedProducts: [...products] as (Product & {
-      category: Category | null;
       variants: ProductVariant[] | null;
     })[],
     priceRange: 50000,
@@ -83,8 +81,8 @@ export default function Collection({
   const filteredProducts = sortedProducts
     .filter((product) => {
       if (
-        (selectedCategory && product.categoryId !== selectedCategory.id) ||
-        (selectedColor && product.colorsId !== selectedColor.id)
+        (selectedCategory && product.category !== selectedCategory) ||
+        (selectedColor && product.color !== selectedColor)
       ) {
         return false;
       }

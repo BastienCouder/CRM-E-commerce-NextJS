@@ -3,9 +3,7 @@ import { columns } from "./data/Columns";
 import { z } from "zod";
 import { getProducts } from "@/lib/db/product";
 import { DataTable } from "@/components/tables/DataTable";
-import { productSchema } from "@/lib/zod";
-
-// import { useServerNewPriorityToRecentProducts } from "./action";
+import { ProductSchema } from "@/lib/DbSchema";
 
 export const metadata: Metadata = {
   title: "Dashboard - Products",
@@ -16,7 +14,9 @@ async function getfetchProducts() {
   try {
     const data = await getProducts();
     if (Array.isArray(data)) {
-      return z.array(productSchema).parse(data);
+      console.log(data);
+
+      return z.array(ProductSchema).parse(data);
     } else {
       console.error("Erreur: Les données ne sont pas un tableau.");
       return [];
@@ -33,7 +33,7 @@ export default async function ProductsPage() {
 
   return (
     <>
-      <DataTable data={products as any} columns={columns} variant="products" />
+      <DataTable data={products} columns={columns} variant="products" />
     </>
   );
 }

@@ -1,7 +1,5 @@
 "use server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { checkUserRole } from "@/middlewares/Admin";
-
 import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/db/prisma";
 import { OrderItems } from "@prisma/client";
@@ -13,9 +11,7 @@ export type OrderProps = OrderItems & {
 
 export async function getOrderItems(): Promise<OrderProps[] | null> {
   const session = await getServerSession(authOptions);
-  const admin = await checkUserRole();
-
-  if (!admin) {
+  if (session && session.user.role === "ADMIN") {
     try {
       const orders = await prisma.orderItems.findMany({
         include: {

@@ -1,6 +1,5 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
-import { Category, Color } from "@prisma/client";
 import { BsCaretDownFill } from "react-icons/bs";
 
 import {
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import PriceRangeFilter from "@/components/PriceRangeFilter";
 import AccordionFilter from "@/components/AccordionFilter";
+import { Category, Color } from "@/lib/DbSchema";
 
 interface FilterProps {
   categories: Category[];
@@ -60,14 +60,14 @@ export default function Filter({
         <Separator className="h-[2px]" />
 
         <div className="mt-8 space-y-8 flex flex-col w-full relative">
-          <AccordionFilter
+          <AccordionFilter<Category>
             title="Catégories"
             items={categories}
             selectedItem={selectedCategory}
             onItemClick={handleCategoryClick}
             onReset={handleResetCategory}
           />
-          <AccordionFilter
+          <AccordionFilter<Color>
             title="Couleurs"
             items={colors}
             selectedItem={selectedColor}

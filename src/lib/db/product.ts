@@ -1,6 +1,5 @@
 "use server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { checkUserRole } from "@/middlewares/Admin";
 import { Product } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/db/prisma";
@@ -11,14 +10,12 @@ export type ProductProps = Product & {
 
 export async function getProducts(): Promise<ProductProps[] | null> {
   const session = await getServerSession(authOptions);
-  const admin = await checkUserRole();
 
-  if (!admin) {
+  if (session && session.user.role === "ADMIN") {
     try {
       const products = await prisma.product.findMany({
         where: { deleteAt: null || undefined },
         include: {
-          category: true,
           variants: true,
         },
       });
@@ -39,23 +36,22 @@ export async function getProducts(): Promise<ProductProps[] | null> {
 export async function createProduct(): Promise<ProductProps | null> {
   try {
     const session = await getServerSession(authOptions);
-    const admin = await checkUserRole();
 
-    if (!session || !admin) {
-      console.error("Utilisateur non autorisé pour la création de produits.");
-      return null;
+    if (session && session.user.role === "ADMIN") {
+      const createdProduct = await prisma.product.create({
+        data: {
+          name: "",
+          description: "",
+          imageUrl: "",
+          price: 0,
+          status: "unavailable",
+          stock: 0,
+        },
+      });
+      return createdProduct;
+    } else {
+      throw new Error("Utilisateur non autorisé pour la création de produits.");
     }
-
-    const createdProduct = await prisma.product.create({
-      data: {
-        name: "",
-        description: "",
-        imageUrl: "",
-        price: 0,
-      },
-    });
-
-    return createdProduct;
   } catch (error) {
     console.error("Erreur lors de la création du produit :", error);
     return null;

@@ -2,17 +2,15 @@
 import Link from "next/link";
 import PriceTag from "@/helpers/PriceTag";
 import Image from "next/image";
-import { Product, Category, Color } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import AddToCartButton from "@/components/AddToCartButton";
 import { useServerAddToCart } from "../products/[id]/actions";
 import { useMemo } from "react";
+import { Category, Color, Product } from "@/lib/DbSchema";
 
 interface CardProductProps {
-  product: Product & {
-    category: Category | null;
-  };
+  product: Product;
   selectedCategory: Category | null;
   selectedColor: Color | null;
 }
@@ -31,9 +29,9 @@ export default function CardProduct({
 
   if (
     !selectedCategory ||
-    product.categoryId === selectedCategory.id ||
+    product.category === selectedCategory ||
     !selectedColor ||
-    product.colorsId === selectedColor.id
+    product.color === selectedColor
   ) {
     return (
       <li className="flex justify-center max-w-[300px] max-h-[400px] p-4">

@@ -24,8 +24,8 @@ import {
   useServerSoftDelete,
   useServerUpdateStatus,
 } from "@/app/dashboard/actions";
+import { ProductSchema } from "@/lib/DbSchema";
 import SoftDelete from "@/components/dashboard/SoftDelete";
-import { productSchema } from "@/lib/zod";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -34,7 +34,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const product = productSchema.parse(row.original);
+  const product = ProductSchema.parse(row.original);
 
   return (
     <DropdownMenu>

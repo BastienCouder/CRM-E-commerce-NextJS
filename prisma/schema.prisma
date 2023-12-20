@@ -61,10 +61,8 @@ model User {
     hashedPassword String?
     newsletter     Boolean?
     image          String?
-    language       String?
-    birthDate      String?
-    createdAt      DateTime?  @default(now())
-    updatedAt      DateTime?  @updatedAt
+    createdAt      DateTime   @default(now())
+    updatedAt      DateTime   @updatedAt
     accounts       Account[]
     sessions       Session[]
     Cart           Cart[]
@@ -76,73 +74,59 @@ model User {
     @@map("users")
 }
 
+enum Color {
+    or
+    argent
+    rose
+}
+
+enum Category {
+    bracelet_cuir
+    bracelet_acier
+}
+
 model Product {
     id            String           @id @default(auto()) @map("_id") @db.ObjectId
     description   String
-    imageUrl      String
+    imageUrl      String?
     name          String
-    status        String?
-    label         String?
+    status        String
     priority      String[]
     price         Int
-    stock         Int?
+    stock         Int
     deleteAt      DateTime?
-    createdAt     DateTime?        @default(now())
-    updatedAt     DateTime?        @updatedAt
+    createdAt     DateTime         @default(now())
+    updatedAt     DateTime         @updatedAt
     CartItems     CartItems[]
-    categoryId    String?          @db.ObjectId
-    category      Category?        @relation(fields: [categoryId], references: [id])
     variants      ProductVariant[]
     WishlistItems WishlistItems[]
-    color         Color?           @relation(fields: [colorsId], references: [id])
-    colorsId      String?          @db.ObjectId
+    color         Color?
+    category      Category?
 
     @@map("products")
 }
 
 model ProductVariant {
     id            String          @id @default(auto()) @map("_id") @db.ObjectId
-    name          String?
-    price         Int?
+    name          String
+    price         Int
     imageUrl      String?
-    productId     String?         @db.ObjectId
+    productId     String          @db.ObjectId
     product       Product?        @relation(fields: [productId], references: [id])
     CartItems     CartItems[]
     WishlistItems WishlistItems[]
-    createdAt     DateTime?       @default(now())
-    updatedAt     DateTime?       @updatedAt
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
     deleteAt      DateTime?
 
     @@map("products_variants")
 }
 
-model Category {
-    id        String    @id @default(auto()) @map("_id") @db.ObjectId
-    name      String?
-    products  Product[]
-    createdAt DateTime? @default(now())
-    updatedAt DateTime? @updatedAt
-    deleteAt  DateTime?
-
-    @@map("categories")
-}
-
-model Color {
-    id        String    @id @default(auto()) @map("_id") @db.ObjectId
-    name      String?
-    products  Product[]
-    createdAt DateTime? @default(now())
-    updatedAt DateTime? @updatedAt
-    deleteAt  DateTime?
-
-    @@map("colors")
-}
-
 model Cart {
     id         String       @id @default(auto()) @map("_id") @db.ObjectId
     user       User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
-    createdAt  DateTime?    @default(now())
-    updatedAt  DateTime?    @updatedAt
+    createdAt  DateTime     @default(now())
+    updatedAt  DateTime     @updatedAt
     userId     String?      @db.ObjectId
     cartItems  CartItems[]
     OrderItems OrderItems[]

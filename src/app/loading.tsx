@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/styles/Utils.module.css";
+import styles from "@/styles/keyframes.module.css";
 import Image from "next/image";
 
 export default function Loading() {
