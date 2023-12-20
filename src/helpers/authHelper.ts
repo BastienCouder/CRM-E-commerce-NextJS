@@ -1,21 +1,4 @@
-"use server";
-import bcrypt from "bcrypt";
-import { redirect } from "next/navigation";
 import { compare } from "bcryptjs";
-
-export async function registerForm(formData: FormData) {
-  const name = formData.get("username")?.toString();
-  const email = formData.get("email")?.toString();
-  const password = formData.get("password")?.toString();
-
-  const hashedPassword = await bcrypt.hash(password!, 10);
-
-  await prisma.user.create({
-    data: { name, email, hashedPassword },
-  });
-
-  redirect("/profile");
-}
 
 //Check RegisterEmail
 export async function checkIfEmailExists(email: string) {

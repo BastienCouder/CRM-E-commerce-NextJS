@@ -1,5 +1,5 @@
 "use client";
-import { formatDateMonth } from "@/lib/format";
+import { formatDateMonth } from "@/helpers/format";
 import {
   Bar,
   BarChart,

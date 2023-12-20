@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/helpers/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,

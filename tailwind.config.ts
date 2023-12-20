@@ -8,7 +8,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  plugins: [require("daisyui"), require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate")],
   theme: {
     container: {
       center: true,

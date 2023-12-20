@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Column } from "@tanstack/react-table";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/helpers/utils";
 import {
   Popover,
   PopoverContent,

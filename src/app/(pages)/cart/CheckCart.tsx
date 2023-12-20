@@ -1,6 +1,6 @@
 "use client";
-import formatPrice from "@/lib/format";
-import { VAT_RATE } from "@/lib/utils";
+import formatPrice from "@/helpers/format";
+import { VAT_RATE } from "@/helpers/utils";
 import { CartItems } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";

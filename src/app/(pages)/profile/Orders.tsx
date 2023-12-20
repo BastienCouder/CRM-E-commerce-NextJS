@@ -2,8 +2,8 @@
 
 import { CartItemsProps } from "@/lib/db/cart";
 import { OrderProps } from "@/lib/db/order";
-import formatPrice, { formatDate, formatDescription } from "@/lib/format";
-import { handleStatusChange } from "@/lib/utils";
+import formatPrice, { formatDate, formatDescription } from "@/helpers/format";
+import { handleStatusChange } from "@/helpers/utils";
 import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";

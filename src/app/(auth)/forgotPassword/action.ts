@@ -1,15 +1,15 @@
 "use server";
 import nodemailer from "nodemailer";
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 const transporter = nodemailer.createTransport(nodemailerConfig);
 import { env } from "@/lib/env";
 import { nodemailerConfig } from "@/lib/nodemailerConfig";
 
 const findUserByEmail = async (email: string) => {
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findUserByEmail({
     where: {
-      email: email,
+      email,
     },
   });
 

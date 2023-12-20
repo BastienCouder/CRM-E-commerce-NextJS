@@ -4,7 +4,7 @@ import SessionProvider from "../context/SessionProvider";
 import { AnimationProvider } from "../context/AnimationContext";
 import { Toaster } from "sonner";
 import CookieBanner from "@/components/CookieBanner";
-import { cn } from "@/lib/utils";
+import { cn } from "@/helpers/utils";
 import { Inter as FontSans, Roboto } from "next/font/google";
 import { FontProvider } from "@/context/FontContext";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -46,7 +46,7 @@ export default function RootLayout({
               <GoogleAnalytics GA_MEASUREMENT_ID="G-V772K2XN19" />
               <main>{children}</main>
             </FontProvider>
-            <CookieBanner />
+            {/* <CookieBanner /> */}
           </AnimationProvider>
         </SessionProvider>
         <Toaster expand={false} position="bottom-left" />

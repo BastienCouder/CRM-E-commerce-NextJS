@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { BsCaretDownFill } from "react-icons/bs";
 import AddToCartButton from "../../../../components/AddToCartButton";
-import PriceTag from "@/components/PriceTag";
+import PriceTag from "@/helpers/PriceTag";
 import { Category, Product, ProductVariant } from "@prisma/client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

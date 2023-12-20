@@ -1,6 +1,6 @@
 "use client";
 
-import formatPrice from "@/lib/format";
+import formatPrice from "@/helpers/format";
 import { Order } from "../../lib/zod";
 
 interface TotalOrderProps {

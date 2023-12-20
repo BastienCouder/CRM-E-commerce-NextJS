@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import formatPrice, { formatDescription } from "@/lib/format";
+import formatPrice, { formatDescription } from "@/helpers/format";
 
 interface CartItemProps {
   cartItem: any;

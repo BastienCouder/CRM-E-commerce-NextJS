@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import PriceTag from "@/components/PriceTag";
+import PriceTag from "@/helpers/PriceTag";
 import Image from "next/image";
 import { Product, Category, Color } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";

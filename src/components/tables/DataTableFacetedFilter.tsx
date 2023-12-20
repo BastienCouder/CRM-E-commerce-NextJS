@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Column } from "@tanstack/react-table";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/helpers/utils";
 import {
   Popover,
   PopoverContent,
@@ -98,9 +98,9 @@ export function DataTableFacetedFilter<TData, TValue>({
                   >
                     <div
                       className={cn(
-                        "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-white text-secondary-foreground",
+                        "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-foreground border-foreground",
                         isSelected
-                          ? "bg-primary text-primary-foreground"
+                          ? "bg-secondary text-primary border-primary"
                           : "opacity-50 [&_svg]:invisible"
                       )}
                     >

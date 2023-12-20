@@ -1,9 +1,5 @@
-import {
-  checkEmail,
-  checkIfEmailExists,
-  checkPassword,
-} from "@/app/auth/action";
 import * as z from "zod";
+import { checkEmail, checkIfEmailExists } from "../helpers/authHelper";
 
 export const UserSchema = z.object({
   id: z.string(),

@@ -1,3 +1,4 @@
+"use client";
 import { Input } from "@/components/ui/input";
 import { useState, useCallback } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -33,7 +34,11 @@ export default function ShowPassword({
         onClick={togglePasswordVisibility}
         className="absolute text-zinc-900 top-1.5 right-0 px-2 outline-none text-xl cursor-pointer"
       >
-        {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+        {showPassword ? (
+          <AiFillEyeInvisible color="rgb(var(--foreground))" />
+        ) : (
+          <AiFillEye color="rgb(var(--foreground))" />
+        )}
       </button>
     </div>
   );

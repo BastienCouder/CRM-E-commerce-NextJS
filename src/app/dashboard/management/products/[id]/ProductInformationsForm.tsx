@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/helpers/utils";
 import {
   Form,
   FormControl,
@@ -30,7 +30,7 @@ import { Button } from "@/components/ui/button";
 import { ProductProps } from "../../../../lib/db/product";
 import { Category, ProductVariant } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
-import formatPrice from "@/lib/format";
+import formatPrice from "@/helpers/format";
 import Image from "next/image";
 
 export const productsFormSchema = z.object({

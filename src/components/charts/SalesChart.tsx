@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import formatPrice, { formatDateMonth } from "@/lib/format";
+import formatPrice, { formatDateMonth } from "@/helpers/format";
 import { BarChart2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { AnalyticsOrdersData } from "../../orders/actions";

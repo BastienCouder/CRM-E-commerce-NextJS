@@ -135,7 +135,7 @@ import "@stripe/stripe-js";
 import { loadStripe } from "@stripe/stripe-js/pure";
 import { createStripeSession } from "@/app/api/create-stripe-session/route";
 import { env } from "@/lib/env";
-import { generateOrderNumber } from "@/lib/utils";
+import { generateOrderNumber } from "@/helpers/utils";
 
 export async function handleStripePayment(carId: string, deliveryId: string) {
   if (carId && deliveryId) {

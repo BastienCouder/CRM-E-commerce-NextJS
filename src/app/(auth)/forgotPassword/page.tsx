@@ -15,9 +15,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { checkIfEmailExists } from "../action";
 import { sendForgotPassword } from "./action";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { checkIfEmailExists } from "@/helpers/authHelper";
 
 //ForgotPassword zod schema
 const ForgotPasswordSchema = z.object({

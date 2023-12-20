@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { formatDateMonth } from "@/lib/format";
+import { formatDateMonth } from "@/helpers/format";
 import { AreaChart } from "lucide-react";
 import {
   ResponsiveContainer,

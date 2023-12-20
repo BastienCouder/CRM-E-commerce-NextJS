@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { AiOutlinePlus } from "react-icons/ai";
 import AddToCartButton from "../../../../components/AddToCartButton";
-import PriceTag from "@/components/PriceTag";
+import PriceTag from "@/helpers/PriceTag";
 import { Category, Product, ProductVariant } from "@prisma/client";
 import { usePathname } from "next/navigation";
 import Link from "next/link";

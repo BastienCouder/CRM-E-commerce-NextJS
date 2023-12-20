@@ -1,38 +1,26 @@
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
-import { checkUserRole } from "@/middlewares/Admin";
 import { ThemeProviders } from "@/context/ThemeContext";
 import { MainNav } from "@/components/dashboard/MainNav";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export const metadata = {
   title: "Dashboard",
   description: "Ceci est le dashboard de mon application.",
 };
 
-async function fetchData() {
-  try {
-    const result = await checkUserRole();
-    if (result) {
-      console.log("Bienvenue");
-    } else {
-      // return redirect("/");
-      console.log("au revoir");
-      // return redirect("/");
-    }
-  } catch (error) {
-    console.error(
-      "Erreur lors de la vérification du rôle utilisateur :",
-      error
-    );
-  }
-}
-
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  fetchData();
+  const session = await getServerSession(authOptions);
+  // if (session?.user.role !== "ADMIN") {
+  //   throw new Error("error");
+  // }
+  console.log(session?.user.role === "ADMIN");
+
   return (
     <>
       <ThemeProviders>

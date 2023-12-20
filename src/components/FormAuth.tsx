@@ -26,11 +26,12 @@ import {
   defaultLoginValues,
   defaultRegisterValues,
 } from "@/lib/zod";
-import ShowPassword from "../../components/ShowPassword";
-import { checkPassword } from "./action";
+import ShowPassword from "./ShowPassword";
+
 import { toast } from "sonner";
 import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
+import { checkPassword } from "@/helpers/authHelper";
 
 interface FormAuthProps {
   registerForm: (formData: FormData) => Promise<void>;

@@ -33,7 +33,7 @@ export default function UserMenuButton({
     </Link>
   ) : (
     <Link
-      href={`/auth`}
+      href={`/login`}
       onClick={() => {
         toggleMenu();
         handleEnableAnimation();

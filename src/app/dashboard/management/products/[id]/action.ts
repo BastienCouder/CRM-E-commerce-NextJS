@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { Product } from "@prisma/client";
-import { findCategoryIdByName } from "@/lib/utils";
+import { findCategoryIdByName } from "@/helpers/utils";
 import { getProducts } from "@/lib/db/product";
 
 export async function useServerUpdateProduct(

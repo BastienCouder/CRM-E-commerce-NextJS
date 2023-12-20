@@ -17,7 +17,7 @@ import SoftDelete from "../../../components/SoftDelete";
 import DangerDelete from "@/components/dashboard/DangerDelete";
 import { Order } from "@/app/dashboard/lib/zod";
 import { statuses } from "../../data/data";
-import { handleStatusChange } from "@/lib/utils";
+import { handleStatusChange } from "@/helpers/utils";
 
 interface OrderSettingsFormProps {
   orderId: string;

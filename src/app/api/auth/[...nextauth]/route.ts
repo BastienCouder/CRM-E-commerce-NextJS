@@ -2,36 +2,52 @@ import { AuthOptions } from "next-auth";
 import { PrismaClient } from "@prisma/client";
 import { env } from "@/lib/env";
 import { authProviders } from "./authProviders";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { Adapter } from "next-auth/adapters";
 import { mergeAnonymousCartIntoUserCart } from "@/lib/db/cart";
 import { mergeAnonymousWishlistIntoUserCart } from "@/lib/db/wishlist";
-import { randomBytes, randomUUID } from "crypto";
 import NextAuth from "next-auth/next";
 // import { mergeAnonymousDeliveryIntoUserCart } from "@/lib/db/delivery";
 
-const prisma = new PrismaClient();
-
 export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma as PrismaClient) as Adapter,
   providers: authProviders,
 
   pages: {
-    signIn: "/auth",
+    signIn: "/login",
   },
   session: {
-    strategy: "database",
+    strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,
-    generateSessionToken: () => {
-      return randomUUID?.() ?? randomBytes(32).toString("hex");
-    },
   },
   secret: env.NEXTAUTH_SECRET,
-  // debug: env.NODE_ENV === "development",
   callbacks: {
-    async session({ session, user }) {
-      session.user.id = user.id;
+    async session({ token, session }) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.role = token.role;
+        session.user.image = token.picture;
+      }
       return session;
+    },
+    async jwt({ token, user }) {
+      const dbUser = prisma.user.findFirst({
+        where: {
+          email: token.email,
+        },
+      });
+
+      if (!dbUser) {
+        token.id = user!.id;
+        return token;
+      }
+
+      return {
+        id: dbUser.id,
+        name: dbUser.name,
+        role: dbUser.role,
+        email: dbUser.email,
+        picture: dbUser.picture,
+      };
     },
   },
   events: {
@@ -42,6 +58,5 @@ export const authOptions: AuthOptions = {
     },
   },
 };
-
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
