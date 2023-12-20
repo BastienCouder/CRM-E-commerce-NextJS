@@ -7,8 +7,7 @@ import CookieBanner from "@/components/CookieBanner";
 import { cn } from "@/lib/utils";
 import { Inter as FontSans, Roboto } from "next/font/google";
 import { FontProvider } from "@/context/FontContext";
-import { AnalyticsProvider } from "@/context/AnalyticsContext";
-import { GeoProvider } from "@/context/GeoContext";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -41,15 +40,14 @@ export default function RootLayout({
         )}
       >
         <SessionProvider>
-          <AnalyticsProvider>
-            <AnimationProvider>
-              <Navbar />
-              <FontProvider>
-                <main>{children}</main>
-              </FontProvider>
-              <CookieBanner />
-            </AnimationProvider>
-          </AnalyticsProvider>
+          <AnimationProvider>
+            <Navbar />
+            <FontProvider>
+              <GoogleAnalytics GA_MEASUREMENT_ID="G-V772K2XN19" />
+              <main>{children}</main>
+            </FontProvider>
+            <CookieBanner />
+          </AnimationProvider>
         </SessionProvider>
         <Toaster expand={false} position="bottom-left" />
       </body>

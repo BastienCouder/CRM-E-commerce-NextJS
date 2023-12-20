@@ -16,7 +16,7 @@ import {
 } from "@/app/dashboard/actions";
 import Status from "@/components/dashboard/Status";
 import SoftDelete from "@/components/dashboard/SoftDelete";
-import { orderSchema } from "@/app/dashboard/lib/zod";
+import { orderSchema } from "@/lib/zod";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -26,7 +26,6 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const order = orderSchema.parse(row.original);
-  console.log(order);
 
   return (
     <DropdownMenu>

@@ -1,49 +1,59 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
+
+import { getLocalStorage, setLocalStorage } from "@/lib/storageHelper";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function CookieBanner() {
-  const [showBanner, setShowBanner] = useState(false);
+  const [cookieConsent, setCookieConsent] = useState(
+    getLocalStorage("cookie_consent", false)
+  );
 
   useEffect(() => {
-    if (document.cookie.indexOf("cookies_accepted=") === -1) {
-      setShowBanner(true);
-    }
-  }, []);
+    const storedCookieConsent = getLocalStorage("cookie_consent", null);
 
-  const handleAcceptCookies = () => {
-    setShowBanner(false);
+    setCookieConsent(storedCookieConsent);
+  }, [setCookieConsent]);
 
-    document.cookie =
-      "cookies_accepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
-  };
+  useEffect(() => {
+    const newValue = cookieConsent ? "granted" : "denied";
 
-  if (!showBanner) {
-    return null;
-  }
+    window.gtag("consent", "update", {
+      analytics_storage: newValue,
+    });
+
+    setLocalStorage("cookie_consent", cookieConsent);
+
+    //For Testing
+    console.log("Cookie Consent: ", cookieConsent);
+  }, [cookieConsent]);
 
   return (
-    <div className="fixed flex flex-col md:flex-row bottom-0 w-full bg-primary/80 p-4 md:p-6 md:space-x-8 space-y-4">
-      <div className="flex flex-col gap-y-2">
-        <p className="text-sm md:text-base">
-          Nous utilisons des cookies pour améliorer votre expérience. En
-          continuant à utiliser ce site, vous acceptez notre utilisation des
-          cookies.
-        </p>
-        <div>
-          <Link
-            href="/politique-de-confidentialite"
-            className="text-sm border-b"
-          >
-            Politique de confidentialité
-          </Link>
-        </div>
+    <div
+      className={`my-10 mx-auto max-w-max md:max-w-screen-sm
+                        fixed bottom-0 left-0 right-0 
+                        flex px-3 md:px-4 py-3 justify-between items-center flex-col sm:flex-row gap-4  
+                         bg-gray-700 rounded-lg shadow`}
+    >
+      <div className="text-center">
+        <Link href="/info/cookies">
+          <p>
+            We use <span className="font-bold text-sky-400">cookies</span> on
+            our site.
+          </p>
+        </Link>
       </div>
-      <div>
-        <Button aria-label="Accepter cookies" onClick={handleAcceptCookies}>
-          Accepter
-        </Button>
+
+      <div className="flex gap-2">
+        {cookieConsent ? (
+          <button className="..." onClick={() => setCookieConsent(false)}>
+            Decline
+          </button>
+        ) : (
+          <button className="..." onClick={() => setCookieConsent(true)}>
+            Allow Cookies
+          </button>
+        )}
       </div>
     </div>
   );

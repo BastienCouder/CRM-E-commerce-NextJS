@@ -13,7 +13,6 @@ export default async function Payment() {
   // const session = getServerSession(authOptions);
   const cart = await getCart();
   const delivery = await getDelivery();
-  console.log(cart);
 
   // if (!session) {
   //   redirect("/auth");

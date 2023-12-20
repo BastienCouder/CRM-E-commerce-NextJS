@@ -6,8 +6,8 @@ import { columns } from "./data/Columns";
 import { useServerReadAnalyticsOrders } from "./actions";
 import AnalyticsOrder from "./AnalyticsOrder";
 import { getOrderItems } from "@/lib/db/orderItem";
-import { orderSchema } from "../../lib/zod";
 import { DataTable } from "@/components/tables/DataTable";
+import { orderSchema } from "@/lib/zod";
 
 export const metadata: Metadata = {
   title: "Dashboard - Products",

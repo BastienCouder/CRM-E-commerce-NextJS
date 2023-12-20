@@ -166,7 +166,6 @@ export const columns: ColumnDef<any>[] = [
       <DataTableColumnHeader column={column} title="Privilège" />
     ),
     cell: ({ row }) => {
-      console.log(row.original.priority);
       return (
         <div className="flex space-x-2">
           {row.original.priority.map((priorityValue: string) => {
@@ -195,7 +194,7 @@ export const columns: ColumnDef<any>[] = [
     },
     filterFn: (row, id, value) => {
       const rowValue = row.getValue(id);
-      console.log(value, row, id);
+
       if (Array.isArray(rowValue)) {
         return value.some((val: string) => rowValue.includes(val));
       }

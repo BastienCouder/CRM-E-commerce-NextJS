@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import { columns } from "./data/Columns";
 import { z } from "zod";
 import { getProducts } from "@/lib/db/product";
-import { productSchema } from "../../lib/zod";
 import { DataTable } from "@/components/tables/DataTable";
+import { productSchema } from "@/lib/zod";
 
 // import { useServerNewPriorityToRecentProducts } from "./action";
 

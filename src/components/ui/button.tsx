@@ -15,10 +15,9 @@ const buttonVariants = cva(
         outline:
           "bg-primary border-none border tracking-[2px] uppercase text-sm hover:text-primary-foreground",
         delete:
-          "bg-accent border-accent border tracking-[2px] uppercase text-sm hover:bg-destructive hover:border-destructive hover:border hover:text-accent-foreground",
+          "bg-primary border-primary border tracking-[2px] uppercase text-sm hover:bg-destructive hover:border-destructive hover:border hover:text-destructive-foreground",
 
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        secondary: "bg-muted text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-muted hover:text-muted-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },

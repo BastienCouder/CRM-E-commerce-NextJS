@@ -4,30 +4,30 @@ import Analytics from "../../app/dashboard/Analytics";
 import Overview from "../../app/dashboard/Overview";
 import Newsletter from "../../app/dashboard/Newsletter";
 
-interface OverviewNavProps {
+interface AnalyticsNavProps {
   analyticsProductsData: any;
   analyticsOrdersData: any;
   analyticsWishlistCartOrderData: any;
   analyticsUsersData: any;
 }
 
-export default function OverviewNav({
+export default function AnalyticsNav({
   analyticsProductsData,
   analyticsOrdersData,
   analyticsUsersData,
   analyticsWishlistCartOrderData,
-}: OverviewNavProps) {
+}: AnalyticsNavProps) {
   return (
     <>
       <div className="flex space-y-4">
         <Tabs defaultValue="overview" className="space-y-4">
           <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-            <TabsTrigger value="reports">Newsletter</TabsTrigger>
-            <TabsTrigger value="notifications">Other</TabsTrigger>
+            <TabsTrigger value="views">Views</TabsTrigger>
+            <TabsTrigger value="products">Produits</TabsTrigger>
+            <TabsTrigger value="users">Users</TabsTrigger>
+            <TabsTrigger value="orders">Orders</TabsTrigger>
           </TabsList>
-          <TabsContent value="overview">
+          <TabsContent value="views">
             <Overview
               {...{
                 analyticsProductsData,
@@ -37,7 +37,7 @@ export default function OverviewNav({
               }}
             />
           </TabsContent>
-          <TabsContent value="analytics">
+          <TabsContent value="products">
             <Analytics
               {...{
                 analyticsProductsData,
@@ -46,10 +46,10 @@ export default function OverviewNav({
               }}
             />
           </TabsContent>
-          <TabsContent value="reports">
+          <TabsContent value="users">
             <Newsletter analyticsUsersData={analyticsUsersData} />
           </TabsContent>
-          <TabsContent value="notifications">
+          <TabsContent value="orders">
             <div>Notifications Content</div>
           </TabsContent>
         </Tabs>

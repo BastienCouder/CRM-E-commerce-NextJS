@@ -17,7 +17,6 @@ import {
   useServerDuplicateProduct,
   useServerUpdateProductFavourites,
 } from "../[id]/action";
-import { productSchema } from "@/app/dashboard/lib/zod";
 import Duplicate from "@/components/dashboard/Duplicate";
 import Favorites from "@/components/dashboard/Favorites";
 import Status from "@/components/dashboard/Status";
@@ -26,6 +25,7 @@ import {
   useServerUpdateStatus,
 } from "@/app/dashboard/actions";
 import SoftDelete from "@/components/dashboard/SoftDelete";
+import { productSchema } from "@/lib/zod";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;

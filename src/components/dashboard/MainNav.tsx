@@ -1,106 +1,47 @@
 "use client";
+import React from "react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
-import {
-  Eye,
-  PackageOpen,
-  Paperclip,
-  ShoppingCart,
-  Users2,
-  Wallpaper,
-} from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { User, Moon, Settings } from "lucide-react";
+import { AreaNav } from "./AreaNav";
 
-const mainNavItems = [
-  { href: "/dashboard", label: "Overview", icon: <Wallpaper size={15} /> },
+type NavSectionProps = {
+  title: string;
+  variant: "main" | "management" | "analytics" | "marketing";
+};
+
+const navSections: NavSectionProps[] = [
+  { title: "Dashboard", variant: "main" },
+  { title: "Gestion", variant: "management" },
+  { title: "Analytics", variant: "analytics" },
+  { title: "Marketing", variant: "marketing" },
 ];
 
-const managementNavItems = [
-  {
-    href: "/dashboard/management/orders",
-    label: "Commandes",
-    icon: <ShoppingCart size={15} />,
-  },
-  {
-    href: "/dashboard/management/products",
-    label: "Produits",
-    icon: <PackageOpen size={15} />,
-  },
-  {
-    href: "/dashboard/management/users",
-    label: "Utilisateurs",
-    icon: <Users2 size={15} />,
-  },
-];
-
-const analyticsNavItems = [
-  {
-    href: "/dashboard/analytics/views",
-    label: "Views",
-    icon: <Eye size={15} />,
-  },
-];
-
-const marketingNavItems = [
-  {
-    href: "/dashboard/newsletter",
-    label: "Newsletter",
-    icon: <Paperclip size={15} />,
-  },
-];
-
-export function MainNav({
-  className,
-  variant = "main",
-  ...props
-}: React.HTMLAttributes<HTMLElement> & {
-  variant?: "main" | "management" | "analytics" | "marketing";
-}) {
-  const pathname = usePathname();
-
-  let navItems;
-  switch (variant) {
-    case "main":
-      navItems = mainNavItems;
-      break;
-    case "management":
-      navItems = managementNavItems;
-      break;
-    case "analytics":
-      navItems = analyticsNavItems;
-      break;
-    case "marketing":
-      navItems = marketingNavItems;
-      break;
-    default:
-      navItems = mainNavItems;
+export function MainNav() {
+  function NavSection({ title, variant }: NavSectionProps) {
+    return (
+      <div className="flex flex-col gap-y-2 items-center">
+        <h2 className="text-sm">{title}</h2>
+        <Separator className="w-5/6 bg-[rgba(var(--foreground),0.5)]" />
+        <AreaNav variant={variant} />
+      </div>
+    );
   }
 
   return (
-    <nav
-      className={cn(
-        "w-full flex flex-col items-center space-y-4 px-2",
-        className
-      )}
-      {...props}
-    >
-      {navItems?.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className={cn(
-            buttonVariants({ variant: "ghost" }),
-            item.href !== "/dashboard" && pathname.startsWith(item.href)
-              ? "bg-muted hover:bg-muted"
-              : "hover:bg-muted",
-            "w-[10rem] border-none justify-start text-sm font-medium py-2 px-4 gap-x-2"
-          )}
-        >
-          <span className="text-secondary">{item.icon}</span>
-          {item.label}
-        </Link>
-      ))}
+    <nav>
+      <div className="flex flex-col h-screen items-center space-y-12 py-4">
+        {navSections.map(({ title, variant }) => (
+          <NavSection key={variant} title={title} variant={variant} />
+        ))}
+        <div className="w-full justify-center flex space-x-8">
+          <User size={20} />
+          <Moon size={20} />
+          <Link href="/dashboard/settings">
+            <Settings size={20} />
+          </Link>
+        </div>
+      </div>
     </nav>
   );
 }

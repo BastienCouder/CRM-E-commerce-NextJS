@@ -158,7 +158,6 @@ export async function useServerUpdateProductFavourites(
       where: { id: productId },
       data: { priority: updatedPriority },
     });
-    console.log(updatedProduct);
 
     revalidatePath(`/dashboard/products`);
     revalidatePath(`/products`);

@@ -29,7 +29,6 @@ async function getfetchUsers() {
 export default async function UserPage() {
   const users = await getfetchUsers();
   // await useServerNewPriorityToRecentProducts();
-  console.log(users);
 
   return (
     <>
