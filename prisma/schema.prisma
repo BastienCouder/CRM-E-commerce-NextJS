@@ -292,7 +292,9 @@ model VisitorInfo {
     visitorId  String    @unique
     browser    String
     os         String
-    location   String?
+    city       String?
+    country    String?
+    region     String?
     deviceType String
     createdAt  DateTime  @default(now())
     deleteAt   DateTime?

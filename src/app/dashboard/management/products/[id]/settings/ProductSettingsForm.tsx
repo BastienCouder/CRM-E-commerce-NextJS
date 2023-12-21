@@ -14,7 +14,7 @@ import {
   useServerDelete,
   useServerRestore,
   useServerSoftDelete,
-} from "@/app/dashboard/actions";
+} from "@/app/dashboard/management/actions";
 import SoftDelete from "../../../components/SoftDelete";
 import DangerDelete from "@/components/dashboard/DangerDelete";
 

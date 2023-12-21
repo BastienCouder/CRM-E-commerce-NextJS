@@ -1,22 +1,29 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse, userAgent } from "next/server";
 import { cookies } from "next/headers";
 import { v4 as uuidv4 } from "uuid";
 import UAParser from "ua-parser-js";
-import { recordVisit, recordVisitorInfo } from "./lib/views";
+import { recordVisitorInfo } from "./lib/views";
 
 export function middleware(req: NextRequest) {
-  const url = req.nextUrl.pathname;
+  const { device } = userAgent(req);
+  let viewport = device.type === "mobile" ? "mobile" : "desktop";
+
+  const { nextUrl: url, geo } = req;
+  const country = geo?.country || "US";
+  console.log(country);
+
+  url.searchParams.set("country", country);
+
   const cookieStore = cookies();
 
   if (
-    !url.startsWith("/_next/") &&
-    !url.startsWith("/api/auth/session") &&
-    !url.endsWith(".svg") &&
-    !url.endsWith(".jpg") &&
-    !url.endsWith(".png") &&
-    !url.endsWith(".css") &&
-    !url.endsWith(".js")
+    !url.pathname.startsWith("/_next/") &&
+    !url.pathname.startsWith("/api/auth/session") &&
+    !url.pathname.endsWith(".svg") &&
+    !url.pathname.endsWith(".jpg") &&
+    !url.pathname.endsWith(".png") &&
+    !url.pathname.endsWith(".css") &&
+    !url.pathname.endsWith(".js")
   ) {
     console.log(`Page requested: ${url}`);
     // recordVisit(url);
@@ -31,13 +38,24 @@ export function middleware(req: NextRequest) {
       const ua = new UAParser(userAgent);
       const browserName = ua.getBrowser().name || "Unknown";
       const osName = ua.getOS().name || "Unknown";
-      const deviceType = ua.getDevice().type || "Unknown";
-      const location = ""; // Remplacer par la logique de géolocalisation réelle
+      const deviceType = viewport;
+      const city = req.geo?.city!;
+      const country = req.geo?.country!;
+      const region = req.geo?.region!;
+      console.log(country, region, city);
 
       console.log(
-        `Visitor requested: ${visitorId}, ${browserName},${osName},${location}`
+        `Visitor requested: ${visitorId}, ${browserName},${osName},${deviceType}`
       );
-      recordVisitorInfo(visitorId, browserName, osName, location, deviceType);
+      recordVisitorInfo(
+        visitorId,
+        browserName,
+        osName,
+        deviceType,
+        city,
+        country,
+        region
+      );
 
       const response = NextResponse.next();
       response.cookies.set("visitorId", visitorId, {

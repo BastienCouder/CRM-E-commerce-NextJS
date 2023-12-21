@@ -1,11 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Home from "@/app/(pages)/page"; // Assurez-vous que le chemin est correct
-import { useRouter } from "next/router"; // Utilisez "next/router" au lieu de "next/navigation"
 
 // Mock useRouter
-jest.mock("next/router", () => ({
-  ...jest.requireActual("next/router"),
+jest.mock("next/navigation", () => ({
+  ...jest.requireActual("next/navigation"),
   useRouter: jest.fn(),
 }));
 

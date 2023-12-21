@@ -21,16 +21,20 @@ export async function recordVisitorInfo(
   visitorId: string,
   browserName: string,
   osName: string,
-  location: string,
-  deviceType: string
+  deviceType: string,
+  city: string,
+  country: string,
+  region: string
 ) {
   await prisma.visitorInfo.create({
     data: {
       visitorId,
       browser: browserName,
       os: osName,
-      location,
       deviceType,
+      city,
+      country,
+      region,
     },
   });
 }

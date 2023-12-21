@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import StatsCard from "../../components/dashboard/StatsCard";
 import OrdersLengthSalesChart from "../../components/charts/OrdersSalesLengthChart";
-import { useServerGeoData } from "./actions";
+import { useServerGeoData } from "./management/actions";
 import { useGeo } from "@/context/GeoContext";
 
 interface OverviewProps {

@@ -23,7 +23,7 @@ import Status from "@/components/dashboard/Status";
 import {
   useServerSoftDelete,
   useServerUpdateStatus,
-} from "@/app/dashboard/actions";
+} from "@/app/dashboard/management/actions";
 import { ProductSchema } from "@/lib/DbSchema";
 import SoftDelete from "@/components/dashboard/SoftDelete";
 

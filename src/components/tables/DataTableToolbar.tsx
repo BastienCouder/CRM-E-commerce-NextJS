@@ -1,7 +1,7 @@
 import { Table } from "@tanstack/react-table";
 
 import SoftDelete from "../dashboard/SoftDelete";
-import { useServerSoftDelete } from "../../app/dashboard/actions";
+import { useServerSoftDelete } from "../../app/dashboard/management/actions";
 import { statuses as orderStatuses } from "../../app/dashboard/management/orders/data/data";
 import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "./DataTableFacetedFilter";

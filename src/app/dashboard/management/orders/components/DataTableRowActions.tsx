@@ -13,7 +13,7 @@ import Link from "next/link";
 import {
   useServerSoftDelete,
   useServerUpdateStatus,
-} from "@/app/dashboard/actions";
+} from "@/app/dashboard/management/actions";
 import Status from "@/components/dashboard/Status";
 import SoftDelete from "@/components/dashboard/SoftDelete";
 import { OrderItemSchema } from "@/lib/DbSchema";
