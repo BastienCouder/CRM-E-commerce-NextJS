@@ -1,9 +1,10 @@
 import { Metadata } from "next";
-import { columns } from "./components/Columns";
-import { DataTable } from "./components/DataTable";
+import { columns } from "./data/Columns";
+
 import { z } from "zod";
 import { getUsers } from "@/lib/db/user";
 import { UserSchema } from "@/lib/DbSchema";
+import { DataTable } from "@/components/tables/DataTable";
 // import { useServerNewPriorityToRecentProducts } from "./action";
 
 export const metadata: Metadata = {
@@ -32,7 +33,7 @@ export default async function UserPage() {
 
   return (
     <>
-      <DataTable data={users as any} columns={columns} />
+      <DataTable data={users as any} columns={columns} variant="users" />
     </>
   );
 }

@@ -30,7 +30,7 @@ import { DataTablePagination } from "./DataTablePagination";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  variant: "orders" | "products";
+  variant: "orders" | "products" | "users";
 }
 
 export function DataTable<TData, TValue>({

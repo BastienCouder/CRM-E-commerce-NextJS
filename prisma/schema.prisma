@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-    provider = "mongodb"
-    url      = env("DATABASE_URL")
+    provider  = "mongodb"
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
 }
 
 model Account {
@@ -264,5 +265,16 @@ model UserLocation {
     createdAt DateTime  @default(now())
     deleteAt  DateTime?
 
-    @@map("UserLocation")
+    @@map("user_location")
+}
+
+model PageVisit {
+    id        String    @id @default(auto()) @map("_id") @db.ObjectId
+    url       String    @unique
+    visits    Int       @default(0)
+    lastVisit DateTime  @default(now())
+    createdAt DateTime  @default(now())
+    deleteAt  DateTime?
+
+    @@map("page_visit")
 }

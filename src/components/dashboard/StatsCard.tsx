@@ -114,7 +114,7 @@ export default function StatsCard({
                 d="m0 351.2 125 266.098 125 23.1 125-180.12 125-192.323L625 795.23l125-611.162 125 61.913 125 203.69 125 188.88 125-145.363 125 93.973 125 162.54 125-387.644 125 200.421 125 65.86 125-154.408"
                 fill="none"
                 stroke="rgb(var(--chart3))"
-                stroke-width="10"
+                strokeWidth="10"
               />
               <g fill="rgb(var(--chart3))">
                 <circle cy="351.201" r="14" />

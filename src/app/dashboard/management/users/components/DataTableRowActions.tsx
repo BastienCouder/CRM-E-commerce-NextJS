@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { UserSchema } from "@/lib/DbSchema";
 
 interface DataTableRowActionsProps<TData> {

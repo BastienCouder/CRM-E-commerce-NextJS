@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
+import { pageVisit } from "@/lib/pageVisit";
 
 export function middleware(req: NextRequest) {
   const url = req.nextUrl.pathname;
@@ -14,6 +15,7 @@ export function middleware(req: NextRequest) {
     !url.endsWith(".js")
   ) {
     console.log(`Page requested: ${url}`);
+    // pageVisit(url);
   }
 
   const cookieConsent = (req.cookies as any)["cookieConsent"];

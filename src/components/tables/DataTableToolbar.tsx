@@ -15,7 +15,7 @@ import {
 
 interface DataTableToolbarProps<TData> {
   table: Table<any>;
-  variant: "orders" | "products";
+  variant: "orders" | "products" | "users";
 }
 
 export function DataTableToolbar<TData>({
@@ -33,7 +33,13 @@ export function DataTableToolbar<TData>({
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder={variant === "orders" ? "Commandes..." : "Produits..."}
+          placeholder={
+            variant === "orders"
+              ? "Commandes..."
+              : variant === "products"
+              ? "Produits..."
+              : "Utilisateurs..."
+          }
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event: any) =>
             table.getColumn("name")?.setFilterValue(event.target.value)

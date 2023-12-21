@@ -1,14 +1,15 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { newsletters } from "../data/data";
+import { newsletters } from "./data";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { DataTableColumnHeader } from "./DataTableColumnHeader";
-import { DataTableRowActions } from "./DataTableRowActions";
+
+import { DataTableRowActions } from "../components/DataTableRowActions";
 
 import Image from "next/image";
+import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader";
 
 export const columns: ColumnDef<any>[] = [
   {

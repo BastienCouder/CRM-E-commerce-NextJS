@@ -43,15 +43,15 @@ export function handleStatusChange(value: string): string {
   }
 }
 
-import { Category } from "@prisma/client";
 import { subDays, subMonths, subYears } from "date-fns";
+import { Category } from "@/lib/DbSchema";
 
 export function findCategoryIdByName(
   categoryName: string,
   categories: Category[]
 ): string | undefined {
-  const category = categories.find((c) => c.name === categoryName);
-  return category?.id;
+  const category = categories.find((category) => category === categoryName);
+  return category;
 }
 
 export const calculateSubtotal = (order: any) => {
