@@ -1,5 +1,4 @@
 "use client";
-
 import { getLocalStorage, setLocalStorage } from "@/helpers/storageHelper";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -10,51 +9,49 @@ export default function CookieBanner() {
   );
 
   useEffect(() => {
-    const storedCookieConsent = getLocalStorage("cookie_consent", null);
-
-    setCookieConsent(storedCookieConsent);
-  }, [setCookieConsent]);
-
-  useEffect(() => {
-    const newValue = cookieConsent ? "granted" : "denied";
-
-    window.gtag("consent", "update", {
-      analytics_storage: newValue,
-    });
-
     setLocalStorage("cookie_consent", cookieConsent);
-
-    //For Testing
     console.log("Cookie Consent: ", cookieConsent);
   }, [cookieConsent]);
 
-  return (
-    <div
-      className={`my-10 mx-auto max-w-max md:max-w-screen-sm
-                        fixed bottom-0 left-0 right-0 
-                        flex px-3 md:px-4 py-3 justify-between items-center flex-col sm:flex-row gap-4  
-                         bg-gray-700 rounded-lg shadow`}
-    >
-      <div className="text-center">
-        <Link href="/info/cookies">
-          <p>
-            We use <span className="font-bold text-sky-400">cookies</span> on
-            our site.
-          </p>
-        </Link>
-      </div>
+  const handleAcceptCookies = () => {
+    setCookieConsent(true);
+    setLocalStorage("cookie_consent", true);
+    document.cookie = "cookieConsent=true; path=/; max-age=31536000"; // 1 an
+  };
 
-      <div className="flex gap-2">
-        {cookieConsent ? (
-          <button className="..." onClick={() => setCookieConsent(false)}>
-            Decline
-          </button>
-        ) : (
-          <button className="..." onClick={() => setCookieConsent(true)}>
+  const handleDeclineCookies = () => {
+    setCookieConsent(false);
+    setLocalStorage("cookie_consent", false);
+    document.cookie = "cookieConsent=; path=/; max-age=0"; // Supprimer le cookie
+  };
+
+  if (!cookieConsent) {
+    return (
+      <div
+        className={`fixed bottom-0 left-0 right-0 mx-auto my-10 max-w-max md:max-w-screen-sm
+                    flex px-3 md:px-4 py-3 justify-between items-center flex-col sm:flex-row gap-4  
+                    bg-gray-700 rounded-lg shadow`}
+      >
+        <div className="text-center">
+          <Link href="/info/cookies">
+            <p>
+              We use <span className="font-bold text-sky-400">cookies</span>
+              on our site.
+            </p>
+          </Link>
+        </div>
+
+        <div className="flex gap-2">
+          <button className="..." onClick={handleAcceptCookies}>
             Allow Cookies
           </button>
-        )}
+          <button className="..." onClick={handleDeclineCookies}>
+            Decline
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return null;
 }

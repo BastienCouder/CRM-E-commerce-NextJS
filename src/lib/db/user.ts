@@ -1,8 +1,8 @@
 "use server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { User } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/db/prisma";
+import { User } from "@/lib/DbSchema";
 
 export type UserProps = User & {
   ///

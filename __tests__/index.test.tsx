@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Home from "@/app/page"; // Assurez-vous que le chemin est correct
+import Home from "@/app/(pages)/page"; // Assurez-vous que le chemin est correct
 import { useRouter } from "next/router"; // Utilisez "next/router" au lieu de "next/navigation"
 
 // Mock useRouter

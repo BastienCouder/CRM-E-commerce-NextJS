@@ -16,7 +16,7 @@ import {
 } from "@/app/dashboard/actions";
 import Status from "@/components/dashboard/Status";
 import SoftDelete from "@/components/dashboard/SoftDelete";
-import { orderSchema } from "@/lib/zod";
+import { OrderItemSchema } from "@/lib/DbSchema";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -25,7 +25,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const order = orderSchema.parse(row.original);
+  const order = OrderItemSchema.parse(row.original);
 
   return (
     <DropdownMenu>
@@ -50,7 +50,7 @@ export function DataTableRowActions<TData>({
               UpdateStatus={useServerUpdateStatus}
               type="actions"
               data="orders"
-              itemStatus={order.status}
+              itemStatus={order.status!}
             />
             <DropdownMenuSeparator />
             <SoftDelete

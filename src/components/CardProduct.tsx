@@ -31,7 +31,7 @@ export default function CardProduct({
           <Link href={"/products/" + product.id}>
             <figure>
               <Image
-                src={product.imageUrl}
+                src={product.imageUrl!}
                 alt={product.name}
                 width={800}
                 height={400}

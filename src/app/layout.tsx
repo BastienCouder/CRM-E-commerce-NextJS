@@ -3,11 +3,10 @@ import Navbar from "./(pages)/Navbar/Navbar";
 import SessionProvider from "../context/SessionProvider";
 import { AnimationProvider } from "../context/AnimationContext";
 import { Toaster } from "sonner";
-import CookieBanner from "@/components/CookieBanner";
 import { cn } from "@/helpers/utils";
 import { Inter as FontSans, Roboto } from "next/font/google";
 import { FontProvider } from "@/context/FontContext";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
+import CookieBanner from "@/components/CookieBanner";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -42,11 +41,11 @@ export default function RootLayout({
         <SessionProvider>
           <AnimationProvider>
             <Navbar />
+
             <FontProvider>
-              <GoogleAnalytics GA_MEASUREMENT_ID="G-V772K2XN19" />
               <main>{children}</main>
             </FontProvider>
-            {/* <CookieBanner /> */}
+            <CookieBanner />
           </AnimationProvider>
         </SessionProvider>
         <Toaster expand={false} position="bottom-left" />

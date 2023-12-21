@@ -10,7 +10,6 @@ import { useServersubscribeToNewsletter } from "@/lib/email/action";
 export default function Home() {
   const [scrollCount, setScrollCount] = useState(0);
   const router = useRouter();
-
   const handleScroll = useCallback(
     async (event: any) => {
       if (event.deltaY > 0) {

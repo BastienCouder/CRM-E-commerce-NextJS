@@ -13,7 +13,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { UserSchema } from "@/lib/zod";
+import { UserSchema } from "@/lib/DbSchema";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;

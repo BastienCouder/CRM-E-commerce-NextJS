@@ -14,8 +14,6 @@ async function getfetchProducts() {
   try {
     const data = await getProducts();
     if (Array.isArray(data)) {
-      console.log(data);
-
       return z.array(ProductSchema).parse(data);
     } else {
       console.error("Erreur: Les données ne sont pas un tableau.");

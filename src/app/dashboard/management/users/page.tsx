@@ -3,7 +3,7 @@ import { columns } from "./components/Columns";
 import { DataTable } from "./components/DataTable";
 import { z } from "zod";
 import { getUsers } from "@/lib/db/user";
-import { UserSchema } from "@/lib/zod";
+import { UserSchema } from "@/lib/DbSchema";
 // import { useServerNewPriorityToRecentProducts } from "./action";
 
 export const metadata: Metadata = {

@@ -7,7 +7,7 @@ import { useServerReadAnalyticsOrders } from "./actions";
 import AnalyticsOrder from "./AnalyticsOrder";
 import { getOrderItems } from "@/lib/db/orderItem";
 import { DataTable } from "@/components/tables/DataTable";
-import { orderSchema } from "@/lib/zod";
+import { OrderItemSchema } from "@/lib/DbSchema";
 
 export const metadata: Metadata = {
   title: "Dashboard - Products",
@@ -19,7 +19,7 @@ async function getfetchProducts() {
     const data = await getOrderItems();
 
     if (Array.isArray(data)) {
-      return z.array(orderSchema).parse(data);
+      return z.array(OrderItemSchema).parse(data);
     } else {
       console.error("Erreur: Les données ne sont pas un tableau.");
       return [];

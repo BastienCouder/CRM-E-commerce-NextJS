@@ -3,44 +3,36 @@ import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { pageview } from "@/helpers/gtagHelper";
+import * as gtag from "@/lib/gtag";
 
-export default function GoogleAnalytics({
-  GA_MEASUREMENT_ID,
-}: {
-  GA_MEASUREMENT_ID: string;
-}) {
+export default function GoogleAnalytics() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  console.log(GA_MEASUREMENT_ID);
+  console.log(gtag.GA_TRACKING_ID);
 
   useEffect(() => {
     const queryParams = searchParams.toString();
     const url = pathname + (queryParams ? `?${queryParams}` : "");
 
-    pageview(GA_MEASUREMENT_ID, url);
-  }, [pathname, searchParams, GA_MEASUREMENT_ID]);
+    pageview(gtag.GA_TRACKING_ID, url);
+  }, [pathname, searchParams]);
 
   return (
     <>
       <Script
         strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
       />
       <Script
-        id="google-analytics"
+        id="gtag-init"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-
-            gtag('consent', 'default', {
-                'analytics_storage': 'denied'
-            });
-            
-            gtag('config', '${GA_MEASUREMENT_ID}', {
-                page_path: window.location.pathname,
+            gtag('config', '${gtag.GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
             });
           `,
         }}

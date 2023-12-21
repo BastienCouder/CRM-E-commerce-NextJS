@@ -1,11 +1,12 @@
 "use server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { Product } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/db/prisma";
+import { Product, ProductVariant } from "@/lib/DbSchema";
 
 export type ProductProps = Product & {
   ///
+  variants?: ProductVariant[];
 };
 
 export async function getProducts(): Promise<ProductProps[] | null> {
@@ -48,7 +49,10 @@ export async function createProduct(): Promise<ProductProps | null> {
           stock: 0,
         },
       });
-      return createdProduct;
+      return {
+        ...createdProduct,
+        variants: [],
+      } as ProductProps;
     } else {
       throw new Error("Utilisateur non autorisé pour la création de produits.");
     }
