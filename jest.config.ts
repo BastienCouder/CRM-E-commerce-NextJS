@@ -10,19 +10,18 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 /** @type {import('jest').Config} */
 const config: Config = {
-  moduleFileExtensions: [...defaults.moduleFileExtensions, "mts"],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   preset: "ts-jest",
-  testEnvironment: "jsdom",
-  transform: {
-    "^.+\\.tsx?$": "babel-jest",
-  },
-  transformIgnorePatterns: [
-    "/node_modules/(?!(module-to-transform|another-module)/)",
-  ],
-  moduleNameMapper: {
-    "\\.(css|less)$": "identity-obj-proxy",
-  },
+
+  transform: { "^.+\\.ts?$": "ts-jest" },
+
+  testEnvironment: "node",
+
+  testRegex: ".*\\.(test|spec)?\\.(ts|tsx)$",
+
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+
+  transformIgnorePatterns: ["/node_modules/(?!@byte-this)"],
   bail: 1,
   verbose: true,
 };
