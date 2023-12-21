@@ -7,6 +7,7 @@ export default function CookieBanner() {
   const [cookieConsent, setCookieConsent] = useState(
     getLocalStorage("cookie_consent", false)
   );
+  console.log(cookieConsent);
 
   useEffect(() => {
     setLocalStorage("cookie_consent", cookieConsent);
@@ -25,33 +26,33 @@ export default function CookieBanner() {
     document.cookie = "cookieConsent=; path=/; max-age=0"; // Supprimer le cookie
   };
 
-  if (!cookieConsent) {
-    return (
-      <div
-        className={`fixed bottom-0 left-0 right-0 mx-auto my-10 max-w-max md:max-w-screen-sm
+  return (
+    <>
+      {cookieConsent === false && (
+        <div
+          className={`fixed bottom-0 left-0 right-0 mx-auto my-10 max-w-max md:max-w-screen-sm
                     flex px-3 md:px-4 py-3 justify-between items-center flex-col sm:flex-row gap-4  
                     bg-gray-700 rounded-lg shadow`}
-      >
-        <div className="text-center">
-          <Link href="/info/cookies">
-            <p>
-              We use <span className="font-bold text-sky-400">cookies</span>
-              on our site.
-            </p>
-          </Link>
-        </div>
+        >
+          <div className="text-center">
+            <Link href="/info/cookies">
+              <p>
+                We use <span className="font-bold text-sky-400">cookies</span>
+                on our site.
+              </p>
+            </Link>
+          </div>
 
-        <div className="flex gap-2">
-          <button className="..." onClick={handleAcceptCookies}>
-            Allow Cookies
-          </button>
-          <button className="..." onClick={handleDeclineCookies}>
-            Decline
-          </button>
+          <div className="flex gap-2">
+            <button className="..." onClick={handleAcceptCookies}>
+              Allow Cookies
+            </button>
+            <button className="..." onClick={handleDeclineCookies}>
+              Decline
+            </button>
+          </div>
         </div>
-      </div>
-    );
-  }
-
-  return null;
+      )}
+    </>
+  );
 }

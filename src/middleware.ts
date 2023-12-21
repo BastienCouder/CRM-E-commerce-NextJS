@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { cookies } from "next/headers";
 import { v4 as uuidv4 } from "uuid";
-import { pageVisit } from "@/lib/pageVisit";
+import UAParser from "ua-parser-js";
+import { recordVisit, recordVisitorInfo } from "./lib/views";
 
 export function middleware(req: NextRequest) {
   const url = req.nextUrl.pathname;
+  const cookieStore = cookies();
+
   if (
     !url.startsWith("/_next/") &&
     !url.startsWith("/api/auth/session") &&
@@ -15,30 +19,35 @@ export function middleware(req: NextRequest) {
     !url.endsWith(".js")
   ) {
     console.log(`Page requested: ${url}`);
-    // pageVisit(url);
+    // recordVisit(url);
   }
+  const cookieConsent = cookieStore.get("cookieConsent");
 
-  const cookieConsent = (req.cookies as any)["cookieConsent"];
-
-  if (cookieConsent === "true") {
-    let visitorId = (req.cookies as any)["visitorId"];
+  if (cookieConsent) {
+    let visitorId = cookieStore.get("visitorId");
     if (!visitorId) {
-      visitorId = uuidv4(); // Générer un UUID pour le nouveau visiteur
-      // Enregistrer le nouveau visiteur dans la base de données ou système de stockage
-      // ...
+      const visitorId = uuidv4();
+      const userAgent = req.headers.get("user-agent") || "";
+      const ua = new UAParser(userAgent);
+      const browserName = ua.getBrowser().name || "Unknown";
+      const osName = ua.getOS().name || "Unknown";
+      const deviceType = ua.getDevice().type || "Unknown";
+      const location = ""; // Remplacer par la logique de géolocalisation réelle
 
-      // Définir le cookie dans la réponse
+      console.log(
+        `Visitor requested: ${visitorId}, ${browserName},${osName},${location}`
+      );
+      recordVisitorInfo(visitorId, browserName, osName, location, deviceType);
+
       const response = NextResponse.next();
       response.cookies.set("visitorId", visitorId, {
         httpOnly: true,
         sameSite: "strict",
+        path: "/",
       });
       return response;
     }
   }
-
-  // Ici, vous pouvez ajouter du code pour enregistrer les visites de page
-  // Par exemple, enregistrer dans une base de données ou envoyer à un service d'analyse
 
   return NextResponse.next();
 }

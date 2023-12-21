@@ -7,6 +7,7 @@ import { cn } from "@/helpers/utils";
 import { Inter as FontSans, Roboto } from "next/font/google";
 import { FontProvider } from "@/context/FontContext";
 import CookieBanner from "@/components/CookieBanner";
+import { aggregateAndCleanUpVisits } from "@/lib/views";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -24,11 +25,14 @@ export const metadata = {
   description: "Ceci est la page d'accueil de mon application.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Exécuter la fonction
+  const auto = await aggregateAndCleanUpVisits();
+
   return (
     <html lang="fr">
       <body

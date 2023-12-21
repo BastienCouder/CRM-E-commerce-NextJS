@@ -268,13 +268,34 @@ model UserLocation {
     @@map("user_location")
 }
 
-model PageVisit {
+model DetailedVisit {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    url       String
+    timestamp DateTime @default(now())
+
+    @@map("detailed_visit")
+}
+
+model AggregatedVisit {
     id        String    @id @default(auto()) @map("_id") @db.ObjectId
     url       String    @unique
-    visits    Int       @default(0)
-    lastVisit DateTime  @default(now())
+    count     Int       @default(0)
+    lastCount DateTime  @default(now())
     createdAt DateTime  @default(now())
     deleteAt  DateTime?
 
-    @@map("page_visit")
+    @@map("aggregated_visit")
+}
+
+model VisitorInfo {
+    id         String    @id @default(auto()) @map("_id") @db.ObjectId
+    visitorId  String    @unique
+    browser    String
+    os         String
+    location   String?
+    deviceType String
+    createdAt  DateTime  @default(now())
+    deleteAt   DateTime?
+
+    @@map("visitor_info")
 }
