@@ -290,14 +290,30 @@ model AggregatedVisit {
 model VisitorInfo {
     id         String    @id @default(auto()) @map("_id") @db.ObjectId
     visitorId  String    @unique
-    browser    String
+    browser    Browser
     os         String
     city       String?
     country    String?
     region     String?
-    deviceType String
+    deviceType Device
     createdAt  DateTime  @default(now())
     deleteAt   DateTime?
 
     @@map("visitor_info")
+}
+
+enum Device {
+    desktop
+    mobile
+}
+
+enum Browser {
+    Chrome
+    Edge
+    Safari
+    Opera
+    Firefox
+    IE
+    Netscape
+    Other
 }

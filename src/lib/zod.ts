@@ -54,7 +54,7 @@ export const LoginSchema = z.object({
     })
     .refine(
       async (email) => {
-        const errorEmail = await checkEmail({ email });
+        const errorEmail = await checkEmail(email);
         return errorEmail;
       },
       {

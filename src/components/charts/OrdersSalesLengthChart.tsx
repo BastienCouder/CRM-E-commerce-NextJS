@@ -36,19 +36,11 @@ const CustomLegend = ({ payload }: CustomLegendProps) => {
       {payload.map((entry, index) => (
         <li key={`item-${index}`} className="flex items-center mb-1">
           {entry.value === "Nombres de ventes" ? (
-            <LineChart size={15} color="rgb(var(--chart2))" />
+            <LineChart size={15} color="rgb(var(--chart))" />
           ) : (
-            <AreaChart size={15} color="rgb(var(--chart1))" />
+            <AreaChart size={15} color="rgb(var(--chart))" />
           )}
-          <span
-            className={`ml-1 text-sm ${
-              entry.value === "Nombres de ventes"
-                ? "text-chart2"
-                : "text-chart1"
-            }`}
-          >
-            {entry.value}
-          </span>
+          <span className={`ml-1 text-sm text-chart`}>{entry.value}</span>
         </li>
       ))}
     </ul>
@@ -89,14 +81,14 @@ export default function OrdersSalesLengthChart({
             type="monotone"
             name="Nombres de ventes"
             dataKey="totalOrders"
-            fill="rgb(var(--chart1))"
+            fill="rgb(var(--chart))"
             stroke="none"
           />
           <Line
             type="monotone"
             name="Nombres de commandes"
             dataKey="totalNocanceledOrders"
-            stroke="rgb(var(--chart2))"
+            stroke="rgb(var(--chart))"
             strokeWidth={3}
             dot={false}
           />

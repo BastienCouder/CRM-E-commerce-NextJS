@@ -27,8 +27,8 @@ const CustomLegend = ({ payload }: CustomLegendProps) => {
     <ul className="flex gap-x-4 w-full justify-center list-none p-0 m-0">
       {payload.map((entry, index) => (
         <li key={index} className="flex items-center mb-1">
-          <AreaChart size={15} color="rgb(var(--chart1))" />
-          <span className="ml-1 text-sm text-chart1">{entry.value}</span>
+          <AreaChart size={15} color="rgb(var(--chart))" />
+          <span className="ml-1 text-sm text-chart">{entry.value}</span>
         </li>
       ))}
     </ul>
@@ -73,7 +73,7 @@ export default function NewsletterLengthChart({
             type="monotone"
             name="Nombres de nouveau abonnées"
             dataKey="newsletterSubscribersCount"
-            fill="rgb(var(--chart1))"
+            fill="rgb(var(--chart))"
             stroke="none"
           />
         </ComposedChart>

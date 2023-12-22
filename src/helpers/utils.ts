@@ -44,7 +44,7 @@ export function handleStatusChange(value: string): string {
 }
 
 import { subDays, subMonths, subYears } from "date-fns";
-import { Category } from "@/lib/DbSchema";
+import { Browser, BrowserEnum, Category } from "@/lib/DbSchema";
 
 export function findCategoryIdByName(
   categoryName: string,
@@ -89,5 +89,26 @@ export function getStartDateForFilter(
       return siteCreationDate;
     default:
       throw new Error("Type de filtre non valide");
+  }
+}
+
+export function mapBrowserName(browserName: string): Browser {
+  switch (true) {
+    case browserName.startsWith("Chrome"):
+      return BrowserEnum.parse("Chrome");
+    case browserName.startsWith("Edge"):
+      return BrowserEnum.parse("Edge");
+    case browserName.startsWith("Safari"):
+      return BrowserEnum.parse("Safari");
+    case browserName.startsWith("Opera"):
+      return BrowserEnum.parse("Opera");
+    case browserName.startsWith("Firefox"):
+      return BrowserEnum.parse("Firefox");
+    case browserName.startsWith("IE"):
+      return BrowserEnum.parse("IE");
+    case browserName.startsWith("Netscape"):
+      return BrowserEnum.parse("Netscape");
+    default:
+      return BrowserEnum.parse("Other");
   }
 }

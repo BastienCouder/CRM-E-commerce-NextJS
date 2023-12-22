@@ -11,7 +11,7 @@ import {
 import formatPrice, { formatDateMonth } from "@/helpers/format";
 import { BarChart2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { AnalyticsOrdersData } from "../../orders/actions";
+import { AnalyticsOrdersData } from "@/app/dashboard/management/orders/actions";
 
 interface SalesChartProps {
   analyticsData: any;
@@ -23,8 +23,8 @@ const CustomLegend: React.FC<{ payload: Array<{ value: string }> }> = ({
   <ul className="flex gap-x-4 w-full justify-center list-none p-0 m-0">
     {payload.map((entry, index) => (
       <li key={index} className="flex items-center mb-1">
-        <BarChart2 size={15} color="rgb(var(--chart1))" />
-        <span className="ml-1 text-sm text-chart1">{entry.value}</span>
+        <BarChart2 size={15} color="rgb(var(--chart))" />
+        <span className="ml-1 text-sm text-chart">{entry.value}</span>
       </li>
     ))}
   </ul>
@@ -85,7 +85,7 @@ export default function SalesChart({ analyticsData }: SalesChartProps) {
           />
           <Bar
             dataKey="subtotal"
-            fill="rgb(var(--chart1))"
+            fill="rgb(var(--chart))"
             radius={[4, 4, 0, 0]}
             name="Total des ventes"
           />

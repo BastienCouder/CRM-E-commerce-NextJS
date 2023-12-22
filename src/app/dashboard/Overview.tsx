@@ -1,9 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import StatsCard from "../../components/dashboard/StatsCard";
-import OrdersLengthSalesChart from "../../components/charts/OrdersSalesLengthChart";
-import { useServerGeoData } from "./management/actions";
-import { useGeo } from "@/context/GeoContext";
+import StatsCard from "@/components/dashboard/StatsCard";
+import OrdersLengthSalesChart from "@/components/charts/OrdersSalesLengthChart";
 
 interface OverviewProps {
   analyticsProductsData: any;

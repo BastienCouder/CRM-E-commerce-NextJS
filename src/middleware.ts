@@ -2,7 +2,8 @@ import { NextRequest, NextResponse, userAgent } from "next/server";
 import { cookies } from "next/headers";
 import { v4 as uuidv4 } from "uuid";
 import UAParser from "ua-parser-js";
-import { recordVisitorInfo } from "./lib/views";
+import { recordVisitorInfo } from "@/lib/views";
+import { mapBrowserName } from "./helpers/utils";
 
 export function middleware(req: NextRequest) {
   const { device } = userAgent(req);
@@ -35,9 +36,10 @@ export function middleware(req: NextRequest) {
       const visitorId = uuidv4();
       const userAgent = req.headers.get("user-agent") || "";
       const ua = new UAParser(userAgent);
-      const browserName = ua.getBrowser().name || "Unknown";
+      const rawBrowserName = ua.getBrowser().name || "Unknown";
+      const browserName = mapBrowserName(rawBrowserName);
       const osName = ua.getOS().name || "Unknown";
-      const deviceType = viewport;
+      const deviceType = viewport as "mobile" | "desktop";
       const city = req.geo?.city!;
       const country = req.geo?.country!;
       const region = req.geo?.region!;

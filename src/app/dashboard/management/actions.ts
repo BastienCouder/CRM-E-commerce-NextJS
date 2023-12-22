@@ -34,6 +34,7 @@ export async function useServerUpdateStatus(itemId: string, newStatus: string) {
     );
   }
 }
+
 export async function useServerSoftDelete(itemId: string | string[]) {
   const deleteItem = async (id: string) => {
     const deleteData = { deleteAt: new Date(), status: "delete" };

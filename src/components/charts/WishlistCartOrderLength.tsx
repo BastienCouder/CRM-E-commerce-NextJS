@@ -141,8 +141,8 @@ export default function WhislistCartOrderLength({
           <Radar
             name="Metrics"
             dataKey="A"
-            stroke="rgb(var(--chart1))"
-            fill="rgb(var(--chart1))"
+            stroke="rgb(var(--chart))"
+            fill="rgb(var(--chart))"
             fillOpacity={0.6}
           />
           <Tooltip content={<CustomTooltip />} />

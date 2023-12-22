@@ -3,10 +3,24 @@ import { z } from "zod";
 export const UserRoleEnum = z.enum(["ADMIN", "USER"]);
 export const ColorEnum = z.enum(["or", "argent", "rose"]);
 export const CategoryEnum = z.enum(["bracelet_cuir", "bracelet_acier"]);
+export const DeviceEnum = z.enum(["desktop", "mobile"]);
+export const BrowserEnum = z.enum([
+  "Chrome",
+  "Edge",
+  "Safari",
+  "Opera",
+  "Firefox",
+  "IE",
+  "Netscape",
+  "Other",
+]);
 
+// Type dérivé de l'énumération
+export type Browser = z.infer<typeof BrowserEnum>;
 export type Category = z.infer<typeof CategoryEnum>;
 export type Color = z.infer<typeof ColorEnum>;
 export type UserRole = z.infer<typeof UserRoleEnum>;
+export type Device = z.infer<typeof DeviceEnum>;
 
 export const UserSchema = z.lazy(() =>
   z.object({
@@ -174,6 +188,21 @@ export const OrderItemSchema = z.lazy(() =>
   })
 );
 
+export const VisitorInfoSchema = z.lazy(() =>
+  z.object({
+    id: z.string(),
+    visitorId: z.string(),
+    browser: BrowserEnum,
+    os: z.string(),
+    city: z.string().nullable(),
+    country: z.string().nullable(),
+    region: z.string().nullable(),
+    deviceType: DeviceEnum,
+    createdAt: z.date(),
+    deleteAt: z.date().nullable(),
+  })
+);
+
 // Types inférés
 export type User = z.infer<typeof UserSchema>;
 export type Product = z.infer<typeof ProductSchema>;
@@ -187,3 +216,4 @@ export type DeliveryItem = z.infer<typeof DeliveryItemSchema>;
 export type DeliveryOption = z.infer<typeof DeliveryOptionSchema>;
 export type Order = z.infer<typeof OrderSchema>;
 export type OrderItem = z.infer<typeof OrderItemSchema>;
+export type VisitorInfo = z.infer<typeof VisitorInfoSchema>;

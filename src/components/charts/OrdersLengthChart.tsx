@@ -75,7 +75,7 @@ export default function OrdersLengthChart({
           />
           <Bar
             dataKey="totalNocanceledOrders"
-            fill="rgb(var(--chart1))"
+            fill="rgb(var(--chart))"
             radius={[4, 4, 0, 0]}
           />
         </BarChart>

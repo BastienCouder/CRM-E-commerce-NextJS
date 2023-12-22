@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db/prisma";
+import { Browser, Device } from "./DbSchema";
 
 export async function recordVisit(url: string) {
   const now = new Date();
@@ -19,9 +20,9 @@ export async function recordVisit(url: string) {
 
 export async function recordVisitorInfo(
   visitorId: string,
-  browserName: string,
+  browserName: Browser,
   osName: string,
-  deviceType: string,
+  deviceType: Device,
   city: string,
   country: string,
   region: string

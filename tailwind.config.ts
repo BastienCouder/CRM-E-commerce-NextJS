@@ -23,11 +23,7 @@ const config: Config = {
         productDesktop: "1068px",
       },
       colors: {
-        chart1: "rgb(var(--chart1))",
-        chart2: "rgb(var(--chart2))",
-        chart3: "rgb(var(--chart3))",
-        chart4: "rgb(var(--chart4))",
-        chart5: "rgb(var(--chart5))",
+        chart: "rgb(var(--chart))",
         border: "rgb(var(--border))",
         input: "rgb(var(--input))",
         ring: "rgb(var(--ring))",
