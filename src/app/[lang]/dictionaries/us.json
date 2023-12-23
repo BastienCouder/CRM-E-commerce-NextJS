@@ -1,6 +1,24 @@
 {
-  "products": {
-    "shop": "Cart",
-    "cart": "Add to Cart"
+  "locale": "en-BG",
+  "cart": {
+    "shoppingcart": "shopping cart",
+    "addtocart": "add to cart",
+    "confirm": "confirm",
+    "empty": "your cart is empty",
+    "continue": "continue shopping",
+    "recap": "summary",
+    "subtotal": "subtotal",
+    "articles": "items",
+    "article": "item",
+    "product": "product",
+    "price": "price",
+    "quantity": "quantity",
+    "quantities": "quantities",
+    "totalprice": "Total Price",
+    "shipping": "shipping",
+    "free": "free",
+    "total": "total",
+    "of": "of",
+    "tva": "VAT"
   }
 }

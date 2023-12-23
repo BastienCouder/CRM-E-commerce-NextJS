@@ -1,16 +1,24 @@
-export default function formatPrice(price: number, currency: string) {
-  let locale;
+export default function formatPrice(price: number, locale: string) {
+  let currency: string;
 
-  if (currency === "EUR") {
-    locale = "fr-FR";
-  } else {
-    locale = "en-US";
+  switch (locale) {
+    case "fr-FR":
+      currency = "EUR";
+      break;
+    case "en-US":
+      currency = "USD";
+      break;
+    case "en-GB":
+      currency = "GBP";
+      break;
+    default:
+      currency = "EUR";
+      break;
   }
 
   return (price / 100).toLocaleString(locale, {
     style: "currency",
     currency: currency,
-    currencyDisplay: "symbol",
   });
 }
 

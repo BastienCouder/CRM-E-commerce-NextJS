@@ -5,16 +5,21 @@ import Image from "next/image";
 import Link from "next/link";
 
 import QuantitySelector from "./QuantityUpdate";
-import { DeleteProduct, UpdateProductQuantity } from "./actions";
+import {
+  DeleteProduct,
+  UpdateProductQuantity,
+} from "../app/[lang]/(pages)/cart/actions";
 import Loading from "@/app/[lang]/loading";
 import { CartItemsProps } from "@/lib/db/cart";
 import { X } from "lucide-react";
+import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
 
 interface CartEntryProps {
   cartItem: CartItemsProps;
+  dict: Dictionary;
 }
 
-export default function CartEntry({ cartItem }: CartEntryProps) {
+export default function CartEntry({ cartItem, dict }: CartEntryProps) {
   const { product, quantity, variant } = cartItem;
 
   if (!product || (variant && !variant)) {
@@ -36,7 +41,9 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
   return (
     <>
       <div className="justify-end items-center w-full lg:w-[180rem] flex flex-col lg:items-start">
-        <h3 className="hidden lg:block text-xs mb-2">Produit</h3>
+        <h3 className="hidden lg:block text-xs mb-2 capitalize">
+          {dict.cart.product}
+        </h3>
         <div className="flex gap-8 items-center">
           {variant ? (
             <Image
@@ -63,17 +70,17 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
       </div>
 
       <div className="hidden lg:flex lg:h-[80px] justify-start items-center w-full flex flex-col lg:space-y-2 lg:items-start">
-        <h3 className="text-xs mb-[1.2rem]">Prix</h3>
+        <h3 className="text-xs mb-[1.2rem] capitalize">{dict.cart.price}</h3>
         <p className="font-bold">
           {variant?.price
-            ? formatPrice(variant.price, "EUR")
-            : formatPrice(product.price, "EUR")}
+            ? formatPrice(variant.price, dict.locale)
+            : formatPrice(product.price, dict.locale)}
         </p>
       </div>
 
       <div className="justify-end items-center w-full flex flex-col lg:space-y-2 lg:items-start">
-        <h3 className="hidden lg:block lg:text-xs">
-          {quantity > 1 ? "Quantités" : "Quantité"}
+        <h3 className="hidden lg:block lg:text-xs capitalize">
+          {quantity > 1 ? `${dict.cart.quantities}` : `${dict.cart.quantity}`}
         </h3>
         <QuantitySelector
           initialQuantity={quantity}
@@ -81,17 +88,23 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
         />
       </div>
       <div className="lg:h-[75px] justify-start items-center w-full flex flex-col lg:space-y-2 lg:items-start">
-        <h3 className="hidden lg:block text-xs mb-[1.2rem]">Prix Total</h3>
+        <h3 className="hidden lg:block text-xs mb-[1.2rem] capitalize">
+          {dict.cart.totalprice}
+        </h3>
         <p className="font-bold">
           {variant?.price
-            ? formatPrice(variant.price * quantity, "EUR")
-            : formatPrice(product.price * quantity, "EUR")}
+            ? formatPrice(variant.price * quantity, dict.locale)
+            : formatPrice(product.price * quantity, dict.locale)}
         </p>
       </div>
       <div className="lg:h-[27px] justify-start items-center flex flex-col lg:space-y-6 lg:items-start">
-        <div className="h-full "></div>
-        <button aria-label="fermer" onClick={handleDelete} className=" px-2">
-          <X />
+        <div className="h-full"></div>
+        <button
+          aria-label={dict.actions.close}
+          onClick={handleDelete}
+          className=" px-2"
+        >
+          <X size={17} />
         </button>
       </div>
     </>

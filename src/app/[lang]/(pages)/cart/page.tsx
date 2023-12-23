@@ -1,13 +1,13 @@
 import { getCart } from "@/lib/db/cart";
-import CartEntry from "./CartEntry";
-import CheckCart from "./CheckCart";
+import CartEntry from "../../../../components/CartEntry";
+import CheckCart from "../../../../components/CheckCart";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Loading from "@/app/[lang]/loading";
 import { getDictionary } from "@/app/[lang]/dictionaries/dictionaries";
 
 export const metadata = {
-  title: "Pannier - E-commerce",
+  title: "Panier - E-commerce",
 };
 
 interface CartProps {
@@ -29,7 +29,7 @@ export default async function Cart({ params: { lang } }: CartProps) {
       <div className="space-y-8">
         <div>
           <h1 className="text-4xl text-center lg:text-start">
-            {dict.cart.title}
+            {dict.cart.shoppingcart}
           </h1>
           <ul className="flex flex-col space-y-2 py-4">
             {cart?.cartItems?.map((cartItem) => (
@@ -37,18 +37,18 @@ export default async function Cart({ params: { lang } }: CartProps) {
                 key={cartItem.id}
                 className="space-y-6 lg:space-y-0 flex flex-col px-8 py-4 lg:border-b-2 lg:border-primary w-full lg:flex-row items-center"
               >
-                <CartEntry cartItem={cartItem} key={cartItem.id} />
+                <CartEntry cartItem={cartItem} key={cartItem.id} dict={dict} />
                 <div className="flex lg:hidden h-[2px] w-3/4 bg-primary"></div>
               </li>
             ))}
           </ul>
-          {!cart?.cartItems.length && (
+          {!cart?.cartItems?.length && (
             <>
               <div className="flex flex-col lg:flex-row gap-y-4 items-center gap-x-16">
-                <p>{dict.cart.empty}</p>
+                <p>{dict.cart.emptycart}</p>
                 <Link href="/">
-                  <Button aria-label="Retour collection" size="xl">
-                    {dict.cart.continue}
+                  <Button aria-label={dict.actions.backtostore} size="xl">
+                    {dict.cart.continueshopping}
                   </Button>
                 </Link>
               </div>

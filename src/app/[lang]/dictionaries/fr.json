@@ -1,9 +1,32 @@
 {
+  "locale": "fr-FR",
   "cart": {
-    "title": "Panier",
-    "addtocart": "Ajouter au panier",
-    "empty": "Votre panier est vide",
-    "continue": "Continuer mes achats",
-    "recap": "Récapitulatif"
+    "shoppingcart": "panier",
+    "addtocart": "ajouter au panier",
+    "emptycart": "votre panier est vide",
+    "continueshopping": "continuer mes achats",
+    "recap": "récapitulatif",
+    "subtotal": "sous-total",
+    "articles": "articles",
+    "article": "article",
+    "product": "produit",
+    "price": "prix",
+    "quantity": "quantité",
+    "quantities": "quantités",
+    "totalprice": "prix Total",
+    "shipping": "expédition",
+    "free": "gratuite",
+    "total": "total",
+    "tva": "tva"
+  },
+  "actions": {
+    "confirm": "valider",
+    "close": "fermer",
+    "increment": "incrémenter",
+    "decrement": "décrementer",
+    "backtostore": "retour à la boutique"
+  },
+  "pronouns": {
+    "of": "de"
   }
 }
