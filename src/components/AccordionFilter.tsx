@@ -5,8 +5,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { RxCross2 } from "react-icons/rx";
 import { Category, Color } from "@/lib/DbSchema";
+import { Cross } from "lucide-react";
 
 interface AccordionFilterProps<T> {
   title: string;
@@ -55,7 +55,7 @@ export default function AccordionFilter<T extends Category | Color>({
           onClick={onReset}
           className="absolute top-5 right-6 cursor-pointer"
         >
-          <RxCross2 size={15} />
+          <Cross size={15} />
         </div>
       )}
     </div>

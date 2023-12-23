@@ -4,26 +4,50 @@ import { v4 as uuidv4 } from "uuid";
 import UAParser from "ua-parser-js";
 import { recordVisitorInfo } from "@/lib/views";
 import { mapBrowserName } from "./helpers/utils";
+import Negotiator from "negotiator";
+
+// Assurez-vous que les headers sont bien définis là où ils sont utilisés.
+let headers = { "accept-language": "en-US,en;q=0.5" };
+let languages = new Negotiator({ headers }).languages();
+let locales = ["fr", "en", "us"];
+let defaultLocale = "fr";
+
+// La fonction getLocale doit être définie pour retourner une locale valide.
+// Par exemple, vous pouvez la définir comme ci-dessous :
+function getLocale(req: any) {
+  const preferredLanguage = new Negotiator(req).language(locales);
+  return preferredLanguage || defaultLocale;
+}
 
 export function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  const pathnameHasLocale = locales.some(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  );
+
+  if (pathnameHasLocale) return;
+
+  const locale = getLocale(req);
+  req.nextUrl.pathname = `/${locale}${pathname}`;
+
+  // Visitor tracking logic
   const { device } = userAgent(req);
   let viewport = device.type === "mobile" ? "mobile" : "desktop";
+  const url = req.nextUrl.pathname;
 
-  const { nextUrl: url, geo } = req;
-  const country = geo?.country || "US";
-
-  url.searchParams.set("country", country);
+  const country = req.geo?.country || "US";
 
   const cookieStore = cookies();
 
   if (
-    !url.pathname.startsWith("/_next/") &&
-    !url.pathname.startsWith("/api/auth/session") &&
-    !url.pathname.endsWith(".svg") &&
-    !url.pathname.endsWith(".jpg") &&
-    !url.pathname.endsWith(".png") &&
-    !url.pathname.endsWith(".css") &&
-    !url.pathname.endsWith(".js")
+    !url.startsWith("/_next/") &&
+    !url.startsWith("/api/auth/session") &&
+    !url.endsWith(".svg") &&
+    !url.endsWith(".jpg") &&
+    !url.endsWith(".png") &&
+    !url.endsWith(".css") &&
+    !url.endsWith(".js") &&
+    !url.endsWith("json")
   ) {
     console.log(`Page requested: ${url}`);
     // recordVisit(url);
@@ -68,5 +92,13 @@ export function middleware(req: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  return NextResponse.redirect(req.nextUrl);
 }
+export const config = {
+  matcher: [
+    // Skip all internal paths (_next)
+    "/((?!_next).*)",
+    // Optional: only run on root (/) URL
+    // '/'
+  ],
+};

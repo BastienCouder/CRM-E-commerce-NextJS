@@ -20,7 +20,7 @@ export const envSchema = z.object({
   NODE_ENV: z.string().nonempty(),
 });
 
-export const env = envSchema.parse(process.env);
+export const env = envSchema?.parse(process.env);
 
 export const getEnvIssues = (): z.ZodIssue[] | void => {
   const result = envSchema.safeParse(process.env);

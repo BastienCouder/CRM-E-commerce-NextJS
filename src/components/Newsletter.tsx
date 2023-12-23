@@ -16,9 +16,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { BsCaretLeftFill } from "react-icons/bs";
+
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 
 //Newsletter
 export const NewsletterFormSchema = z.object({
@@ -98,7 +99,7 @@ export default function Newsletter({ SubscribeToNewsletter }: NewsletterProps) {
             >
               <h2 className="text-2xl font-Noto">Newsletter</h2>
               <p>
-                <BsCaretLeftFill
+                <ArrowLeft
                   size={15}
                   className={`ml-2 ${showForm ? `${styles.rotate}` : ""} : ""}`}
                 />
@@ -153,7 +154,7 @@ export default function Newsletter({ SubscribeToNewsletter }: NewsletterProps) {
           onClick={handleShowForm}
           className="flex gap-4 items-center"
         >
-          <BsCaretLeftFill
+          <ArrowLeft
             size={15}
             className={`ml-2 ${showForm ? `${styles.rotate}` : ""} : ""}`}
           />

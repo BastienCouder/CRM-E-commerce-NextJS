@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import styles from "@/styles/Like.module.css";
+import styles from "@/styles/keyframes.module.css";
 import { WishlistItemsProps } from "@/lib/db/wishlist";
 
 interface AddToWishlistProps {

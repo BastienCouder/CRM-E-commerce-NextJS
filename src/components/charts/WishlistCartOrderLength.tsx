@@ -85,20 +85,20 @@ export default function WhislistCartOrderLength({
   const chartData = useMemo(
     () => [
       {
-        subject: selectedProduct.wishlistCount > 1 ? "J'aimes" : "J'aime",
-        A: selectedProduct.wishlistCount,
+        subject: selectedProduct?.wishlistCount > 1 ? "J'aimes" : "J'aime",
+        A: selectedProduct?.wishlistCount,
         fullMark: 100,
         ...selectedProduct,
       },
       {
         subject: "Mise en Panier",
-        A: selectedProduct.cartCount,
+        A: selectedProduct?.cartCount,
         fullMark: 100,
         ...selectedProduct,
       },
       {
         subject: "Commander",
-        A: selectedProduct.orderCount,
+        A: selectedProduct?.orderCount,
         fullMark: 100,
         ...selectedProduct,
       },
@@ -116,7 +116,7 @@ export default function WhislistCartOrderLength({
       <div className="mb-4">
         <Select onValueChange={handleSelectChange}>
           <SelectTrigger className="w-[180px] rounded-lg">
-            <SelectValue placeholder={selectedProduct.name} />
+            <SelectValue placeholder={selectedProduct?.name} />
           </SelectTrigger>
           <SelectContent>
             {sortedData.map((product) => (

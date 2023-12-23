@@ -11,7 +11,6 @@ export const BrowserEnum = z.enum([
   "Opera",
   "Firefox",
   "IE",
-  "Netscape",
   "Other",
 ]);
 

@@ -1,4 +1,3 @@
-import { AiOutlineSearch } from "react-icons/ai";
 import {
   Accordion,
   AccordionContent,

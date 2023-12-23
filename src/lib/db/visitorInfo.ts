@@ -1,5 +1,5 @@
 "use server";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/[lang]/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/db/prisma";
 import { VisitorInfo } from "@/lib/DbSchema";
@@ -13,7 +13,6 @@ export async function getVisitorInfo(): Promise<VisitorInfoProps[] | null> {
   if (session && session.user.role === "ADMIN") {
     try {
       const visitorInfo = await prisma.visitorInfo.findMany();
-      console.log(visitorInfo);
 
       return visitorInfo;
     } catch (error: any) {

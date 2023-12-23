@@ -38,7 +38,7 @@ export default function LoginForm() {
         redirect: false,
       });
 
-      const isCorrectPassword = await checkPassword({ email, password });
+      const isCorrectPassword = await checkPassword(email, password);
 
       if (password) {
         if (!isCorrectPassword) {

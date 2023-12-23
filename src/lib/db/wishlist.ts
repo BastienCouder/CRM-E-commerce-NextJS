@@ -2,7 +2,7 @@ import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "./prisma";
 import { Prisma, Wishlist, WishlistItems } from "@prisma/client";
 import { Session, getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/[lang]/api/auth/[...nextauth]/route";
 
 export type WishlistWithWishlistItemsProps = Prisma.WishlistGetPayload<{
   include: {

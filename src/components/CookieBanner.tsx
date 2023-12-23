@@ -12,7 +12,6 @@ export default function CookieBanner() {
     // Cette mise à jour est maintenant conditionnelle
     if (cookieConsent !== null) {
       setLocalStorage("cookie_consent", cookieConsent);
-      console.log("Cookie Consent: ", cookieConsent);
 
       // Mise à jour du cookie de consentement
       const consentValue = cookieConsent ? "true" : "; max-age=0";

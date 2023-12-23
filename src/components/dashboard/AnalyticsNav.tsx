@@ -3,6 +3,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Analytics from "../../app/dashboard/Analytics";
 import Overview from "../../app/dashboard/Overview";
 import Newsletter from "../../app/dashboard/Newsletter";
+import WhislistCartOrderLength from "../charts/WishlistCartOrderLength";
+import TopProductsChart from "../charts/TopProductsChart";
 
 interface AnalyticsNavProps {
   analyticsProductsData: any;
@@ -17,6 +19,8 @@ export default function AnalyticsNav({
   analyticsUsersData,
   analyticsWishlistCartOrderData,
 }: AnalyticsNavProps) {
+  console.log(analyticsProductsData);
+
   return (
     <>
       <div className="flex space-y-4">
@@ -27,24 +31,12 @@ export default function AnalyticsNav({
             <TabsTrigger value="users">Users</TabsTrigger>
             <TabsTrigger value="orders">Orders</TabsTrigger>
           </TabsList>
-          <TabsContent value="views">
-            <Overview
-              {...{
-                analyticsProductsData,
-                analyticsOrdersData,
-                analyticsWishlistCartOrderData,
-                analyticsUsersData,
-              }}
-            />
-          </TabsContent>
+          <TabsContent value="views">hello</TabsContent>
           <TabsContent value="products">
-            <Analytics
-              {...{
-                analyticsProductsData,
-                analyticsOrdersData,
-                analyticsWishlistCartOrderData,
-              }}
+            <WhislistCartOrderLength
+              analyticsData={analyticsWishlistCartOrderData}
             />
+            <TopProductsChart analyticsData={analyticsProductsData} />
           </TabsContent>
           <TabsContent value="users">
             <Newsletter analyticsUsersData={analyticsUsersData} />

@@ -1,10 +1,8 @@
-import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "./prisma";
-import { Prisma } from "@prisma/client";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/[lang]/api/auth/[...nextauth]/route";
 import { Session } from "next-auth";
-import { Delivery, DeliverySchema } from "@/lib/DbSchema";
+import { DeliverySchema } from "@/lib/DbSchema";
 import { z } from "zod";
 
 export type DeliveryProps = z.infer<typeof DeliverySchema>;

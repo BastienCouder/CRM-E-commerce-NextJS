@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { AiOutlineSearch } from "react-icons/ai";
+import { SearchIcon } from "lucide-react";
 
 interface SearchProps {
   searchTerm: string;
@@ -21,7 +21,7 @@ export default function Search({ searchTerm, onSearchChange }: SearchProps) {
         placeholder="Rechercher..."
       />
       <div className="absolute text-zinc-900 top-1.5 right-0 px-2 outline-none text-xl cursor-pointer">
-        <AiOutlineSearch size={20} className="text-white mr-1" />
+        <SearchIcon size={20} className="text-white mr-1" />
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
-import { BsCaretDownFill } from "react-icons/bs";
 
 import {
   Sheet,
@@ -12,6 +11,7 @@ import {
 import PriceRangeFilter from "@/components/PriceRangeFilter";
 import AccordionFilter from "@/components/AccordionFilter";
 import { Category, Color } from "@/lib/DbSchema";
+import { ArrowDown } from "lucide-react";
 
 interface FilterProps {
   categories: Category[];
@@ -85,7 +85,7 @@ export default function Filter({
           <SheetTrigger>
             <div className="text-sm md:text-base flex items-center uppercase bg-primary h-full px-3 py-2 font-Noto">
               Filtres
-              <BsCaretDownFill size={15} className={`ml-2 `} />
+              <ArrowDown size={15} className={`ml-2 `} />
             </div>
           </SheetTrigger>
           <SheetContent side="left" className="w-full md:w-[400px]">

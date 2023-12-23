@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { Session, getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/[lang]/api/auth/[...nextauth]/route";
 import { generateOrderNumber } from "@/helpers/utils";
 import { prisma } from "@/lib/db/prisma";
 

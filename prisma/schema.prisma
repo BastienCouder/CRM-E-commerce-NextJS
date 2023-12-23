@@ -314,6 +314,5 @@ enum Browser {
     Opera
     Firefox
     IE
-    Netscape
     Other
 }

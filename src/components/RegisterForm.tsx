@@ -20,7 +20,7 @@ import ShowPassword from "@/components/ShowPassword";
 import { Separator } from "@/components/ui/separator";
 import { signIn } from "next-auth/react";
 import { AiFillGoogleSquare } from "react-icons/ai";
-import { registerForm } from "@/app/(auth)/action";
+import { registerForm } from "@/app/[lang]/(auth)/action";
 
 export default function RegisterForm() {
   const form = useForm<RegisterValues>({

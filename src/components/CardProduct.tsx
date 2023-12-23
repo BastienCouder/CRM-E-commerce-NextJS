@@ -4,9 +4,8 @@ import PriceTag from "@/helpers/PriceTag";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import AddToCartButton from "@/components/AddToCartButton";
-
 import { Category, Color, Product } from "@/lib/DbSchema";
-import { useServerAddToCart } from "@/app/(pages)/wishlist/actions";
+import { useServerAddToCart } from "@/app/[lang]/(pages)/wishlist/actions";
 
 interface CardProductProps {
   product: Product;
