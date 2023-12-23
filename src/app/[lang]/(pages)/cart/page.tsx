@@ -29,7 +29,7 @@ export default async function Cart({ params: { lang } }: CartProps) {
       <div className="space-y-8">
         <div>
           <h1 className="text-4xl text-center lg:text-start">
-            {dict.products.shop}
+            {dict.cart.title}
           </h1>
           <ul className="flex flex-col space-y-2 py-4">
             {cart?.cartItems?.map((cartItem) => (
@@ -38,7 +38,6 @@ export default async function Cart({ params: { lang } }: CartProps) {
                 className="space-y-6 lg:space-y-0 flex flex-col px-8 py-4 lg:border-b-2 lg:border-primary w-full lg:flex-row items-center"
               >
                 <CartEntry cartItem={cartItem} key={cartItem.id} />
-
                 <div className="flex lg:hidden h-[2px] w-3/4 bg-primary"></div>
               </li>
             ))}
@@ -46,17 +45,17 @@ export default async function Cart({ params: { lang } }: CartProps) {
           {!cart?.cartItems.length && (
             <>
               <div className="flex flex-col lg:flex-row gap-y-4 items-center gap-x-16">
-                <p>Votre panier est vide</p>
+                <p>{dict.cart.empty}</p>
                 <Link href="/">
                   <Button aria-label="Retour collection" size="xl">
-                    Continuer mes achats
+                    {dict.cart.continue}
                   </Button>
                 </Link>
               </div>
             </>
           )}
         </div>
-        <CheckCart cart={cart} />
+        <CheckCart cart={cart} dict={dict} />
       </div>
     </>
   );

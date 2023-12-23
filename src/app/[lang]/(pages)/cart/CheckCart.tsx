@@ -1,23 +1,25 @@
 "use client";
 import formatPrice from "@/helpers/format";
 import { VAT_RATE } from "@/helpers/utils";
-import { CartItems } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useMemo } from "react";
+import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import { CartItem } from "@/lib/DbSchema";
 
 interface CheckCartProps {
-  cart: Cart | null;
+  cart: Cart;
+  dict: Dictionary;
 }
 
 interface Cart {
   subtotal: number;
   size: number;
-  cartItems: CartItems[];
+  cartItems: CartItem[];
 }
 
-export default function CheckCart({ cart }: CheckCartProps) {
+export default function CheckCart({ cart, dict }: CheckCartProps) {
   const router = useRouter();
 
   const total: number = useMemo(() => {
@@ -42,8 +44,8 @@ export default function CheckCart({ cart }: CheckCartProps) {
 
   return (
     <section className="flex gap-y-8 lg:space-x-12 flex-col-reverse lg:flex-row items-center lg:items-start">
-      <div className="text-sm lg:text-base tracking-wide space-y-4 bg-third flex flex-col p-4 w-80">
-        <h2 className="text-3xl mb-4">Récapitulatif</h2>
+      <div className="text-sm lg:text-base tracking-wide space-y-4 bg-card flex flex-col p-4 w-80">
+        <h2 className="text-3xl mb-4">{dict.cart.recap}</h2>
         <div className="flex justify-between">
           <div className="flex items-center space-x-3">
             <p className="capitalize">sous total</p>

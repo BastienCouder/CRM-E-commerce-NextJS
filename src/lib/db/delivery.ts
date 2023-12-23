@@ -1,6 +1,6 @@
 import { prisma } from "./prisma";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/[lang]/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Session } from "next-auth";
 import { DeliverySchema } from "@/lib/DbSchema";
 import { z } from "zod";

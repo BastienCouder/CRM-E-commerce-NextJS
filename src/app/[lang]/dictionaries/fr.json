@@ -1,6 +1,9 @@
 {
-  "products": {
-    "shop": "Panier",
-    "cart": "Ajouter au panier"
+  "cart": {
+    "title": "Panier",
+    "addtocart": "Ajouter au panier",
+    "empty": "Votre panier est vide",
+    "continue": "Continuer mes achats",
+    "recap": "Récapitulatif"
   }
 }

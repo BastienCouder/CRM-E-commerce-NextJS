@@ -8,7 +8,6 @@ import Negotiator from "negotiator";
 
 // Assurez-vous que les headers sont bien définis là où ils sont utilisés.
 let headers = { "accept-language": "en-US,en;q=0.5" };
-let languages = new Negotiator({ headers }).languages();
 let locales = ["fr", "en", "us"];
 let defaultLocale = "fr";
 

@@ -1,4 +1,4 @@
-type Dictionary = {
+export type Dictionary = {
   [key: string]: any;
 };
 
