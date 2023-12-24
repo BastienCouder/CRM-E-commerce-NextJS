@@ -2,6 +2,7 @@ import z from "zod";
 
 export const envSchema = z.object({
   CREATE_WEBSITE: z.string().nonempty(),
+  NAME_WEBSITE: z.string().nonempty(),
   NEXT_PUBLIC_GA_ID: z.string().nonempty(),
   DATABASE_URL: z.string().nonempty(),
   NEXTAUTH_URL: z.string().nonempty(),
@@ -20,7 +21,7 @@ export const envSchema = z.object({
   NODE_ENV: z.string().nonempty(),
 });
 
-export const env = envSchema?.parse(process.env);
+export const env = process.env;
 
 export const getEnvIssues = (): z.ZodIssue[] | void => {
   const result = envSchema.safeParse(process.env);

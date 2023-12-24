@@ -4,9 +4,12 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 import Product from "./Product";
 import { getWishlist } from "@/lib/db/wishlist";
+import { getDictionary } from "@/app/[lang]/dictionaries/dictionaries";
+
 interface ProductPageProps {
   params: {
     id: string;
+    lang: string;
   };
 }
 
@@ -34,14 +37,14 @@ export async function generateMetadata({
 }
 
 export default async function ProductPage({
-  params: { id },
+  params: { id, lang },
 }: ProductPageProps) {
   const products = await prisma.product.findMany({
     orderBy: {
       id: "desc",
     },
   });
-
+  const dict = await getDictionary(lang);
   const product = await getProduct(id);
   const wishlist = await getWishlist();
 
@@ -50,6 +53,7 @@ export default async function ProductPage({
       products={products}
       product={product}
       wishlistItems={wishlist?.wishlistItems}
+      dict={dict}
     />
   );
 }

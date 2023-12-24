@@ -1,15 +1,15 @@
 import { getServerSession } from "next-auth";
-import FormDelivery from "../../../../components/FormDelivery";
-import {
-  useServerDeleteDeliveryItem,
-  useServerSetDefaultDeliveryItem,
-  useServerDeliveryForm,
-} from "./actions";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import FormLogin from "./FormLogin";
+import Loading from "@/app/[lang]/loading";
 import { getDelivery } from "@/lib/db/delivery";
+import FormDelivery from "@/components/FormDelivery";
 import SelectDelivery from "./SelectDelivery";
-import Loading from "@/app/loading";
+import {
+  useServerDeleteDeliveryItem,
+  useServerDeliveryForm,
+  useServerSetDefaultDeliveryItem,
+} from "./actions";
 
 export default async function Delivery() {
   const session = await getServerSession(authOptions);

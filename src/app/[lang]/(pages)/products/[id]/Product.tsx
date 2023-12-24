@@ -6,6 +6,7 @@ import ProductMobile from "./ProductMobile";
 import ProductDesktop from "./ProductDesktop";
 import ProductTablet from "./ProductTablet";
 import { WishlistItemsProps } from "@/lib/db/wishlist";
+import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
 
 interface ProductProps {
   wishlistItems: WishlistItemsProps[] | undefined;
@@ -13,12 +14,14 @@ interface ProductProps {
     variants: ProductVariant[];
   };
   products: any;
+  dict: Dictionary;
 }
 
 export default function Product({
   product,
   products,
   wishlistItems,
+  dict,
 }: ProductProps) {
   const [showColor, setShowColor] = useState(false);
   const [selectedColor, setSelectedColor] = useState(
@@ -45,6 +48,7 @@ export default function Product({
   const productCategory = product ? product.category : null;
 
   const ProductPagesProps = {
+    dict,
     productCategory,
     showCategories,
     wishlistItems,

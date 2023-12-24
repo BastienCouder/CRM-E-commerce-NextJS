@@ -1,3 +1,4 @@
+import MainLayout from "@/components/layouts/MainLayout";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,17 +14,7 @@ export default async function CartLayout({
 }) {
   return (
     <>
-      <div className="border-b-2 border-primary h-24 flex justify-center items-center 2xl:mx-20">
-        <Link href={"/"}>
-          <Image
-            src={"/svg/logo.svg"}
-            alt="logo"
-            height={200}
-            width={200}
-            className="mt-4 h-[180px] aspect-square object-contain"
-          ></Image>
-        </Link>
-      </div>
+      <MainLayout />
       <div className="mt-8 pb-10 lg:px-16 xl:px-44">{children}</div>
     </>
   );

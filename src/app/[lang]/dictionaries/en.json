@@ -1,11 +1,11 @@
 {
   "locale": "en-GB",
   "cart": {
-    "shoppingcart": "shopping cart",
-    "addtocart": "add to cart",
-    "confirm": "confirm",
-    "empty": "your cart is empty",
-    "continue": "continue shopping",
+    "shopping_cart": "shopping cart",
+    "add_to_cart": "add to cart",
+    "empty_cart": "your cart is empty",
+    "no_items_in_cart": "No items in the cart",
+    "continue_shopping": "continue shopping",
     "recap": "summary",
     "subtotal": "subtotal",
     "articles": "items",
@@ -14,11 +14,34 @@
     "price": "price",
     "quantity": "quantity",
     "quantities": "quantities",
-    "totalprice": "Total Price",
+    "total_price": "total price",
     "shipping": "shipping",
     "free": "free",
     "total": "total",
-    "of": "of",
     "tva": "VAT"
+  },
+  "favories": {
+    "favories": "favorites",
+    "empty_favories": "your favorites are empty",
+    "product": "product",
+    "price": "price",
+    "add_to_cart": "add to cart",
+    "succes_product": "product added successfully"
+  },
+  "actions": {
+    "confirm": "confirm",
+    "close": "close",
+    "increment": "increment",
+    "decrement": "decrement",
+    "backtostore": "back to store"
+  },
+  "pronouns": {
+    "of": "of"
+  },
+  "metadata": {
+    "cart_title": "Cart",
+    "cart_metadescritpion": "This is the cart of my application.",
+    "favories_title": "Favorites",
+    "favories_metadescritpion": "These are the favorites of my application."
   }
 }

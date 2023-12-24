@@ -1,14 +1,12 @@
 "use client";
-
 import formatPrice from "@/helpers/format";
 import Image from "next/image";
 import Link from "next/link";
-
 import QuantitySelector from "./QuantityUpdate";
 import {
   DeleteProduct,
   UpdateProductQuantity,
-} from "../app/[lang]/(pages)/cart/actions";
+} from "@/app/[lang]/(pages)/cart/actions";
 import Loading from "@/app/[lang]/loading";
 import { CartItemsProps } from "@/lib/db/cart";
 import { X } from "lucide-react";
@@ -85,11 +83,12 @@ export default function CartEntry({ cartItem, dict }: CartEntryProps) {
         <QuantitySelector
           initialQuantity={quantity}
           onQuantityChange={handleQuantityChange}
+          dict={dict}
         />
       </div>
       <div className="lg:h-[75px] justify-start items-center w-full flex flex-col lg:space-y-2 lg:items-start">
         <h3 className="hidden lg:block text-xs mb-[1.2rem] capitalize">
-          {dict.cart.totalprice}
+          {dict.cart.total_price}
         </h3>
         <p className="font-bold">
           {variant?.price

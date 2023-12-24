@@ -5,11 +5,19 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Loading from "@/app/[lang]/loading";
 import { getDictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import { Metadata } from "next";
+import { env } from "@/lib/env";
 
-export const metadata = {
-  title: "Panier - E-commerce",
-};
+export async function generateMetadata({
+  params: { lang },
+}: CartProps): Promise<Metadata> {
+  const dict = await getDictionary(lang);
 
+  return {
+    title: `${dict.metadata.cart_title} - ${env.NAME_WEBSITE}`,
+    description: `${dict.metadata.cart_metadescritpion}`,
+  };
+}
 interface CartProps {
   params: {
     lang: string;
@@ -28,8 +36,8 @@ export default async function Cart({ params: { lang } }: CartProps) {
     <>
       <div className="space-y-8">
         <div>
-          <h1 className="text-4xl text-center lg:text-start">
-            {dict.cart.shoppingcart}
+          <h1 className="text-3xl md:text-4xl text-center lg:text-start">
+            {dict.cart.shopping_cart}
           </h1>
           <ul className="flex flex-col space-y-2 py-4">
             {cart?.cartItems?.map((cartItem) => (
@@ -45,10 +53,10 @@ export default async function Cart({ params: { lang } }: CartProps) {
           {!cart?.cartItems?.length && (
             <>
               <div className="flex flex-col lg:flex-row gap-y-4 items-center gap-x-16">
-                <p>{dict.cart.emptycart}</p>
+                <p>{dict.cart.empty_cart}</p>
                 <Link href="/">
-                  <Button aria-label={dict.actions.backtostore} size="xl">
-                    {dict.cart.continueshopping}
+                  <Button aria-label={dict.actions.back_to_store} size="xl">
+                    {dict.cart.continue_shopping}
                   </Button>
                 </Link>
               </div>

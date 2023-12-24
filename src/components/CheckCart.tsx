@@ -23,29 +23,29 @@ export default function CheckCart({ cart, dict }: CheckCartProps) {
   const router = useRouter();
 
   const total: number = useMemo(() => {
-    return parseInt(formatPrice(cart?.subtotal || 0, "EUR"));
-  }, [cart?.subtotal]);
+    return parseInt(formatPrice(cart?.subtotal || 0, dict.locale));
+  }, [cart?.subtotal, dict.locale]);
 
   const totalTVA: string = useMemo(() => {
     return (VAT_RATE * total).toFixed(2);
   }, [total]);
 
   const quantity: number | undefined = useMemo(() => {
-    return cart?.cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    return cart?.cartItems?.reduce((acc, item) => acc + item?.quantity, 0);
   }, [cart?.cartItems]);
 
   const cartCheckout = () => {
-    if (cart && cart.size !== 0) {
+    if (cart?.size !== 0) {
       router.push("/cart/delivery");
     } else {
-      toast.error("Aucun article dans le panier");
+      toast.error(`${dict.cart.no_items_in_cart}`);
     }
   };
 
   return (
     <section className="flex gap-y-8 lg:space-x-12 flex-col-reverse lg:flex-row items-center lg:items-start">
       <div className="text-sm lg:text-base tracking-wide space-y-4 bg-card flex flex-col p-4 w-80">
-        <h2 className="text-3xl mb-4">{dict.cart.recap}</h2>
+        <h2 className="text-2xl mb-4">{dict.cart.recap}</h2>
         <div className="flex justify-between">
           <div className="flex items-center space-x-3">
             <p className="capitalize">{dict.cart.subtotal}</p>
@@ -76,7 +76,7 @@ export default function CheckCart({ cart, dict }: CheckCartProps) {
           <p>{formatPrice(cart?.subtotal || 0, dict.locale)}</p>
         </div>
         <div className="pt-4">
-          <Button aria-label="Valider" onClick={cartCheckout}>
+          <Button aria-label={dict.actions.confirm} onClick={cartCheckout}>
             {dict.actions.confirm}
           </Button>
         </div>

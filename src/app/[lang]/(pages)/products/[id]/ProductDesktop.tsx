@@ -1,28 +1,30 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import AddToCartButton from "../../../../components/AddToCartButton";
+import AddToCartButton from "@/components/AddToCartButton";
 import PriceTag from "@/helpers/PriceTag";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import AddToWishlist from "../../../../components/AddToWishlist";
+import AddToWishlist from "@/components/AddToWishlist";
 import { useServerAddToCart, useServerAddWishlist } from "./actions";
 import { useAnimationContext } from "@/context/AnimationContext";
 import styles from "@/styles/keyframes.module.css";
 import { WishlistItemsProps } from "@/lib/db/wishlist";
 import { ArrowDown, X } from "lucide-react";
-import { Product, ProductVariant } from "@/lib/DbSchema";
+import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import { Product, ProductVariant } from "@prisma/client";
 
 interface ProductDesktopProps {
   wishlistItems: WishlistItemsProps[] | undefined;
-  productCategory: string;
+  productCategory: string | null;
   products: Product[];
   showColor: boolean;
-  selectedColor: string;
+  selectedColor: string | null;
   selectedVariant: ProductVariant | undefined;
   product: ExtendedProduct;
   toggleColorVisibility: () => Promise<void>;
   handleColorChange: (color: string) => void;
+  dict: Dictionary;
 }
 
 interface ExtendedProduct extends Product {
@@ -39,6 +41,7 @@ export default function ProductDesktop({
   product,
   toggleColorVisibility,
   handleColorChange,
+  dict,
 }: ProductDesktopProps) {
   const pathname = usePathname();
   const { disableAnimation, setDisableAnimation } = useAnimationContext();
@@ -358,6 +361,7 @@ export default function ProductDesktop({
                             : product.price
                         }
                         className="text-xl text-start font-bold"
+                        locale={dict.locale}
                       />
                     </motion.div>
                     <AddToWishlist
@@ -434,6 +438,7 @@ export default function ProductDesktop({
                             : product.price
                         }
                         className="text-xl text-start font-bold"
+                        locale={dict.locale}
                       />
                     </motion.div>
 

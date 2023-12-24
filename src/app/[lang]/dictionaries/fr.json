@@ -1,10 +1,11 @@
 {
   "locale": "fr-FR",
   "cart": {
-    "shoppingcart": "panier",
-    "addtocart": "ajouter au panier",
-    "emptycart": "votre panier est vide",
-    "continueshopping": "continuer mes achats",
+    "shopping_cart": "panier",
+    "add_to_cart": "ajouter au panier",
+    "empty_cart": "votre panier est vide",
+    "no_items_in_cart": "Aucun article dans le panier",
+    "continue_shopping": "continuer mes achats",
     "recap": "récapitulatif",
     "subtotal": "sous-total",
     "articles": "articles",
@@ -13,11 +14,19 @@
     "price": "prix",
     "quantity": "quantité",
     "quantities": "quantités",
-    "totalprice": "prix Total",
+    "total_price": "prix total",
     "shipping": "expédition",
     "free": "gratuite",
     "total": "total",
     "tva": "tva"
+  },
+  "favories": {
+    "favories": "favories",
+    "empty_favories": "vos favories sont vides",
+    "product": "produit",
+    "price": "prix",
+    "add_to_cart": "ajouter au panier",
+    "succes_product": "produit ajouté avec succès"
   },
   "actions": {
     "confirm": "valider",
@@ -28,5 +37,11 @@
   },
   "pronouns": {
     "of": "de"
+  },
+  "metadata": {
+    "cart_title": "Panier",
+    "cart_metadescritpion": "Ceci est le panier de mon application.",
+    "favories_title": "Favories",
+    "favories_metadescritpion": "Ceci sont les favories de mon application."
   }
 }

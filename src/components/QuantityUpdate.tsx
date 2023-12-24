@@ -1,14 +1,18 @@
+"use client";
+import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
 import React, { useState } from "react";
 
 interface QuantityProps {
   initialQuantity: number;
   onQuantityChange: (newQuantity: number) => void;
+  dict: Dictionary;
 }
 
-const QuantitySelector: React.FC<QuantityProps> = ({
+export default function QuantitySelector({
   initialQuantity,
   onQuantityChange,
-}) => {
+  dict,
+}: QuantityProps) {
   const [quantity, setQuantity] = useState<number>(initialQuantity);
 
   const handleIncrement = () => {
@@ -30,7 +34,7 @@ const QuantitySelector: React.FC<QuantityProps> = ({
     <div className="lg:h-[55px] justify-start">
       <div className="flex mt-[1.2rem] space-x-2">
         <button
-          aria-label="incrémenter"
+          aria-label={dict.actions.increment}
           onClick={handleDecrement}
           className="bg-primary text-white px-2"
         >
@@ -38,7 +42,7 @@ const QuantitySelector: React.FC<QuantityProps> = ({
         </button>
         <p>{quantity}</p>
         <button
-          aria-label="décrementer"
+          aria-label={dict.actions.decrement}
           onClick={handleIncrement}
           className="bg-primary text-white px-2"
         >
@@ -47,6 +51,4 @@ const QuantitySelector: React.FC<QuantityProps> = ({
       </div>
     </div>
   );
-};
-
-export default QuantitySelector;
+}

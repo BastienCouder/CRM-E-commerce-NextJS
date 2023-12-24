@@ -1,36 +1,24 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { AiOutlinePlus } from "react-icons/ai";
-import AddToCartButton from "../../../../components/AddToCartButton";
+import AddToCartButton from "@/components/AddToCartButton";
 import PriceTag from "@/helpers/PriceTag";
 import { Category, Product, ProductVariant } from "@prisma/client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { RxCross2 } from "react-icons/rx";
-import AddToWishlist from "../../../../components/AddToWishlist";
+import AddToWishlist from "@/components/AddToWishlist";
 import { useServerAddToCart, useServerAddWishlist } from "./actions";
 import { useAnimationContext } from "@/context/AnimationContext";
 import { BsCaretDownFill } from "react-icons/bs";
 import styles from "@/styles/keyframes.module.css";
 import { WishlistItemsProps } from "@/lib/db/wishlist";
+import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
 
 interface ProductTabletProps {
   wishlistItems: WishlistItemsProps[] | undefined;
   productCategory: string | null | undefined;
-  products: {
-    id: string;
-    description: string;
-    imageUrl: string;
-    name: string;
-    price: number;
-    createdAt: Date;
-    updatedAt: Date;
-    categoryId: string | null;
-    category: {
-      id: string;
-      name: string;
-    } | null;
-  }[];
+  products: Product[];
   showColor: boolean;
   showCategories: boolean;
   selectedColor: string | null;
@@ -39,6 +27,7 @@ interface ProductTabletProps {
   toggleColorVisibility: () => Promise<void>;
   toggleCategoriesVisibility: () => Promise<void>;
   handleColorChange: (color: string) => void;
+  dict: Dictionary;
 }
 
 interface ExtendedProduct extends Product {
@@ -57,6 +46,7 @@ export default function ProductTablet({
   toggleCategoriesVisibility,
   product,
   handleColorChange,
+  dict,
 }: ProductTabletProps) {
   const pathname = usePathname();
 
@@ -275,6 +265,7 @@ export default function ProductTablet({
                         : product.price
                     }
                     className="text-xl text-start font-bold"
+                    locale={dict.locale}
                   />
                 </motion.div>
                 <AddToWishlist
@@ -408,6 +399,7 @@ export default function ProductTablet({
                         : product.price
                     }
                     className="text-xl text-start font-bold"
+                    locale={dict.locale}
                   />
                 </motion.div>
                 <AddToWishlist
@@ -482,7 +474,7 @@ export default function ProductTablet({
             </div>
             <ul className="absolute w-[15rem] space-y-4">
               {products.map((product) => {
-                if (product.category?.name === productCategory) {
+                if (product.category === productCategory) {
                   const productPath = `/products/${product.id}`;
                   return (
                     <motion.li

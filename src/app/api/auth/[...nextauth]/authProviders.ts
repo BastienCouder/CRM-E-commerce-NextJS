@@ -1,7 +1,7 @@
 import GoogleProvider from "next-auth/providers/google";
-import { env } from "process";
 import { compare } from "bcrypt";
 import Credentials from "next-auth/providers/credentials";
+import { env } from "@/lib/env";
 
 export const authProviders = [
   GoogleProvider({

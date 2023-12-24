@@ -6,13 +6,10 @@ import { recordVisitorInfo } from "@/lib/views";
 import { mapBrowserName } from "./helpers/utils";
 import Negotiator from "negotiator";
 
-// Assurez-vous que les headers sont bien définis là où ils sont utilisés.
 let headers = { "accept-language": "en-US,en;q=0.5" };
 let locales = ["fr", "en", "us"];
 let defaultLocale = "fr";
 
-// La fonction getLocale doit être définie pour retourner une locale valide.
-// Par exemple, vous pouvez la définir comme ci-dessous :
 function getLocale(req: any) {
   const preferredLanguage = new Negotiator(req).language(locales);
   return preferredLanguage || defaultLocale;
@@ -20,11 +17,21 @@ function getLocale(req: any) {
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+
+  if (
+    pathname.startsWith("/_next/") ||
+    pathname.startsWith("/svg/") ||
+    pathname.startsWith("/images/") ||
+    pathname.startsWith("/api/")
+  ) {
+    return NextResponse.next();
+  }
+
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
-  if (pathnameHasLocale) return;
+  if (pathnameHasLocale) return NextResponse.next();
 
   const locale = getLocale(req);
   req.nextUrl.pathname = `/${locale}${pathname}`;
@@ -48,7 +55,7 @@ export function middleware(req: NextRequest) {
     !url.endsWith(".js") &&
     !url.endsWith("json")
   ) {
-    console.log(`Page requested: ${url}`);
+    // console.log(`Page requested: ${url}`);
     // recordVisit(url);
   }
   const cookieConsent = cookieStore.get("cookieConsent");
@@ -94,10 +101,5 @@ export function middleware(req: NextRequest) {
   return NextResponse.redirect(req.nextUrl);
 }
 export const config = {
-  matcher: [
-    // Skip all internal paths (_next)
-    "/((?!_next).*)",
-    // Optional: only run on root (/) URL
-    // '/'
-  ],
+  matcher: "/((?!_next|svg|api).*)",
 };

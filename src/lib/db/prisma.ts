@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client/edge";
-import { env } from "../env";
+import { env } from "@/lib/env";
 import { withAccelerate } from "@prisma/extension-accelerate";
 
 const prismaClientSingleton = () => {

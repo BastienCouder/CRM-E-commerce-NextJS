@@ -1,39 +1,60 @@
 import { getWishlist } from "@/lib/db/wishlist";
-import WishlistEntry from "./WishlistEntry";
+import WishlistEntry from "../../../../components/WishlistEntry";
 import { useServerAddToCart } from "./actions";
+import { getDictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import { Metadata } from "next";
+import { env } from "@/lib/env";
 
-export const metadata = {
-  title: "Favories - E-commerce",
-};
+export async function generateMetadata({
+  params: { lang },
+}: WishlistProps): Promise<Metadata> {
+  const dict = await getDictionary(lang);
 
-export default async function Wishlist() {
+  return {
+    title: `${dict.metadata.favories_title} - ${env.NAME_WEBSITE}`,
+    description: `${dict.metadata.favories_metadescritpion}`,
+  };
+}
+
+interface WishlistProps {
+  params: {
+    lang: string;
+  };
+}
+
+export default async function Wishlist({ params: { lang } }: WishlistProps) {
+  const dict = await getDictionary(lang);
   const wishlist = await getWishlist();
 
   return (
     <>
-      <div className="mt-8 pb-10 lg:px-16 xl:px-44 ">
-        <h1 className="text-4xl text-center lg:text-start">Favories</h1>
+      <h1 className="text-3xl md:text-4xl text-center lg:text-start">
+        {dict.favories.favories}
+      </h1>
 
-        <ul className="flex flex-col space-y-2 py-8 lg:py-12">
-          {wishlist?.wishlistItems.map((wishlistItem) => {
-            return (
-              <li
+      <ul className="flex flex-col space-y-2 py-8 lg:py-12">
+        {wishlist?.wishlistItems?.map((wishlistItem) => {
+          return (
+            <li
+              key={wishlistItem.id}
+              className="space-y-6 lg:space-y-0 flex flex-col px-8 py-4 lg:border-b-2 lg:border-primary w-full lg:flex-row items-center"
+            >
+              <WishlistEntry
+                wishlistItem={wishlistItem}
                 key={wishlistItem.id}
-                className="space-y-6 lg:space-y-0 flex flex-col px-8 py-4 lg:border-b-2 lg:border-primary w-full lg:flex-row items-center"
-              >
-                <WishlistEntry
-                  wishlistItem={wishlistItem}
-                  key={wishlistItem.id}
-                  AddToCart={useServerAddToCart}
-                />
-
-                <div className="flex lg:hidden  h-[2px] w-3/4 bg-primary"></div>
-              </li>
-            );
-          })}
-          {!wishlist?.wishlistItems.length && <p>Vos favories sont vides</p>}
-        </ul>
-      </div>
+                AddToCart={useServerAddToCart}
+                dict={dict}
+              />
+              <div className="flex lg:hidden  h-[2px] w-3/4 bg-primary"></div>
+            </li>
+          );
+        })}
+        {!wishlist?.wishlistItems?.length && (
+          <p className="flex justify-center lg:justify-start items-center gap-x-16">
+            {dict.favories.empty_favories}
+          </p>
+        )}
+      </ul>
     </>
   );
 }
