@@ -2,19 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Bodoni";
-  font-style: normal;
-  src: local("Bodoni"), url("/fonts/Bodoni.otf") format("opentype");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Noto";
-  font-style: normal;
-  src: local("Noto"), url("/fonts/Noto.ttf") format("truetype");
-  font-display: swap;
-}
 @layer base {
   :root {
     --background: 35, 35, 35;
@@ -35,10 +22,11 @@
     --destructive2: 139, 0, 0;
     --destructive-foreground: 255, 255, 255;
     --border: 242, 244, 248;
-    --input: 45, 45, 45;
+    --input: 221, 229, 236;
     --ring: 207, 224, 234;
     --radius: 0.5rem;
     --chart: 210, 167, 142;
+    --font-bodoni: "Bodoni", sans-serif;
   }
 
   .ice {
@@ -64,6 +52,7 @@
     --ring: 207, 224, 234;
     --radius: 0.5rem;
     --chart: 112, 157, 166;
+    --font-bodoni: "Bodoni", sans-serif;
   }
 }
 

@@ -2,12 +2,14 @@
 import Image from "next/image";
 import formatPrice, { formatDescription } from "@/helpers/format";
 import { CartItemsProps } from "@/lib/db/cart";
+import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
 
 interface CartItemProps {
   cartItem: CartItemsProps;
+  dict: Dictionary;
 }
 
-export default function CartItem({ cartItem }: CartItemProps) {
+export default function CartItem({ cartItem, dict }: CartItemProps) {
   const description = `${cartItem.product.description}`;
   const formattedDescription = formatDescription(description);
 
@@ -18,7 +20,7 @@ export default function CartItem({ cartItem }: CartItemProps) {
           src={
             cartItem.variant
               ? cartItem.variant.imageUrl || ""
-              : cartItem.product.imageUrl
+              : cartItem.product.imageUrl!
           }
           alt={cartItem.product.name}
           width={400}
@@ -42,11 +44,13 @@ export default function CartItem({ cartItem }: CartItemProps) {
             cartItem.variant?.price
               ? cartItem.variant?.price
               : cartItem.product.price,
-            "EUR"
+            dict.locale
           )}
         </p>
         <p className="capitalize flex gap-2">
-          {cartItem.quantity > 1 ? `quantités` : `quantité`}
+          {cartItem.quantity > 1
+            ? `${dict.payment.quantities}`
+            : `${dict.payment.quantity}`}
           <span>{cartItem.quantity}</span>
         </p>
       </div>

@@ -2,7 +2,6 @@
   "locale": "en-US",
   "cart": {
     "shopping_cart": "shopping cart",
-    "add_to_cart": "add to cart",
     "empty_cart": "your cart is empty",
     "no_items_in_cart": "No items in the cart",
     "continue_shopping": "continue shopping",
@@ -31,17 +30,47 @@
   "actions": {
     "confirm": "confirm",
     "close": "close",
+    "add_to_cart": "add to cart",
     "increment": "increment",
     "decrement": "decrement",
     "backtostore": "back to store"
   },
   "pronouns": {
-    "of": "of"
+    "of": "of",
+    "and": "and",
+    "or": "or"
+  },
+  "auth": {
+    "login": "log in",
+    "register": "sign up",
+    "agree": "by clicking continue, you agree to our",
+    "enter_email_login": "enter your email below to log in",
+    "enter_email_register": "enter your email below to sign up",
+    "incorrect_password": "the password is incorrect",
+    "error_login": "an error occurred while logging in:"
+  },
+  "form": {
+    "email": "email",
+    "name": "name",
+    "password": "password",
+    "show_password": "show password",
+    "forgot_password": "forgot password"
+  },
+  "policy": {
+    "terms_of_service": "terms of service",
+    "privacy_policy": "privacy policy",
+    "agree": "by clicking continue, you agree to our"
   },
   "metadata": {
+    "login_title": "Login",
+    "login_metadescritpion": "Authentication forms built using the components.",
+    "register_title": "Sign Up",
+    "register_metadescritpion": "Authentication forms built using the components.",
     "cart_title": "Cart",
     "cart_metadescritpion": "This is the cart of my application.",
     "favories_title": "Favorites",
-    "favories_metadescritpion": "These are the favorites of my application."
+    "favories_metadescritpion": "These are the favorites of my application.",
+    "payment_title": "Payment",
+    "payment_metadescritpion": "This is the payment of my application."
   }
 }

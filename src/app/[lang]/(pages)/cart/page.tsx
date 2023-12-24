@@ -1,12 +1,13 @@
 import { getCart } from "@/lib/db/cart";
-import CartEntry from "../../../../components/CartEntry";
-import CheckCart from "../../../../components/CheckCart";
+import CartEntry from "@/components/CartEntry";
+import CheckCart from "@/components/CheckCart";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Loading from "@/app/[lang]/loading";
 import { getDictionary } from "@/app/[lang]/dictionaries/dictionaries";
 import { Metadata } from "next";
-import { env } from "@/lib/env";
+import urls from "@/lib/data/url";
+import website from "@/lib/data/infosWebsite";
 
 export async function generateMetadata({
   params: { lang },
@@ -14,7 +15,7 @@ export async function generateMetadata({
   const dict = await getDictionary(lang);
 
   return {
-    title: `${dict.metadata.cart_title} - ${env.NAME_WEBSITE}`,
+    title: `${dict.metadata.cart_title} - ${website.name}`,
     description: `${dict.metadata.cart_metadescritpion}`,
   };
 }
@@ -54,7 +55,7 @@ export default async function Cart({ params: { lang } }: CartProps) {
             <>
               <div className="flex flex-col lg:flex-row gap-y-4 items-center gap-x-16">
                 <p>{dict.cart.empty_cart}</p>
-                <Link href="/">
+                <Link href={urls.store}>
                   <Button aria-label={dict.actions.back_to_store} size="xl">
                     {dict.cart.continue_shopping}
                   </Button>

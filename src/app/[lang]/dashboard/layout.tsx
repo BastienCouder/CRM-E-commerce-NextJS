@@ -3,8 +3,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { ThemeProviders } from "@/context/ThemeContext";
 import { MainNav } from "@/components/dashboard/MainNav";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import Loading from "@/app/loading";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Loading from "@/app/[lang]/loading";
 
 export const metadata = {
   title: "Dashboard",

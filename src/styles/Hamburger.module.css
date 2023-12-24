@@ -6,6 +6,8 @@
   right: 2rem;
   z-index: 999;
   color: white;
+  text-transform: uppercase;
+  font-size: small;
 }
 
 .burger-button {

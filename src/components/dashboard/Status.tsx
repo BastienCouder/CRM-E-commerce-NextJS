@@ -7,8 +7,8 @@ import {
   DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu";
 import { DropdownMenuSubTrigger } from "@radix-ui/react-dropdown-menu";
-import { statuses as productStatuses } from "@/app/dashboard/management/products/data/data";
-import { statuses as orderStatuses } from "@/app/dashboard/management/orders/data/data";
+import { statuses as productStatuses } from "@/app/[lang]/dashboard/management/products/data/data";
+import { statuses as orderStatuses } from "@/app/[lang]/dashboard/management/orders/data/data";
 
 interface StatusProps {
   itemId: string;

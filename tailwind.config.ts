@@ -75,7 +75,8 @@ const config: Config = {
       },
     },
     fontFamily: {
-      sans: ["var(--font-sans)", ...fontFamily.sans],
+      inter: "var(--font-inter)",
+      bodoni: "var(--font-bodoni)",
     },
     keyframes: {
       "accordion-down": {

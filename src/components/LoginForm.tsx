@@ -20,8 +20,14 @@ import { checkPassword } from "@/helpers/authHelper";
 import { toast } from "sonner";
 import { AiFillGoogleSquare } from "react-icons/ai";
 import { Separator } from "@/components/ui/separator";
+import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import urls from "@/lib/data/url";
 
-export default function LoginForm() {
+interface LoginFormProps {
+  dict: Dictionary;
+}
+
+export default function LoginForm({ dict }: LoginFormProps) {
   const router = useRouter();
   const form = useForm<LoginValues>({
     resolver: zodResolver(LoginSchema),
@@ -32,7 +38,7 @@ export default function LoginForm() {
     const email = form.getValues("email");
     const password = form.getValues("password");
     try {
-      await signIn("email", {
+      await signIn("credentials", {
         email: email,
         password: password,
         redirect: false,
@@ -42,14 +48,13 @@ export default function LoginForm() {
 
       if (password) {
         if (!isCorrectPassword) {
-          toast.error("Le mot de passe est incorrecte");
+          toast.error(`${dict.auth.incorrect_password}`);
         } else {
-          router.push("/profile");
+          router.push(`${urls.profile}`);
         }
       }
-    } catch (error) {
-      console.error("Une erreur s'est produite lors de la connexion : ", error);
-      throw error;
+    } catch (error: any) {
+      throw new Error(`${dict.auth.error_login} ${error.message}`);
     }
   };
 
@@ -68,12 +73,14 @@ export default function LoginForm() {
         </div>
         <div className="w-full flex items-center">
           <div className="w-1/2 h-px bg-white"></div>
-          <p className="px-8 flex justify-center items-center">Ou</p>
+          <p className="px-8 flex justify-center items-center">
+            {dict.pronouns.or}
+          </p>
           <div className="w-1/2 h-px bg-white"></div>
         </div>
       </div>
-      <p className="text-sm mx-auto text-center text-muted-foreground">
-        Saisissez votre email ci-dessous pour vous connecter
+      <p className="text-sm mx-auto text-center text-muted-foreground first-letter:uppercase">
+        {dict.auth.enter_email_login}
       </p>
       <Form {...form}>
         <form
@@ -86,9 +93,9 @@ export default function LoginForm() {
             name="email"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{dict.form.email}</FormLabel>
                 <FormControl>
-                  <Input placeholder="email" {...field} />
+                  <Input placeholder={dict.form.email} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -100,20 +107,21 @@ export default function LoginForm() {
             name="password"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{dict.form.password}</FormLabel>
                 <FormControl>
                   <ShowPassword
                     password={field.value}
                     setPassword={field.onChange}
+                    dict={dict}
                   />
                 </FormControl>
                 <div className="flex flex-col">
                   <small>
                     <Link
-                      href="forgotPassword"
+                      href={urls.forgot_password}
                       className="cursor-pointer hover:text-secondary"
                     >
-                      Mot de passe oublié ?
+                      {dict.form.forgot_password} ?
                     </Link>
                   </small>
                   <FormMessage />
@@ -121,8 +129,8 @@ export default function LoginForm() {
               </FormItem>
             )}
           />
-          <Button aria-label="connexion" size="lg">
-            Se connecter
+          <Button aria-label={dict.auth.login} size="lg">
+            {dict.auth.login}
           </Button>
         </form>
       </Form>

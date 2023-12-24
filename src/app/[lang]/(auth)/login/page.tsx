@@ -1,31 +1,36 @@
 import LoginForm from "@/components/LoginForm";
 import { buttonVariants } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { cn } from "@/helpers/utils";
+import { env } from "@/lib/env";
 import { Metadata } from "next";
-import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { AiFillGoogleSquare } from "react-icons/ai";
+import { getDictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import urls from "@/lib/data/url";
 
-export const metadata: Metadata = {
-  title: "Authentication",
-  description: "Authentication forms built using the components.",
-};
+export async function generateMetadata({
+  params: { lang },
+}: LoginProps): Promise<Metadata> {
+  const dict = await getDictionary(lang);
 
-export default function LoginPage() {
+  return {
+    title: `${dict.metadata.login_title} - ${env.NAME_WEBSITE}`,
+    description: `${dict.metadata.login_metadescritpion}`,
+  };
+}
+
+interface LoginProps {
+  params: {
+    lang: string;
+  };
+}
+
+export default async function Login({ params: { lang } }: LoginProps) {
+  const dict = await getDictionary(lang);
+
   return (
     <>
       <section className="h-screen">
-        <div className="md:hidden">
-          <Image
-            src="/examples/authentication-light.png"
-            width={1280}
-            height={843}
-            alt="Authentication"
-            className="block dark:hidden"
-          />
-        </div>
         <div className="container relative hidden h-full flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
           <div className="relative hidden h-full flex-col px-8 py-2 text-foreground lg:flex">
             <div className="absolute inset-0 bg-[#000] " />
@@ -58,36 +63,35 @@ export default function LoginPage() {
           </div>
           <div className="lg:p-8">
             <Link
-              href="/register"
+              href={urls.register}
               className={cn(
                 buttonVariants({ variant: "outline" }),
                 "absolute top-[1.5rem] hover:bg-muted"
               )}
             >
-              S&apos;inscrire
+              {dict.auth.register}
             </Link>
             <div className="relative mx-auto flex w-full flex-col justify-center space-y-4 sm:w-[350px]">
               <div className="flex flex-col space-y-2 text-center">
                 <h1 className="text-2xl font-semibold tracking-tight">
-                  Se connecter
+                  {dict.auth.login}
                 </h1>
               </div>
-
-              <LoginForm />
-              <p className="px-8 text-center text-sm text-muted-foreground">
-                By clicking continue, you agree to our{" "}
+              <LoginForm dict={dict} />
+              <p className="px-8 text-center text-sm text-muted-foreground first-letter:uppercase">
+                {dict.auth.agree}{" "}
                 <Link
-                  href="/terms"
+                  href={urls.legal}
                   className="underline underline-offset-4 hover:text-secondary"
                 >
-                  Terms of Service
+                  {dict.policy.terms_of_service}
                 </Link>{" "}
-                and{" "}
+                {dict.pronouns.and}{" "}
                 <Link
-                  href="/privacy"
+                  href={urls.privacy}
                   className="underline underline-offset-4 hover:text-secondary"
                 >
-                  Privacy Policy
+                  {dict.policy.privacy_policy}
                 </Link>
                 .
               </p>

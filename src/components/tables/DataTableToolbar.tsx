@@ -1,8 +1,7 @@
 import { Table } from "@tanstack/react-table";
-
 import SoftDelete from "../dashboard/SoftDelete";
-import { useServerSoftDelete } from "../../app/dashboard/management/actions";
-import { statuses as orderStatuses } from "../../app/dashboard/management/orders/data/data";
+import { useServerSoftDelete } from "@/app/[lang]/dashboard/management/actions";
+import { statuses as orderStatuses } from "@/app/[lang]/dashboard/management/orders/data/data";
 import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "./DataTableFacetedFilter";
 import { Button } from "@/components/ui/button";
@@ -11,7 +10,7 @@ import { DataTableViewOptions } from "./DataTableViewOptions";
 import {
   priorities,
   statuses as productStatuses,
-} from "../../app/dashboard/management/products/data/data";
+} from "@/app/[lang]/dashboard/management/products/data/data";
 
 interface DataTableToolbarProps<TData> {
   table: Table<any>;

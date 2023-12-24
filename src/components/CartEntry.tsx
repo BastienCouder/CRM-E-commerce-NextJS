@@ -11,6 +11,7 @@ import Loading from "@/app/[lang]/loading";
 import { CartItemsProps } from "@/lib/db/cart";
 import { X } from "lucide-react";
 import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import urls from "@/lib/data/url";
 
 interface CartEntryProps {
   cartItem: CartItemsProps;
@@ -60,7 +61,7 @@ export default function CartEntry({ cartItem, dict }: CartEntryProps) {
               className="rounded-lg w-[70px] h-[70px] object-contain border-white border-[1px]"
             />
           )}
-          <Link href={"/products/" + product.id}>
+          <Link href={`${urls.products}/` + product.id}>
             <p className="font-bold capitalize">{product.name}</p>
             {variant && <p className="text-sm capitalize">{variant.name}</p>}
           </Link>

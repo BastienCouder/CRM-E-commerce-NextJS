@@ -1,15 +1,19 @@
 "use client";
+import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import { DeliveryItemWithdeliveryOption } from "@/lib/db/delivery";
 
 interface DeliveryDetailsProps {
-  deliveryItem: any;
+  deliveryItem: DeliveryItemWithdeliveryOption;
+  dict: Dictionary;
 }
 
 export default function DeliveryDetails({
   deliveryItem,
+  dict,
 }: DeliveryDetailsProps) {
   return (
     <article className="space-y-2">
-      <h2 className="text-2xl">Adresse de livraison</h2>
+      <h2 className="text-2xl">{dict.payment.delivery_address}</h2>
       <div className="text-sm border-b-2 pb-8 border-primary">
         {deliveryItem && (
           <>

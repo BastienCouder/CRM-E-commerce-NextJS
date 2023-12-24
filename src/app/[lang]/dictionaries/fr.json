@@ -2,9 +2,8 @@
   "locale": "fr-FR",
   "cart": {
     "shopping_cart": "panier",
-    "add_to_cart": "ajouter au panier",
     "empty_cart": "votre panier est vide",
-    "no_items_in_cart": "Aucun article dans le panier",
+    "no_items_in_cart": "aucun article dans le panier",
     "continue_shopping": "continuer mes achats",
     "recap": "récapitulatif",
     "subtotal": "sous-total",
@@ -28,20 +27,72 @@
     "add_to_cart": "ajouter au panier",
     "succes_product": "produit ajouté avec succès"
   },
+  "payment": {
+    "payment": "paiement",
+    "recap": "récapitulatif",
+    "products": "produits",
+    "product": "produit",
+    "delivery_address": "adresse de livraison",
+    "quantity": "quantité",
+    "quantities": "quantités",
+    "proceed_to_payment": "proceder au paiment"
+  },
   "actions": {
     "confirm": "valider",
     "close": "fermer",
+    "add_to_cart": "ajouter au panier",
     "increment": "incrémenter",
     "decrement": "décrementer",
     "backtostore": "retour à la boutique"
   },
+  "nav": {
+    "menu": "menu",
+    "home": "acceuil",
+    "collection": "collection",
+    "legal_information": "mentions légales",
+    "privacy_policy": "politique de confidentialité",
+    "cookie_policy": "Politique de cookies",
+    "refund_policy": "politique de remboursement",
+    "contact": "contact"
+  },
   "pronouns": {
-    "of": "de"
+    "of": "de",
+    "and": "et",
+    "or": "ou"
+  },
+  "auth": {
+    "login": "se connecter",
+    "register": "s'inscrire",
+    "agree": "en cliquant sur continuer, vous acceptez nos",
+    "enter_email_login": "saisissez votre email ci-dessous pour vous connecter",
+    "enter_email_register": "saisissez votre email ci-dessous pour vous inscrire",
+    "incorrect_password": "le mot de passe est incorrecte",
+    "error_login": "une erreur s'est produite lors de la connexion :"
+  },
+  "form": {
+    "email": "email",
+    "name": "nom",
+    "password": "mot de passe",
+    "show_password": "montrer mot de passe",
+    "forgot_password": "mot de passe oublié"
+  },
+  "policy": {
+    "terms_of_service": "conditions d'utilisation",
+    "privacy_policy": "politique de confidentialité",
+    "agree": "en cliquant sur continuer, vous acceptez notre"
   },
   "metadata": {
+    "login_title": "Connexion",
+    "login_metadescritpion": "Authentication forms built using the components.",
+    "register_title": "S'inscrire",
+    "register_metadescritpion": "Authentication forms built using the components.",
     "cart_title": "Panier",
     "cart_metadescritpion": "Ceci est le panier de mon application.",
+    "store_title": "Boutique",
+    "store_metadescritpion": "Ceci est la boutique de mon application.",
     "favories_title": "Favories",
-    "favories_metadescritpion": "Ceci sont les favories de mon application."
+    "favories_metadescritpion": "Ceci sont les favories de mon application.",
+    "payment_title": "Paiement",
+    "payment_metadescritpion": "Ceci est le paiement de mon application."
   }
 }

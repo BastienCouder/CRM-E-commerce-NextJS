@@ -23,7 +23,7 @@ export default function ShoppingCartButton({
         handleEnableAnimation();
       }}
     >
-      <ShoppingBag size={34} />
+      <ShoppingBag size={27} />
       <Badge className="absolute top-0 -right-2">{cart?.size || 0}</Badge>
     </Link>
   );

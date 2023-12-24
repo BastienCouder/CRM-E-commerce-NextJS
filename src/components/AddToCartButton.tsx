@@ -22,7 +22,7 @@ export default function AddToCartButton({
   return (
     <>
       <Button
-        aria-label={dict.favories.add_to_cart}
+        aria-label={dict.actions.add_to_cart}
         size="xl"
         onClick={() => {
           startTransition(async () => {
@@ -31,7 +31,7 @@ export default function AddToCartButton({
           });
         }}
       >
-        {dict.favories.add_to_cart}
+        {dict.actions.add_to_cart}
       </Button>
 
       <Toaster expand={false} position="bottom-left" />

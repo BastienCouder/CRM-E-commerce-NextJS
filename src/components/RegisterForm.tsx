@@ -21,8 +21,13 @@ import { Separator } from "@/components/ui/separator";
 import { signIn } from "next-auth/react";
 import { AiFillGoogleSquare } from "react-icons/ai";
 import { registerForm } from "@/app/[lang]/(auth)/action";
+import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
 
-export default function RegisterForm() {
+interface RegisterFormProps {
+  dict: Dictionary;
+}
+
+export default function RegisterForm({ dict }: RegisterFormProps) {
   const form = useForm<RegisterValues>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: defaultRegisterValues,
@@ -51,12 +56,14 @@ export default function RegisterForm() {
         </div>
         <div className="w-full flex items-center">
           <div className="w-1/2 h-px bg-white"></div>
-          <p className="px-8 flex justify-center items-center">Ou</p>
+          <p className="px-8 flex justify-center items-center">
+            {dict.pronouns.or}
+          </p>
           <div className="w-1/2 h-px bg-white"></div>
         </div>
       </div>
-      <p className="text-sm mx-auto text-center text-muted-foreground">
-        Saisissez votre email ci-dessous pour vous inscrire
+      <p className="text-sm mx-auto text-center text-muted-foreground first-letter:uppercase">
+        {dict.auth.enter_email_register}
       </p>
       <Form {...form}>
         <form
@@ -69,9 +76,9 @@ export default function RegisterForm() {
             name="username"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Nom</FormLabel>
+                <FormLabel>{dict.form.name}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Nom" {...field} />
+                  <Input placeholder={dict.form.name} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -83,9 +90,9 @@ export default function RegisterForm() {
             name="email"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{dict.form.email}</FormLabel>
                 <FormControl>
-                  <Input placeholder="email" {...field} />
+                  <Input placeholder={dict.form.email} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -97,11 +104,12 @@ export default function RegisterForm() {
             name="password"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{dict.form.password}</FormLabel>
                 <FormControl>
                   <ShowPassword
                     password={field.value}
                     setPassword={field.onChange}
+                    dict={dict}
                   />
                 </FormControl>
 
@@ -109,8 +117,8 @@ export default function RegisterForm() {
               </FormItem>
             )}
           />
-          <Button aria-label="inscription" size="lg">
-            S&apos;inscrire
+          <Button aria-label={dict.auth.register} size="lg">
+            {dict.auth.register}
           </Button>
         </form>
       </Form>

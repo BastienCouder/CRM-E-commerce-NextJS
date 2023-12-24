@@ -7,16 +7,23 @@ import { motion } from "framer-motion";
 import { Category, Color, Product, ProductVariant } from "@/lib/DbSchema";
 import CardProduct from "@/components/CardProduct";
 import StoreListHeader from "@/components/StoreListHeader";
+import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
 
-interface StoreProps {
+interface InterfaceStoreProps {
   products: (Product & {
     variants: ProductVariant[] | null;
   })[];
   categories: Category[];
   colors: Color[];
+  dict: Dictionary;
 }
 
-export default function Store({ products, categories, colors }: StoreProps) {
+export default function InterfaceStore({
+  products,
+  categories,
+  colors,
+  dict,
+}: InterfaceStoreProps) {
   const [filterData, setFilterData] = useState({
     selectedCategory: null as Category | null,
     selectedColor: null as Color | null,
@@ -139,6 +146,7 @@ export default function Store({ products, categories, colors }: StoreProps) {
                 key={product.id}
                 selectedCategory={selectedCategory}
                 selectedColor={selectedColor}
+                dict={dict}
               />
             ))}
           </ul>

@@ -3,7 +3,7 @@ import WishlistEntry from "../../../../components/WishlistEntry";
 import { useServerAddToCart } from "./actions";
 import { getDictionary } from "@/app/[lang]/dictionaries/dictionaries";
 import { Metadata } from "next";
-import { env } from "@/lib/env";
+import website from "@/lib/data/infosWebsite";
 
 export async function generateMetadata({
   params: { lang },
@@ -11,7 +11,7 @@ export async function generateMetadata({
   const dict = await getDictionary(lang);
 
   return {
-    title: `${dict.metadata.favories_title} - ${env.NAME_WEBSITE}`,
+    title: `${dict.metadata.favories_title} - ${website.name}`,
     description: `${dict.metadata.favories_metadescritpion}`,
   };
 }

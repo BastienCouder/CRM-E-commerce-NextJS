@@ -9,6 +9,7 @@ export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
   const order = await getOrder();
   const delivery = await getDelivery();
+
   if (!session) {
     redirect("/auth");
   }

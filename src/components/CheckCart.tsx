@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useMemo } from "react";
 import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import urls from "@/lib/data/url";
 
 interface CheckCartProps {
   cart: Cart | null;
@@ -36,7 +37,7 @@ export default function CheckCart({ cart, dict }: CheckCartProps) {
 
   const cartCheckout = () => {
     if (cart?.size !== 0) {
-      router.push("/cart/delivery");
+      router.push(`${urls.delivery}`);
     } else {
       toast.error(`${dict.cart.no_items_in_cart}`);
     }

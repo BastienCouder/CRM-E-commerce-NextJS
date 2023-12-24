@@ -6,17 +6,20 @@ import { Separator } from "@/components/ui/separator";
 import AddToCartButton from "@/components/AddToCartButton";
 import { Category, Color, Product } from "@/lib/DbSchema";
 import { useServerAddToCart } from "@/app/[lang]/(pages)/wishlist/actions";
+import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
 
 interface CardProductProps {
   product: Product;
   selectedCategory: Category | null;
   selectedColor: Color | null;
+  dict: Dictionary;
 }
 
 export default function CardProduct({
   product,
   selectedCategory,
   selectedColor,
+  dict,
 }: CardProductProps) {
   if (
     !selectedCategory ||
@@ -47,7 +50,7 @@ export default function CardProduct({
 
             <div className="flex space-x-2 mr-4 justify-center items-center">
               <div className="text-center">
-                <PriceTag price={product.price} />
+                <PriceTag price={product.price} locale={dict.locale} />
               </div>
             </div>
           </div>
@@ -56,6 +59,7 @@ export default function CardProduct({
               productId={product.id}
               variantId={""}
               addToCart={useServerAddToCart}
+              dict={dict}
             />
           </div>
           <Separator />

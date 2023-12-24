@@ -24,6 +24,6 @@
     }
   },
   "types": ["node", "jest"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/[lang]/(pages)/Navbar/NavBar.tsx"],
   "exclude": ["node_modules"]
 }

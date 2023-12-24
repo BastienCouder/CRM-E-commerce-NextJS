@@ -4,39 +4,44 @@ import Link from "next/link";
 import styles from "@/styles/Nav.module.css";
 import ShoppingCartButton from "@/app/[lang]/(pages)/Navbar/components/ShoppingCartButton";
 import UserMenuButton from "@/app/[lang]/(pages)/Navbar/components/UserMenuButton";
-import { Session } from "next-auth";
 import { useDisableAnimation } from "@/hooks/useDisableAnimation";
 import WishlistButton from "./components/WishlistButton";
 import { CartProps } from "@/lib/db/cart";
+import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import urls from "@/lib/data/url";
 
-interface NavBarProps {
+interface NavContentProps {
   toggleMenu: () => void;
   cart: CartProps | null;
-  session: Session | null;
+  dict: Dictionary;
 }
 
-const mainNavData = [
-  { name: "Accueil", path: "/" },
-  { name: `Collection`, path: "/store" },
-];
+export default function NavContent({
+  toggleMenu,
+  cart,
+  dict,
+}: NavContentProps) {
+  const mainNavData = [
+    { name: `${dict.nav.home}`, path: `${urls.home}` },
+    { name: `${dict.nav.collection}`, path: `${urls.store}` },
+  ];
 
-const footerNavData = [
-  { name: "Mentions légales", path: "/mentions-legales" },
-  {
-    name: `Politique de confidentialité`,
-    path: "/politique-de-confidentialite",
-  },
-  {
-    name: `Politique de cookies`,
-    path: "/politique-de-cookies",
-  },
-  {
-    name: `Politique de remboursement`,
-    path: "/politique-de-remboursement",
-  },
-];
+  const footerNavData = [
+    { name: `${dict.nav.legal_information}`, path: `${urls.legal}` },
+    {
+      name: `${dict.nav.privacy_policy}`,
+      path: `${urls.privacy}`,
+    },
+    {
+      name: `${dict.nav.cookie_policy}`,
+      path: `${urls.cookies}`,
+    },
+    {
+      name: `${dict.nav.refund_policy}`,
+      path: `${urls.refund}`,
+    },
+  ];
 
-export default function NavPage({ toggleMenu, cart, session }: NavBarProps) {
   const { handleEnableAnimation } = useDisableAnimation();
   const isSmallScreen = window.innerWidth <= 768;
 
@@ -97,21 +102,22 @@ export default function NavPage({ toggleMenu, cart, session }: NavBarProps) {
       };
 
   return (
-    <div className="z-40 fixed h-screen w-screen flex flex-col justify-between bg-[#18181b] top-0 left-0">
+    <div className="z-40 fixed h-screen w-screen flex flex-col justify-between bg-card top-0 left-0">
       <div className="flex space-x-6 text-[2rem] md:text-[2.5rem] absolute top-7 md:top-6 right-24">
         <motion.div {...iconProfileMotionProps} className="flex items-center">
           <UserMenuButton
             toggleMenu={toggleMenu}
-            session={session}
             isSmallScreen={isSmallScreen}
           />
         </motion.div>
-        <motion.div {...iconShopMotionProps}>
-          <WishlistButton toggleMenu={toggleMenu} />
-        </motion.div>
-        <motion.div {...iconShopMotionProps}>
-          <ShoppingCartButton toggleMenu={toggleMenu} cart={cart} />
-        </motion.div>
+        <div className="flex gap-x-4 mt-1">
+          <motion.div {...iconShopMotionProps}>
+            <WishlistButton toggleMenu={toggleMenu} />
+          </motion.div>
+          <motion.div {...iconShopMotionProps}>
+            <ShoppingCartButton toggleMenu={toggleMenu} cart={cart} />
+          </motion.div>
+        </div>
       </div>
       <div className="h-[2rem]"></div>
 
@@ -127,13 +133,13 @@ export default function NavPage({ toggleMenu, cart, session }: NavBarProps) {
                     handleEnableAnimation();
                   }}
                 >
-                  <div className={`flex items-center ${styles.name}`}>
+                  <div className={`flex items-center${styles.name}`}>
                     {"" === link.path ? (
                       <div className={styles.path}></div>
                     ) : (
                       <div className={styles.bar}></div>
                     )}
-                    {link.name}
+                    <p className="first-letter:uppercase">{link.name}</p>
                   </div>
                 </Link>
               </li>
@@ -145,7 +151,7 @@ export default function NavPage({ toggleMenu, cart, session }: NavBarProps) {
           className="w-1/4 flex-col mt-8 md:mt-0 space-y-8"
         >
           <div className="text-white flex flex-col items-center md:items-start">
-            <h2 className="text-[1.8rem]">Contact</h2>
+            <h2 className="text-[1.8rem] capitalize">{dict.nav.contact}</h2>
             <div className="hidden md:flex md:flex-col">
               <p>Email : example@example.com</p>
               <p>Téléphone : (123) 456-7890</p>
