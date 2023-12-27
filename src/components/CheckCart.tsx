@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useMemo } from "react";
-import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import { Dictionary } from "@/app/lang/dictionaries";
 import urls from "@/lib/data/url";
 
 interface CheckCartProps {

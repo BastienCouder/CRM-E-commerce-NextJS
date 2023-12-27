@@ -21,7 +21,7 @@ export type Color = z.infer<typeof ColorEnum>;
 export type UserRole = z.infer<typeof UserRoleEnum>;
 export type Device = z.infer<typeof DeviceEnum>;
 
-export const UserSchema = z.lazy(() =>
+export const UserSchema: z.ZodSchema<any> = z.lazy(() =>
   z.object({
     id: z.string(),
     name: z.string().nullable(),
@@ -39,18 +39,7 @@ export const UserSchema = z.lazy(() =>
   })
 );
 
-export const ProductVariantSchema = z.lazy(() =>
-  z.object({
-    id: z.string(),
-    name: z.string(),
-    price: z.number(),
-    imageUrl: z.string().nullable(),
-    createdAt: z.date(),
-    deleteAt: z.date().nullable(),
-  })
-);
-
-export const ProductSchema = z.lazy(() =>
+export const ProductSchema: z.ZodSchema<any> = z.lazy(() =>
   z.object({
     id: z.string(),
     description: z.string(),
@@ -62,63 +51,65 @@ export const ProductSchema = z.lazy(() =>
     stock: z.number().nullable(),
     deleteAt: z.date().nullable(),
     createdAt: z.date(),
-    variants: z.array(ProductVariantSchema).nullable(),
     color: ColorEnum,
     category: CategoryEnum,
   })
 );
 
-export const CartSchema = z.lazy(() =>
+export const CartSchema: z.ZodSchema<any> = z.lazy(() =>
   z.object({
     id: z.string(),
     userId: z.string().nullable(),
     createdAt: z.date(),
     updatedAt: z.date(),
     deleteAt: z.date().nullable(),
+    subtotal: z.number().optional(),
+    size: z.number().optional(),
     cartItems: z.array(CartItemSchema).optional(),
     orderItems: z.array(OrderItemSchema).optional(),
   })
 );
 
-export const CartItemSchema = z.lazy(() =>
+export const CartItemSchema: z.ZodSchema<any> = z.lazy(() =>
   z.object({
     id: z.string(),
-    variantId: z.string().nullable(),
     productId: z.string(),
     quantity: z.number(),
     cartId: z.string(),
     createdAt: z.date(),
     updatedAt: z.date(),
     deleteAt: z.date().nullable(),
+    cart: CartSchema.optional(),
     product: ProductSchema.optional(),
-    variant: ProductVariantSchema.optional(),
   })
 );
 
-export const WishlistSchema = z.lazy(() =>
+export const WishlistSchema: z.ZodSchema<any> = z.lazy(() =>
   z.object({
     id: z.string(),
     userId: z.string().nullable(),
+    size: z.number(),
     createdAt: z.date(),
     updatedAt: z.date(),
     deleteAt: z.date().nullable(),
+
     wishlistItems: z.array(WishlistItemSchema).optional(),
   })
 );
 
-export const WishlistItemSchema = z.lazy(() =>
+export const WishlistItemSchema: z.ZodSchema<any> = z.lazy(() =>
   z.object({
     id: z.string(),
-    variantId: z.string().nullable(),
     productId: z.string(),
     wishlistId: z.string(),
     createdAt: z.date(),
     updatedAt: z.date(),
     deleteAt: z.date().nullable(),
+    product: ProductSchema.optional(),
   })
 );
 
-export const DeliverySchema = z.lazy(() =>
+export const DeliverySchema: z.ZodSchema<any> = z.lazy(() =>
   z.object({
     id: z.string(),
     userId: z.string(),
@@ -129,11 +120,10 @@ export const DeliverySchema = z.lazy(() =>
   })
 );
 
-export const DeliveryItemSchema = z.lazy(() =>
+export const DeliveryItemSchema: z.ZodSchema<any> = z.lazy(() =>
   z.object({
     id: z.string(),
     deliveryId: z.string(),
-    deliveryOptionId: z.string().nullable(),
     Default: z.boolean(),
     name: z.string(),
     surname: z.string(),
@@ -150,7 +140,7 @@ export const DeliveryItemSchema = z.lazy(() =>
   })
 );
 
-export const DeliveryOptionSchema = z.lazy(() =>
+export const DeliveryOptionSchema: z.ZodSchema<any> = z.lazy(() =>
   z.object({
     id: z.string(),
     name: z.string(),
@@ -158,36 +148,42 @@ export const DeliveryOptionSchema = z.lazy(() =>
     price: z.number(),
     createdAt: z.date(),
     updatedAt: z.date(),
+    orderItems: z.array(OrderItemSchema).optional(),
     deleteAt: z.date().nullable(),
   })
 );
 
-export const OrderSchema = z.lazy(() =>
+export const OrderSchema: z.ZodSchema<any> = z.lazy(() =>
   z.object({
     id: z.string(),
-    userId: z.string().optional(),
-    createdAt: z.date().optional(),
-    updatedAt: z.date().optional(),
-    deleteAt: z.date().optional(),
+    userId: z.string().nullable(),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+    deleteAt: z.date().nullable(),
     orderItems: z.array(OrderItemSchema).optional(),
   })
 );
 
-export const OrderItemSchema = z.lazy(() =>
+export const OrderItemSchema: z.ZodSchema<any> = z.lazy(() =>
   z.object({
     id: z.string(),
     orderNumber: z.string(),
-    orderId: z.string().optional(),
+    orderId: z.string(),
     cartId: z.string(),
-    status: z.string().optional(),
-    createdAt: z.date().optional(),
-    updatedAt: z.date().optional(),
-    deliveryItemsId: z.string().optional(),
-    deleteAt: z.date().optional(),
+    status: z.string(),
+    subtotal: z.number().optional(),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+    deliveryItemsId: z.string().nullable(),
+    deliveryOptionId: z.string().nullable(),
+    deliveryItems: DeliveryItemSchema.optional(),
+    order: OrderSchema.optional(),
+    cart: CartSchema.optional(),
+    deleteAt: z.date().nullable(),
   })
 );
 
-export const VisitorInfoSchema = z.lazy(() =>
+export const VisitorInfoSchema: z.ZodSchema<any> = z.lazy(() =>
   z.object({
     id: z.string(),
     visitorId: z.string(),
@@ -205,7 +201,6 @@ export const VisitorInfoSchema = z.lazy(() =>
 // Types inférés
 export type User = z.infer<typeof UserSchema>;
 export type Product = z.infer<typeof ProductSchema>;
-export type ProductVariant = z.infer<typeof ProductVariantSchema>;
 export type Cart = z.infer<typeof CartSchema>;
 export type CartItem = z.infer<typeof CartItemSchema>;
 export type Wishlist = z.infer<typeof WishlistSchema>;

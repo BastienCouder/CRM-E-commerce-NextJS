@@ -5,8 +5,8 @@ import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import AddToCartButton from "@/components/AddToCartButton";
 import { Category, Color, Product } from "@/lib/DbSchema";
-import { useServerAddToCart } from "@/app/[lang]/(pages)/wishlist/actions";
-import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import { useServerAddToCart } from "@/app/(pages)/wishlist/actions";
+import { Dictionary } from "@/app/lang/dictionaries";
 
 interface CardProductProps {
   product: Product;
@@ -57,7 +57,6 @@ export default function CardProduct({
           <div className="pb-2">
             <AddToCartButton
               productId={product.id}
-              variantId={""}
               addToCart={useServerAddToCart}
               dict={dict}
             />

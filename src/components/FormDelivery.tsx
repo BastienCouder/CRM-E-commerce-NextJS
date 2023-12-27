@@ -32,12 +32,12 @@ import {
 import { DeliveryOption } from "@prisma/client";
 
 interface FormDeliveryProps {
-  deliveryForm: any;
+  processDeliveryForm: any;
   session: Session | null;
 }
 
 export default function FormDelivery({
-  deliveryForm,
+  processDeliveryForm,
   session,
 }: FormDeliveryProps) {
   const form = useForm<DeliveryValues>({
@@ -82,8 +82,7 @@ export default function FormDelivery({
     formData.append("tel", data.tel);
 
     try {
-      await deliveryForm(formData, selectedDeliveryOption!);
-      toggleFormVisibility();
+      await processDeliveryForm(formData, selectedDeliveryOption!);
       toast.success("Addresse de livraison ajoutée avec succès");
       form.reset();
     } catch (error) {
@@ -93,189 +92,149 @@ export default function FormDelivery({
     }
   };
 
-  const toggleFormVisibility = useCallback(async () => {
-    setFormVisible(!formVisible);
-  }, [formVisible]);
-
   return (
     <>
-      <Button
-        aria-label="Fermer ou Ajouter une adresse de livraison"
-        size="xl"
-        onClick={toggleFormVisibility}
-        className="border-zinc-800 border-2"
-      >
-        {formVisible ? "Fermer" : "Ajouter une adresse de livraison"}
-      </Button>
-      {formVisible && (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full space-y-4"
-          >
-            {error ? <small className="text-red-500">{error}</small> : null}
-            <div className="w-full flex flex-col sm:flex-row gap-6 sm:gap-12">
-              {/* name */}
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel>Prenom</FormLabel>
-                    <FormControl>
-                      <Input placeholder="prenom" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {/* surname */}
-              <FormField
-                control={form.control}
-                name="surname"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel>Nom</FormLabel>
-                    <FormControl>
-                      <Input placeholder="nom" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            {/* email*/}
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/*tel*/}
-            <FormField
-              control={form.control}
-              name="tel"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Téléphone</FormLabel>
-                  <FormControl>
-                    <Input placeholder="tel" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* address*/}
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Adresse</FormLabel>
-                  <FormControl>
-                    <Input placeholder="adresse" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* country*/}
-            <FormField
-              control={form.control}
-              name="country"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Pays</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Pays" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {countries.map((country, index) => (
-                        <SelectItem key={index} value={country}>
-                          {country}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* postcode*/}
-            <FormField
-              control={form.control}
-              name="postcode"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Code Postal</FormLabel>
-                  <FormControl>
-                    <Input placeholder="code postal" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* city*/}
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Ville</FormLabel>
-                  <FormControl>
-                    <Input placeholder="ville" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="pt-4">
-              <Button aria-label="ajouter" type="submit">
-                Ajouter
-              </Button>
-            </div>
-          </form>
-        </Form>
-      )}
-      {/* <div className="mt-4">
-        <label
-          htmlFor="deliveryOption"
-          className="block text-sm font-medium text-gray-700"
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full space-y-4"
         >
-          Choix de livraison
-        </label>
-        <select
-          id="deliveryOption"
-          name="deliveryOption"
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          value={selectedDeliveryOption?.id || ""}
-          onChange={(e) => {
-            const selectedOption = deliveryOption.find(
-              (option) => option.id === e.target.value
-            );
-            setSelectedDeliveryOption(selectedOption || null);
-          }}
-        >
-          {deliveryOption.map((option) => (
-            <option key={option.id} value={option.id}>
-              {option.name}
-            </option>
-          ))}
-        </select>
-      </div> */}
+          {error ? <small className="text-red-500">{error}</small> : null}
+          <div className="w-full flex flex-col sm:flex-row gap-6 sm:gap-12">
+            {/* name */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Prenom</FormLabel>
+                  <FormControl>
+                    <Input placeholder="prenom" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* surname */}
+            <FormField
+              control={form.control}
+              name="surname"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Nom</FormLabel>
+                  <FormControl>
+                    <Input placeholder="nom" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          {/* email*/}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/*tel*/}
+          <FormField
+            control={form.control}
+            name="tel"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Téléphone</FormLabel>
+                <FormControl>
+                  <Input placeholder="tel" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* address*/}
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Adresse</FormLabel>
+                <FormControl>
+                  <Input placeholder="adresse" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* country*/}
+          <FormField
+            control={form.control}
+            name="country"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Pays</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Pays" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {countries.map((country, index) => (
+                      <SelectItem key={index} value={country}>
+                        {country}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* postcode*/}
+          <FormField
+            control={form.control}
+            name="postcode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Code Postal</FormLabel>
+                <FormControl>
+                  <Input placeholder="code postal" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* city*/}
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Ville</FormLabel>
+                <FormControl>
+                  <Input placeholder="ville" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="pt-4">
+            <Button aria-label="ajouter" type="submit">
+              Ajouter
+            </Button>
+          </div>
+        </form>
+      </Form>
     </>
   );
 }

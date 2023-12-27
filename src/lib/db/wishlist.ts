@@ -1,20 +1,10 @@
 import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "./prisma";
-import { Prisma, Wishlist, WishlistItems } from "@prisma/client";
 import { Session, getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { Wishlist, WishlistItem } from "@/lib/DbSchema";
 
-export type WishlistWithWishlistItemsProps = Prisma.WishlistGetPayload<{
-  include: {
-    wishlistItems: { include: { product: true; variant: true } };
-  };
-}>;
-
-export type WishlistItemsProps = Prisma.WishlistItemsGetPayload<{
-  include: { product: true; variant: true };
-}>;
-
-export type WishlistProps = WishlistWithWishlistItemsProps & {
+export type WishlistProps = Wishlist & {
   ///...
   size: number;
 };
@@ -22,7 +12,7 @@ export type WishlistProps = WishlistWithWishlistItemsProps & {
 export async function getWishlist(): Promise<WishlistProps | null> {
   const session: Session | null = await getServerSession(authOptions);
 
-  let wishlist: WishlistWithWishlistItemsProps | null = null;
+  let wishlist: WishlistProps | null = null;
 
   if (session) {
     wishlist = await prisma.wishlist.findFirst({
@@ -32,7 +22,7 @@ export async function getWishlist(): Promise<WishlistProps | null> {
       include: {
         wishlistItems: {
           where: { deleteAt: null },
-          include: { product: true, variant: true },
+          include: { product: true },
         },
       },
     });
@@ -45,7 +35,7 @@ export async function getWishlist(): Promise<WishlistProps | null> {
           include: {
             wishlistItems: {
               where: { deleteAt: null },
-              include: { product: true, variant: true },
+              include: { product: true },
             },
           },
         })
@@ -58,7 +48,7 @@ export async function getWishlist(): Promise<WishlistProps | null> {
 
   return {
     ...wishlist,
-    size: wishlist.wishlistItems.reduce((acc) => acc + 1, 0),
+    size: wishlist.wishlistItems.reduce((acc: number) => acc + 1, 0),
   };
 }
 
@@ -93,7 +83,7 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
         where: { id: localWishlistId },
         include: {
           wishlistItems: {
-            include: { product: true, variant: true },
+            include: { product: true },
           },
         },
       })
@@ -107,7 +97,7 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
     where: { userId },
     include: {
       wishlistItems: {
-        include: { product: true, variant: true },
+        include: { product: true },
       },
     },
   });
@@ -126,7 +116,6 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
       await tx.wishlistItems.createMany({
         data: mergedWishlistItems.map((item) => ({
           wishlistId: userWishlist.id,
-          variantId: item.variantId,
           productId: item.productId,
           deleteAt: null,
         })),
@@ -138,7 +127,6 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
           wishlistItems: {
             createMany: {
               data: localWishlist.wishlistItems.map((item) => ({
-                variantId: item.variantId,
                 productId: item.productId,
                 deleteAt: null,
               })),
@@ -155,14 +143,12 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
   });
 }
 
-function mergeWishlistItems(...wishlistItems: WishlistItems[][]) {
+function mergeWishlistItems(...wishlistItems: WishlistItem[][]) {
   return wishlistItems.reduce((acc, items) => {
     items.forEach((item) => {
-      acc.find(
-        (i) => i.productId === item.productId && i.variantId === item.variantId
-      );
+      acc.find((i) => i.productId === item.productId);
       acc.push(item);
     });
     return acc;
-  }, [] as WishlistItems[]);
+  }, [] as WishlistItem[]);
 }

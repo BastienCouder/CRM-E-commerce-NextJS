@@ -2,11 +2,10 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/db/prisma";
-import { Product, ProductVariant } from "@/lib/DbSchema";
+import { Product } from "@/lib/DbSchema";
 
 export type ProductProps = Product & {
   ///
-  variants?: ProductVariant[];
 };
 
 export async function getProducts(): Promise<ProductProps[] | null> {
@@ -16,9 +15,6 @@ export async function getProducts(): Promise<ProductProps[] | null> {
     try {
       const products = await prisma.product.findMany({
         where: { deleteAt: null || undefined },
-        include: {
-          variants: true,
-        },
       });
 
       return products as ProductProps[];

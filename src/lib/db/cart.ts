@@ -1,23 +1,11 @@
 import { cookies } from "next/dist/client/components/headers";
-import { prisma } from "./prisma";
-import { Cart, CartItems, Prisma } from "@prisma/client";
+import { prisma } from "@/lib/db/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Session } from "next-auth";
+import { Cart, CartItem } from "@/lib/DbSchema";
 
-export type CartWithCartItemsProps = Prisma.CartGetPayload<{
-  include: {
-    cartItems: {
-      include: { product: true; variant: true };
-    };
-  };
-}>;
-
-export type CartItemsProps = Prisma.CartItemsGetPayload<{
-  include: { product: true; variant: true };
-}>;
-
-export type CartProps = CartWithCartItemsProps & {
+export type CartProps = Cart & {
   size: number;
   subtotal: number;
 };
@@ -25,7 +13,7 @@ export type CartProps = CartWithCartItemsProps & {
 export async function getCart(): Promise<CartProps | null> {
   const session = await getServerSession(authOptions);
 
-  let cart: CartWithCartItemsProps | null = null;
+  let cart: CartProps | null = null;
 
   if (session) {
     cart = await prisma.cart.findFirst({
@@ -36,7 +24,7 @@ export async function getCart(): Promise<CartProps | null> {
       include: {
         cartItems: {
           where: { deleteAt: null },
-          include: { product: true, variant: true },
+          include: { product: true },
         },
       },
     });
@@ -48,7 +36,7 @@ export async function getCart(): Promise<CartProps | null> {
           include: {
             cartItems: {
               where: { deleteAt: null },
-              include: { product: true, variant: true },
+              include: { product: true },
             },
           },
         })
@@ -61,20 +49,15 @@ export async function getCart(): Promise<CartProps | null> {
 
   return {
     ...cart,
-    size: cart.cartItems.reduce((acc, item) => acc + item.quantity, 0),
-    subtotal: cart.cartItems.reduce((acc, item) => {
-      const variantPrice: number | null = item.variant
-        ? item.variant.price
-        : null;
+    size: cart.cartItems.reduce(
+      (acc: number, item: CartItem) => acc + item.quantity,
+      0
+    ),
+    subtotal: cart.cartItems.reduce((acc: number, item: CartItem) => {
       const productPrice: number | null = item.product
         ? item.product.price
         : null;
-      const price: number | null =
-        variantPrice !== null
-          ? variantPrice
-          : productPrice !== null
-          ? productPrice
-          : 0;
+      const price: number | null = productPrice !== null ? productPrice : 0;
       return acc + item.quantity * price;
     }, 0),
   };
@@ -112,7 +95,7 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
         where: { id: localCartId },
         include: {
           cartItems: {
-            include: { product: true, variant: true },
+            include: { product: true },
           },
         },
       })
@@ -126,7 +109,7 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
     where: { userId },
     include: {
       cartItems: {
-        include: { product: true, variant: true },
+        include: { product: true },
       },
     },
   });
@@ -146,7 +129,6 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
         data: mergedCartItems.map((item) => ({
           cartId: userCart.id,
           productId: item.productId,
-          variantId: item.variantId,
           quantity: item.quantity,
           deleteAt: null,
         })),
@@ -158,7 +140,6 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
           cartItems: {
             createMany: {
               data: localCart.cartItems.map((item) => ({
-                variantId: item.variantId,
                 productId: item.productId,
                 quantity: item.quantity,
                 deleteAt: null,
@@ -177,12 +158,10 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
   });
 }
 
-function mergeCartItems(...cartItems: CartItems[][]) {
+function mergeCartItems(...cartItems: CartItem[][]) {
   return cartItems.reduce((acc, items) => {
     items.forEach((item) => {
-      const existingItem = acc.find(
-        (i) => i.productId === item.productId && i.variantId === item.variantId
-      );
+      const existingItem = acc.find((i) => i.productId === item.productId);
       if (existingItem) {
         existingItem.quantity += item.quantity;
       } else {
@@ -190,5 +169,5 @@ function mergeCartItems(...cartItems: CartItems[][]) {
       }
     });
     return acc;
-  }, [] as CartItems[]);
+  }, [] as CartItem[]);
 }

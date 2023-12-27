@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Newsletter from "@/app/[lang]/dashboard/Newsletter";
+import Newsletter from "@/app/dashboard/Newsletter";
 import WhislistCartOrderLength from "../charts/WishlistCartOrderLength";
 import TopProductsChart from "../charts/TopProductsChart";
 
@@ -16,8 +16,6 @@ export default function AnalyticsNav({
   analyticsUsersData,
   analyticsWishlistCartOrderData,
 }: AnalyticsNavProps) {
-  console.log(analyticsProductsData);
-
   return (
     <>
       <div className="flex space-y-4">

@@ -1,5 +1,5 @@
 "use client";
-import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import { Dictionary } from "@/app/lang/dictionaries";
 import { Input } from "@/components/ui/input";
 import { useState, useCallback } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";

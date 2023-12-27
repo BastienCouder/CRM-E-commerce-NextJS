@@ -1,6 +1,6 @@
 "use client";
 import { Monitor, Smartphone } from "lucide-react";
-import { Separator } from "../ui/separator";
+import { Separator } from "@/components/ui/separator";
 import { ReactElement } from "react";
 
 interface DeviceData {

@@ -1,6 +1,4 @@
 "use client";
-
-import { Product } from "@prisma/client";
 import { Star } from "lucide-react";
 
 interface FavoritesProps {

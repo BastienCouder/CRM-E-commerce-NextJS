@@ -1,0 +1,115 @@
+{
+  "locale": "en-GB",
+  "cart": {
+    "shopping_cart": "cart",
+    "empty_cart": "your cart is empty",
+    "no_items_in_cart": "no items in the cart",
+    "continue_shopping": "continue shopping",
+    "recap": "summary",
+    "subtotal": "subtotal",
+    "articles": "items",
+    "article": "item",
+    "product": "product",
+    "price": "price",
+    "quantity": "quantity",
+    "quantities": "quantities",
+    "total_price": "total price",
+    "shipping": "shipping",
+    "free": "free",
+    "total": "total",
+    "tva": "VAT"
+  },
+  "favorites": {
+    "favorites": "favorites",
+    "empty_favorites": "your favorites are empty",
+    "product": "product",
+    "price": "price",
+    "add_to_cart": "add to cart",
+    "success_product": "product successfully added"
+  },
+  "payment": {
+    "payment": "payment",
+    "recap": "summary",
+    "products": "products",
+    "product": "product",
+    "delivery_address": "delivery address",
+    "quantity": "quantity",
+    "quantities": "quantities",
+    "proceed_to_payment": "proceed to payment"
+  },
+  "actions": {
+    "confirm": "validate",
+    "close": "close",
+    "add_to_cart": "add to cart",
+    "increment": "increment",
+    "decrement": "decrement",
+    "backtostore": "back to the store"
+  },
+  "delivery": {
+    "delivery": "delivery"
+  },
+  "nav": {
+    "menu": "menu",
+    "home": "home",
+    "collection": "collection",
+    "legal_information": "legal information",
+    "privacy_policy": "privacy policy",
+    "cookie_policy": "cookie policy",
+    "refund_policy": "refund policy",
+    "email": "email",
+    "phone": "phone",
+    "address": "address",
+    "contact": "contact",
+    "infos": "information"
+  },
+  "pronouns": {
+    "of": "of",
+    "and": "and",
+    "or": "or"
+  },
+  "auth": {
+    "login": "login",
+    "register": "register",
+    "agree": "by clicking continue, you agree to our",
+    "enter_email_login": "enter your email below to login",
+    "enter_email_register": "enter your email below to register",
+    "incorrect_password": "the password is incorrect",
+    "error_login": "an error occurred during login:"
+  },
+  "form": {
+    "email": "email",
+    "name": "name",
+    "password": "password",
+    "show_password": "show password",
+    "forgot_password": "forgot password"
+  },
+  "policy": {
+    "terms_of_service": "terms of service",
+    "privacy_policy": "privacy policy",
+    "agree": "by clicking continue, you agree to our"
+  },
+  "metadata": {
+    "login_title": "Login",
+    "login_metadescription": "Authentication forms built using the components.",
+    "register_title": "Register",
+    "register_metadescription": "Authentication forms built using the components.",
+    "cart_title": "Cart",
+    "cart_metadescription": "This is the cart of my application.",
+    "store_title": "Store",
+    "store_metadescription": "This is the store of my application.",
+    "favorites_title": "Favorites",
+    "favorites_metadescription": "These are the favorites of my application.",
+    "delivery_title": "Delivery",
+    "delivery_metadescription": "This is the delivery of my application.",
+    "payment_title": "Payment",
+    "payment_metadescription": "This is the payment of my application.",
+    "privacy_policy_title": "Privacy Policy",
+    "privacy_policy_metadescription": "This is the privacy policy of my application.",
+    "cookies_title": "Cookie Policy",
+    "cookies_metadescription": "This is the cookie policy of my application.",
+    "legal_information_title": "Legal Information",
+    "legal_information_metadescription": "These are the legal information of my application.",
+    "refund_title": "Refund Policy",
+    "refund_metadescription": "This is the refund policy of my application."
+  }
+}

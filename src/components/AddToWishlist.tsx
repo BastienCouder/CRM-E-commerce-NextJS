@@ -1,24 +1,21 @@
+"use client";
 import React, { useState, useCallback, useEffect } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import styles from "@/styles/keyframes.module.css";
-import { WishlistItemsProps } from "@/lib/db/wishlist";
+import { CartItem, WishlistItem } from "@/lib/DbSchema";
+import { toast } from "sonner";
 
 interface AddToWishlistProps {
-  handleColorChange?: (color: string) => void;
   productId: string;
-  variantId?: string | null;
-  incrementWishlist: (
-    productId: string,
-    variantId: string | null
-  ) => Promise<void>;
-  wishlistItems?: WishlistItemsProps[];
+  incrementWishlist: (productId: string) => Promise<void>;
+  wishlistItems?: WishlistItem[];
+  cartItems: CartItem[];
 }
 
 export default function AddToWishlist({
   productId,
-  variantId = null,
-  handleColorChange,
   wishlistItems,
+  cartItems,
   incrementWishlist,
 }: AddToWishlistProps) {
   const [like, setLike] = useState(false);
@@ -29,30 +26,37 @@ export default function AddToWishlist({
 
   const handleAddToWishlist = async () => {
     toggleLikeVisibility();
-    await incrementWishlist(productId, variantId);
+    await incrementWishlist(productId);
+  };
+
+  const alreadyInCart = async () => {
+    toast.error("Déjà dans le panier");
   };
 
   const isProductInWishlist = wishlistItems?.find(
-    (item: WishlistItemsProps) =>
-      item.productId === productId && item.variantId === variantId
+    (item: WishlistItem) => item.productId === productId
   );
-  if (
-    isProductInWishlist &&
-    isProductInWishlist.productId === productId &&
-    isProductInWishlist.variantId === variantId
-  ) {
-  }
+  const isProductInCart = cartItems?.find(
+    (item: CartItem) => item.productId === productId
+  );
+
   useEffect(() => {
+    if (isProductInCart) {
+      setLike(false);
+    }
     if (isProductInWishlist) {
       setLike(true);
     } else {
       setLike(false);
     }
-  }, [isProductInWishlist, handleColorChange]);
+  }, [isProductInWishlist, isProductInCart]);
 
   return (
     <>
-      <div className="w-0 my-4 cursor-pointer" onClick={handleAddToWishlist}>
+      <div
+        className={`w-0 my-4 cursor-pointer`}
+        onClick={!isProductInCart ? handleAddToWishlist : alreadyInCart}
+      >
         <p>
           {like ? (
             <AiFillHeart

@@ -1,0 +1,115 @@
+{
+  "locale": "fr-FR",
+  "cart": {
+    "shopping_cart": "panier",
+    "empty_cart": "votre panier est vide",
+    "no_items_in_cart": "aucun article dans le panier",
+    "continue_shopping": "continuer mes achats",
+    "recap": "récapitulatif",
+    "subtotal": "sous-total",
+    "articles": "articles",
+    "article": "article",
+    "product": "produit",
+    "price": "prix",
+    "quantity": "quantité",
+    "quantities": "quantités",
+    "total_price": "prix total",
+    "shipping": "expédition",
+    "free": "gratuite",
+    "total": "total",
+    "tva": "tva"
+  },
+  "favories": {
+    "favories": "favories",
+    "empty_favories": "vos favories sont vides",
+    "product": "produit",
+    "price": "prix",
+    "add_to_cart": "ajouter au panier",
+    "succes_product": "produit ajouté avec succès"
+  },
+  "payment": {
+    "payment": "paiement",
+    "recap": "récapitulatif",
+    "products": "produits",
+    "product": "produit",
+    "delivery_address": "adresse de livraison",
+    "quantity": "quantité",
+    "quantities": "quantités",
+    "proceed_to_payment": "proceder au paiment"
+  },
+  "actions": {
+    "confirm": "valider",
+    "close": "fermer",
+    "add_to_cart": "ajouter au panier",
+    "increment": "incrémenter",
+    "decrement": "décrementer",
+    "backtostore": "retour à la boutique"
+  },
+  "delivery": {
+    "delivery": "livraison"
+  },
+  "nav": {
+    "menu": "menu",
+    "home": "acceuil",
+    "collection": "collection",
+    "legal_information": "mentions légales",
+    "privacy_policy": "politique de confidentialité",
+    "cookie_policy": "politique de cookies",
+    "refund_policy": "politique de remboursement",
+    "email": "email",
+    "phone": "téléphone",
+    "address": "adresse",
+    "contact": "contact",
+    "infos": "infos"
+  },
+  "pronouns": {
+    "of": "de",
+    "and": "et",
+    "or": "ou"
+  },
+  "auth": {
+    "login": "se connecter",
+    "register": "s'inscrire",
+    "agree": "en cliquant sur continuer, vous acceptez nos",
+    "enter_email_login": "saisissez votre email ci-dessous pour vous connecter",
+    "enter_email_register": "saisissez votre email ci-dessous pour vous inscrire",
+    "incorrect_password": "le mot de passe est incorrecte",
+    "error_login": "une erreur s'est produite lors de la connexion :"
+  },
+  "form": {
+    "email": "email",
+    "name": "nom",
+    "password": "mot de passe",
+    "show_password": "montrer mot de passe",
+    "forgot_password": "mot de passe oublié"
+  },
+  "policy": {
+    "terms_of_service": "conditions d'utilisation",
+    "privacy_policy": "politique de confidentialité",
+    "agree": "en cliquant sur continuer, vous acceptez notre"
+  },
+  "metadata": {
+    "login_title": "Connexion",
+    "login_metadescription": "Authentication forms built using the components.",
+    "register_title": "S'inscrire",
+    "register_metadescription": "Authentication forms built using the components.",
+    "cart_title": "Panier",
+    "cart_metadescription": "Ceci est le panier de mon application.",
+    "store_title": "Boutique",
+    "store_metadescription": "Ceci est la boutique de mon application.",
+    "favories_title": "Favories",
+    "favories_metadescription": "Ceci sont les favories de mon application.",
+    "delivery_title": "Livraison",
+    "delivery_metadescription": "Ceci est la livraison de mon application.",
+    "payment_title": "Paiement",
+    "payment_metadescription": "Ceci est le paiement de mon application.",
+    "privaty_policy_title": "Politique de confidentialité",
+    "privaty_policy_metadescription": "Ceci est la politique de confidentialité de mon application.",
+    "cookies_title": "Politique de cookies",
+    "cookies_metadescription": "Ceci est la politique de cookies de mon application.",
+    "legal_information_title": "Mentions légales",
+    "legal_information_metadescription": "Ceci sont les mentions légales de mon application.",
+    "refund_title": "Politique de remboursement",
+    "refund_metadescription": "Ceci est la politique de remboursement de mon application."
+  }
+}

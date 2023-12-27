@@ -1,26 +1,26 @@
 import { Table } from "@tanstack/react-table";
-import SoftDelete from "../dashboard/SoftDelete";
-import { useServerSoftDelete } from "@/app/[lang]/dashboard/management/actions";
-import { statuses as orderStatuses } from "@/app/[lang]/dashboard/management/orders/data/data";
+import SoftDelete from "@/components/dashboard/SoftDelete";
+import { statuses as orderStatuses } from "@/app/dashboard/management/orders/data/data";
 import { Input } from "@/components/ui/input";
-import { DataTableFacetedFilter } from "./DataTableFacetedFilter";
+import { DataTableFacetedFilter } from "@/components/tables/DataTableFacetedFilter";
 import { Button } from "@/components/ui/button";
 import { Plus, X } from "lucide-react";
-import { DataTableViewOptions } from "./DataTableViewOptions";
+import { DataTableViewOptions } from "@/components/tables/DataTableViewOptions";
 import {
   priorities,
   statuses as productStatuses,
-} from "@/app/[lang]/dashboard/management/products/data/data";
+} from "@/app/dashboard/management/products/data/data";
+import { softDeleteItem } from "@/app/dashboard/management/actions";
+import { ProductProps } from "@/lib/db/product";
+import { OrderProps } from "@/lib/db/orderItem";
+import { UserProps } from "@/lib/db/user";
 
-interface DataTableToolbarProps<TData> {
-  table: Table<any>;
+interface DataTableToolbarProps {
+  table: Table<ProductProps | OrderProps | UserProps>;
   variant: "orders" | "products" | "users";
 }
 
-export function DataTableToolbar<TData>({
-  table,
-  variant,
-}: DataTableToolbarProps<TData>) {
+export function DataTableToolbar({ table, variant }: DataTableToolbarProps) {
   const isFiltered = table.getState().columnFilters.length > 0;
   const isSelected = Object.keys(table.getState().rowSelection).length > 0;
   const selectedRows = table
@@ -39,10 +39,18 @@ export function DataTableToolbar<TData>({
               ? "Produits..."
               : "Utilisateurs..."
           }
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event: any) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+          value={
+            variant === "products" || variant === "users"
+              ? (table.getColumn("name")?.getFilterValue() as string)
+              : (table.getColumn("email")?.getFilterValue() as string) ?? ""
           }
+          onChange={(event: any) => {
+            if (variant === "products" || variant === "users") {
+              table.getColumn("name")?.setFilterValue(event.target.value);
+            } else {
+              table.getColumn("email")?.setFilterValue(event.target.value);
+            }
+          }}
           className="h-8 w-[150px] lg:w-[250px]"
         />
         {table.getColumn("status") && (
@@ -72,7 +80,7 @@ export function DataTableToolbar<TData>({
         {isSelected && (
           <SoftDelete
             itemId={selectedRowIds}
-            SoftDelete={useServerSoftDelete}
+            SoftDelete={softDeleteItem}
             type="toolbar"
           />
         )}

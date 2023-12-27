@@ -2,14 +2,14 @@
 import formatPrice from "@/helpers/format";
 import Image from "next/image";
 import Link from "next/link";
-import Loading from "@/app/[lang]/loading";
-import { useServerAddToCart } from "../app/[lang]/(pages)/wishlist/actions";
+import Loading from "@/app/loading";
+import { useServerAddToCart } from "@/app/(pages)/wishlist/actions";
 import AddToCartButton from "@/components/AddToCartButton";
-import { WishlistItemsProps } from "@/lib/db/wishlist";
-import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import { Dictionary } from "@/app/lang/dictionaries";
+import { WishlistItem } from "@/lib/DbSchema";
 
 interface WishlistEntryProps {
-  wishlistItem: WishlistItemsProps;
+  wishlistItem: WishlistItem;
   AddToCart: (productId: string, variantId: string) => Promise<void>;
   dict: Dictionary;
 }
@@ -18,8 +18,9 @@ export default function WishlistEntry({
   wishlistItem,
   dict,
 }: WishlistEntryProps) {
-  const { product, variant } = wishlistItem;
-  if (!product || (variant && !variant)) {
+  const { product } = wishlistItem;
+
+  if (!product) {
     return <Loading />;
   }
 
@@ -30,30 +31,18 @@ export default function WishlistEntry({
           {dict.favories.product}
         </h3>
         <div className="flex gap-8 items-center">
-          {variant ? (
-            <Link href={"/products/" + product.id}>
-              <Image
-                src={variant.imageUrl || ""}
-                alt={product.name}
-                width={200}
-                height={200}
-                className="rounded-lg w-[70px] h-[70px] border-white border-[1px] object-contain"
-              />
-            </Link>
-          ) : (
-            <Link href={"/products/" + product.id}>
-              <Image
-                src={product.imageUrl!}
-                alt={product.name}
-                width={200}
-                height={200}
-                className="rounded-lg w-[70px] h-[70px] border-white border-[1px] object-contain"
-              />
-            </Link>
-          )}
+          <Link href={"/products/" + product.id}>
+            <Image
+              src={product.imageUrl!}
+              alt={product.name}
+              width={200}
+              height={200}
+              className="rounded-lg w-[70px] h-[70px] border-white border-[1px] object-contain"
+            />
+          </Link>
+
           <Link href={"/products/" + product.id}>
             <p className="font-bold capitalize">{product.name}</p>
-            {variant && <p className="text-sm capitalize">{variant.name}</p>}
           </Link>
         </div>
       </div>
@@ -62,17 +51,12 @@ export default function WishlistEntry({
         <h3 className="hidden lg:flex text-xs mb-[1.5rem] capitalize">
           {dict.favories.price}
         </h3>
-        <p className="font-bold">
-          {variant?.price
-            ? formatPrice(variant.price, dict.locale)
-            : formatPrice(product.price, dict.locale)}
-        </p>
+        <p className="font-bold">{formatPrice(product.price, dict.locale)}</p>
       </div>
       <div className="w-[80rem] lg:h-[85px] flex justify-center pt-[1.2rem] items-center">
         <AddToCartButton
           productId={product.id}
           addToCart={useServerAddToCart}
-          variantId={variant?.id || ""}
           dict={dict}
         />
       </div>

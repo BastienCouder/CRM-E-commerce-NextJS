@@ -2,11 +2,12 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/db/prisma";
-import { User } from "@prisma/client";
+import { User } from "@/lib/DbSchema";
 
 export type UserProps = User & {
   ///
 };
+
 export async function getUsers(): Promise<UserProps[] | null> {
   const session = await getServerSession(authOptions);
 

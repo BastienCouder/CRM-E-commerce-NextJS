@@ -20,7 +20,7 @@ import { checkPassword } from "@/helpers/authHelper";
 import { toast } from "sonner";
 import { AiFillGoogleSquare } from "react-icons/ai";
 import { Separator } from "@/components/ui/separator";
-import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import { Dictionary } from "@/app/lang/dictionaries";
 import urls from "@/lib/data/url";
 
 interface LoginFormProps {

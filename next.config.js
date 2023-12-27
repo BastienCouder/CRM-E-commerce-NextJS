@@ -7,7 +7,10 @@ const nextConfig = {
       { hostname: "other-allowed-domain.com" },
     ],
   },
-
+  i18n: {
+    defaultLocale: "fr",
+    locales: ["fr", "en", "zh-CN"],
+  },
   async rewrites() {
     return [];
   },

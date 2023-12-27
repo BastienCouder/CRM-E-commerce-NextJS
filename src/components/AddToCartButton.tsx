@@ -1,19 +1,17 @@
 "use client";
-import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import { Dictionary } from "@/app/lang/dictionaries";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 import { Toaster, toast } from "sonner";
 
 interface AddToCartButtonProps {
   productId: string;
-  variantId: string;
-  addToCart: (productId: string, variantId: string) => Promise<void>;
+  addToCart: (productId: string) => Promise<void>;
   dict: Dictionary;
 }
 
 export default function AddToCartButton({
   productId,
-  variantId,
   addToCart,
   dict,
 }: AddToCartButtonProps) {
@@ -26,7 +24,7 @@ export default function AddToCartButton({
         size="xl"
         onClick={() => {
           startTransition(async () => {
-            await addToCart(productId, variantId);
+            await addToCart(productId);
             toast.success(`${dict.favories.succes_product}`);
           });
         }}

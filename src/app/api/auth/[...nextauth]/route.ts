@@ -29,6 +29,7 @@ export const authOptions: AuthOptions = {
         session.user.role = token.role;
         session.user.image = token.picture;
       }
+
       return session;
     },
     async jwt({ token, user }) {
@@ -56,7 +57,7 @@ export const authOptions: AuthOptions = {
   events: {
     async signIn({ user }) {
       await mergeAnonymousCartIntoUserCart(user.id);
-      await mergeAnonymousWishlistIntoUserCart(user.id);
+      // await mergeAnonymousWishlistIntoUserCart(user.id);
       // await mergeAnonymousDeliveryIntoUserCart(user.id);
     },
   },

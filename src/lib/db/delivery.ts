@@ -1,18 +1,16 @@
 import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "./prisma";
-import { Prisma, Delivery } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export type DeliveryWithdeliveryItems = Prisma.DeliveryGetPayload<{
   include: {
-    deliveryItems: { include: { deliveryOption: true } };
+    deliveryItems: true;
   };
 }>;
 
-export type DeliveryItemWithdeliveryOption = Prisma.DeliveryItemsGetPayload<{
-  include: { deliveryOption: true };
-}>;
+export type DeliveryItemWithdeliveryOption = Prisma.DeliveryItemsGetPayload<{}>;
 
 export type DeliveryProps = DeliveryWithdeliveryItems & {
   ///...
@@ -32,9 +30,6 @@ export async function getDelivery(): Promise<DeliveryProps | null> {
         deliveryItems: {
           where: {
             deleteAt: null,
-          },
-          include: {
-            deliveryOption: true,
           },
         },
       },

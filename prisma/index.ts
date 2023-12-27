@@ -61,25 +61,6 @@ async function main() {
       color: "or",
       status: "unavailable",
       stock: 20,
-      variants: {
-        create: [
-          {
-            name: "or",
-            price: 9000,
-            imageUrl: "/images/montre1.png",
-          },
-          {
-            name: "argent",
-            price: 9000,
-            imageUrl: "/images/variants/montre1-argent.png",
-          },
-          {
-            name: "rose",
-            price: 9000,
-            imageUrl: "/images/variants/montre1-rose.png",
-          },
-        ],
-      },
     },
   });
 }

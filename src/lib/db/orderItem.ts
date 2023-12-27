@@ -2,18 +2,27 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/db/prisma";
-import { OrderItems } from "@prisma/client";
+import { OrderItem } from "@/lib/DbSchema";
 
-export type OrderProps = OrderItems & {
+export type OrderProps = OrderItem & {
   ///
-  subtotal?: number;
+  subtotal: number;
 };
 
-export async function getOrderItems(): Promise<OrderProps[] | null> {
+export async function getOrderItems(
+  startDate?: Date,
+  endDate?: Date
+): Promise<OrderProps[] | null> {
   const session = await getServerSession(authOptions);
   if (session && session.user.role === "ADMIN") {
     try {
       const orders = await prisma.orderItems.findMany({
+        where: {
+          createdAt: {
+            gte: startDate,
+            lt: endDate,
+          },
+        },
         include: {
           cart: {
             include: {
@@ -22,53 +31,92 @@ export async function getOrderItems(): Promise<OrderProps[] | null> {
                 where: { deleteAt: null },
                 include: {
                   product: true,
-                  variant: true,
                 },
               },
             },
           },
+          deliveryItems: true,
+          deliveryOption: true,
+        },
+      });
+      return orders.map((order) => {
+        const cartSubtotal = order.cart.cartItems.reduce((acc, cartItem) => {
+          return acc + cartItem.quantity * cartItem.product.price;
+        }, 0);
 
-          deliveryItems: {
+        const orderSubtotal = cartSubtotal + (order.deliveryOption?.price ?? 0);
+
+        return {
+          ...order,
+          cart: {
+            ...order.cart,
+            subtotal: cartSubtotal,
+          },
+          subtotal: orderSubtotal,
+        };
+      }) as OrderItem[];
+    } catch (error: any) {
+      throw new Error(
+        `Erreur lors de la récupération des commandes : ${error.message}`
+      );
+    }
+  } else {
+    throw new Error(`Utilisateur non autorisé`);
+  }
+}
+
+export async function getOrderItemId(
+  orderItemId: string
+): Promise<OrderProps | null> {
+  const session = await getServerSession(authOptions);
+  if (session && session.user.role === "ADMIN") {
+    try {
+      const orderItem = await prisma.orderItems.findUnique({
+        where: {
+          id: orderItemId,
+        },
+        include: {
+          cart: {
             include: {
-              deliveryOption: true,
+              user: true,
+              cartItems: {
+                where: { deleteAt: null },
+                include: {
+                  product: true,
+                },
+              },
             },
           },
+          deliveryItems: true,
+          deliveryOption: true,
         },
       });
 
-      const subtotal: number = orders.reduce((acc, order) => {
-        const cart = order.cart;
-        if (cart) {
-          const cartItems = cart.cartItems;
-          if (cartItems) {
-            acc += cartItems.reduce((itemAcc, item) => {
-              const variantPrice = item.variant ? item.variant.price : null;
-              const productPrice = item.product ? item.product.price : null;
-              const price =
-                variantPrice !== null
-                  ? variantPrice
-                  : productPrice !== null
-                  ? productPrice
-                  : 0;
-              return itemAcc + item.quantity * price;
-            }, 0);
-          }
-        }
-        return acc;
+      if (!orderItem) {
+        return null;
+      }
+
+      const cartSubtotal = orderItem.cart.cartItems.reduce((acc, cartItem) => {
+        return acc + cartItem.quantity * cartItem.product.price;
       }, 0);
 
-      return orders.map((order) => ({
-        ...order,
-        subtotal,
-      })) as OrderProps[];
-    } catch (error) {
-      console.error("Erreur lors de la récupération des commandes :", error);
-      return null;
+      const orderSubtotal =
+        cartSubtotal + (orderItem.deliveryOption?.price ?? 0);
+
+      return {
+        ...orderItem,
+        cart: {
+          ...orderItem.cart,
+          subtotal: cartSubtotal,
+        },
+        subtotal: orderSubtotal,
+      };
+    } catch (error: any) {
+      throw new Error(
+        `Erreur lors de la récupération de l'élément de commande : ${error.message}`
+      );
     }
   } else {
-    console.error(
-      "Erreur lors de la récupération des produits : Utilisateur non autorisé"
-    );
-    return null;
+    throw new Error(`Utilisateur non autorisé`);
   }
 }

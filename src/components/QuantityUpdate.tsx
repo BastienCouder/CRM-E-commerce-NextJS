@@ -1,5 +1,5 @@
 "use client";
-import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import { Dictionary } from "@/app/lang/dictionaries";
 import React, { useState } from "react";
 
 interface QuantityProps {

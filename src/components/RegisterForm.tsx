@@ -20,8 +20,8 @@ import ShowPassword from "@/components/ShowPassword";
 import { Separator } from "@/components/ui/separator";
 import { signIn } from "next-auth/react";
 import { AiFillGoogleSquare } from "react-icons/ai";
-import { registerForm } from "@/app/[lang]/(auth)/action";
-import { Dictionary } from "@/app/[lang]/dictionaries/dictionaries";
+import { registerForm } from "@/app/(auth)/action";
+import { Dictionary } from "@/app/lang/dictionaries";
 
 interface RegisterFormProps {
   dict: Dictionary;
