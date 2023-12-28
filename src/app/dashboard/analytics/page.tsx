@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import AnalyticsNav from "@/components/dashboard/AnalyticsNav";
-import { calculateStatistics } from "./action";
 import DeviceChart from "@/components/charts/DeviceChart";
 import BrowserChart from "@/components/charts/BrowserChart";
 import {
@@ -9,6 +8,7 @@ import {
 } from "../management/products/action";
 import { readAnalyticsOrders } from "../management/orders/actions";
 import { readAnalyticsUsers } from "../management/users/action";
+import { readAnalyticsVisitorInfos } from "./action";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -25,8 +25,8 @@ export default async function ViewsPage() {
           analyticsUsersData={await readAnalyticsUsers()}
           analyticsWishlistCartOrderData={await readAnalyticsWishlistCartOrder()}
         />
-        <BrowserChart analyticsData={await calculateStatistics()} />
-        <DeviceChart analyticsData={await calculateStatistics()} />
+        <BrowserChart analyticsData={await readAnalyticsVisitorInfos()} />
+        <DeviceChart analyticsData={await readAnalyticsVisitorInfos()} />
       </div>
     </>
   );

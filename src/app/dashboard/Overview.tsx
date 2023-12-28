@@ -1,8 +1,7 @@
 "use client";
 import StatsCard from "@/components/dashboard/StatsCard";
-import OrdersLengthSalesChart from "@/components/charts/OrdersSalesLengthChart";
-import BrowserChart from "@/components/charts/BrowserChart";
-import { calculateStatistics } from "./analytics/action";
+import SalesChart from "@/components/charts/SalesChart";
+import OrdersLengthChart from "@/components/charts/OrdersLengthChart";
 
 interface OverviewProps {
   analyticsProductsData: any;
@@ -25,7 +24,7 @@ export default function Overview({
             value={analyticsOrdersData.maxSubtotal}
             secondaryText={`${analyticsOrdersData.subtotalDifferencePercent}`}
             type="price"
-            variant="bars"
+            variant="dollars"
           />
           <StatsCard
             title="Utilisateurs total"
@@ -33,7 +32,7 @@ export default function Overview({
             value={analyticsUsersData.totalUsers}
             secondaryText={`${analyticsUsersData.monthlyGrowthPercentage}`}
             type="nbr"
-            variant="line"
+            variant="trening"
           />
           <StatsCard
             title="Produit vendus au total"
@@ -41,14 +40,16 @@ export default function Overview({
             value={analyticsProductsData.totalProductsSales}
             secondaryText={`${analyticsProductsData.salesGrowthPercentage}`}
             type="nbr"
-            variant="area"
+            variant="zap"
           />
         </section>
-        <section className="flex">
-          <div className="w-[50rem] h-[25rem] p-4 rounded-lg bg-card">
+        <section className="flex flex-col gap-y-4">
+          <SalesChart analyticsData={analyticsOrdersData()} />
+
+          {/* <div className="w-[50rem] h-[25rem] p-4 rounded-lg bg-card">
             <OrdersLengthSalesChart analyticsData={analyticsOrdersData} />
           </div>
-          <BrowserChart analyticsData={calculateStatistics} />
+          <BrowserChart analyticsData={calculateStatistics} /> */}
         </section>
       </article>
     </>

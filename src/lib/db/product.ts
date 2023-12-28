@@ -15,6 +15,9 @@ export async function getProducts(): Promise<ProductProps[] | null> {
     try {
       const products = await prisma.product.findMany({
         where: { deleteAt: null || undefined },
+        orderBy: {
+          id: "desc",
+        },
       });
 
       return products as ProductProps[];

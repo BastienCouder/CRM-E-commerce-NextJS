@@ -15,6 +15,9 @@ export async function getUsers(): Promise<UserProps[] | null> {
     try {
       const users = await prisma.user.findMany({
         where: { deleteAt: null || undefined },
+        orderBy: {
+          id: "desc",
+        },
       });
 
       return users;

@@ -1,4 +1,8 @@
 "use client";
+import {
+  AnalyticsOrdersData,
+  readAnalyticsOrdersProps,
+} from "@/app/dashboard/management/orders/actions";
 import { formatDateMonth } from "@/helpers/format";
 import {
   Bar,
@@ -8,13 +12,9 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
-import {
-  AnalyticsOrdersData,
-  useServerReadAnalyticsOrdersProps,
-} from "@/app/dashboard/management/orders/actions";
 
 interface OrdersLengthChartProps {
-  analyticsData: useServerReadAnalyticsOrdersProps;
+  analyticsData: readAnalyticsOrdersProps;
 }
 
 const axisStyle = {
@@ -53,33 +53,35 @@ export default function OrdersLengthChart({
 
   return (
     <>
-      <h2 className="mb-2">Nombres de commandes</h2>
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data}>
-          <XAxis
-            dataKey="date"
-            tickFormatter={(value) => formatDateMonth(value, "short")}
-            style={axisStyle}
-            tickLine={false}
-            axisLine={{ stroke: "rgb(var(--foreground))" }}
-          />
-          <YAxis
-            scale="linear"
-            style={axisStyle}
-            tickLine={false}
-            axisLine={{ stroke: "rgb(var(--foreground))" }}
-          />
-          <Tooltip
-            cursor={{ fill: "rgb(var(--muted))" }}
-            content={<CustomTooltip />}
-          />
-          <Bar
-            dataKey="totalNocanceledOrders"
-            fill="rgb(var(--chart))"
-            radius={[4, 4, 0, 0]}
-          />
-        </BarChart>
-      </ResponsiveContainer>
+      <section className="w-[50rem] h-[25rem] p-4 rounded-lg bg-card pb-24">
+        <h2 className="mb-2">Nombres de commandes</h2>
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={data}>
+            <XAxis
+              dataKey="date"
+              tickFormatter={(value) => formatDateMonth(value, "short")}
+              style={axisStyle}
+              tickLine={false}
+              axisLine={{ stroke: "rgb(var(--foreground))" }}
+            />
+            <YAxis
+              scale="linear"
+              style={axisStyle}
+              tickLine={false}
+              axisLine={{ stroke: "rgb(var(--foreground))" }}
+            />
+            <Tooltip
+              cursor={{ fill: "rgb(var(--muted))" }}
+              content={<CustomTooltip />}
+            />
+            <Bar
+              dataKey="totalNocanceledOrders"
+              fill="rgb(var(--chart))"
+              radius={[4, 4, 0, 0]}
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </section>
     </>
   );
 }

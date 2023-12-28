@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { DeliverySchema, DeliveryValues } from "@/lib/zod";
+import { DeliveryItem } from "@/lib/DbSchema";
 
 interface DeliveryInfoProps {
   delivery: DeliveryProps | null;
@@ -47,10 +48,10 @@ export default function DeliveryInfo({
 }: DeliveryInfoProps) {
   const [selectedDeliveryItem, setSelectedDeliveryItem] = useState<
     string | undefined
-  >(delivery?.deliveryItems.find((item) => item.Default)?.id);
+  >(delivery?.deliveryItems.find((item: DeliveryItem) => item.Default)?.id);
 
   const deliveryItem = delivery?.deliveryItems.find(
-    (item) => item.id === selectedDeliveryItem
+    (item: DeliveryItem) => item.id === selectedDeliveryItem
   );
 
   const form = useForm<DeliveryValues>({
@@ -138,7 +139,7 @@ export default function DeliveryInfo({
 
   useEffect(() => {
     setSelectedDeliveryItem(
-      delivery?.deliveryItems.find((item) => item.Default)?.id
+      delivery?.deliveryItems.find((item: DeliveryItem) => item.Default)?.id
     );
   }, [delivery]);
 
@@ -146,7 +147,7 @@ export default function DeliveryInfo({
     <div className="space-y-4">
       <ul className="space-y-4 w-[35rem]">
         {delivery?.deliveryItems &&
-          delivery.deliveryItems.map((deliveryItem) => (
+          delivery.deliveryItems.map((deliveryItem: DeliveryItem) => (
             <li
               key={deliveryItem.id}
               className="flex text-sm border-2 px-8 py-6 border-white"

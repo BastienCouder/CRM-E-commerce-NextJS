@@ -5,13 +5,13 @@ type Statistic = {
   percentage: number;
 };
 
-type Statistics = {
+type readAnalyticsVisitorInfosProps = {
   devices: Record<string, Statistic>;
   browsers: Record<string, Statistic>;
   os: Record<string, Statistic>;
 };
 
-export async function calculateStatistics(): Promise<Statistics> {
+export async function readAnalyticsVisitorInfos(): Promise<readAnalyticsVisitorInfosProps> {
   const visitorInfos = await getVisitorInfo();
 
   if (!visitorInfos) {

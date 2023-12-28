@@ -1,25 +1,16 @@
-import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "./prisma";
-import { Prisma } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { Delivery } from "@/lib/DbSchema";
 
-export type DeliveryWithdeliveryItems = Prisma.DeliveryGetPayload<{
-  include: {
-    deliveryItems: true;
-  };
-}>;
-
-export type DeliveryItemWithdeliveryOption = Prisma.DeliveryItemsGetPayload<{}>;
-
-export type DeliveryProps = DeliveryWithdeliveryItems & {
+export type DeliveryProps = Delivery & {
   ///...
 };
 
 export async function getDelivery(): Promise<DeliveryProps | null> {
   const session = await getServerSession(authOptions);
 
-  let delivery: DeliveryWithdeliveryItems | null = null;
+  let delivery: DeliveryProps | null = null;
 
   if (session) {
     delivery = await prisma.delivery.findFirst({

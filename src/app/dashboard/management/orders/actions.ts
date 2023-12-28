@@ -1,4 +1,5 @@
 "use server";
+import { getWeekNumber } from "@/helpers/format";
 import { CartItem, OrderItem } from "@/lib/DbSchema";
 import { getOrderItems } from "@/lib/db/orderItem";
 import { prisma } from "@/lib/db/prisma";
@@ -7,8 +8,6 @@ import {
   eachMonthOfInterval,
   startOfMonth,
   subMonths,
-  startOfYear,
-  endOfYear,
   differenceInDays,
   eachDayOfInterval,
   eachWeekOfInterval,
@@ -40,72 +39,71 @@ export async function readAnalyticsOrders(
   endDateParam?: Date
 ): Promise<readAnalyticsOrdersProps> {
   try {
+    // Définir les dates de début et de fin
     const currentDate = new Date();
-    const startDate = startDateParam || startOfYear(currentDate);
-    const endDate = endDateParam || endOfYear(currentDate);
+    const startDate = startDateParam || startOfMonth(currentDate);
+    const endDate = endDateParam || currentDate;
 
+    // Récupérer les éléments de commande
     const orderItems = await getOrderItems(startDate, endDate);
-    console.log(orderItems);
 
     const daysDifference = differenceInDays(endDate, startDate);
-    let intervalFunction = eachMonthOfInterval;
 
-    if (daysDifference <= 1) {
+    let intervalFunction: (interval: { start: Date; end: Date }) => Date[];
+    if (daysDifference <= 7) {
       intervalFunction = eachDayOfInterval;
-    } else if (daysDifference <= 7) {
+    } else if (daysDifference <= 30) {
       intervalFunction = eachWeekOfInterval;
+    } else {
+      intervalFunction = eachMonthOfInterval;
     }
 
-    const allIntervals = intervalFunction({
-      start: startDate,
-      end: endDate,
-    });
+    const allIntervals = intervalFunction({ start: startDate, end: endDate });
 
     let orderItemsData: AnalyticsOrdersData[] = allIntervals.map(
-      (intervalStart) => {
+      (intervalStart: Date) => {
         let intervalEnd: Date;
+        let formattedDate: string;
+
         if (intervalFunction === eachDayOfInterval) {
           intervalEnd = addDays(intervalStart, 1);
+          formattedDate = format(intervalStart, "yyyy-MM-dd");
         } else if (intervalFunction === eachWeekOfInterval) {
           intervalEnd = addWeeks(intervalStart, 1);
+          const weekNumber = getWeekNumber(intervalStart);
+          formattedDate = `${intervalStart.getFullYear()}-W${String(
+            weekNumber
+          ).padStart(2, "0")}`;
         } else {
           intervalEnd = addMonths(intervalStart, 1);
+          formattedDate = format(intervalStart, "yyyy-MM");
         }
 
-        const intervalOrders = orderItems?.filter(
-          (orderItem: OrderItem) =>
-            new Date(orderItem.createdAt!) >= intervalStart &&
-            new Date(orderItem.createdAt!) < intervalEnd
+        const intervalOrders: any = orderItems?.filter(
+          (orderItem: OrderItem) => {
+            const createdAt = new Date(orderItem.createdAt);
+            return createdAt >= intervalStart && createdAt < intervalEnd;
+          }
         );
-
-        const activeCartItems =
+        // Calculer le subtotal pour l'intervalle
+        const subtotal =
           intervalOrders &&
           intervalOrders
             .filter((orderItem: OrderItem) => orderItem.deleteAt === null)
             .reduce(
-              (items: OrderItem, orderItem: OrderItem) =>
-                items.concat(orderItem.subtotal || []),
-              [] as OrderItem[]
+              (sum: number, orderItem: OrderItem) =>
+                sum + (orderItem.subtotal || 0),
+              0
             );
 
-        const subtotal = activeCartItems;
-        const orderCount = intervalOrders?.length!;
-        const noCanceledOrderCount = intervalOrders?.filter(
-          (orderItem) => orderItem.deleteAt === null
-        ).length!;
-
-        let dateFormat = "yyyy-MM";
-        if (intervalFunction === eachDayOfInterval) {
-          dateFormat = "yyyy-MM-dd";
-        } else if (intervalFunction === eachWeekOfInterval) {
-          dateFormat = "yyyy-'W'Iso";
-        }
-
+        // Retourner les données pour l'intervalle
         return {
-          date: format(intervalStart, dateFormat),
-          subtotal: subtotal || 0,
-          totalOrders: orderCount,
-          totalNocanceledOrders: noCanceledOrderCount,
+          date: formattedDate,
+          subtotal,
+          totalOrders: intervalOrders?.length,
+          totalNocanceledOrders: intervalOrders?.filter(
+            (orderItem: OrderItem) => orderItem.deleteAt === null
+          ).length,
         };
       }
     );

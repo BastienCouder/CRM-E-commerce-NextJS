@@ -22,7 +22,6 @@ export default function Orders({ order }: OrdersProps) {
     <div className="my-12">
       <ul className="space-y-8">
         {order?.orderItems?.map((orderItem: OrderItem, index: number) => {
-          console.log(orderItem);
           const dateValue = new Date(orderItem.createdAt!);
           const formattedDate = formatDate(dateValue);
           const isOrderSelected = selectedOrderIndex === index;

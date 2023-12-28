@@ -17,6 +17,9 @@ export async function getOrderItems(
   if (session && session.user.role === "ADMIN") {
     try {
       const orders = await prisma.orderItems.findMany({
+        orderBy: {
+          id: "desc",
+        },
         where: {
           createdAt: {
             gte: startDate,

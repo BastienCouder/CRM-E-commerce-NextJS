@@ -8,8 +8,6 @@ interface TotalOrderDetailsProps {
 export default async function TotalOrderDetails({
   order,
 }: TotalOrderDetailsProps) {
-  console.log(order);
-
   return (
     <>
       {order && (

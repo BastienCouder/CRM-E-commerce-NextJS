@@ -1,12 +1,7 @@
 "use client";
-
-import * as React from "react";
-
 import { endOfYear, format, startOfYear } from "date-fns";
 import { DateRange } from "react-day-picker";
-
 import { cn } from "@/helpers/utils";
-
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -16,18 +11,18 @@ import {
 } from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { fr } from "date-fns/locale";
+import { useState } from "react";
 
-interface CalendarDateRangePickerProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+interface DateRangePickerProps extends React.HTMLAttributes<HTMLDivElement> {
   setDateRange: (range: { from: Date; to: Date }) => void;
 }
 
-export function CalendarDateRangePicker({
+export function DateRangePicker({
   className,
   setDateRange,
-}: CalendarDateRangePickerProps) {
+}: DateRangePickerProps) {
   const currentYear = new Date().getFullYear();
-  const [date, setDate] = React.useState<DateRange | undefined>({
+  const [date, setDate] = useState<DateRange | undefined>({
     from: startOfYear(new Date(currentYear, 0, 1)),
     to: endOfYear(new Date(currentYear, 11, 31)),
   });
@@ -47,7 +42,7 @@ export function CalendarDateRangePicker({
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[340px] justify-start text-left font-normal",
+              "w-[300px] justify-start text-left font-normal text-xs bg-background",
               !date && "text-muted-foreground"
             )}
           >

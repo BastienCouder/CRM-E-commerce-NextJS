@@ -36,7 +36,7 @@ const managementNavItems = [
 
 const analyticsNavItems = [
   {
-    href: "/dashboard/analytics/views",
+    href: "/dashboard/analyticss",
     label: "Views",
     icon: <Eye size={15} />,
   },

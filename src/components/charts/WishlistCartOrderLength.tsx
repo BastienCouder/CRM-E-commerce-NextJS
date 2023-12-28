@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import {
   AnalyticsWishlistCartOrder,
-  useServerReadAnalyticsWishlistCartOrderProps,
+  readAnalyticsWishlistCartOrderProps,
 } from "@/app/dashboard/management/products/action";
 
 import {
@@ -21,9 +21,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Product } from "@/lib/DbSchema";
 
 interface WhislistCartOrderLengthProps {
-  analyticsData: useServerReadAnalyticsWishlistCartOrderProps;
+  analyticsData: readAnalyticsWishlistCartOrderProps;
 }
 
 interface CustomTooltipProps {
@@ -71,14 +72,15 @@ export default function WhislistCartOrderLength({
   }, [data]);
 
   const sortedData = useMemo(
-    () => data.sort((a, b) => a.name.localeCompare(b.name)),
+    () => data.sort((a: Product, b: Product) => a.name.localeCompare(b.name)),
     [data]
   );
 
   const selectedProduct = useMemo(
     () =>
-      sortedData.find((item) => item.productId === selectedProductId) ||
-      sortedData[0],
+      sortedData.find(
+        (item: Product) => item.productId === selectedProductId
+      ) || sortedData[0],
     [selectedProductId, sortedData]
   );
 

@@ -1,7 +1,4 @@
 import { Metadata } from "next";
-import NewsletterLengthChart from "@/components/charts/NewsletterLengthChart";
-import { useServerReadAnalyticsUsers } from "../../management/users/action";
-
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "Example dashboard app built using the components.",
