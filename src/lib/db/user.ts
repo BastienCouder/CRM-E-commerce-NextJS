@@ -11,7 +11,7 @@ export type UserProps = User & {
 export async function getUsers(): Promise<UserProps[] | null> {
   const session = await getServerSession(authOptions);
 
-  if (session && session.user.role === "ADMIN") {
+  if (session && session.user.role === "admin") {
     try {
       const users = await prisma.user.findMany({
         where: { deleteAt: null || undefined },

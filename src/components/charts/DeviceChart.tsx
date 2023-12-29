@@ -36,8 +36,8 @@ export default function DeviceChart({ analyticsData }: DeviceChartProps) {
 
   return (
     <>
-      <section className="w-[15rem] p-4 rounded-lg bg-card space-y-4">
-        <h2>Plateforme</h2>
+      <section className="w-[15rem] h-[12.5rem] p-4 rounded-lg bg-card space-y-4">
+        <h2>Plateforme utilisées</h2>
         <Separator className="bg-[rgba(var(--foreground),0.5)]" />
         <ul className="space-y-4">
           {Object.entries(deviceData).map(([device, data]) => (

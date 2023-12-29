@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const UserRoleEnum = z.enum(["ADMIN", "USER"]);
+export const UserRoleEnum = z.enum(["admin", "user"]);
 export const ColorEnum = z.enum(["or", "argent", "rose"]);
 export const CategoryEnum = z.enum(["bracelet_cuir", "bracelet_acier"]);
 export const DeviceEnum = z.enum(["desktop", "mobile"]);

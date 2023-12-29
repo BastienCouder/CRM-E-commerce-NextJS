@@ -14,6 +14,8 @@ import { softDeleteItem } from "@/app/dashboard/management/actions";
 import { ProductProps } from "@/lib/db/product";
 import { OrderProps } from "@/lib/db/orderItem";
 import { UserProps } from "@/lib/db/user";
+import CreateUsers from "../dashboard/CreateUsers";
+import { roles } from "@/app/dashboard/management/users/data/data";
 
 interface DataTableToolbarProps {
   table: Table<ProductProps | OrderProps | UserProps>;
@@ -63,8 +65,15 @@ export function DataTableToolbar({ table, variant }: DataTableToolbarProps) {
         {variant === "products" && table.getColumn("priority") && (
           <DataTableFacetedFilter
             column={table.getColumn("priority")}
-            title="Privilège"
+            title="Priority"
             options={priorities}
+          />
+        )}
+        {variant === "users" && table.getColumn("role") && (
+          <DataTableFacetedFilter
+            column={table.getColumn("role")}
+            title="Role"
+            options={roles}
           />
         )}
         {isFiltered && (
@@ -95,6 +104,7 @@ export function DataTableToolbar({ table, variant }: DataTableToolbarProps) {
             <Plus className="ml-2 h-4 w-4" />
           </Button>
         )}
+        {variant === "users" && <CreateUsers />}
       </div>
       <DataTableViewOptions table={table} />
     </div>

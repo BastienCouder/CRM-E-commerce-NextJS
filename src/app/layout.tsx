@@ -18,11 +18,13 @@ const inter = Inter({
 export default async function RootLayout({
   children,
   params: { lang },
+  context,
 }: {
   params: {
     lang: string;
   };
   children: React.ReactNode;
+  context: any;
 }) {
   const dict = await getDictionary(lang);
   const cart = await getCart();

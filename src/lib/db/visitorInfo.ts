@@ -10,7 +10,7 @@ export type VisitorInfoProps = VisitorInfo & {
 export async function getVisitorInfo(): Promise<VisitorInfoProps[] | null> {
   const session = await getServerSession(authOptions);
 
-  if (session && session.user.role === "ADMIN") {
+  if (session && session.user.role === "admin") {
     try {
       const visitorInfo = await prisma.visitorInfo.findMany();
 

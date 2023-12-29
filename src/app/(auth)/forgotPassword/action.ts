@@ -15,6 +15,7 @@ const findUserByEmail = async (email: string) => {
 
   return user;
 };
+
 export async function sendForgotPassword(formData: FormData) {
   const email = formData.get("email")?.toString();
 

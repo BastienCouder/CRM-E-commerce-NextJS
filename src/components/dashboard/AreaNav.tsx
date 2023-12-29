@@ -5,6 +5,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import {
   Eye,
+  Mail,
   PackageOpen,
   Paperclip,
   ShoppingCart,
@@ -36,7 +37,7 @@ const managementNavItems = [
 
 const analyticsNavItems = [
   {
-    href: "/dashboard/analyticss",
+    href: "/dashboard/analytics",
     label: "Views",
     icon: <Eye size={15} />,
   },
@@ -47,6 +48,11 @@ const marketingNavItems = [
     href: "/dashboard/marketing/newsletter",
     label: "Newsletter",
     icon: <Paperclip size={15} />,
+  },
+  {
+    href: "/dashboard/marketing/mail",
+    label: "Mail",
+    icon: <Mail size={15} />,
   },
 ];
 export function AreaNav({
@@ -90,7 +96,7 @@ export function AreaNav({
             href={item.href}
             className={cn(
               buttonVariants({ variant: "ghost" }),
-              "w-[10rem] border-none justify-start text-sm font-medium py-2 px-4 gap-x-2",
+              "w-[10rem] bg-background flex items-center border-none justify-start text-sm font-medium py-2 px-4 gap-x-2",
               {
                 "bg-muted hover:bg-muted":
                   item.href !== "/dashboard" && pathname.startsWith(item.href),
@@ -98,7 +104,7 @@ export function AreaNav({
             )}
           >
             <span className="text-secondary">{item.icon}</span>
-            {item.label}
+            <span className="mb-1">{item.label}</span>
           </Link>
         </li>
       ))}

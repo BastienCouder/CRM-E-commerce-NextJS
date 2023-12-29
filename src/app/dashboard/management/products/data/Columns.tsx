@@ -139,18 +139,16 @@ export const columns: ColumnDef<any>[] = [
 
       return (
         <div className="flex space-x-2">
-          {status && (
-            <Badge
-              variant="outline"
-              className={`${
-                status.value === "available"
-                  ? "border-green-800"
-                  : "border-destructive"
-              }`}
-            >
-              {status.label}
-            </Badge>
-          )}
+          <Badge
+            variant="outline"
+            className={`${
+              status?.value === "available"
+                ? "border-green-800"
+                : "border-destructive"
+            }`}
+          >
+            {status?.label}
+          </Badge>
         </div>
       );
     },

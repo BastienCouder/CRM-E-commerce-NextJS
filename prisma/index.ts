@@ -17,7 +17,7 @@ async function main() {
   //       id: userId,
   //     },
   //     data: {
-  //       role: "ADMIN",
+  //       role: "admin",
   //     },
   //   });
   //   console.log(`L'utilisateur  est maintenant administrateur.`);
@@ -50,17 +50,10 @@ async function main() {
   //     },
   //   },
   // });
-  await prisma.product.create({
+  await prisma.accountMail.create({
     data: {
-      name: "Produit 1",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
-      price: 9000,
-      imageUrl: "/images/montre1.png",
-      category: "bracelet_acier",
-      color: "or",
-      status: "unavailable",
-      stock: 20,
+      label: "Bastien Couder",
+      email: "couderbastien@gmail.com",
     },
   });
 }

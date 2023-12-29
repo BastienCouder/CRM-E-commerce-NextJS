@@ -15,11 +15,13 @@ import { useState } from "react";
 
 interface DateRangePickerProps extends React.HTMLAttributes<HTMLDivElement> {
   setDateRange: (range: { from: Date; to: Date }) => void;
+  onDateChange?: (range: { from: Date; to: Date }) => void;
 }
 
 export function DateRangePicker({
   className,
   setDateRange,
+  onDateChange,
 }: DateRangePickerProps) {
   const currentYear = new Date().getFullYear();
   const [date, setDate] = useState<DateRange | undefined>({
@@ -31,6 +33,7 @@ export function DateRangePicker({
     setDate(range);
     if (range) {
       setDateRange({ from: range.from!, to: range.to! });
+      onDateChange?.({ from: range.from!, to: range.to! });
     }
   };
 
@@ -42,14 +45,11 @@ export function DateRangePicker({
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal text-xs bg-background",
-              !date && "text-muted-foreground"
+              "w-[280px] flex gap-x-3 justify-start text-left text-xs bg-background lowercase",
+              !date && "text-secondary-foreground"
             )}
           >
-            <CalendarIcon
-              className="mr-2 h-4 w-4"
-              color="rgb(var(--secondary))"
-            />
+            <CalendarIcon className="h-4 w-4" color="rgb(var(--secondary))" />
             {date?.from ? (
               date.to ? (
                 <>

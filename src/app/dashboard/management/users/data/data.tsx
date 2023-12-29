@@ -1,4 +1,4 @@
-import { BadgePlus, CheckCheck, Plus, Star, X } from "lucide-react";
+import { CheckCheck, User, User2, UserCircleIcon, X } from "lucide-react";
 
 export const newsletters = [
   {
@@ -11,10 +11,21 @@ export const newsletters = [
     label: "Non",
     icon: X,
   },
+  {
+    value: false,
+    label: "Non",
+    icon: X,
+  },
 ];
-
-export const priorities = [
-  { value: "best seller", label: "Best Seller", icon: BadgePlus },
-  { value: "favorie", label: "Favorie", icon: Star },
-  { value: "new", label: "Nouveau", icon: Plus },
+export const roles = [
+  {
+    value: "admin",
+    label: "Administrateur",
+    icon: UserCircleIcon,
+  },
+  {
+    value: "user",
+    label: "Utilisateur",
+    icon: User,
+  },
 ];

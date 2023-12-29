@@ -8,6 +8,14 @@ import { readAnalyticsOrders } from "./management/orders/actions";
 import { getOrderItems } from "@/lib/db/orderItem";
 import StatsCard from "@/components/dashboard/StatsCard";
 import SalesChart from "@/components/charts/SalesChart";
+import Image from "next/image";
+import GeoChart from "@/components/charts/GeoChart";
+import DeviceChart from "@/components/charts/DeviceChart";
+import {
+  readAnalyticsVisited,
+  readAnalyticsVisitorInfos,
+} from "./analytics/action";
+import ViewsChart from "@/components/charts/ViewsChart";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -20,6 +28,8 @@ export default async function Dashboard() {
   const analyticsOrdersData = await readAnalyticsOrders();
   const analyticsUsersData = await readAnalyticsUsers();
   const analyticsWishlistCartOrderData = await readAnalyticsWishlistCartOrder();
+  const analyticsVisitorInfosData = await readAnalyticsVisitorInfos();
+  const analyticsVisitedData = await readAnalyticsVisited();
 
   return (
     <>
@@ -51,7 +61,14 @@ export default async function Dashboard() {
           />
         </section>
         <section className="flex flex-col gap-y-4">
-          <SalesChart analyticsData={analyticsOrdersData} />
+          <div className="flex gap-x-4">
+            <SalesChart />
+            <ViewsChart analyticsData={analyticsVisitedData} />
+          </div>
+          <div className="flex gap-x-4">
+            <GeoChart />
+            <DeviceChart analyticsData={analyticsVisitorInfosData} />
+          </div>
         </section>
         {/* {orders?.slice(0, 5).map((orderItem, index) => (
           <LastOrderItem key={index} orderItem={orderItem} />

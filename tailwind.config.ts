@@ -24,7 +24,7 @@ const config: Config = {
       },
       colors: {
         chart: "rgb(var(--chart))",
-        border: "rgb(var(--border))",
+        border: "rgba(var(--border))",
         input: "rgb(var(--input))",
         ring: "rgb(var(--ring))",
         body: "rgb(var(--body))",

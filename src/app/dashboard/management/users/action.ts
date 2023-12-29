@@ -119,3 +119,31 @@ export async function readAnalyticsUsers(
     monthlyGrowthPercentage,
   };
 }
+
+enum UserRole {
+  admin = "admin",
+  user = "user",
+}
+export async function sendCreateUser(formData: FormData): Promise<void> {
+  const name = formData.get("username")?.toString();
+  const email = formData.get("email")?.toString();
+  let role: UserRole | undefined;
+  const formRole = formData.get("role")?.toString();
+
+  if (formRole && Object.values(UserRole).includes(formRole as UserRole)) {
+    role = formRole as UserRole;
+  } else {
+    throw new Error(`Rôle invalide fourni: ${formRole}`);
+  }
+
+  await prisma.user.create({
+    data: {
+      name,
+      email,
+      image: null,
+      role,
+      emailVerified: null,
+      newsletter: null,
+    },
+  });
+}

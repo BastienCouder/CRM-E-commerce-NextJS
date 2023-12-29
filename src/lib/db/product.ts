@@ -11,7 +11,7 @@ export type ProductProps = Product & {
 export async function getProducts(): Promise<ProductProps[] | null> {
   const session = await getServerSession(authOptions);
 
-  if (session && session.user.role === "ADMIN") {
+  if (session && session.user.role === "admin") {
     try {
       const products = await prisma.product.findMany({
         where: { deleteAt: null || undefined },
@@ -37,7 +37,7 @@ export async function createProduct(): Promise<ProductProps | null> {
   try {
     const session = await getServerSession(authOptions);
 
-    if (session && session.user.role === "ADMIN") {
+    if (session && session.user.role === "admin") {
       const createdProduct = await prisma.product.create({
         data: {
           name: "",

@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { CalendarDateRangePicker } from "@/components/dashboard/DateRangePicker";
 import OrdersLengthChart from "@/components/charts/OrdersLengthChart";
 import StatsCard from "@/components/dashboard/StatsCard";
 
@@ -33,11 +32,6 @@ export default function AnalyticsOrder({ analyticsData }: AnalyticsOrderProps) {
       <div className="space-y-4">
         <div className="flex flex-col gap-y-2">
           <h2>Voir sur une durée de :</h2>
-          <CalendarDateRangePicker
-            setDateRange={(range: { from: Date; to: Date }) =>
-              handleFilterChange(range)
-            }
-          />
         </div>
         <div className="flex flex-col gap-y-2">
           <h2>Ce mois ci :</h2>

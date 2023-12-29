@@ -1,7 +1,7 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { newsletters } from "./data";
+import { newsletters, roles } from "./data";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -54,8 +54,8 @@ export const columns: ColumnDef<any>[] = [
       return (
         <div className="min-w-[120px] flex space-x-2">
           <Image
-            className="rounded-full w-[35px] h-[35px] object-contain border-white border-[1px]"
-            src={row.original.image}
+            className="rounded-full w-[35px] h-[35px] object-contain"
+            src={row.original.image ? row.original.image : "/images/user.png"}
             alt={row.getValue("name")}
             width={500}
             height={500}
@@ -103,13 +103,20 @@ export const columns: ColumnDef<any>[] = [
       <DataTableColumnHeader column={column} title="Role" />
     ),
     cell: ({ row }) => {
+      const roleValue = row.original.role;
+
+      const role = roles.find((roleItem) => roleItem.value === roleValue);
+
       return (
         <div className="flex space-x-2 items-center">
           <span className="max-w-[500px] lowercase truncate flex font-medium bg-background py-1 px-2 rounded-lg">
-            {row.original.role}
+            {role?.label}
           </span>
         </div>
       );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
     },
   },
   {

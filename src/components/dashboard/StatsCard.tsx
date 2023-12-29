@@ -69,7 +69,11 @@ export default function StatsCard({
             {type === "price" ? formatPrice(Number(value), "EUR") : value}
           </div>
           <p className="flex flex-col text-xs">
-            <span className={`flex items-center gap-x-1 font-bold text-chart`}>
+            <span
+              className={`flex items-center gap-x-1 font-bold ${
+                isPositive ? "text-green-700" : "text-red-700"
+              }`}
+            >
               {!isNaN(number) && <IconComponent size={13} />}
               {formattedSecondaryText}
             </span>

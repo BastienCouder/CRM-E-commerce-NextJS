@@ -4,11 +4,12 @@ import { addWeeks, addMonths } from "date-fns";
 
 export function useFilteredAnalyticsData<T>(
   fetchData: (startDate: Date, endDate: Date) => Promise<T>,
-  initialTimeRange: string = "Ce mois"
+  initialTimeRange: string | { from: Date; to: Date },
+  defaultValue: T
 ): [
   T,
-  string,
-  (timeRange: string) => void,
+  string | { from: Date; to: Date },
+  (timeRange: string | { from: Date; to: Date }) => void,
   { value: string; label: string }[]
 ] {
   const options = [
@@ -18,32 +19,38 @@ export function useFilteredAnalyticsData<T>(
     { value: "6months", label: "6 Mois" },
     { value: "12months", label: "12 Mois" },
   ];
-  const [timeRange, setTimeRange] = useState<string>(initialTimeRange);
-  const [filteredData, setFilteredData] = useState<T>();
+  const [timeRange, setTimeRange] = useState<string | { from: Date; to: Date }>(
+    initialTimeRange
+  );
+  const [filteredData, setFilteredData] = useState<T>(defaultValue);
 
   useEffect(() => {
     const now = new Date();
     let startDate: Date;
     let endDate: Date = now;
-
-    switch (timeRange) {
-      case "week":
-        startDate = addWeeks(now, -1);
-        break;
-      case "month":
-        startDate = addMonths(now, -1);
-        break;
-      case "3months":
-        startDate = addMonths(now, -3);
-        break;
-      case "6months":
-        startDate = addMonths(now, -6);
-        break;
-      case "12months":
-        startDate = addMonths(now, -12);
-        break;
-      default:
-        startDate = addMonths(now, -1);
+    if (typeof timeRange === "string") {
+      switch (timeRange) {
+        case "week":
+          startDate = addWeeks(now, -1);
+          break;
+        case "month":
+          startDate = addMonths(now, -1);
+          break;
+        case "3months":
+          startDate = addMonths(now, -2);
+          break;
+        case "6months":
+          startDate = addMonths(now, -5);
+          break;
+        case "12months":
+          startDate = addMonths(now, -11);
+          break;
+        default:
+          startDate = addWeeks(now, -1);
+      }
+    } else {
+      startDate = timeRange.from;
+      endDate = timeRange.to;
     }
 
     fetchData(startDate, endDate)
@@ -55,5 +62,5 @@ export function useFilteredAnalyticsData<T>(
       });
   }, [timeRange, fetchData]);
 
-  return [filteredData!, timeRange!, setTimeRange, options];
+  return [filteredData, timeRange, setTimeRange, options];
 }

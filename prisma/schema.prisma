@@ -4,7 +4,8 @@ generator client {
 
 datasource db {
     provider  = "mongodb"
-    url       = env("DATABASE_URL")
+    url       = env("DIRECT_URL")
+    // url       = env("DATABASE_URL")
     directUrl = env("DIRECT_URL")
 }
 
@@ -49,8 +50,8 @@ model VerificationToken {
 }
 
 enum UserRole {
-    ADMIN
-    USER
+    admin
+    user
 }
 
 model User {
@@ -58,7 +59,7 @@ model User {
     name           String?
     email          String?    @unique
     emailVerified  DateTime?
-    role           UserRole   @default(USER)
+    role           UserRole   @default(user)
     hashedPassword String?
     newsletter     Boolean?
     image          String?
@@ -294,4 +295,33 @@ enum Browser {
     Firefox
     IE
     Other
+}
+
+model Mail {
+    id      String   @id @default(auto()) @map("_id") @db.ObjectId
+    name    String?
+    email   String
+    subject String
+    text    String
+    date    DateTime
+    read    Boolean
+    labels  String[]
+
+    @@map("mail")
+}
+
+model AccountMail {
+    id    String @id @default(auto()) @map("_id") @db.ObjectId
+    label String
+    email String @unique
+
+    @@map("accunt_mail")
+}
+
+model Contact {
+    id    String @id @default(auto()) @map("_id") @db.ObjectId
+    name  String
+    email String @unique
+
+    @@map("contact")
 }

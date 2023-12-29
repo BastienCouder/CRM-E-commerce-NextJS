@@ -2,7 +2,7 @@ import { NextRequest, NextResponse, userAgent } from "next/server";
 import { cookies } from "next/headers";
 import { v4 as uuidv4 } from "uuid";
 import UAParser from "ua-parser-js";
-import { recordVisitorInfo } from "@/lib/db/views";
+import { recordVisit, recordVisitorInfo } from "@/lib/db/views";
 import { mapBrowserName } from "./helpers/utils";
 
 export function middleware(req: NextRequest) {

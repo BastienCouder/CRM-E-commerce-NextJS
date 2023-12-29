@@ -14,7 +14,7 @@ export async function getOrderItems(
   endDate?: Date
 ): Promise<OrderProps[] | null> {
   const session = await getServerSession(authOptions);
-  if (session && session.user.role === "ADMIN") {
+  if (session && session.user.role === "admin") {
     try {
       const orders = await prisma.orderItems.findMany({
         orderBy: {
@@ -72,7 +72,7 @@ export async function getOrderItemId(
   orderItemId: string
 ): Promise<OrderProps | null> {
   const session = await getServerSession(authOptions);
-  if (session && session.user.role === "ADMIN") {
+  if (session && session.user.role === "admin") {
     try {
       const orderItem = await prisma.orderItems.findUnique({
         where: {

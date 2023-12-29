@@ -1,5 +1,4 @@
 import { Separator } from "@/components/ui/separator";
-import { formatDateMonth } from "@/helpers/format";
 import { AreaChart } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -61,7 +60,6 @@ export default function NewsletterLengthChart({
             tickLine={false}
             axisLine={{ stroke: "rgb(var(--foreground))" }}
             style={axisStyle}
-            tickFormatter={(value) => formatDateMonth(value, "short")}
           />
           <YAxis
             scale="linear"

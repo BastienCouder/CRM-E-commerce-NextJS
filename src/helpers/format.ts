@@ -35,37 +35,6 @@ export function formatDate(date: Date): string {
   return date.toLocaleString(undefined, options);
 }
 
-export const formatDateMonth = (
-  dateString: string,
-  format: "short" | "long" = "short"
-) => {
-  const date = new Date(dateString);
-
-  const options: Intl.DateTimeFormatOptions = {
-    month: format,
-  };
-
-  return new Intl.DateTimeFormat("fr-FR", options).format(date);
-};
-
-function isoWeekNumber(date: Date): number {
-  const target = new Date(date);
-  const dayNr = (date.getDay() + 6) % 7; // Transforme dimanche en 0, lundi en 1, etc.
-  target.setDate(target.getDate() - dayNr + 3); // Jeudi de la semaine actuelle
-
-  const firstThursday = target.getTime(); // Convertit en timestamp
-  target.setMonth(0, 1);
-
-  if (target.getDay() !== 4) {
-    target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7));
-  }
-
-  const startOfYear = target.getTime(); // Convertit également en timestamp
-  const weekNumber = 1 + Math.ceil((firstThursday - startOfYear) / 604800000); // Divise les timestamps
-
-  return weekNumber;
-}
-
 // Fonction pour calculer le numéro de la semaine dans l'année
 export function getWeekNumber(date: Date): number {
   const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
@@ -75,6 +44,7 @@ export function getWeekNumber(date: Date): number {
   return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
 }
 
+// Format pour la description trop longue
 export function formatDescription(description: string): string {
   const words: string[] = description.split(" ");
   if (words.length <= 20) {
@@ -82,4 +52,104 @@ export function formatDescription(description: string): string {
   }
   const truncatedDescription = words.slice(0, 20).join(" ");
   return truncatedDescription + "...";
+}
+
+import { ArrowUpCircle, ArrowDownCircle } from "lucide-react";
+
+// Format pour le pourcentage
+interface FormattedPercentageResult {
+  formattedPercentage: string;
+  IconComponent: typeof ArrowUpCircle | typeof ArrowDownCircle;
+}
+
+export function formatPercentage(
+  percentage: number | string
+): FormattedPercentageResult {
+  const number =
+    typeof percentage === "string" ? parseFloat(percentage) : percentage;
+  const isPositive = !isNaN(number) && number >= 0;
+
+  const formattedPercentage = !isNaN(number)
+    ? `${isPositive ? "+" : ""}${number.toFixed(2)}%`
+    : percentage.toString();
+
+  const IconComponent = isPositive ? ArrowUpCircle : ArrowDownCircle;
+
+  return { formattedPercentage, IconComponent };
+}
+
+///format de la date
+import {
+  differenceInCalendarDays,
+  differenceInCalendarMonths,
+  differenceInCalendarWeeks,
+  format,
+  getISOWeek,
+  isSameYear,
+  parseISO,
+  startOfWeek,
+} from "date-fns";
+import { fr } from "date-fns/locale";
+
+export function formatDateBasedOnFilter(
+  dateString: string,
+  filterType: "day" | "week" | "month"
+): string {
+  const date = parseISO(dateString);
+  const now = new Date();
+  const startOfCurrentWeek = startOfWeek(now, { weekStartsOn: 1 });
+
+  switch (filterType) {
+    case "day":
+      // Format pour les jours
+      if (date >= startOfCurrentWeek) {
+        // Si la date est dans la semaine actuelle
+        return format(date, "EE d", { locale: fr });
+      } else {
+        return format(date, "EE d", { locale: fr });
+      }
+
+    case "week":
+      // Format pour les semaines
+      const weekNumber = getISOWeek(date);
+      return `Semaine ${weekNumber}`;
+
+    case "month":
+      // Format pour les mois
+      if (isSameYear(date, now)) {
+        return format(date, "MMM", { locale: fr });
+      } else {
+        return format(date, "MMM yy", { locale: fr });
+      }
+
+    default:
+      return dateString;
+  }
+}
+
+export function determineFilterType(
+  timeRange: string | { from: Date; to: Date }
+): "day" | "week" | "month" {
+  if (typeof timeRange === "string") {
+    switch (timeRange) {
+      case "week":
+        return "day";
+      case "month":
+        return "week";
+      default:
+        return "month";
+    }
+  } else {
+    const daysDiff = differenceInCalendarDays(timeRange.to, timeRange.from);
+    const weeksDiff = differenceInCalendarWeeks(timeRange.to, timeRange.from);
+    const monthsDiff = differenceInCalendarMonths(timeRange.to, timeRange.from);
+
+    if (daysDiff <= 7 && weeksDiff === 0) {
+      return "day";
+    } else if (weeksDiff >= 1 && monthsDiff === 0) {
+      return "week";
+    } else {
+      return "month";
+    }
+  }
 }

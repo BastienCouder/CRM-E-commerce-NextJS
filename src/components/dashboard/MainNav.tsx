@@ -30,17 +30,17 @@ export function MainNav() {
 
   return (
     <nav>
-      <div className="flex flex-col h-screen items-center space-y-12 py-4">
+      <div className="flex flex-col h-screen items-center gap-y-12 py-4">
         {navSections.map(({ title, variant }) => (
           <NavSection key={variant} title={title} variant={variant} />
         ))}
-        <div className="w-full justify-center flex space-x-8">
+        {/* <div className="w-full justify-center flex space-x-8">
           <User size={20} />
           <Moon size={20} />
           <Link href="/dashboard/settings">
             <Settings size={20} />
           </Link>
-        </div>
+        </div> */}
       </div>
     </nav>
   );
