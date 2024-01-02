@@ -39,4 +39,4 @@ next-env.d.ts
 .vercel
 .react-email
 .mailing
-/react-email-starter
+.react-email
