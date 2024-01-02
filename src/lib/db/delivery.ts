@@ -1,14 +1,13 @@
-import { prisma } from "./prisma";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { Delivery } from "@/lib/DbSchema";
+import { prisma } from "../prisma";
+import { Delivery } from "@/schemas/DbSchema";
+import { auth } from "@/auth";
 
 export type DeliveryProps = Delivery & {
   ///...
 };
 
 export async function getDelivery(): Promise<DeliveryProps | null> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   let delivery: DeliveryProps | null = null;
 
@@ -36,7 +35,7 @@ export async function getDelivery(): Promise<DeliveryProps | null> {
 }
 
 export async function createDelivery(): Promise<DeliveryProps> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (!session) {
     throw new Error("Aucune session n'est disponible.");

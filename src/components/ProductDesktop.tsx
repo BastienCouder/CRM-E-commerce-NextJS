@@ -9,7 +9,7 @@ import AddToWishlist from "@/components/AddToWishlist";
 import { useAnimationContext } from "@/context/AnimationContext";
 import { Dictionary } from "@/app/lang/dictionaries";
 import { Product } from "@prisma/client";
-import { CartItem, WishlistItem } from "@/lib/DbSchema";
+import { CartItem, WishlistItem } from "@/schemas/DbSchema";
 import {
   addProductToCart,
   addProductToWishlist,

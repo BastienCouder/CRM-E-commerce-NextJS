@@ -17,6 +17,8 @@ import {
 } from "./analytics/action";
 import ViewsChart from "@/components/charts/ViewsChart";
 
+import StripeWelcomeEmail from "../../../react-email-starter/emails/stripe-welcome";
+
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "Example dashboard app built using the components.",
@@ -30,6 +32,14 @@ export default async function Dashboard() {
   const analyticsWishlistCartOrderData = await readAnalyticsWishlistCartOrder();
   const analyticsVisitorInfosData = await readAnalyticsVisitorInfos();
   const analyticsVisitedData = await readAnalyticsVisited();
+
+  // const email = await sendEmail({
+  //   from: "Acme <onboarding@acme.com>",
+  //   to: ["bastien.couder@gmail.com"],
+  //   subject: "Stripe",
+  //   content: StripeWelcomeEmail(),
+  //   text: "bonjour",
+  // });
 
   return (
     <>

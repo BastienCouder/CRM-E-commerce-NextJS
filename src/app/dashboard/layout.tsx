@@ -2,10 +2,9 @@ import React, { Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProviders } from "@/context/ThemeContext";
 import { MainNav } from "@/components/dashboard/MainNav";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Loading from "@/app/loading";
-import CurrentPageIndicator from "@/components/dashboard/CurrentPageIndicator";
+import { utils } from "@/data/infosWebsite";
+import { auth } from "@/auth";
 
 export const metadata = {
   title: "Dashboard",
@@ -17,8 +16,8 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
-  if (session?.user.role !== "admin") {
+  const session = await auth();
+  if (session?.user.role !== `${utils.protected}`) {
     throw new Error("error");
   }
 

@@ -8,11 +8,13 @@ interface ShowPasswordProps {
   password: string;
   setPassword: (value: string) => void;
   dict: Dictionary;
+  isPending: boolean;
 }
 
 export default function ShowPassword({
   password,
   setPassword,
+  isPending,
   dict,
 }: ShowPasswordProps) {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,6 +26,7 @@ export default function ShowPassword({
   return (
     <div className="w-full flex flex-col space-y-1 relative">
       <Input
+        disabled={isPending}
         autoComplete="off"
         placeholder={dict.form.password}
         required={false}

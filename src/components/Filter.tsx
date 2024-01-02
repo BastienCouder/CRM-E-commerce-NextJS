@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import PriceRangeFilter from "@/components/PriceRangeFilter";
 import AccordionFilter from "@/components/AccordionFilter";
-import { Category, Color } from "@/lib/DbSchema";
+import { Category, Color } from "@/schemas/DbSchema";
 import { ArrowDown } from "lucide-react";
 
 interface FilterProps {

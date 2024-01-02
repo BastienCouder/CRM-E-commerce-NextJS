@@ -1,5 +1,3 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import FormDeliveryLogin from "./FormDeliveryLogin";
 import Loading from "@/app/loading";
 import { getDelivery } from "@/lib/db/delivery";
@@ -12,10 +10,11 @@ import {
 } from "./actions";
 import { Metadata } from "next";
 import { getDictionary } from "@/app/lang/dictionaries";
-import website from "@/lib/data/infosWebsite";
+import website from "@/data/infosWebsite";
 import { cache } from "react";
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 
 export async function generateMetadata({
   params: { lang },
@@ -41,7 +40,7 @@ const getDeliveryOptions = cache(async () => {
 });
 
 export default async function Delivery({ params: { lang } }: DeliveryProps) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   const delivery = await getDelivery();
   const deliveryOptions = await getDeliveryOptions();
   const dict = await getDictionary(lang);

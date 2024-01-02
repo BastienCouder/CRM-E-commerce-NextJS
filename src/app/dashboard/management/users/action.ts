@@ -1,5 +1,6 @@
 "use server";
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
+import { UserRole, UserRoleEnum } from "@/schemas/DbSchema";
 import {
   format,
   eachMonthOfInterval,
@@ -120,18 +121,16 @@ export async function readAnalyticsUsers(
   };
 }
 
-enum UserRole {
-  admin = "admin",
-  user = "user",
-}
 export async function sendCreateUser(formData: FormData): Promise<void> {
   const name = formData.get("username")?.toString();
   const email = formData.get("email")?.toString();
   let role: UserRole | undefined;
   const formRole = formData.get("role")?.toString();
+  const parsedRole = UserRoleEnum.safeParse(formRole);
 
-  if (formRole && Object.values(UserRole).includes(formRole as UserRole)) {
-    role = formRole as UserRole;
+  if (parsedRole.success) {
+    role = parsedRole.data;
+    console.log(role);
   } else {
     throw new Error(`Rôle invalide fourni: ${formRole}`);
   }

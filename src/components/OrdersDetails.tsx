@@ -1,13 +1,13 @@
 "use client";
 import { OrderProps } from "@/lib/db/order";
-import formatPrice, { formatDate, formatDescription } from "@/helpers/format";
-import { handleStatusChange } from "@/helpers/utils";
+import formatPrice, { formatDate, formatDescription } from "@/lib/format";
+import { handleStatusChange } from "@/lib/utils";
 import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { AiFillCreditCard, AiOutlineUser } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
-import { CartItem, OrderItem } from "@/lib/DbSchema";
+import { CartItem, OrderItem } from "@/schemas/DbSchema";
 
 interface OrdersProps {
   order: OrderProps;

@@ -47,7 +47,7 @@ export default function ViewsChart({
 
   return (
     <>
-      <section className="w-2/5 p-4 h-[25rem] rounded-lg bg-card space-y-4">
+      <section className="border w-2/5 p-4 h-[25rem] rounded-lg bg-card space-y-4">
         <div className="w-full flex justify-between mb-2">
           <div className="flex flex-col justify-between">
             <h2>Total de Visiteurs</h2>

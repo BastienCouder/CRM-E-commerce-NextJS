@@ -3,7 +3,7 @@ import { columns } from "./data/Columns";
 import { z } from "zod";
 import { getProducts } from "@/lib/db/product";
 import { DataTable } from "@/components/tables/DataTable";
-import { ProductSchema } from "@/lib/DbSchema";
+import { ProductSchema } from "@/schemas/DbSchema";
 
 export const metadata: Metadata = {
   title: "Dashboard - Products",

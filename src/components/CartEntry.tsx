@@ -1,5 +1,5 @@
 "use client";
-import formatPrice from "@/helpers/format";
+import formatPrice from "@/lib/format";
 import Image from "next/image";
 import Link from "next/link";
 import QuantitySelector from "./QuantityUpdate";
@@ -7,12 +7,12 @@ import QuantitySelector from "./QuantityUpdate";
 import Loading from "@/app/loading";
 import { X } from "lucide-react";
 import { Dictionary } from "@/app/lang/dictionaries";
-import urls from "@/lib/data/url";
+import urls from "@/data/url";
 import {
   removeCartItem,
   updateCartItemQuantity,
 } from "@/app/(pages)/cart/actions";
-import { CartItem } from "@/lib/DbSchema";
+import { CartItem } from "@/schemas/DbSchema";
 
 interface CartEntryProps {
   cartItem: CartItem;

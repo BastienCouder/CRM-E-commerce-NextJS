@@ -1,8 +1,7 @@
 import { cookies } from "next/dist/client/components/headers";
-import { prisma } from "./prisma";
-import { Session, getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { Wishlist, WishlistItem } from "@/lib/DbSchema";
+import { prisma } from "../prisma";
+import { Wishlist, WishlistItem } from "@/schemas/DbSchema";
+import { auth } from "@/auth";
 
 export type WishlistProps = Wishlist & {
   ///...
@@ -10,7 +9,7 @@ export type WishlistProps = Wishlist & {
 };
 
 export async function getWishlist(): Promise<WishlistProps | null> {
-  const session: Session | null = await getServerSession(authOptions);
+  const session = await auth();
 
   let wishlist: WishlistProps | null = null;
 
@@ -36,12 +35,12 @@ export async function getWishlist(): Promise<WishlistProps | null> {
 
   return {
     ...wishlist,
-    size: wishlist.wishlistItems.reduce((acc: number) => acc + 1, 0),
+    size: wishlist.wishlistItems?.reduce((acc: number) => acc + 1, 0),
   };
 }
 
 export async function createWishlist(): Promise<WishlistProps> {
-  const session: Session | null = await getServerSession(authOptions);
+  const session = await auth();
 
   let newWishlist: Wishlist;
   if (session) {

@@ -15,7 +15,7 @@ import {
 import formatPrice, {
   determineFilterType,
   formatDateBasedOnFilter,
-} from "@/helpers/format";
+} from "@/lib/format";
 import { Separator } from "@/components/ui/separator";
 import {
   AnalyticsOrdersData,
@@ -67,7 +67,7 @@ const CustomTooltip = ({
   );
 };
 
-const axisStyle = { fontSize: "0.8rem", fill: "#f5f5f5" };
+const axisStyle = { fontSize: "0.8rem", fill: "rgb(var(--foreground))" };
 
 export default function SalesChart() {
   const initialRange = "week";
@@ -87,7 +87,7 @@ export default function SalesChart() {
 
   return (
     <>
-      <section className="w-2/3 h-[25rem] p-4 rounded-lg bg-card pb-32">
+      <section className="border w-2/3 h-[25rem] p-4 rounded-lg bg-card pb-32">
         <div className="w-full flex justify-between mb-2">
           <div className="flex flex-col justify-between">
             <h2>Total des revenus</h2>

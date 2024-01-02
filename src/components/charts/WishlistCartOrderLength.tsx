@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Product } from "@/lib/DbSchema";
+import { Product } from "@/schemas/DbSchema";
 
 interface WhislistCartOrderLengthProps {
   analyticsData: readAnalyticsWishlistCartOrderProps;

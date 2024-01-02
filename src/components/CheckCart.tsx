@@ -1,13 +1,13 @@
 "use client";
-import formatPrice from "@/helpers/format";
-import { VAT_RATE } from "@/helpers/utils";
+import formatPrice from "@/lib/format";
+import { VAT_RATE } from "@/lib/utils";
 import { CartItems } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useMemo } from "react";
 import { Dictionary } from "@/app/lang/dictionaries";
-import urls from "@/lib/data/url";
+import urls from "@/data/url";
 
 interface CheckCartProps {
   cart: Cart | null;

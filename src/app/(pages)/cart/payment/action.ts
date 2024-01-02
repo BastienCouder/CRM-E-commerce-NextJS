@@ -1,7 +1,7 @@
 "use server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { OrderProps, createOrder, getOrder } from "@/lib/db/order";
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 
@@ -133,9 +133,9 @@ import "@stripe/stripe-js";
 import { loadStripe } from "@stripe/stripe-js/pure";
 import { createStripeSession } from "@/app/api/create-stripe-session/route";
 import { env } from "@/lib/env";
-import { generateOrderNumber } from "@/helpers/utils";
+import { generateOrderNumber } from "@/lib/utils";
 import DeliveryInfo from "../../../../components/DeliveryInfo";
-import { OrderItem } from "@/lib/DbSchema";
+import { OrderItem } from "@/schemas/DbSchema";
 
 export async function handleStripePayment(carId: string, deliveryId: string) {
   if (carId && deliveryId) {

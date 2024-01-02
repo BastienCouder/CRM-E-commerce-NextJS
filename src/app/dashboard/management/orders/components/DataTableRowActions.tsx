@@ -12,7 +12,7 @@ import { FoldHorizontalIcon } from "lucide-react";
 import Link from "next/link";
 import Status from "@/components/dashboard/Status";
 import SoftDelete from "@/components/dashboard/SoftDelete";
-import { OrderItemSchema } from "@/lib/DbSchema";
+import { OrderItemSchema } from "@/schemas/DbSchema";
 import { softDeleteItem, updateStatusItem } from "../../actions";
 
 interface DataTableRowActionsProps<TData> {

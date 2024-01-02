@@ -1,14 +1,14 @@
 import type { Config } from "tailwindcss";
-const { fontFamily } = require("tailwindcss/defaultTheme");
 
-const config: Config = {
+const config = {
   darkMode: ["class"],
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
-  plugins: [require("tailwindcss-animate")],
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -24,10 +24,9 @@ const config: Config = {
       },
       colors: {
         chart: "rgb(var(--chart))",
-        border: "rgba(var(--border))",
+        border: "rgb(var(--border))",
         input: "rgb(var(--input))",
         ring: "rgb(var(--ring))",
-        body: "rgb(var(--body))",
         background: "rgb(var(--background))",
         foreground: "rgb(var(--foreground))",
         primary: {
@@ -40,10 +39,6 @@ const config: Config = {
         },
         destructive: {
           DEFAULT: "rgb(var(--destructive))",
-          foreground: "rgb(var(--destructive-foreground))",
-        },
-        destructive2: {
-          DEFAULT: "rgb(var(--destructive2))",
           foreground: "rgb(var(--destructive-foreground))",
         },
         muted: {
@@ -63,35 +58,33 @@ const config: Config = {
           foreground: "rgb(var(--card-foreground))",
         },
       },
-    },
-    borderRadius: {
-      lg: "var(--radius)",
-      md: "calc(var(--radius) - 2px)",
-      sm: "calc(var(--radius) - 4px)",
-    },
-    scrollBehavior: {
-      smooth: {
-        scrollBehavior: "smooth",
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
-    },
-    fontFamily: {
-      inter: "var(--font-inter)",
-      bodoni: "var(--font-bodoni)",
-    },
-    keyframes: {
-      "accordion-down": {
-        from: { height: "0" },
-        to: { height: "var(--radix-accordion-content-height)" },
+      scrollBehavior: {
+        smooth: {
+          scrollBehavior: "smooth",
+        },
       },
-      "accordion-up": {
-        from: { height: "var(--radix-accordion-content-height)" },
-        to: { height: "0" },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
       },
-    },
-    animation: {
-      "accordion-down": "accordion-down 0.2s ease-out",
-      "accordion-up": "accordion-up 0.2s ease-out",
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
     },
   },
-};
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config;
+
 export default config;

@@ -1,5 +1,5 @@
 import React from "react";
-import formatPrice from "@/helpers/format";
+import formatPrice from "@/lib/format";
 
 interface PriceRangeFilterProps {
   priceRange: number;

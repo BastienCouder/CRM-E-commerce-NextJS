@@ -3,7 +3,7 @@ import {
   AnalyticsOrdersData,
   readAnalyticsOrdersProps,
 } from "@/app/dashboard/management/orders/actions";
-import { formatDateMonth } from "@/helpers/format";
+import { formatDateMonth } from "@/lib/format";
 import {
   Bar,
   BarChart,

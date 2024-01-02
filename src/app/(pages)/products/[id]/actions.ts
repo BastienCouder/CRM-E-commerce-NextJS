@@ -1,10 +1,10 @@
 "use server";
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { CartProps, createCart, getCart } from "@/lib/db/cart";
 import { WishlistProps, createWishlist, getWishlist } from "@/lib/db/wishlist";
 import { deleteItemFromWishlist } from "@/app/(pages)/wishlist/actions";
-import { CartItem, WishlistItem } from "@/lib/DbSchema";
+import { CartItem, WishlistItem } from "@/schemas/DbSchema";
 
 export async function addProductToCart(productId: string): Promise<void> {
   const cart: CartProps | null = (await getCart()) ?? (await createCart());

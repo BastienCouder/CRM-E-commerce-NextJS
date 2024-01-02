@@ -1,17 +1,17 @@
 "use server";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
-import { prisma } from "@/lib/db/prisma";
-import { User } from "@/lib/DbSchema";
+import { prisma } from "@/lib/prisma";
+import { User } from "@/schemas/DbSchema";
+import { utils } from "../../data/infosWebsite";
+import { auth } from "@/auth";
 
 export type UserProps = User & {
   ///
 };
 
 export async function getUsers(): Promise<UserProps[] | null> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
-  if (session && session.user.role === "admin") {
+  if (session && session.user.role === `${utils.protected}`) {
     try {
       const users = await prisma.user.findMany({
         where: { deleteAt: null || undefined },

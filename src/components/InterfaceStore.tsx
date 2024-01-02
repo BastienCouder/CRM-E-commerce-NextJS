@@ -4,7 +4,7 @@ import Filter from "@/components/Filter";
 import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
-import { Category, Color, Product } from "@/lib/DbSchema";
+import { Category, Color, Product } from "@/schemas/DbSchema";
 import CardProduct from "@/components/CardProduct";
 import StoreListHeader from "@/components/StoreListHeader";
 import { Dictionary } from "@/app/lang/dictionaries";

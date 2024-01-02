@@ -1,6 +1,6 @@
 "use server";
 import { CartProps, createCart, getCart } from "@/lib/db/cart";
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
 import {
   WishlistItemsProps,
   createWishlist,

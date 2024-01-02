@@ -1,9 +1,9 @@
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import ProductInformationsForm from "@/components/dashboard/ProductInformationsForm";
-import { CategoryEnum } from "@/lib/DbSchema";
+import { CategoryEnum } from "@/schemas/DbSchema";
 import { updateProduct } from "./action";
 
 interface ProductPageProps {

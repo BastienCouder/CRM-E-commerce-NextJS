@@ -6,10 +6,10 @@ import { createOrderIncrementation, handleStripePayment } from "./action";
 import AddToOrder from "@/components/AddToOrder";
 import { Metadata } from "next";
 import { getDictionary } from "@/app/lang/dictionaries";
-import website from "@/lib/data/infosWebsite";
+import website from "@/data/infosWebsite";
 import { cache } from "react";
 import { notFound } from "next/navigation";
-import { CartItem, DeliveryOption } from "@/lib/DbSchema";
+import { CartItem, DeliveryItem, DeliveryOption } from "@/schemas/DbSchema";
 import CartItemsDetails from "@/components/CartItemsDetails";
 
 export async function generateMetadata({
@@ -42,7 +42,9 @@ export default async function Payment({ params: { lang } }: PaymentProps) {
   const deliveryOptions = await getDeliveryOptions();
   let deliveryItem = null;
   if (delivery) {
-    deliveryItem = delivery.deliveryItems.find((item) => item.Default);
+    deliveryItem = delivery.deliveryItems.find(
+      (item: DeliveryItem) => item.Default
+    );
   }
 
   return (

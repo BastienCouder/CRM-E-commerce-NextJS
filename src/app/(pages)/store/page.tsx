@@ -1,11 +1,11 @@
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
 import React from "react";
 import Interface from "@/components/InterfaceStore";
 import Loading from "@/app/loading";
-import { CategoryEnum, ColorEnum, ProductSchema } from "@/lib/DbSchema";
+import { CategoryEnum, ColorEnum, ProductSchema } from "@/schemas/DbSchema";
 import { Metadata } from "next";
 import { getDictionary } from "@/app/lang/dictionaries";
-import website from "@/lib/data/infosWebsite";
+import website from "@/data/infosWebsite";
 
 export async function generateMetadata({
   params: { lang },

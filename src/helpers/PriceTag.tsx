@@ -1,4 +1,4 @@
-import formatPrice from "@/helpers/format";
+import formatPrice from "@/lib/format";
 
 interface PriceTagProps {
   price: number;

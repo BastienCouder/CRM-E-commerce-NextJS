@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import { mails } from "./data";
 import { MailInteface } from "./components/mail";
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
 
 export default async function MailPage() {
   const layout = cookies().get("react-resizable-panels:layout");
@@ -29,6 +29,7 @@ export default async function MailPage() {
           className="block dark:hidden"
         />
       </div>
+
       <div className="hidden flex-col md:flex">
         <MailInteface
           accounts={accounts}

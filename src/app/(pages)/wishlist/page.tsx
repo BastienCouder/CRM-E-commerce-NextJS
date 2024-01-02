@@ -3,8 +3,8 @@ import WishlistEntry from "@/components/WishlistEntry";
 import { useServerAddToCart } from "./actions";
 import { getDictionary } from "@/app/lang/dictionaries";
 import { Metadata } from "next";
-import website from "@/lib/data/infosWebsite";
-import { WishlistItem } from "@/lib/DbSchema";
+import website from "@/data/infosWebsite";
+import { WishlistItem } from "@/schemas/DbSchema";
 
 export async function generateMetadata({
   params: { lang },

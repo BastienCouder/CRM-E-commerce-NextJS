@@ -1,9 +1,55 @@
 import { NextRequest, NextResponse, userAgent } from "next/server";
 import { cookies } from "next/headers";
-import { v4 as uuidv4 } from "uuid";
-import UAParser from "ua-parser-js";
-import { recordVisit, recordVisitorInfo } from "@/lib/db/views";
-import { mapBrowserName } from "./helpers/utils";
+// import { v4 as uuidv4 } from "uuid";
+// import UAParser from "ua-parser-js";
+// import { recordVisitorInfo } from "@/lib/db/views";
+// import { mapBrowserName } from "./lib/utils";
+
+import authConfig from "@/auth.config";
+import {
+  DEFAULT_LOGIN_REDIRECT,
+  apiAuthPrefix,
+  authRoutes,
+  publicRoutes,
+} from "@/routes";
+import nextAuth from "next-auth";
+
+const { auth } = nextAuth(authConfig);
+
+export default auth((req: any) => {
+  const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
+
+  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+
+  if (isApiAuthRoute) {
+    return null;
+  }
+
+  if (isAuthRoute) {
+    if (isLoggedIn) {
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+    return null;
+  }
+
+  if (!isLoggedIn && !isPublicRoute) {
+    let callbackUrl = nextUrl.pathname;
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search;
+    }
+
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+
+    return Response.redirect(
+      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+    );
+  }
+
+  return null;
+});
 
 export function middleware(req: NextRequest) {
   // Visitor tracking logic
@@ -32,46 +78,46 @@ export function middleware(req: NextRequest) {
 
   if (cookieConsent) {
     let visitorId = cookieStore.get("visitorId");
-    if (!visitorId) {
-      const visitorId = uuidv4();
-      const userAgent = req.headers.get("user-agent") || "";
-      const ua = new UAParser(userAgent);
-      const rawBrowserName = ua.getBrowser().name || "Unknown";
-      const browserName = mapBrowserName(rawBrowserName);
-      const osName = ua.getOS().name || "Unknown";
-      const deviceType = viewport as "mobile" | "desktop";
-      const city = req.geo?.city!;
-      const country = req.geo?.country!;
-      const region = req.geo?.region!;
-      console.log(country, region, city);
+    // if (!visitorId) {
+    //   const visitorId = uuidv4();
+    //   const userAgent = req.headers.get("user-agent") || "";
+    //   const ua = new UAParser(userAgent);
+    //   const rawBrowserName = ua.getBrowser().name || "Unknown";
+    //   const browserName = mapBrowserName(rawBrowserName);
+    //   const osName = ua.getOS().name || "Unknown";
+    //   const deviceType = viewport as "mobile" | "desktop";
+    //   const city = req.geo?.city!;
+    //   const country = req.geo?.country!;
+    //   const region = req.geo?.region!;
+    //   console.log(country, region, city);
 
-      console.log(
-        `Visitor requested: ${visitorId}, ${browserName},${osName},${deviceType}`
-      );
-      recordVisitorInfo(
-        visitorId,
-        browserName,
-        osName,
-        deviceType,
-        city,
-        country,
-        region
-      );
+    // console.log(
+    //   `Visitor requested: ${visitorId}, ${browserName},${osName},${deviceType}`
+    // );
+    // recordVisitorInfo(
+    //   visitorId,
+    //   browserName,
+    //   osName,
+    //   deviceType,
+    //   city,
+    //   country,
+    //   region
+    // );
 
-      const response = NextResponse.next();
-      response.cookies.set("visitorId", visitorId, {
-        httpOnly: true,
-        sameSite: "strict",
-        path: "/",
-      });
-      return response;
-    }
+    //   const response = NextResponse.next();
+    //   response.cookies.set("visitorId", visitorId, {
+    //     httpOnly: true,
+    //     sameSite: "strict",
+    //     path: "/",
+    //   });
+    //   return response;
+    // }
   }
 
   return NextResponse.next();
 }
 export const config = {
-  matcher: "/((?!_next|svg|api).*)",
+  matcher: ["/((?!api|_next/statict|svg|_next/image|favicon.ico).*)"],
 };
 
 // import { NextRequest, NextResponse } from "next/server";

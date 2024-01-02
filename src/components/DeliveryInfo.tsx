@@ -26,7 +26,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { DeliverySchema, DeliveryValues } from "@/lib/zod";
-import { DeliveryItem } from "@/lib/DbSchema";
+import { DeliveryItem } from "@/schemas/DbSchema";
 
 interface DeliveryInfoProps {
   delivery: DeliveryProps | null;

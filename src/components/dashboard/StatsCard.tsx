@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import formatPrice from "@/helpers/format";
+import formatPrice from "@/lib/format";
 import {
   AreaChart,
   ArrowDownCircle,
@@ -43,13 +43,33 @@ export default function StatsCard({
   function renderIcon(variant: string) {
     switch (variant) {
       case "dollars":
-        return <DollarSign className="bg-background p-1 rounded-lg" />;
+        return (
+          <DollarSign
+            className="bg-background p-1 rounded-lg"
+            color="rgb(var(--chart))"
+          />
+        );
       case "trening":
-        return <TrendingUpIcon className="bg-background p-1 rounded-lg" />;
+        return (
+          <TrendingUpIcon
+            className="bg-background p-1 rounded-lg"
+            color="rgb(var(--chart))"
+          />
+        );
       case "zap":
-        return <Zap className="bg-background p-1 rounded-lg" />;
+        return (
+          <Zap
+            className="bg-background p-1 rounded-lg"
+            color="rgb(var(--chart))"
+          />
+        );
       case "eye":
-        return <Eye className="bg-background p-1 rounded-lg" />;
+        return (
+          <Eye
+            className="bg-background p-1 rounded-lg"
+            color="rgb(var(--chart))"
+          />
+        );
       default:
         return null;
     }
@@ -58,13 +78,13 @@ export default function StatsCard({
   return (
     <>
       <Card className="max-w-[250px] flex flex-col">
-        <CardHeader className="flex flex-row items-center justify-between pb-1">
+        <CardHeader className="pt-2 pb-0 px-4 flex flex-row items-center justify-between pb-1">
           <CardTitle className="flex items-center gap-x-2 text-sm w-[12rem]">
             {title}
           </CardTitle>
           {renderIcon(variant!)}
         </CardHeader>
-        <CardContent className="flex flex-col">
+        <CardContent className="pb-4 pt-0 px-4 flex flex-col">
           <div className="text-xl font-bold">
             {type === "price" ? formatPrice(Number(value), "EUR") : value}
           </div>

@@ -10,12 +10,12 @@ import {
   priorities,
   statuses as productStatuses,
 } from "@/app/dashboard/management/products/data/data";
-import { softDeleteItem } from "@/app/dashboard/management/actions";
 import { ProductProps } from "@/lib/db/product";
 import { OrderProps } from "@/lib/db/orderItem";
 import { UserProps } from "@/lib/db/user";
 import CreateUsers from "../dashboard/CreateUsers";
 import { roles } from "@/app/dashboard/management/users/data/data";
+import { softDeleteItem } from "@/app/dashboard/management/actions";
 
 interface DataTableToolbarProps {
   table: Table<ProductProps | OrderProps | UserProps>;
@@ -96,7 +96,6 @@ export function DataTableToolbar({ table, variant }: DataTableToolbarProps) {
         {variant === "products" && (
           <Button
             variant="outline"
-            size="xl"
             onClick={() => {}}
             className="h-8 px-2 lg:px-3"
           >

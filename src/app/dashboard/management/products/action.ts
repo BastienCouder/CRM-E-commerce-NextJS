@@ -1,5 +1,5 @@
 "use server";
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
 import { env } from "@/lib/env";
 import { subMonths, startOfMonth, endOfMonth } from "date-fns";
 import { revalidatePath } from "next/cache";

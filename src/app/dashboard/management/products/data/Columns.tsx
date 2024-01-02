@@ -6,7 +6,7 @@ import { statuses, priorities } from "./data";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 
-import formatPrice from "@/helpers/format";
+import formatPrice from "@/lib/format";
 import Image from "next/image";
 import { DataTableRowActions } from "../components/DataTableRowActions";
 import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader";
@@ -54,7 +54,7 @@ export const columns: ColumnDef<any>[] = [
       const imageUrl = row.original.imageUrl;
 
       return (
-        <div className="min-w-[120px] flex space-x-2">
+        <div className="min-w-[80px] flex space-x-2">
           <Image
             className="rounded-lg w-[50px] h-[50px] object-contain border-white/50 border-[1px]"
             src={imageUrl}

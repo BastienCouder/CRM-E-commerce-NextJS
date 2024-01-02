@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Category, Color } from "@/lib/DbSchema";
+import { Category, Color } from "@/schemas/DbSchema";
 import { X } from "lucide-react";
 
 interface AccordionFilterProps<T> {

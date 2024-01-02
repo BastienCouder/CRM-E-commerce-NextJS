@@ -41,10 +41,10 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/helpers/utils";
+import { cn } from "@/lib/utils";
 import React from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { UserRoleEnum } from "@/lib/DbSchema";
+import { UserRoleEnum } from "@/schemas/DbSchema";
 import { z } from "zod";
 import { checkIfEmailExists } from "@/helpers/authHelper";
 import { toast } from "sonner";
@@ -62,7 +62,6 @@ export default function CreateUsers() {
         <DialogTrigger asChild>
           <Button
             variant="outline"
-            size="xl"
             onClick={() => {}}
             className="h-8 px-2 lg:px-3"
           >
@@ -89,7 +88,6 @@ export default function CreateUsers() {
       <DrawerTrigger asChild>
         <Button
           variant="outline"
-          size="xl"
           onClick={() => {}}
           className="h-8 px-2 lg:px-3"
         >
@@ -145,14 +143,10 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
         message: "Le nom d'utilisateur doit comporter au moins 3 caractères",
       })
       .max(50),
-    role: z
-      .string({
-        required_error: "Le role est requis",
-        invalid_type_error: "Lerole r doit être une chaîne de caractères",
-      })
-      .min(3, {
-        message: "Le role doit comporter au moins 3 caractères",
-      }),
+    role: z.string({
+      required_error: "Le role est requis",
+      invalid_type_error: "Le role doit être une chaîne de caractères",
+    }),
   });
 
   type UserValues = z.infer<typeof UserSchema>;
@@ -255,7 +249,6 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
         </div>
         <Button
           variant="outline"
-          size="xl"
           onClick={() => {}}
           className="h-8 px-2 lg:px-3"
           type="submit"

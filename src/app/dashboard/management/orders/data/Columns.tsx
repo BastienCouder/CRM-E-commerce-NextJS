@@ -3,7 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { statuses } from "./data";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import formatPrice, { formatDate } from "@/helpers/format";
+import formatPrice, { formatDate } from "@/lib/format";
 import { DataTableRowActions } from "../components/DataTableRowActions";
 import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader";
 
@@ -68,7 +68,7 @@ export const columns: ColumnDef<any>[] = [
 
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium bg-background py-1 px-2 rounded-lg">
+          <span className="max-w-[500px] truncate font-medium">
             {deliveryOption.name}
           </span>
         </div>

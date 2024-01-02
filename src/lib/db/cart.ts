@@ -1,9 +1,7 @@
 import { cookies } from "next/dist/client/components/headers";
-import { prisma } from "@/lib/db/prisma";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { Session } from "next-auth";
-import { Cart, CartItem } from "@/lib/DbSchema";
+import { prisma } from "@/lib/prisma";
+import { Cart, CartItem } from "@/schemas/DbSchema";
+import { auth } from "@/auth";
 
 export type CartProps = Cart & {
   size: number;
@@ -11,10 +9,9 @@ export type CartProps = Cart & {
 };
 
 export async function getCart(): Promise<CartProps | null> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   let cart: CartProps | null = null;
-
   if (session) {
     cart = await prisma.cart.findFirst({
       where: {
@@ -64,7 +61,7 @@ export async function getCart(): Promise<CartProps | null> {
 }
 
 export async function createCart(): Promise<CartProps> {
-  const session: Session | null = await getServerSession(authOptions);
+  const session = await auth();
 
   let newCart: Cart;
   if (session) {

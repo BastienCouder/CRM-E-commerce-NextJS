@@ -16,7 +16,7 @@ import { useAnimationContext } from "@/context/AnimationContext";
 import { BsCaretDownFill } from "react-icons/bs";
 import styles from "@/styles/keyframes.module.css";
 import { Dictionary } from "@/app/lang/dictionaries";
-import { CartItem, WishlistItem } from "@/lib/DbSchema";
+import { CartItem, WishlistItem } from "@/schemas/DbSchema";
 
 interface ProductTabletProps {
   cartItems: CartItem[];

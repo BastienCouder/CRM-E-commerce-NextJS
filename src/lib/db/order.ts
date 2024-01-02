@@ -1,15 +1,13 @@
-import { Session, getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { generateOrderNumber } from "@/helpers/utils";
-import { prisma } from "@/lib/db/prisma";
-import { CartItem, Order, OrderItem } from "../DbSchema";
+import { prisma } from "@/lib/prisma";
+import { CartItem, Order, OrderItem } from "../../schemas/DbSchema";
+import { auth } from "@/auth";
 
 export type OrderProps = Order & {
   //
 };
 
 export async function getOrder(): Promise<OrderProps | null> {
-  const session: Session | null = await getServerSession(authOptions);
+  const session = await auth();
 
   let order: OrderProps | null = null;
 
@@ -78,7 +76,7 @@ export async function getOrder(): Promise<OrderProps | null> {
   return null;
 }
 export async function createOrder(): Promise<OrderProps | null> {
-  const session: Session | null = await getServerSession(authOptions);
+  const session = await auth();
 
   if (session) {
     const newOrder = await prisma.order.create({

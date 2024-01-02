@@ -5,7 +5,7 @@ import ProductMobile from "./ProductMobile";
 import ProductDesktop from "./ProductDesktop";
 import ProductTablet from "./ProductTablet";
 import { Dictionary } from "@/app/lang/dictionaries";
-import { WishlistItem } from "@/lib/DbSchema";
+import { WishlistItem } from "@/schemas/DbSchema";
 
 interface InterfaceProductProps {
   wishlistItems: WishlistItem[] | undefined;

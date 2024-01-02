@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { cn } from "@/helpers/utils";
+import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import {
@@ -45,8 +45,8 @@ const analyticsNavItems = [
 
 const marketingNavItems = [
   {
-    href: "/dashboard/marketing/newsletter",
-    label: "Newsletter",
+    href: "/dashboard/marketing/campaign",
+    label: "Campagne",
     icon: <Paperclip size={15} />,
   },
   {
@@ -103,8 +103,8 @@ export function AreaNav({
               }
             )}
           >
-            <span className="text-secondary">{item.icon}</span>
-            <span className="mb-1">{item.label}</span>
+            <span className="text-primary">{item.icon}</span>
+            <span className="mb-px">{item.label}</span>
           </Link>
         </li>
       ))}

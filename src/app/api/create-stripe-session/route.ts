@@ -1,9 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
-import { LineItem } from "../../../../@types/lineItem";
+import { LineItem } from "../../../@types/lineItem";
 import { env } from "@/lib/env";
 import { stripe } from "@/lib/stripe";
+import { auth } from "@/auth";
 
 const prisma = new PrismaClient();
 
@@ -16,7 +15,7 @@ const prisma = new PrismaClient();
  */
 export async function createStripeSession(cartId: string, deliveryId: string) {
   // Vérifie la session utilisateur
-  const userSession = await getServerSession(authOptions);
+  const userSession = await auth();
 
   if (!userSession) {
     return; // Sort prématurément si aucune session n'est trouvée

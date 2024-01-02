@@ -37,3 +37,6 @@ next-env.d.ts
 .env
 /prisma/index.ts
 .vercel
+.react-email
+.mailing
+/react-email-starter

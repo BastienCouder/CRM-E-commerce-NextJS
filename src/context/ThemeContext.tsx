@@ -13,11 +13,14 @@ export function ThemeProviders({ children }: ThemeProvidersProps) {
       attribute="class"
       themes={[
         "ice",
-        "forest",
-        "violet",
-        "boisée",
-        "fée",
-        "earth",
+        "red-light",
+        "red-dark",
+        "green-light",
+        "green-dark",
+        "blue-light",
+        "blue-dark",
+        "violet-light",
+        "violet-dark",
         "light",
         "dark",
       ]}

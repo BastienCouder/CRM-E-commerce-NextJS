@@ -7,7 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/helpers/utils";
+import { cn } from "@/lib/utils";
+
 import { Mail } from "lucide-react";
 import * as React from "react";
 
@@ -47,7 +48,7 @@ export function AccountSwitcher({
           </span>
         </SelectValue>
       </SelectTrigger>
-      <SelectContent className="bg-card">
+      <SelectContent>
         {accounts.map((account) => (
           <SelectItem key={account.email} value={account.email}>
             <div className="flex items-center gap-3 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0 [&_svg]:text-foreground">

@@ -1,5 +1,5 @@
 "use server";
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
 import { compare } from "bcryptjs";
 
 // Check Register Email

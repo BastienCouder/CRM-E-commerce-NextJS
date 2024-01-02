@@ -1,7 +1,7 @@
 "use client";
 import { Dictionary } from "@/app/lang/dictionaries";
 import { useDeliveryOptionId } from "@/hooks/useDeliveryOptionId";
-import { DeliveryItem, DeliveryOption } from "@/lib/DbSchema";
+import { DeliveryItem, DeliveryOption } from "@/schemas/DbSchema";
 
 interface DeliveryDetailsProps {
   deliveryItem: DeliveryItem;

@@ -52,7 +52,7 @@ export const columns: ColumnDef<any>[] = [
     ),
     cell: ({ row }) => {
       return (
-        <div className="min-w-[120px] flex space-x-2">
+        <div className="min-w-[80px] flex space-x-2">
           <Image
             className="rounded-full w-[35px] h-[35px] object-contain"
             src={row.original.image ? row.original.image : "/images/user.png"}
@@ -109,7 +109,7 @@ export const columns: ColumnDef<any>[] = [
 
       return (
         <div className="flex space-x-2 items-center">
-          <span className="max-w-[500px] lowercase truncate flex font-medium bg-background py-1 px-2 rounded-lg">
+          <span className="max-w-[500px] lowercase truncate flex font-medium">
             {role?.label}
           </span>
         </div>

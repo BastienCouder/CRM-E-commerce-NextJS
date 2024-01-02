@@ -4,11 +4,12 @@ import { BsFillBoxSeamFill } from "react-icons/bs";
 import { AiFillFileText } from "react-icons/ai";
 import { BiLogIn } from "react-icons/bi";
 import { Session } from "next-auth";
-import Logout from "@/components/Logout";
+
 import Orders from "@/components/OrdersDetails";
 import { OrderProps } from "@/lib/db/order";
 import { DeliveryProps } from "@/lib/db/delivery";
 import Info from "./ProfilePage";
+import { LogoutButton } from "./auth/logout-button";
 
 interface InterfaceProfileProps {
   session: Session | null;
@@ -68,7 +69,7 @@ export default function InterfaceProfile({
               <span>
                 <BiLogIn size={24} />
               </span>
-              <Logout />
+              <LogoutButton>Deconexion</LogoutButton>
             </div>
           </div>
         </div>

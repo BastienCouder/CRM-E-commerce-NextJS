@@ -2,7 +2,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import styles from "@/styles/keyframes.module.css";
-import { CartItem, WishlistItem } from "@/lib/DbSchema";
+import { CartItem, WishlistItem } from "@/schemas/DbSchema";
 import { toast } from "sonner";
 
 interface AddToWishlistProps {

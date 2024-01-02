@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import { getOrderItemId } from "@/lib/db/orderItem";
-import { CartItem, OrderItem } from "@/lib/DbSchema";
+import { CartItem, OrderItem } from "@/schemas/DbSchema";
 import CartItemsDetails from "@/components/CartItemsDetails";
 import DeliveryDetails from "@/components/DeliveryDetails";
 import { getDictionary } from "@/app/lang/dictionaries";

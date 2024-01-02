@@ -3,7 +3,7 @@ import { columns } from "./data/Columns";
 
 import { z } from "zod";
 import { getUsers } from "@/lib/db/user";
-import { UserSchema } from "@/lib/DbSchema";
+import { UserSchema } from "@/schemas/DbSchema";
 import { DataTable } from "@/components/tables/DataTable";
 // import { useServerNewPriorityToRecentProducts } from "./action";
 

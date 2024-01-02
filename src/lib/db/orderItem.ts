@@ -1,8 +1,8 @@
 "use server";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
-import { prisma } from "@/lib/db/prisma";
-import { OrderItem } from "@/lib/DbSchema";
+import { prisma } from "@/lib/prisma";
+import { OrderItem } from "@/schemas/DbSchema";
+import { utils } from "../../data/infosWebsite";
+import { auth } from "@/auth";
 
 export type OrderProps = OrderItem & {
   ///
@@ -13,8 +13,9 @@ export async function getOrderItems(
   startDate?: Date,
   endDate?: Date
 ): Promise<OrderProps[] | null> {
-  const session = await getServerSession(authOptions);
-  if (session && session.user.role === "admin") {
+  const session = await auth();
+
+  if (session && session.user.role === `${utils.protected}`) {
     try {
       const orders = await prisma.orderItems.findMany({
         orderBy: {
@@ -71,8 +72,9 @@ export async function getOrderItems(
 export async function getOrderItemId(
   orderItemId: string
 ): Promise<OrderProps | null> {
-  const session = await getServerSession(authOptions);
-  if (session && session.user.role === "admin") {
+  const session = await auth();
+
+  if (session && session.user.role === `${utils.protected}`) {
     try {
       const orderItem = await prisma.orderItems.findUnique({
         where: {

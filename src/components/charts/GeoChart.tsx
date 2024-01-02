@@ -80,7 +80,7 @@ export default function GeoChart() {
 
   return (
     <>
-      <section className="w-3/5 p-4 h-[20rem] rounded-lg bg-card space-y-4">
+      <section className="border w-3/5 p-4 h-[20rem] rounded-lg bg-card space-y-4">
         <div className="w-full flex justify-between mb-2">
           <h2>Visiteurs par {displayMode === "country" ? "pays" : "ville"}</h2>
           <div>

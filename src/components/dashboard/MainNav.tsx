@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { User, Moon, Settings } from "lucide-react";
 import { AreaNav } from "./AreaNav";
+import ColorCircles from "./ColorCircles";
 
 type NavSectionProps = {
   title: string;
@@ -20,9 +21,9 @@ const navSections: NavSectionProps[] = [
 export function MainNav() {
   function NavSection({ title, variant }: NavSectionProps) {
     return (
-      <div className="flex flex-col gap-y-2 items-center">
-        <h2 className="text-sm">{title}</h2>
-        <Separator className="w-5/6 bg-[rgba(var(--foreground),0.5)]" />
+      <div className="flex flex-col gap-y-2">
+        <h2 className="text-xs font-bold cpitalize px-2">{title}</h2>
+        <Separator />
         <AreaNav variant={variant} />
       </div>
     );
@@ -41,6 +42,7 @@ export function MainNav() {
             <Settings size={20} />
           </Link>
         </div> */}
+        <ColorCircles />
       </div>
     </nav>
   );

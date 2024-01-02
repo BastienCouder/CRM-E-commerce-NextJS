@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/db/prisma";
-import { Browser, Device } from "../DbSchema";
+import { prisma } from "@/lib/prisma";
+import { Browser, Device } from "../../schemas/DbSchema";
 
 export async function recordVisit(url: string) {
   const now = new Date();

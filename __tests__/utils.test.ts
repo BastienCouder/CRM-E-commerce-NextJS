@@ -6,8 +6,8 @@ import {
   getStartDateForFilter,
   handleStatusChange,
   validateEmail,
-} from "@/helpers/utils";
-import { Category } from "@/lib/DbSchema";
+} from "@/lib/utils";
+import { Category } from "@/schemas/DbSchema";
 import { subDays, subMonths, subYears } from "date-fns";
 
 describe("Utility Functions", () => {

@@ -1,17 +1,17 @@
 "use server";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
-import { prisma } from "@/lib/db/prisma";
-import { Product } from "@/lib/DbSchema";
+import { prisma } from "@/lib/prisma";
+import { Product } from "@/schemas/DbSchema";
+import { utils } from "../../data/infosWebsite";
+import { auth } from "@/auth";
 
 export type ProductProps = Product & {
   ///
 };
 
 export async function getProducts(): Promise<ProductProps[] | null> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
-  if (session && session.user.role === "admin") {
+  if (session && session.user.role === `${utils.protected}`) {
     try {
       const products = await prisma.product.findMany({
         where: { deleteAt: null || undefined },
@@ -35,9 +35,9 @@ export async function getProducts(): Promise<ProductProps[] | null> {
 
 export async function createProduct(): Promise<ProductProps | null> {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
-    if (session && session.user.role === "admin") {
+    if (session && session.user.role === `${utils.protected}`) {
       const createdProduct = await prisma.product.create({
         data: {
           name: "",

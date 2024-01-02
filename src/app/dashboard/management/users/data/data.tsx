@@ -1,4 +1,12 @@
-import { CheckCheck, User, User2, UserCircleIcon, X } from "lucide-react";
+import {
+  CheckCheck,
+  Contact,
+  PackageSearch,
+  Tag,
+  User,
+  UserCircleIcon,
+  X,
+} from "lucide-react";
 
 export const newsletters = [
   {
@@ -19,12 +27,27 @@ export const newsletters = [
 ];
 export const roles = [
   {
-    value: "admin",
+    value: "ADMIN",
     label: "Administrateur",
     icon: UserCircleIcon,
   },
   {
-    value: "user",
+    value: "PRODUCT_MANAGER",
+    label: "Chef / Cheffe de production",
+    icon: PackageSearch,
+  },
+  {
+    value: "CUSTOMER_SERVICE",
+    label: "Service clientèle",
+    icon: Contact,
+  },
+  {
+    value: "MARKETING_MANAGER",
+    label: "Responsable marketing",
+    icon: Tag,
+  },
+  {
+    value: "USER",
     label: "Utilisateur",
     icon: User,
   },

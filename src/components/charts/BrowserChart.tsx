@@ -35,7 +35,7 @@ export default function BrowserChart({ analyticsData }: BrowserChartProps) {
   const browserData = { ...defaultBrowsers, ...analyticsData.browsers };
   return (
     <>
-      <section className="w-[28rem] p-4 rounded-lg bg-card space-y-4">
+      <section className="border w-[28rem] p-4 rounded-lg bg-card space-y-4">
         <h2>Navigateur</h2>
         <Separator className="bg-[rgba(var(--foreground),0.5)]" />
         <ul className="space-y-4">

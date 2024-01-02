@@ -1,8 +1,8 @@
 "use server";
-import { getWeekNumber } from "@/helpers/format";
-import { CartItem, OrderItem } from "@/lib/DbSchema";
+import { getWeekNumber } from "@/lib/format";
+import { CartItem, OrderItem } from "@/schemas/DbSchema";
 import { getOrderItems } from "@/lib/db/orderItem";
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
 import {
   format,
   eachMonthOfInterval,

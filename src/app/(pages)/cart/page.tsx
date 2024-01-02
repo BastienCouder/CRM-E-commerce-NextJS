@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 import Loading from "@/app/loading";
 import { getDictionary } from "@/app/lang/dictionaries";
 import { Metadata } from "next";
-import urls from "@/lib/data/url";
-import website from "@/lib/data/infosWebsite";
-import { CartItem } from "@/lib/DbSchema";
+import urls from "@/data/url";
+import website from "@/data/infosWebsite";
+import { CartItem } from "@/schemas/DbSchema";
 
 export async function generateMetadata({
   params: { lang },
@@ -57,7 +57,7 @@ export default async function Cart({ params: { lang } }: CartProps) {
               <div className="flex flex-col lg:flex-row gap-y-4 items-center gap-x-16">
                 <p>{dict.cart.empty_cart}</p>
                 <Link href={urls.store}>
-                  <Button aria-label={dict.actions.back_to_store} size="xl">
+                  <Button aria-label={dict.actions.back_to_store}>
                     {dict.cart.continue_shopping}
                   </Button>
                 </Link>

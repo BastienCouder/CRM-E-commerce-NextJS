@@ -1,9 +1,9 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { DeliveryProps, createDelivery, getDelivery } from "@/lib/db/delivery";
-import { validateEmail } from "@/helpers/utils";
-import { prisma } from "@/lib/db/prisma";
-import { DeliveryItem } from "@/lib/DbSchema";
+import { validateEmail } from "@/lib/utils";
+import { prisma } from "@/lib/prisma";
+import { DeliveryItem } from "@/schemas/DbSchema";
 
 export async function processDeliveryForm(formData: FormData): Promise<void> {
   const delivery = (await getDelivery()) ?? (await createDelivery());

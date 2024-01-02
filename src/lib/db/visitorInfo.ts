@@ -1,16 +1,16 @@
 "use server";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
-import { prisma } from "@/lib/db/prisma";
-import { VisitorInfo } from "@/lib/DbSchema";
+import { prisma } from "@/lib/prisma";
+import { VisitorInfo } from "@/schemas/DbSchema";
+import { utils } from "../../data/infosWebsite";
+import { auth } from "@/auth";
 
 export type VisitorInfoProps = VisitorInfo & {
   ///
 };
 export async function getVisitorInfo(): Promise<VisitorInfoProps[] | null> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
-  if (session && session.user.role === "admin") {
+  if (session && session.user.role === `${utils.protected}`) {
     try {
       const visitorInfo = await prisma.visitorInfo.findMany();
 

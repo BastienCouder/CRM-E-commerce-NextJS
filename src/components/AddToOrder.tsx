@@ -2,7 +2,7 @@
 import { Dictionary } from "@/app/lang/dictionaries";
 import { Button } from "@/components/ui/button";
 import { useDeliveryOptionId } from "@/hooks/useDeliveryOptionId";
-import { DeliveryOption } from "@/lib/DbSchema";
+import { DeliveryOption } from "@/schemas/DbSchema";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 

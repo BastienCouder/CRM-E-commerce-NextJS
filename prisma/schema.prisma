@@ -3,77 +3,103 @@ generator client {
 }
 
 datasource db {
-    provider  = "mongodb"
-    url       = env("DIRECT_URL")
-    // url       = env("DATABASE_URL")
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
     directUrl = env("DIRECT_URL")
 }
 
 model Account {
-    id                String  @id @default(auto()) @map("_id") @db.ObjectId
-    userId            String  @db.ObjectId
+    id                String  @id @default(cuid())
+    userId            String
     type              String
     provider          String
-    providerAccountId String  @map("provider_account_id")
-    refresh_token     String? @db.String
-    access_token      String? @db.String
+    providerAccountId String
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? @db.String
+    id_token          String? @db.Text
     session_state     String?
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
-    @@map("accounts")
 }
 
 model Session {
-    id           String   @id @default(auto()) @map("_id") @db.ObjectId
+    id           String   @id @default(cuid())
     sessionToken String   @unique
-    userId       String   @db.ObjectId
+    userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@map("sessions")
 }
 
 model VerificationToken {
-    id         String   @id @default(auto()) @map("_id") @db.ObjectId
-    identifier String
-    token      String   @unique
-    expires    DateTime
+    id      String   @id @default(cuid())
+    email   String
+    token   String   @unique
+    expires DateTime
 
-    @@unique([identifier, token])
-    @@map("verificationtokens")
+    @@unique([email, token])
+}
+
+model PasswordResetToken {
+    id      String   @id @default(cuid())
+    email   String
+    token   String   @unique
+    expires DateTime
+
+    @@unique([email, token])
+}
+
+model TwoFactorToken {
+    id      String   @id @default(cuid())
+    email   String
+    token   String   @unique
+    expires DateTime
+
+    @@unique([email, token])
+}
+
+model TwoFactorConfirmation {
+    id String @id @default(cuid())
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([userId])
 }
 
 enum UserRole {
-    admin
-    user
+    ADMIN
+    USER
+    PRODUCT_MANAGER
+    CUSTOMER_SERVICE
+    MARKETING_MANAGER
 }
 
 model User {
-    id             String     @id @default(auto()) @map("_id") @db.ObjectId
-    name           String?
-    email          String?    @unique
-    emailVerified  DateTime?
-    role           UserRole   @default(user)
-    hashedPassword String?
-    newsletter     Boolean?
-    image          String?
-    createdAt      DateTime   @default(now())
-    updatedAt      DateTime   @updatedAt
-    accounts       Account[]
-    sessions       Session[]
-    Cart           Cart[]
-    Wishlist       Wishlist[]
-    Delivery       Delivery[]
-    Order          Order[]
-    deleteAt       DateTime?
+    id                    String                 @id @default(cuid())
+    name                  String?
+    email                 String?                @unique
+    emailVerified         DateTime?
+    role                  UserRole               @default(USER)
+    password              String?
+    newsletter            Boolean?
+    image                 String?
+    createdAt             DateTime               @default(now())
+    updatedAt             DateTime               @updatedAt
+    accounts              Account[]
+    isTwoFactorEnabled    Boolean                @default(false)
+    twoFactorConfirmation TwoFactorConfirmation?
 
-    @@map("users")
+    Cart     Cart[]
+    Wishlist Wishlist[]
+    Delivery Delivery[]
+    Order    Order[]
+    deleteAt DateTime?
+    Session  Session[]
 }
 
 enum Color {
@@ -88,7 +114,7 @@ enum Category {
 }
 
 model Product {
-    id            String          @id @default(auto()) @map("_id") @db.ObjectId
+    id            String          @id @default(cuid())
     description   String
     imageUrl      String?
     name          String
@@ -103,77 +129,65 @@ model Product {
     WishlistItems WishlistItems[]
     color         Color?
     category      Category?
-
-    @@map("products")
 }
 
 model Cart {
-    id         String       @id @default(auto()) @map("_id") @db.ObjectId
+    id         String       @id @default(cuid())
     user       User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
     createdAt  DateTime     @default(now())
     updatedAt  DateTime     @updatedAt
-    userId     String?      @db.ObjectId
+    userId     String?
     cartItems  CartItems[]
     OrderItems OrderItems[]
     deleteAt   DateTime?
-
-    @@map("carts")
 }
 
 model CartItems {
-    id        String    @id @default(auto()) @map("_id") @db.ObjectId
-    productId String    @db.ObjectId
+    id        String    @id @default(cuid())
+    productId String
     product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
     quantity  Int
-    cartId    String    @db.ObjectId
+    cartId    String
     cart      Cart      @relation(fields: [cartId], references: [id], onDelete: Cascade)
     createdAt DateTime? @default(now())
     updatedAt DateTime? @updatedAt
     deleteAt  DateTime?
-
-    @@map("carts_items")
 }
 
 model Wishlist {
-    id            String          @id @default(auto()) @map("_id") @db.ObjectId
-    userId        String?         @db.ObjectId
+    id            String          @id @default(cuid())
+    userId        String?
     wishlistItems WishlistItems[]
     user          User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
     deleteAt      DateTime?
-
-    @@map("wishlists")
 }
 
 model WishlistItems {
-    id         String    @id @default(auto()) @map("_id") @db.ObjectId
-    productId  String    @db.ObjectId
+    id         String    @id @default(cuid())
+    productId  String
     product    Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
-    wishlistId String    @db.ObjectId
+    wishlistId String
     wishlist   Wishlist  @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
     createdAt  DateTime  @default(now())
     updatedAt  DateTime  @updatedAt
     deleteAt   DateTime?
-
-    @@map("wishlist_items")
 }
 
 model Delivery {
-    id            String          @id @default(auto()) @map("_id") @db.ObjectId
-    userId        String          @db.ObjectId
+    id            String          @id @default(cuid())
+    userId        String
     user          User            @relation(fields: [userId], references: [id])
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
     deleteAt      DateTime?
     deliveryItems DeliveryItems[]
-
-    @@map("deliveries")
 }
 
 model DeliveryItems {
-    id         String       @id @default(auto()) @map("_id") @db.ObjectId
-    deliveryId String       @db.ObjectId
+    id         String       @id @default(cuid())
+    deliveryId String
     delivery   Delivery     @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
     createdAt  DateTime     @default(now())
     updatedAt  DateTime     @updatedAt
@@ -188,12 +202,10 @@ model DeliveryItems {
     country    String
     city       String
     orderItems OrderItems[]
-
-    @@map("deliveries_items")
 }
 
 model DeliveryOption {
-    id          String       @id @default(auto()) @map("_id") @db.ObjectId
+    id          String       @id @default(cuid())
     name        String
     description String
     price       Int
@@ -201,74 +213,62 @@ model DeliveryOption {
     updatedAt   DateTime     @updatedAt
     deleteAt    DateTime?
     OrderItems  OrderItems[]
-
-    @@map("delivery_options")
 }
 
 model Order {
-    id         String       @id @default(auto()) @map("_id") @db.ObjectId
-    userId     String       @db.ObjectId
+    id         String       @id @default(cuid())
+    userId     String
     user       User         @relation(fields: [userId], references: [id])
     createdAt  DateTime     @default(now())
     updatedAt  DateTime     @updatedAt
     orderItems OrderItems[]
     deleteAt   DateTime?
-
-    @@map("orders")
 }
 
 model OrderItems {
-    id               String          @id @default(auto()) @map("_id") @db.ObjectId
+    id               String          @id @default(cuid())
     orderNumber      String
-    orderId          String          @db.ObjectId
+    orderId          String
     order            Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
-    cartId           String          @db.ObjectId
+    cartId           String
     cart             Cart            @relation(fields: [cartId], references: [id], onDelete: Cascade)
     status           String
     createdAt        DateTime        @default(now())
     updatedAt        DateTime        @updatedAt
     deliveryItems    DeliveryItems   @relation(fields: [deliveryItemsId], references: [id])
-    deliveryItemsId  String          @db.ObjectId
-    deliveryOptionId String?         @db.ObjectId
+    deliveryItemsId  String
+    deliveryOptionId String?
     deliveryOption   DeliveryOption? @relation(fields: [deliveryOptionId], references: [id], onDelete: Cascade)
     deleteAt         DateTime?
-
-    @@map("orders_items")
 }
 
 model UserLocation {
-    id        String    @id @default(auto()) @map("_id") @db.ObjectId
+    id        String    @id @default(cuid())
     latitude  Float
     longitude Float
     platform  String
     userAgent String
     createdAt DateTime  @default(now())
     deleteAt  DateTime?
-
-    @@map("user_location")
 }
 
 model DetailedVisit {
-    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    id        String   @id @default(cuid())
     url       String
     timestamp DateTime @default(now())
-
-    @@map("detailed_visit")
 }
 
 model AggregatedVisit {
-    id        String    @id @default(auto()) @map("_id") @db.ObjectId
+    id        String    @id @default(cuid())
     url       String    @unique
     count     Int       @default(0)
     lastCount DateTime  @default(now())
     createdAt DateTime  @default(now())
     deleteAt  DateTime?
-
-    @@map("aggregated_visit")
 }
 
 model VisitorInfo {
-    id         String    @id @default(auto()) @map("_id") @db.ObjectId
+    id         String    @id @default(cuid())
     visitorId  String    @unique
     browser    Browser
     os         String
@@ -278,8 +278,6 @@ model VisitorInfo {
     deviceType Device
     createdAt  DateTime  @default(now())
     deleteAt   DateTime?
-
-    @@map("visitor_info")
 }
 
 enum Device {
@@ -298,7 +296,7 @@ enum Browser {
 }
 
 model Mail {
-    id      String   @id @default(auto()) @map("_id") @db.ObjectId
+    id      String   @id @default(cuid())
     name    String?
     email   String
     subject String
@@ -306,22 +304,16 @@ model Mail {
     date    DateTime
     read    Boolean
     labels  String[]
-
-    @@map("mail")
 }
 
 model AccountMail {
-    id    String @id @default(auto()) @map("_id") @db.ObjectId
+    id    String @id @default(cuid())
     label String
     email String @unique
-
-    @@map("accunt_mail")
 }
 
 model Contact {
-    id    String @id @default(auto()) @map("_id") @db.ObjectId
+    id    String @id @default(cuid())
     name  String
     email String @unique
-
-    @@map("contact")
 }

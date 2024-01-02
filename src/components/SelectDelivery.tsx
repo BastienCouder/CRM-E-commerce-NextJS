@@ -4,7 +4,7 @@ import { MouseEventHandler, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Delivery, DeliveryItem, DeliveryOption } from "@/lib/DbSchema";
+import { Delivery, DeliveryItem, DeliveryOption } from "@/schemas/DbSchema";
 import SelectDeliveryOptions from "@/components/SelectDeliveryOptions";
 import { Dictionary } from "@/app/lang/dictionaries";
 import { setLocalStorage } from "@/helpers/storageHelper";

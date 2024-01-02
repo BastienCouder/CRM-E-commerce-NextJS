@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Newsletter from "@/components/Newsletter";
 import styles from "@/styles/keyframes.module.css";
-import { useServersubscribeToNewsletter } from "@/lib/email/action";
-
+import { sendSubscribeToNewsletter } from "@/lib/email/email";
 export default function Home() {
   const [scrollCount, setScrollCount] = useState(0);
   const router = useRouter();
@@ -100,7 +99,7 @@ export default function Home() {
         >
           Titre du site web
         </motion.h1>
-        <Newsletter SubscribeToNewsletter={useServersubscribeToNewsletter} />
+        {/* <Newsletter SubscribeToNewsletter={sendSubscribeToNewsletter} /> */}
 
         <div
           className="block cursor-pointer"

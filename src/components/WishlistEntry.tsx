@@ -1,12 +1,12 @@
 "use client";
-import formatPrice from "@/helpers/format";
+import formatPrice from "@/lib/format";
 import Image from "next/image";
 import Link from "next/link";
 import Loading from "@/app/loading";
 import { useServerAddToCart } from "@/app/(pages)/wishlist/actions";
 import AddToCartButton from "@/components/AddToCartButton";
 import { Dictionary } from "@/app/lang/dictionaries";
-import { WishlistItem } from "@/lib/DbSchema";
+import { WishlistItem } from "@/schemas/DbSchema";
 
 interface WishlistEntryProps {
   wishlistItem: WishlistItem;

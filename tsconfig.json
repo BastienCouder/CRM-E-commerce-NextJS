@@ -24,6 +24,6 @@
     }
   },
   "types": ["node", "jest"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/[lang]/(pages)/Navbar/NavBar.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/[lang]/(pages)/Navbar/NavBar.tsx", "react-email-starter/emails/order-template.tsx"],
   "exclude": ["node_modules"]
 }

@@ -1,7 +1,7 @@
 "use client";
 import { endOfYear, format, startOfYear } from "date-fns";
 import { DateRange } from "react-day-picker";
-import { cn } from "@/helpers/utils";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -49,7 +49,7 @@ export function DateRangePicker({
               !date && "text-secondary-foreground"
             )}
           >
-            <CalendarIcon className="h-4 w-4" color="rgb(var(--secondary))" />
+            <CalendarIcon className="h-4 w-4" color="rgb(var(--primary))" />
             {date?.from ? (
               date.to ? (
                 <>

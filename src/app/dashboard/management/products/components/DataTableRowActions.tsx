@@ -14,7 +14,7 @@ import Link from "next/link";
 import Duplicate from "@/components/dashboard/Duplicate";
 import Favorites from "@/components/dashboard/Favorites";
 import Status from "@/components/dashboard/Status";
-import { ProductSchema } from "@/lib/DbSchema";
+import { ProductSchema } from "@/schemas/DbSchema";
 import SoftDelete from "@/components/dashboard/SoftDelete";
 import { duplicateProduct, updateProductFavourites } from "../[id]/action";
 import { softDeleteItem, updateStatusItem } from "../../actions";

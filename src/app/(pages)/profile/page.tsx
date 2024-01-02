@@ -1,12 +1,11 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { getOrder } from "@/lib/db/order";
 import Menu from "../../../components/InterfaceProfile";
 import { getDelivery } from "@/lib/db/delivery";
+import { auth } from "@/auth";
 
 export default async function Profile() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   const order = await getOrder();
   const delivery = await getDelivery();
 

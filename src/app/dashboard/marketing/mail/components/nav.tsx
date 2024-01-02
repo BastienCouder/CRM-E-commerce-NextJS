@@ -7,13 +7,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { cn } from "@/helpers/utils";
+import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
 interface NavProps {
   isCollapsed: boolean;
   links: {
-    size?: "default" | "sm" | "lg" | "xl" | "icon" | null | undefined;
     title: string;
     label?: string;
     icon: LucideIcon;
@@ -35,7 +34,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                 <Link
                   href="#"
                   className={cn(
-                    buttonVariants({ variant: link.variant, size: link.size }),
+                    buttonVariants({ variant: link.variant }),
 
                     link.variant === "default" &&
                       "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white px-2 py-1"
@@ -59,7 +58,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
               key={index}
               href="#"
               className={cn(
-                buttonVariants({ variant: link.variant, size: link.size }),
+                buttonVariants({ variant: link.variant }),
                 link.variant === "default" &&
                   "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white px-2 py-1",
                 "justify-start"

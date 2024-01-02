@@ -17,7 +17,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { cn } from "@/helpers/utils";
+import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
@@ -57,7 +57,7 @@ export function MailInteface({
             sizes
           )}`;
         }}
-        className="h-full max-h-[660px] items-stretch"
+        className="h-full max-h-[800px] items-stretch"
       >
         <ResizablePanel
           defaultSize={defaultLayout[0]}
@@ -78,8 +78,8 @@ export function MailInteface({
         >
           <div
             className={cn(
-              "flex h-[60px] items-center justify-center",
-              isCollapsed ? "h-[60px]" : "px-2"
+              "flex h-[52px] items-center justify-center",
+              isCollapsed ? "h-[52px]" : "px-2"
             )}
           >
             <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
@@ -93,7 +93,6 @@ export function MailInteface({
                 label: "128",
                 icon: Mail,
                 variant: "ghost",
-                size: "xl",
               },
               {
                 title: "Drafts",
