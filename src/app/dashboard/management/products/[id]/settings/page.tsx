@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { notFound } from "next/navigation";
 import SettingsForm from "@/components/dashboard/SettingsForm";
-import { updateStatusItem } from "../../../actions";
+import { updateStatusItem } from "../../../action/update-status";
 
 const getProduct = cache(async (id: string) => {
   const product = await prisma.product.findUnique({

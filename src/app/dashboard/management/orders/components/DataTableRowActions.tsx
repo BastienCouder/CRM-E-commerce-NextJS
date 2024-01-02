@@ -13,7 +13,8 @@ import Link from "next/link";
 import Status from "@/components/dashboard/Status";
 import SoftDelete from "@/components/dashboard/SoftDelete";
 import { OrderItemSchema } from "@/schemas/DbSchema";
-import { softDeleteItem, updateStatusItem } from "../../actions";
+import { updateStatusItem } from "@/app/dashboard/management/action/update-status";
+import { softDeleteItem } from "@/app/dashboard/management/action/soft-delete";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;

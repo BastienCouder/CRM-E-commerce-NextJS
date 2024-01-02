@@ -1,5 +1,5 @@
 import { getWishlist } from "@/lib/db/wishlist";
-import WishlistEntry from "@/components/WishlistEntry";
+import WishlistEntry from "@/components/wishlist/wishlist-entry";
 import { useServerAddToCart } from "./actions";
 import { getDictionary } from "@/app/lang/dictionaries";
 import { Metadata } from "next";

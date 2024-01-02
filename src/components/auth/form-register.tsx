@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import ShowPassword from "@/components/ShowPassword";
+import ShowPassword from "@/components/auth/show-password";
 import { Separator } from "@/components/ui/separator";
 import { signIn } from "next-auth/react";
 import { AiFillGoogleSquare } from "react-icons/ai";
@@ -19,7 +19,7 @@ import { Dictionary } from "@/app/lang/dictionaries";
 import { useState, useTransition } from "react";
 import { z } from "zod";
 import { RegisterSchema } from "@/schemas";
-import { register } from "@/actions/register";
+import { register } from "@/app/(auth)/actions/register";
 import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 import Link from "next/link";

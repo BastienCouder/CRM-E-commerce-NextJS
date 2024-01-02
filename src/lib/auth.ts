@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import { Session } from "next-auth";
 
 export const currentUser = async () => {
   const session = await auth();
@@ -13,8 +12,6 @@ export const currentRole = async () => {
   return session?.user?.role;
 };
 
-import { NextResponse } from "next/server";
-
 const roles = {
   protected: [
     "ADMIN",
@@ -24,10 +21,15 @@ const roles = {
   ],
 };
 
-export function roleCheckMiddleware(session: any) {
-  if (session && roles.protected.includes(session.role)) {
-    return NextResponse.next();
+export function roleCheckMiddleware(
+  session: any,
+  specificRoles = roles.protected
+) {
+  if (!session || !session.role) {
+    console.log(session.role);
+
+    return false;
   }
 
-  return new NextResponse(null, { status: 403 });
+  return specificRoles.includes(session.role);
 }

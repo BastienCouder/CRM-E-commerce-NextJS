@@ -5,6 +5,7 @@ import { MainNav } from "@/components/dashboard/MainNav";
 import Loading from "@/app/loading";
 import { utils } from "@/data/infosWebsite";
 import { auth } from "@/auth";
+import { currentRole } from "@/lib/auth";
 
 export const metadata = {
   title: "Dashboard",
@@ -16,9 +17,9 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
-  if (session?.user.role !== `${utils.protected}`) {
-    throw new Error("error");
+  const admin = await currentRole();
+  if (!admin) {
+    throw new Error("unauthorized");
   }
 
   return (

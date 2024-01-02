@@ -1,6 +1,6 @@
 import { getCart } from "@/lib/db/cart";
-import CartEntry from "@/components/CartEntry";
-import CheckCart from "@/components/CheckCart";
+import CartEntry from "@/components/cart/cart-entry";
+import CheckCart from "@/components/cart/check-card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Loading from "@/app/loading";

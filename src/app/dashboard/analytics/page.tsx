@@ -2,13 +2,11 @@ import { Metadata } from "next";
 import AnalyticsNav from "@/components/dashboard/AnalyticsNav";
 import DeviceChart from "@/components/charts/DeviceChart";
 import BrowserChart from "@/components/charts/BrowserChart";
-import {
-  readAnalyticsProducts,
-  readAnalyticsWishlistCartOrder,
-} from "../management/products/action";
-import { readAnalyticsOrders } from "../management/orders/actions";
-import { readAnalyticsUsers } from "../management/users/action";
-import { readAnalyticsVisitorInfos } from "./action";
+import { readAnalyticsProducts } from "./actions/analytics-products";
+import { readAnalyticsOrders } from "./actions/analytics-orders";
+import { readAnalyticsUsers } from "./actions/analytics-users";
+import { readAnalyticsWishlistCartOrder } from "./actions/analytics-interactions-products";
+import { readAnalyticsVisitorInfos } from "./actions/analytics-visitors";
 
 export const metadata: Metadata = {
   title: "Dashboard",

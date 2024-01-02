@@ -19,7 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/auth/form-error";
 import { FormSuccess } from "@/components/auth/form-success";
-import { newPassword } from "@/actions/new-password";
+import { newPassword } from "@/app/(auth)/actions/new-password";
 
 export const NewPasswordForm = () => {
   const searchParams = useSearchParams();

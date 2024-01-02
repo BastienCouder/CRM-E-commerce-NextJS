@@ -1,8 +1,8 @@
 import FormDeliveryLogin from "./FormDeliveryLogin";
 import Loading from "@/app/loading";
 import { getDelivery } from "@/lib/db/delivery";
-import FormDelivery from "@/components/FormDelivery";
-import SelectDelivery from "@/components/SelectDelivery";
+import FormDelivery from "@/components/delivery/form-delivery";
+import SelectDelivery from "@/components/delivery/select-delivery";
 import {
   designateDefaultDeliveryItem,
   processDeliveryForm,

@@ -2,7 +2,7 @@ import {
   checkEmail,
   checkIfEmailExists,
   checkPassword,
-} from "@/helpers/authHelper";
+} from "@/lib/helpers/authHelper";
 import { compare } from "bcryptjs";
 
 jest.mock("bcryptjs", () => ({

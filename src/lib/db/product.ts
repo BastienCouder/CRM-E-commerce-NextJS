@@ -1,18 +1,17 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { Product } from "@/schemas/DbSchema";
-import { auth } from "@/auth";
-import { roleCheckMiddleware } from "../auth";
+import { currentUser, roleCheckMiddleware } from "@/lib/auth";
 
 export type ProductProps = Product & {
   ///
 };
 
 export async function getProducts(): Promise<ProductProps[] | null> {
-  const session = await auth();
-  const response = roleCheckMiddleware(session);
+  const session = await currentUser();
+  const isAuthorized = roleCheckMiddleware(session);
 
-  if (session && response) {
+  if (isAuthorized) {
     try {
       const products = await prisma.product.findMany({
         where: { deleteAt: null || undefined },
@@ -36,10 +35,10 @@ export async function getProducts(): Promise<ProductProps[] | null> {
 
 export async function createProduct(): Promise<ProductProps | null> {
   try {
-    const session = await auth();
-    const response = roleCheckMiddleware(session);
+    const session = await currentUser();
+    const isAuthorized = roleCheckMiddleware(session);
 
-    if (session && response) {
+    if (isAuthorized) {
       const createdProduct = await prisma.product.create({
         data: {
           name: "",

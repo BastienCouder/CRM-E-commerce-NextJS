@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { notFound } from "next/navigation";
 import SettingsForm from "@/components/dashboard/SettingsForm";
-import { updateStatusItem } from "../../../actions";
+import { updateStatusItem } from "@/app/dashboard/management/action/update-status";
 
 const getOrderItem = cache(async (id: string) => {
   const order = await prisma.orderItems.findUnique({

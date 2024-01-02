@@ -44,8 +44,7 @@ export default function Overview({
           />
         </section>
         <section className="flex flex-col gap-y-4">
-          <SalesChart analyticsData={analyticsOrdersData()} />
-
+          <SalesChart />
           {/* <div className="w-[50rem] h-[25rem] p-4 rounded-lg bg-card">
             <OrdersLengthSalesChart analyticsData={analyticsOrdersData} />
           </div>

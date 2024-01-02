@@ -16,8 +16,10 @@ import Favorites from "@/components/dashboard/Favorites";
 import Status from "@/components/dashboard/Status";
 import { ProductSchema } from "@/schemas/DbSchema";
 import SoftDelete from "@/components/dashboard/SoftDelete";
-import { duplicateProduct, updateProductFavourites } from "../[id]/action";
-import { softDeleteItem, updateStatusItem } from "../../actions";
+import { updateStatusItem } from "@/app/dashboard/management/action/update-status";
+import { softDeleteItem } from "@/app/dashboard/management/action/soft-delete";
+import { updateProductFavourites } from "@/app/dashboard/management/action/update-product-favorites";
+import { duplicateProduct } from "@/app/dashboard/management/action/duplicate-product";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;

@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import ShowPassword from "@/components/ShowPassword";
+import ShowPassword from "@/components/auth/show-password";
 import { AiFillGoogleSquare } from "react-icons/ai";
 import { Separator } from "@/components/ui/separator";
 import { Dictionary } from "@/app/lang/dictionaries";
@@ -21,7 +21,7 @@ import urls from "@/data/url";
 import { LoginSchema } from "@/schemas";
 import { z } from "zod";
 import { useState, useTransition } from "react";
-import { login } from "@/actions/login";
+import { login } from "@/app/(auth)/actions/login";
 import { useSearchParams } from "next/navigation";
 import { FormError } from "./form-error";
 import { FormSuccess } from "./form-success";
@@ -82,7 +82,7 @@ export default function LoginForm({ dict }: LoginFormProps) {
       <div className="space-y-4">
         <div className="flex items-center justify-center cursor-pointer">
           <div
-            onClick={() => signIn("google", { callbackUrl: "/" })}
+            onClick={() => signIn("google", { callbackUrl: "/profile" })}
             className="w-full flex items-center justify-center gap-x-2 cursor-pointer px-4 py-2 bg-card hover:bg-muted rounded-lg"
           >
             Google

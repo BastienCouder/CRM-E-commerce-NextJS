@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState, useMemo } from "react";
 import {
   Radar,
@@ -9,10 +10,6 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import {
-  AnalyticsWishlistCartOrder,
-  readAnalyticsWishlistCartOrderProps,
-} from "@/app/dashboard/management/products/action";
 
 import {
   Select,
@@ -22,6 +19,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Product } from "@/schemas/DbSchema";
+import {
+  AnalyticsWishlistCartOrder,
+  readAnalyticsWishlistCartOrderProps,
+} from "@/app/dashboard/analytics/actions/analytics-interactions-products";
 
 interface WhislistCartOrderLengthProps {
   analyticsData: readAnalyticsWishlistCartOrderProps;

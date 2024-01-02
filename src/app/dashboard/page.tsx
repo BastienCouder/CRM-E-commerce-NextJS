@@ -1,23 +1,19 @@
 import { Metadata } from "next";
-import {
-  readAnalyticsProducts,
-  readAnalyticsWishlistCartOrder,
-} from "./management/products/action";
-import { readAnalyticsUsers } from "./management/users/action";
-import { readAnalyticsOrders } from "./management/orders/actions";
 import { getOrderItems } from "@/lib/db/orderItem";
 import StatsCard from "@/components/dashboard/StatsCard";
 import SalesChart from "@/components/charts/SalesChart";
-import Image from "next/image";
 import GeoChart from "@/components/charts/GeoChart";
 import DeviceChart from "@/components/charts/DeviceChart";
+
+import ViewsChart from "@/components/charts/ViewsChart";
+import { readAnalyticsProducts } from "./analytics/actions/analytics-products";
+import { readAnalyticsOrders } from "./analytics/actions/analytics-orders";
+import { readAnalyticsWishlistCartOrder } from "./analytics/actions/analytics-interactions-products";
 import {
   readAnalyticsVisited,
   readAnalyticsVisitorInfos,
-} from "./analytics/action";
-import ViewsChart from "@/components/charts/ViewsChart";
-
-import StripeWelcomeEmail from "../../../react-email-starter/emails/stripe-welcome";
+} from "./analytics/actions/analytics-visitors";
+import { readAnalyticsUsers } from "./analytics/actions/analytics-users";
 
 export const metadata: Metadata = {
   title: "Dashboard",

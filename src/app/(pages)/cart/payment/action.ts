@@ -1,8 +1,7 @@
 "use server";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 import { OrderProps, createOrder, getOrder } from "@/lib/db/order";
 import { prisma } from "@/lib/prisma";
-import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 
 export async function createOrderIncrementation(
@@ -10,13 +9,13 @@ export async function createOrderIncrementation(
   deliveryId: string,
   deliveryOptionId: string
 ): Promise<void> {
-  const session = await getServerSession(authOptions);
+  const session = await currentUser();
 
   if (!session) {
     return;
   }
 
-  const userId = session.user.id;
+  const userId = session.id;
   const order = (await getOrder()) || (await createOrder());
   const OrderInSession = order?.orderItems?.find(
     (item: OrderItem) => item.cartId === cartId
@@ -134,8 +133,9 @@ import { loadStripe } from "@stripe/stripe-js/pure";
 import { createStripeSession } from "@/app/api/create-stripe-session/route";
 import { env } from "@/lib/env";
 import { generateOrderNumber } from "@/lib/utils";
-import DeliveryInfo from "../../../../components/DeliveryInfo";
+import DeliveryInfo from "../../../../components/profile/delivery-info";
 import { OrderItem } from "@/schemas/DbSchema";
+import { currentUser } from "@/lib/auth";
 
 export async function handleStripePayment(carId: string, deliveryId: string) {
   if (carId && deliveryId) {

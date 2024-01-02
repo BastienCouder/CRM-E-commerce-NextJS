@@ -2,10 +2,10 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import styles from "@/styles/Nav.module.css";
-import ShoppingCartButton from "@/components/ShoppingCartMenuButton";
-import UserMenuButton from "@/components/UserMenuButton";
+import ShoppingCartButton from "@/components/nav/shopping-cart-menu-button";
+import UserMenuButton from "@/components/nav/user-menu-button";
 import { useDisableAnimation } from "@/hooks/useDisableAnimation";
-import WishlistButton from "@/components/WishlistMenuButton";
+import WishlistButton from "@/components/nav/wishlist-menu-button";
 import { CartProps } from "@/lib/db/cart";
 import { Dictionary } from "@/app/lang/dictionaries";
 import urls from "@/data/url";

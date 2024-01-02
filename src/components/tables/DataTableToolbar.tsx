@@ -15,7 +15,7 @@ import { OrderProps } from "@/lib/db/orderItem";
 import { UserProps } from "@/lib/db/user";
 import CreateUsers from "../dashboard/CreateUsers";
 import { roles } from "@/app/dashboard/management/users/data/data";
-import { softDeleteItem } from "@/app/dashboard/management/actions";
+import { softDeleteItem } from "@/app/dashboard/management/action/soft-delete";
 
 interface DataTableToolbarProps {
   table: Table<ProductProps | OrderProps | UserProps>;

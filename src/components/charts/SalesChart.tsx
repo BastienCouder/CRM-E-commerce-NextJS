@@ -17,11 +17,7 @@ import formatPrice, {
   formatDateBasedOnFilter,
 } from "@/lib/format";
 import { Separator } from "@/components/ui/separator";
-import {
-  AnalyticsOrdersData,
-  readAnalyticsOrders,
-  readAnalyticsOrdersProps,
-} from "@/app/dashboard/management/orders/actions";
+
 import {
   Select,
   SelectContent,
@@ -32,6 +28,11 @@ import {
 import { useFilteredAnalyticsData } from "@/hooks/useFilteredAnalyticsData";
 import { DateRangePicker } from "../dashboard/DateRangePicker";
 import { MoreHorizontal } from "lucide-react";
+import {
+  AnalyticsOrdersData,
+  readAnalyticsOrders,
+  readAnalyticsOrdersProps,
+} from "@/app/dashboard/analytics/actions/analytics-orders";
 
 interface CustomTooltipProps {
   active?: boolean;

@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/auth/form-error";
 import { FormSuccess } from "@/components/auth/form-success";
-import { reset } from "@/actions/reset";
+import { reset } from "@/app/(auth)/actions/reset";
 
 export const ResetForm = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -58,7 +58,7 @@ export const ResetForm = () => {
                   <Input
                     {...field}
                     disabled={isPending}
-                    placeholder="john.doe@example.com"
+                    placeholder="user@exemple.com"
                     type="email"
                   />
                 </FormControl>

@@ -5,7 +5,7 @@ import { cache } from "react";
 import { getWishlist } from "@/lib/db/wishlist";
 import { getDictionary } from "@/app/lang/dictionaries";
 import { getCart } from "@/lib/db/cart";
-import InterfaceProduct from "@/components/InterfaceProduct";
+import InterfaceProduct from "@/components/product/interface-product";
 
 interface ProductProps {
   params: {

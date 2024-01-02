@@ -10,9 +10,9 @@ export type VisitorInfoProps = VisitorInfo & {
 };
 export async function getVisitorInfo(): Promise<VisitorInfoProps[] | null> {
   const session = await auth();
-  const response = roleCheckMiddleware(session);
+  const isAuthorized = roleCheckMiddleware(session);
 
-  if (session && response) {
+  if (isAuthorized) {
     try {
       const visitorInfo = await prisma.visitorInfo.findMany();
 

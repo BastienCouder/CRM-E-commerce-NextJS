@@ -1,9 +1,10 @@
 "use client";
+
 import {
   AnalyticsOrdersData,
   readAnalyticsOrdersProps,
-} from "@/app/dashboard/management/orders/actions";
-import { formatDateMonth } from "@/lib/format";
+} from "@/app/dashboard/analytics/actions/analytics-orders";
+import { formatDate } from "@/lib/format";
 import {
   Bar,
   BarChart,
@@ -33,7 +34,7 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
 
     return (
       <div className="p-3 text-background text-sm bg-foreground rounded-lg">
-        <p className="font-bold">{formatDateMonth(date, "long")}</p>
+        <p className="font-bold">{date}</p>
         <p>
           {totalNocanceledOrders
             ? `Total : ${totalNocanceledOrders}`
@@ -59,7 +60,7 @@ export default function OrdersLengthChart({
           <BarChart data={data}>
             <XAxis
               dataKey="date"
-              tickFormatter={(value) => formatDateMonth(value, "short")}
+              tickFormatter={(value) => formatDate(value)}
               style={axisStyle}
               tickLine={false}
               axisLine={{ stroke: "rgb(var(--foreground))" }}

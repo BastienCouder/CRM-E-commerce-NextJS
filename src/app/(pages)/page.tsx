@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Newsletter from "@/components/Newsletter";
 import styles from "@/styles/keyframes.module.css";
-import { sendSubscribeToNewsletter } from "@/lib/email/auth";
+
 export default function Home() {
   const [scrollCount, setScrollCount] = useState(0);
   const router = useRouter();

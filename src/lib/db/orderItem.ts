@@ -15,9 +15,9 @@ export async function getOrderItems(
   endDate?: Date
 ): Promise<OrderProps[] | null> {
   const session = await currentUser();
-  const response = roleCheckMiddleware(session);
+  const isAuthorized = roleCheckMiddleware(session);
 
-  if (response) {
+  if (isAuthorized) {
     try {
       const orders = await prisma.orderItems.findMany({
         orderBy: {
@@ -75,7 +75,9 @@ export async function getOrderItemId(
   orderItemId: string
 ): Promise<OrderProps | null> {
   const session = await currentUser();
-  if (session && session.role === `${utils.protected}`) {
+  const isAuthorized = roleCheckMiddleware(session);
+
+  if (isAuthorized) {
     try {
       const orderItem = await prisma.orderItems.findUnique({
         where: {

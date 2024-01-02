@@ -1,5 +1,5 @@
 "use client";
-import { getLocalStorage, setLocalStorage } from "@/helpers/storageHelper";
+import { getLocalStorage, setLocalStorage } from "@/lib/helpers/storageHelper";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 

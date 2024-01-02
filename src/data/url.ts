@@ -7,7 +7,7 @@ const urls = {
   delivery: `/cart/delivery`,
   payment: `/cart/delivery/payment`,
   about: `/about`,
-  forgot_password: `/new-password `,
+  forgot_password: `/reset`,
   register: `/register`,
   login: `/login`,
   legal: `/policy/legalInformation`,

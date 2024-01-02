@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import React from "react";
-import Interface from "@/components/InterfaceStore";
+import Interface from "@/components/shop/interface-store";
 import Loading from "@/app/loading";
 import { CategoryEnum, ColorEnum, ProductSchema } from "@/schemas/DbSchema";
 import { Metadata } from "next";

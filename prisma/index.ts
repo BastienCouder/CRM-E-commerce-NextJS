@@ -16,9 +16,10 @@ async function main() {
   //       id: userId,
   //     },
   //     data: {
-  //       role: "ADMIN",
+  //       role: "MARKETING_MANAGER",
   //     },
   //   });
+  // }
   //   console.log(`L'utilisateur  est maintenant administrateur.`);
   // } else {
   //   console.log("Utilisateur non trouvé.");

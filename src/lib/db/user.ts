@@ -10,9 +10,9 @@ export type UserProps = User & {
 
 export async function getUsers(): Promise<UserProps[] | null> {
   const session = await auth();
-  const response = roleCheckMiddleware(session);
+  const isAuthorized = roleCheckMiddleware(session);
 
-  if (session && response) {
+  if (isAuthorized) {
     try {
       const users = await prisma.user.findMany({
         where: { deleteAt: null || undefined },

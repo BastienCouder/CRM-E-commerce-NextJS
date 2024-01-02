@@ -22,9 +22,9 @@ import { Session } from "next-auth";
 import { useCallback } from "react";
 import { signIn } from "next-auth/react";
 
-import ShowPassword from "@/components/ShowPassword";
+import ShowPassword from "@/components/auth/show-password";
 import { AiFillGoogleSquare } from "react-icons/ai";
-import { checkPassword } from "@/helpers/authHelper";
+import { checkPassword } from "@/lib/helpers/authHelper";
 import { Dictionary } from "@/app/lang/dictionaries";
 
 interface FormDeliveryLoginProps {

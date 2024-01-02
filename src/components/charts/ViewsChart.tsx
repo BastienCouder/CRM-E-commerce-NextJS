@@ -1,4 +1,5 @@
 "use client";
+
 import { useMemo } from "react";
 import {
   Radar,
@@ -9,8 +10,9 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import { AnalyticsVisitedData } from "@/app/dashboard/analytics/action";
+
 import { Separator } from "../ui/separator";
+import { AnalyticsVisitedData } from "@/app/dashboard/analytics/actions/analytics-visitors";
 
 interface ViewsChartProps {
   analyticsData: any;

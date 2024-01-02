@@ -39,18 +39,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { UserRoleEnum } from "@/schemas/DbSchema";
 import { z } from "zod";
-import { checkIfEmailExists } from "@/helpers/authHelper";
+import { checkIfEmailExists } from "@/lib/helpers/authHelper";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { sendCreateUser } from "@/app/dashboard/management/users/action";
+import { sendCreateUser } from "@/app/dashboard/management/action/create-user";
 
 export default function CreateUsers() {
   const [open, setOpen] = React.useState(false);

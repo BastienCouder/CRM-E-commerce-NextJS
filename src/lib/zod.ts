@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { checkEmail, checkIfEmailExists } from "@/helpers/authHelper";
+import { checkEmail, checkIfEmailExists } from "@/lib/helpers/authHelper";
 
 //Register
 export const RegisterSchema = z.object({
