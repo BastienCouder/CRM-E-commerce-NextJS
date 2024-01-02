@@ -16,7 +16,7 @@ import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation
 import {
   sendTwoFactorTokenEmail,
   sendVerificationEmail,
-} from "@/lib/email/email";
+} from "@/lib/email/auth";
 import { prisma } from "@/lib/prisma";
 
 export const login = async (

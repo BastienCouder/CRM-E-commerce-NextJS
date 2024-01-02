@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { OrderItem } from "@/schemas/DbSchema";
 import { utils } from "../../data/infosWebsite";
 import { auth } from "@/auth";
+import { currentUser, roleCheckMiddleware } from "../auth";
 
 export type OrderProps = OrderItem & {
   ///
@@ -13,9 +14,10 @@ export async function getOrderItems(
   startDate?: Date,
   endDate?: Date
 ): Promise<OrderProps[] | null> {
-  const session = await auth();
+  const session = await currentUser();
+  const response = roleCheckMiddleware(session);
 
-  if (session && session.user.role === `${utils.protected}`) {
+  if (response) {
     try {
       const orders = await prisma.orderItems.findMany({
         orderBy: {
@@ -72,9 +74,8 @@ export async function getOrderItems(
 export async function getOrderItemId(
   orderItemId: string
 ): Promise<OrderProps | null> {
-  const session = await auth();
-
-  if (session && session.user.role === `${utils.protected}`) {
+  const session = await currentUser();
+  if (session && session.role === `${utils.protected}`) {
     try {
       const orderItem = await prisma.orderItems.findUnique({
         where: {

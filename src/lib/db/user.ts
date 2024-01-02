@@ -1,8 +1,8 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { User } from "@/schemas/DbSchema";
-import { utils } from "../../data/infosWebsite";
 import { auth } from "@/auth";
+import { roleCheckMiddleware } from "../auth";
 
 export type UserProps = User & {
   ///
@@ -10,8 +10,9 @@ export type UserProps = User & {
 
 export async function getUsers(): Promise<UserProps[] | null> {
   const session = await auth();
+  const response = roleCheckMiddleware(session);
 
-  if (session && session.user.role === `${utils.protected}`) {
+  if (session && response) {
     try {
       const users = await prisma.user.findMany({
         where: { deleteAt: null || undefined },

@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { newVerification } from "@/actions/new-verification";
 import { FormError } from "@/components/auth/form-error";
 import { FormSuccess } from "@/components/auth/form-success";
-import { X } from "lucide-react";
+import Loading from "@/app/loading";
 
 export const NewVerificationForm = () => {
   const [error, setError] = useState<string | undefined>();
@@ -40,7 +40,7 @@ export const NewVerificationForm = () => {
 
   return (
     <div className="flex items-center w-full justify-center">
-      {!success && !error && <X />}
+      {!success && !error && <Loading />}
       <FormSuccess message={success} />
       {!success && <FormError message={error} />}
     </div>

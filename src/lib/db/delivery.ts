@@ -1,20 +1,21 @@
 import { prisma } from "../prisma";
 import { Delivery } from "@/schemas/DbSchema";
 import { auth } from "@/auth";
+import { currentUser } from "@/lib/auth";
 
 export type DeliveryProps = Delivery & {
   ///...
 };
 
 export async function getDelivery(): Promise<DeliveryProps | null> {
-  const session = await auth();
+  const session = await currentUser();
 
   let delivery: DeliveryProps | null = null;
 
   if (session) {
     delivery = await prisma.delivery.findFirst({
       where: {
-        userId: session.user.id,
+        userId: session.id,
       },
       include: {
         deliveryItems: {
@@ -35,14 +36,14 @@ export async function getDelivery(): Promise<DeliveryProps | null> {
 }
 
 export async function createDelivery(): Promise<DeliveryProps> {
-  const session = await auth();
+  const session = await currentUser();
 
   if (!session) {
     throw new Error("Aucune session n'est disponible.");
   }
 
   const newDelivery = await prisma.delivery.create({
-    data: { userId: session.user.id },
+    data: { userId: session.id },
   });
 
   return {

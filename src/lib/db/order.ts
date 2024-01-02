@@ -1,20 +1,21 @@
 import { prisma } from "@/lib/prisma";
 import { CartItem, Order, OrderItem } from "../../schemas/DbSchema";
 import { auth } from "@/auth";
+import { currentUser } from "@/lib/auth";
 
 export type OrderProps = Order & {
   //
 };
 
 export async function getOrder(): Promise<OrderProps | null> {
-  const session = await auth();
+  const session = await currentUser();
 
   let order: OrderProps | null = null;
 
   if (session) {
     order = await prisma.order.findFirst({
       where: {
-        userId: session.user.id,
+        userId: session.id,
       },
       include: {
         orderItems: {
@@ -76,12 +77,12 @@ export async function getOrder(): Promise<OrderProps | null> {
   return null;
 }
 export async function createOrder(): Promise<OrderProps | null> {
-  const session = await auth();
+  const session = await currentUser();
 
   if (session) {
     const newOrder = await prisma.order.create({
       data: {
-        userId: session.user.id,
+        userId: session.id,
       },
       include: {
         orderItems: {

@@ -8,7 +8,7 @@ import { SettingsSchema } from "@/schemas/index";
 import { getUserByEmail, getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/email/email";
+import { sendVerificationEmail } from "@/lib/email/auth";
 import { prisma } from "@/lib/prisma";
 
 export const settings = async (values: z.infer<typeof SettingsSchema>) => {

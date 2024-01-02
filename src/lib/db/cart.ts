@@ -2,6 +2,7 @@ import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "@/lib/prisma";
 import { Cart, CartItem } from "@/schemas/DbSchema";
 import { auth } from "@/auth";
+import { currentUser } from "@/lib/auth";
 
 export type CartProps = Cart & {
   size: number;
@@ -9,13 +10,13 @@ export type CartProps = Cart & {
 };
 
 export async function getCart(): Promise<CartProps | null> {
-  const session = await auth();
+  const session = await currentUser();
 
   let cart: CartProps | null = null;
   if (session) {
     cart = await prisma.cart.findFirst({
       where: {
-        userId: session.user.id,
+        userId: session.id,
         deleteAt: null,
       },
       include: {
@@ -61,12 +62,12 @@ export async function getCart(): Promise<CartProps | null> {
 }
 
 export async function createCart(): Promise<CartProps> {
-  const session = await auth();
+  const session = await currentUser();
 
   let newCart: Cart;
   if (session) {
     newCart = await prisma.cart.create({
-      data: { userId: session.user.id, deleteAt: null },
+      data: { userId: session.id, deleteAt: null },
     });
   } else {
     newCart = await prisma.cart.create({

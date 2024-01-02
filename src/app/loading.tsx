@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function Loading() {
   return (
-    <div className="h-screen w-full flex justify-center items-center bg-primary text-white">
+    <div className="h-screen w-full flex justify-center items-center bg-bacground text-white">
       <Image
         src={"/svg/logo.svg"}
         alt="logo"
