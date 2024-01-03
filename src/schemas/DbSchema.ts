@@ -7,6 +7,7 @@ export const UserRoleEnum = z.enum([
   "CUSTOMER_SERVICE",
   "MARKETING_MANAGER",
 ]);
+
 export const ColorEnum = z.enum(["or", "argent", "rose"]);
 export const CategoryEnum = z.enum(["bracelet_cuir", "bracelet_acier"]);
 export const DeviceEnum = z.enum(["desktop", "mobile"]);

@@ -1,7 +1,8 @@
+"use server";
 import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "../prisma";
 import { Wishlist, WishlistItem } from "@/schemas/DbSchema";
-import { auth } from "@/auth";
+import { currentUser } from "@/lib/auth";
 
 export type WishlistProps = Wishlist & {
   ///...
@@ -9,14 +10,14 @@ export type WishlistProps = Wishlist & {
 };
 
 export async function getWishlist(): Promise<WishlistProps | null> {
-  const session = await auth();
+  const session = await currentUser();
 
   let wishlist: WishlistProps | null = null;
 
   if (session) {
     wishlist = await prisma.wishlist.findFirst({
       where: {
-        userId: session.user.id,
+        userId: session.id,
       },
     });
   } else {
@@ -40,12 +41,12 @@ export async function getWishlist(): Promise<WishlistProps | null> {
 }
 
 export async function createWishlist(): Promise<WishlistProps> {
-  const session = await auth();
+  const session = await currentUser();
 
   let newWishlist: Wishlist;
   if (session) {
     newWishlist = await prisma.wishlist.create({
-      data: { userId: session.user.id },
+      data: { userId: session.id },
     });
   } else {
     newWishlist = await prisma.wishlist.create({

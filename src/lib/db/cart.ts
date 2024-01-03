@@ -1,7 +1,8 @@
+"use server";
+
 import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "@/lib/prisma";
 import { Cart, CartItem } from "@/schemas/DbSchema";
-import { auth } from "@/auth";
 import { currentUser } from "@/lib/auth";
 
 export type CartProps = Cart & {

@@ -8,29 +8,22 @@ import { CartItem, WishlistItem } from "@/schemas/DbSchema";
 
 export async function addProductToCart(productId: string): Promise<void> {
   const cart: CartProps | null = (await getCart()) ?? (await createCart());
-  const wishlist: WishlistProps | null =
-    (await getWishlist()) ?? (await createWishlist());
 
   const productInCart: CartItem | undefined = cart.cartItems.find(
     (item: CartItem) => item.productId === productId
   );
-  const productInWishlist: WishlistItem | undefined =
-    wishlist.wishlistItems.find(
-      (item: WishlistItem) => item.productId === productId
-    );
 
   if (productInCart) {
     await updateCartItemQuantity(productId, productInCart);
   } else {
-    await createNewCartItem(cart, productId, productInWishlist);
+    await createNewCartItem(cart, productId);
     revalidatePath(`/products/${productId}`);
   }
 }
 
 async function createNewCartItem(
   cart: CartProps,
-  productId: string,
-  productInWishlist: WishlistItem | undefined
+  productId: string
 ): Promise<void> {
   const newCartItem = {
     cartId: cart.id,
@@ -39,10 +32,6 @@ async function createNewCartItem(
     deleteAt: null,
   };
   await prisma.cartItems.create({ data: newCartItem });
-
-  if (productInWishlist) {
-    await deleteItemFromWishlist(productInWishlist);
-  }
 
   revalidatePath(`/products/${productId}`);
   revalidatePath("/wishlist");
@@ -64,13 +53,12 @@ export async function addProductToWishlist(productId: string): Promise<void> {
   const wishlist: WishlistProps | null =
     (await getWishlist()) ?? (await createWishlist());
 
-  const productInCart: CartItem | undefined = cart.cartItems.find(
+  const productInCart: CartItem = cart.cartItems.find(
     (item: CartItem) => item.productId === productId
   );
-  const productInWishlist: WishlistItem | undefined =
-    wishlist.wishlistItems.find(
-      (item: WishlistItem) => item.productId === productId
-    );
+  const productInWishlist: WishlistItem = wishlist.wishlistItems.find(
+    (item: WishlistItem) => item.productId === productId
+  );
 
   if (!productInCart) {
     if (productInWishlist) {

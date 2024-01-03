@@ -56,46 +56,46 @@ async function main() {
   //     email: "couderbastien@gmail.com",
   //   },
   // });
-  await prisma.product.create({
-    data: {
-      name: "Produit 1",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
-      price: 9000,
-      imageUrl: "/images/montre1.png",
-      category: "bracelet_acier",
-      color: "or",
-      status: "unavailable",
-      stock: 20,
-    },
-  });
+  // await prisma.product.create({
+  //   data: {
+  //     name: "Produit 1",
+  //     description:
+  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+  //     price: 9000,
+  //     imageUrl: "/images/montre1.png",
+  //     category: "bracelet_acier",
+  //     color: "or",
+  //     status: "unavailable",
+  //     stock: 20,
+  //   },
+  // });
 }
 //   });
-//   const deliveryOptions = [
-//     {
-//       name: "Livraison Standard",
-//       description: "Livraison en 3-5 jours ouvrables",
-//       price: 299,
-//     },
-//     {
-//       name: "Livraison Express",
-//       description: "Livraison en 1-2 jours ouvrables",
-//       price: 799,
-//     },
-//   ];
-//   async function seedDeliveryOptions() {
-//     for (const option of deliveryOptions) {
-//       await prisma.deliveryOption.create({
-//         data: {
-//           name: option.name,
-//           description: option.description,
-//           price: option.price,
-//         },
-//       });
-//     }
-//   }
-//   seedDeliveryOptions();
-// }
+const deliveryOptions = [
+  {
+    name: "Livraison Standard",
+    description: "Livraison en 3-5 jours ouvrables",
+    price: 299,
+  },
+  {
+    name: "Livraison Express",
+    description: "Livraison en 1-2 jours ouvrables",
+    price: 799,
+  },
+];
+async function seedDeliveryOptions() {
+  for (const option of deliveryOptions) {
+    await prisma.deliveryOption.create({
+      data: {
+        name: option.name,
+        description: option.description,
+        price: option.price,
+      },
+    });
+  }
+}
+seedDeliveryOptions();
+
 main()
   .catch(async (e) => {
     console.error(e);

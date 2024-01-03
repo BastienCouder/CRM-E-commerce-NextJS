@@ -21,7 +21,7 @@ export async function getOrderItems(
     try {
       const orders = await prisma.orderItems.findMany({
         orderBy: {
-          id: "desc",
+          createdAt: "desc",
         },
         where: {
           createdAt: {

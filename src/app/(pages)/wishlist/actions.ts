@@ -1,25 +1,22 @@
 "use server";
 import { CartProps, createCart, getCart } from "@/lib/db/cart";
+import { createWishlist, getWishlist } from "@/lib/db/wishlist";
 import { prisma } from "@/lib/prisma";
-import {
-  WishlistItemsProps,
-  createWishlist,
-  getWishlist,
-} from "@/lib/db/wishlist";
+import { WishlistItem } from "@/schemas/DbSchema";
+
 import { revalidatePath } from "next/cache";
 
-export async function useServerAddToCart(productId: string) {
+export async function AddToCart(productId: string) {
   //DB REST
   const wishlist = (await getWishlist()) ?? (await createWishlist());
   const cart = (await getCart()) ?? (await createCart());
 
   //Find Method
   const articleInWishlistInCart = wishlist.wishlistItems.find(
-    (item) => item.productId === productId
+    (item: WishlistItem) => item.productId === productId
   );
 
   //Global Function
-
   await handleAddToCart(cart, productId, articleInWishlistInCart);
 }
 
@@ -27,7 +24,7 @@ export async function useServerAddToCart(productId: string) {
 async function handleAddToCart(
   cart: CartProps,
   productId: string,
-  articleInWishlistInCart: WishlistItemsProps | undefined
+  articleInWishlistInCart: WishlistItem | undefined
 ) {
   const cartItemData = {
     cartId: cart.id,
@@ -47,7 +44,7 @@ async function handleAddToCart(
 }
 
 //Delete Item From Whishlist
-export async function deleteItemFromWishlist(item: WishlistItemsProps) {
+export async function deleteItemFromWishlist(item: WishlistItem) {
   await prisma.wishlistItems.update({
     where: {
       id: item.id,

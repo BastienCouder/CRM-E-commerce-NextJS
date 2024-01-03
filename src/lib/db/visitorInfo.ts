@@ -1,15 +1,13 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { VisitorInfo } from "@/schemas/DbSchema";
-import { utils } from "../../data/infosWebsite";
-import { auth } from "@/auth";
-import { roleCheckMiddleware } from "../auth";
+import { currentUser, roleCheckMiddleware } from "../auth";
 
 export type VisitorInfoProps = VisitorInfo & {
   ///
 };
 export async function getVisitorInfo(): Promise<VisitorInfoProps[] | null> {
-  const session = await auth();
+  const session = await currentUser();
   const isAuthorized = roleCheckMiddleware(session);
 
   if (isAuthorized) {

@@ -1,3 +1,4 @@
+"use server";
 import { prisma } from "../prisma";
 import { Delivery } from "@/schemas/DbSchema";
 import { auth } from "@/auth";

@@ -1,3 +1,5 @@
+"use server";
+
 import { prisma } from "@/lib/prisma";
 import { Browser, Device } from "../../schemas/DbSchema";
 

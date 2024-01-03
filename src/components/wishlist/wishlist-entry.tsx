@@ -3,7 +3,7 @@ import formatPrice from "@/lib/format";
 import Image from "next/image";
 import Link from "next/link";
 import Loading from "@/app/loading";
-import { useServerAddToCart } from "@/app/(pages)/wishlist/actions";
+import { AddToCart } from "@/app/(pages)/wishlist/actions";
 import AddToCartButton from "@/components/actions/add-to-cart-button";
 import { Dictionary } from "@/app/lang/dictionaries";
 import { WishlistItem } from "@/schemas/DbSchema";
@@ -56,7 +56,7 @@ export default function WishlistEntry({
       <div className="w-[80rem] lg:h-[85px] flex justify-center pt-[1.2rem] items-center">
         <AddToCartButton
           productId={product.id}
-          addToCart={useServerAddToCart}
+          addToCart={AddToCart}
           dict={dict}
         />
       </div>

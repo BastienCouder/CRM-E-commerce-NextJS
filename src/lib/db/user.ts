@@ -1,15 +1,14 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { User } from "@/schemas/DbSchema";
-import { auth } from "@/auth";
-import { roleCheckMiddleware } from "../auth";
+import { currentUser, roleCheckMiddleware } from "../auth";
 
 export type UserProps = User & {
   ///
 };
 
 export async function getUsers(): Promise<UserProps[] | null> {
-  const session = await auth();
+  const session = await currentUser();
   const isAuthorized = roleCheckMiddleware(session);
 
   if (isAuthorized) {
@@ -17,7 +16,7 @@ export async function getUsers(): Promise<UserProps[] | null> {
       const users = await prisma.user.findMany({
         where: { deleteAt: null || undefined },
         orderBy: {
-          id: "desc",
+          createdAt: "desc",
         },
       });
 

@@ -1,3 +1,4 @@
+"use server";
 import { prisma } from "@/lib/prisma";
 import { CartItem, Order, OrderItem } from "../../schemas/DbSchema";
 import { auth } from "@/auth";
