@@ -1,3 +1,4 @@
+import { CartItem } from "@/schemas/DbSchema";
 import { env } from "../env";
 import { Resend } from "resend";
 
@@ -36,7 +37,9 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   });
 };
 
-export const sendEmail = async (email: string) => {
+export const sendEmail = async (email: string, cartItems: CartItem[]) => {
+  console.log(cartItems);
+
   await resend.emails.send({
     from: "Acme <onboarding@resend.dev>",
     to: "bastien.couder@gmail.com",

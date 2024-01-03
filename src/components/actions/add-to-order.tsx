@@ -9,8 +9,7 @@ import { useTransition } from "react";
 interface AddToOrderProps {
   cartId: string;
   deliveryId: string;
-  handleStripePayment: (productId: string, deliveryId: string) => Promise<void>;
-  createOrderIncrementation: (
+  createOrder: (
     productId: string,
     deliveryId: string,
     deliveryOption: string
@@ -22,8 +21,8 @@ export default function AddToOrder({
   cartId,
   deliveryId,
   deliveryOptions,
-  handleStripePayment,
-  createOrderIncrementation,
+
+  createOrder,
   dict,
 }: AddToOrderProps) {
   const [isPending, startTransition] = useTransition();
@@ -37,15 +36,11 @@ export default function AddToOrder({
   return (
     <>
       <Button
+        disabled={isPending}
         aria-label={dict.payment.proceed_to_payment}
         onClick={() => {
           startTransition(async () => {
-            await handleStripePayment(cartId, deliveryId);
-            await createOrderIncrementation(
-              cartId,
-              deliveryId,
-              deliveryOption?.id!
-            );
+            await createOrder(cartId, deliveryId, deliveryOption?.id!);
             router.push("/profile");
           });
         }}

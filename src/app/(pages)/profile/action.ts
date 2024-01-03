@@ -1,11 +1,10 @@
 "use server";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { currentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 export async function updateUser(formData: FormData) {
-  const session = await getServerSession(authOptions);
+  const session = await currentUser();
   if (!session) {
     return;
   }
@@ -18,7 +17,7 @@ export async function updateUser(formData: FormData) {
   }
   await prisma.user.update({
     where: {
-      id: session.user?.id,
+      id: session.id,
     },
     data: {
       name,

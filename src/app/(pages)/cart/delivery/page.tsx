@@ -3,11 +3,6 @@ import Loading from "@/app/loading";
 import { getDelivery } from "@/lib/db/delivery";
 import FormDelivery from "@/components/delivery/form-delivery";
 import SelectDelivery from "@/components/delivery/select-delivery";
-import {
-  designateDefaultDeliveryItem,
-  processDeliveryForm,
-  removeDeliveryItem,
-} from "./actions";
 import { Metadata } from "next";
 import { getDictionary } from "@/app/lang/dictionaries";
 import website from "@/data/infosWebsite";
@@ -15,6 +10,9 @@ import { cache } from "react";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
+import { designateDefaultDeliveryItem } from "@/app/(pages)/actions/designate-delivery-form";
+import { removeDeliveryItem } from "@/app/(pages)/actions/remove-deliveryItem";
+import { processDeliveryForm } from "@/app/(pages)/actions/process-delivery-form";
 
 export async function generateMetadata({
   params: { lang },

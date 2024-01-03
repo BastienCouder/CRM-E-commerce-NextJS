@@ -8,11 +8,9 @@ import Loading from "@/app/loading";
 import { X } from "lucide-react";
 import { Dictionary } from "@/app/lang/dictionaries";
 import urls from "@/data/url";
-import {
-  removeCartItem,
-  updateCartItemQuantity,
-} from "@/app/(pages)/cart/actions";
 import { CartItem } from "@/schemas/DbSchema";
+import { updateCartItemQuantity } from "@/app/(pages)/actions/update-cart-quantity";
+import { removeCartItem } from "@/app/(pages)/actions/delete-product-from-cart";
 
 interface CartEntryProps {
   cartItem: CartItem;

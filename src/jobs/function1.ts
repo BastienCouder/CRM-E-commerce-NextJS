@@ -1,16 +1,18 @@
+import { CartProps } from "@/lib/db/cart";
 import { UserProps } from "@/lib/db/user";
 import { sendEmail } from "@/lib/email/auth";
 import { inngestClient } from "@/lib/inngestClient";
 import { prisma } from "@/lib/prisma";
+import { CartItem } from "@/schemas/DbSchema";
 import { subWeeks } from "date-fns";
 
 const cronWeeklyUsersWithRecentCartEmailsJob = inngestClient.createFunction(
-  { id: "Weekly Emails" },
+  { id: "Users With Recent Cart" },
   { cron: "TZ=Europe/Paris 0 0 * * 6,0" },
   async ({ step }) => {
-    const twoWeeksAgo = subWeeks(new Date(), 2);
+    const WeeksAgo = subWeeks(new Date(), 1);
 
-    const usersWithRecentCart: UserProps = await step.run(
+    const usersWithRecentCart: UserProps[] = await step.run(
       "Get Users with recent cart",
       async () =>
         await prisma.user.findMany({
@@ -21,7 +23,7 @@ const cronWeeklyUsersWithRecentCartEmailsJob = inngestClient.createFunction(
                 cartItems: {
                   some: {
                     createdAt: {
-                      gt: twoWeeksAgo,
+                      gt: WeeksAgo,
                     },
                   },
                 },
@@ -31,11 +33,25 @@ const cronWeeklyUsersWithRecentCartEmailsJob = inngestClient.createFunction(
           orderBy: {
             createdAt: "desc",
           },
+          include: {
+            Cart: {
+              include: {
+                cartItems: {
+                  where: {
+                    deleteAt: null,
+                  },
+                  include: { product: true },
+                },
+              },
+            },
+          },
         })
     );
 
     for (const user of usersWithRecentCart) {
-      await sendEmail(user.email!);
+      const cartItems: CartItem[] =
+        user.Cart?.flatMap((cart: CartProps) => cart.cartItems) || [];
+      await sendEmail(user.email!, cartItems);
     }
 
     return { count: usersWithRecentCart.length };

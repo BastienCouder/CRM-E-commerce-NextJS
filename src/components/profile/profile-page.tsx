@@ -5,12 +5,10 @@ import { Session } from "next-auth";
 import FormDelivery from "@/components/delivery/form-delivery";
 import { Separator } from "@/components/ui/separator";
 import UserInfo from "./user-info";
-import {
-  designateDefaultDeliveryItem,
-  processDeliveryForm,
-  removeDeliveryItem,
-  updateDeliveryFormData,
-} from "../../app/(pages)/cart/delivery/actions";
+import { processDeliveryForm } from "@/app/(pages)/actions/process-delivery-form";
+import { designateDefaultDeliveryItem } from "@/app/(pages)/actions/designate-delivery-form";
+import { removeDeliveryItem } from "@/app/(pages)/actions/remove-deliveryItem";
+import { updateDeliveryFormData } from "@/app/(pages)/actions/update-delivery-form";
 
 interface ProfilePageProps {
   session: Session | null;

@@ -1,7 +1,8 @@
 "use server";
 import { createCart, getCart } from "@/lib/db/cart";
-import { prisma } from "@/lib/prisma";
+import { CartItem } from "@/schemas/DbSchema";
 import { revalidatePath } from "next/cache";
+import { removeCartItem } from "./delete-product-from-cart";
 
 export async function updateCartItemQuantity(
   productId: string,
@@ -9,7 +10,9 @@ export async function updateCartItemQuantity(
 ): Promise<void> {
   const cart = (await getCart()) ?? (await createCart());
 
-  const cartItem = cart.cartItems.find((item) => item.productId === productId);
+  const cartItem = cart.cartItems.find(
+    (item: CartItem) => item.productId === productId
+  );
 
   if (quantity === 0) {
     if (cartItem) {
@@ -32,22 +35,4 @@ async function changeCartItemQuantity(
     where: { id: cartItemId },
     data: { quantity: newQuantity },
   });
-}
-
-export async function removeCartItem(cartItemId: string): Promise<void> {
-  await prisma.cartItems.update({
-    where: { id: cartItemId },
-    data: { deleteAt: new Date() },
-  });
-}
-
-export async function deleteProductFromCart(productId: string): Promise<void> {
-  const cart = (await getCart()) ?? (await createCart());
-
-  const cartItem = cart.cartItems.find((item) => item.productId === productId);
-  if (cartItem) {
-    await removeCartItem(cartItem.id);
-  }
-
-  revalidatePath("/cart");
 }

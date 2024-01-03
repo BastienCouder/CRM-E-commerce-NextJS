@@ -8,15 +8,14 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { RxCross2 } from "react-icons/rx";
 import AddToWishlist from "@/components/actions/add-to-wishlist";
-import {
-  addProductToCart,
-  addProductToWishlist,
-} from "@/app/(pages)/products/[id]/actions";
+
 import { BsCaretDownFill } from "react-icons/bs";
 import { useAnimationContext } from "@/context/AnimationContext";
 import styles from "@/styles/keyframes.module.css";
 import { Dictionary } from "@/app/lang/dictionaries";
 import { CartItem, WishlistItem } from "@/schemas/DbSchema";
+import { addProductToWishlist } from "@/app/(pages)/actions/add-to-wishlist";
+import { addProductToCart } from "@/app/(pages)/actions/add-to-cart";
 
 interface ProductMobileProps {
   cartItems: CartItem[];

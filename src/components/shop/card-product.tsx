@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import AddToCartButton from "@/components/actions/add-to-cart-button";
 import { Category, Color, Product } from "@/schemas/DbSchema";
 import { Dictionary } from "@/app/lang/dictionaries";
-import { addProductToCart } from "@/app/(pages)/products/[id]/actions";
+import { addProductToCart } from "@/app/(pages)/actions/add-to-cart";
 
 interface CardProductProps {
   product: Product;

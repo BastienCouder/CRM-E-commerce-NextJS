@@ -4,7 +4,7 @@ import { getDictionary } from "@/app/lang/dictionaries";
 import { Metadata } from "next";
 import website from "@/data/infosWebsite";
 import { WishlistItem } from "@/schemas/DbSchema";
-import { AddToCart } from "./actions";
+import { addProductToCart } from "@/app/(pages)/actions/add-to-cart";
 
 export async function generateMetadata({
   params: { lang },
@@ -43,7 +43,7 @@ export default async function Wishlist({ params: { lang } }: WishlistProps) {
               <WishlistEntry
                 wishlistItem={wishlistItem}
                 key={wishlistItem.id}
-                AddToCart={AddToCart}
+                AddToCart={addProductToCart}
                 dict={dict}
               />
               <div className="flex lg:hidden  h-[2px] w-3/4 bg-primary"></div>

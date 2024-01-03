@@ -1,9 +1,9 @@
 "use server";
-import { revalidatePath } from "next/cache";
+
 import { DeliveryProps, createDelivery, getDelivery } from "@/lib/db/delivery";
-import { validateEmail } from "@/lib/utils";
 import { prisma } from "@/lib/prisma";
-import { DeliveryItem } from "@/schemas/DbSchema";
+import { validateEmail } from "@/lib/utils";
+import { revalidatePath } from "next/cache";
 
 export async function processDeliveryForm(formData: FormData): Promise<void> {
   const delivery = (await getDelivery()) ?? (await createDelivery());
@@ -53,87 +53,6 @@ async function setDefaultDeliveryItem(
   await prisma.deliveryItems.update({
     where: { id: deliveryItemId },
     data: { Default: true },
-  });
-}
-
-export async function designateDefaultDeliveryItem(
-  deliveryItemId: string
-): Promise<void> {
-  const selectedDeliveryItem = await prisma.deliveryItems.findUnique({
-    where: { id: deliveryItemId },
-  });
-
-  if (!selectedDeliveryItem) {
-    throw new Error("Delivery item not found");
-  }
-
-  await setDefaultDeliveryItem(selectedDeliveryItem.deliveryId, deliveryItemId);
-  revalidatePath("/cart/delivery");
-}
-
-export async function removeDeliveryItem(
-  deliveryItemId: string
-): Promise<void> {
-  const deliveryItem = await prisma.deliveryItems.findUnique({
-    where: { id: deliveryItemId },
-  });
-
-  if (deliveryItem) {
-    await softDeleteDeliveryItem(deliveryItemId);
-    await designateNextDefaultDeliveryItem(deliveryItem.deliveryId);
-  }
-}
-
-async function softDeleteDeliveryItem(deliveryItemId: string): Promise<void> {
-  await prisma.deliveryItems.update({
-    where: { id: deliveryItemId },
-    data: { deleteAt: new Date(), Default: false },
-  });
-}
-
-async function designateNextDefaultDeliveryItem(
-  deliveryId: string
-): Promise<void> {
-  const nextDefaultItem = await prisma.deliveryItems.findFirst({
-    where: { deliveryId, Default: false },
-  });
-
-  if (nextDefaultItem) {
-    await prisma.deliveryItems.update({
-      where: { id: nextDefaultItem.id },
-      data: { Default: true },
-    });
-  }
-
-  revalidatePath("/cart/delivery");
-}
-
-export async function updateDeliveryFormData(
-  deliveryItemId: string,
-  formData: FormData
-): Promise<void> {
-  const deliveryItem = await prisma.deliveryItems.findUnique({
-    where: { id: deliveryItemId },
-  });
-
-  if (!deliveryItem) {
-    throw new Error("Delivery item not found");
-  }
-
-  const formDataValues = extractFormDataValues(formData);
-  await updateDeliveryItem(deliveryItem, formDataValues);
-
-  revalidatePath("/cart/delivery");
-  revalidatePath("/profile");
-}
-
-async function updateDeliveryItem(
-  deliveryItem: DeliveryItem,
-  formDataValues: any
-): Promise<void> {
-  await prisma.deliveryItems.update({
-    where: { id: deliveryItem.id },
-    data: { ...formDataValues },
   });
 }
 

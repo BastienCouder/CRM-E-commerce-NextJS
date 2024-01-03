@@ -10,10 +10,8 @@ import { useAnimationContext } from "@/context/AnimationContext";
 import { Dictionary } from "@/app/lang/dictionaries";
 import { Product } from "@prisma/client";
 import { CartItem, WishlistItem } from "@/schemas/DbSchema";
-import {
-  addProductToCart,
-  addProductToWishlist,
-} from "@/app/(pages)/products/[id]/actions";
+import { addProductToCart } from "@/app/(pages)/actions/add-to-cart";
+import { addProductToWishlist } from "@/app/(pages)/actions/add-to-wishlist";
 
 interface ProductDesktopProps {
   wishlistItems: WishlistItem[] | undefined;
