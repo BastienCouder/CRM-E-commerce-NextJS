@@ -4,9 +4,9 @@ import DeviceChart from "@/components/charts/DeviceChart";
 import BrowserChart from "@/components/charts/BrowserChart";
 import { readAnalyticsProducts } from "./actions/analytics-products";
 import { readAnalyticsOrders } from "./actions/analytics-orders";
-import { readAnalyticsUsers } from "./actions/analytics-users";
 import { readAnalyticsWishlistCartOrder } from "./actions/analytics-interactions-products";
 import { readAnalyticsVisitorInfos } from "./actions/analytics-visitors";
+import { readAnalyticsNewsletterAnalytics } from "./actions/analytics-users";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -20,7 +20,7 @@ export default async function ViewsPage() {
         <AnalyticsNav
           analyticsProductsData={await readAnalyticsProducts()}
           analyticsOrdersData={await readAnalyticsOrders()}
-          analyticsUsersData={await readAnalyticsUsers()}
+          analyticsUsersData={await readAnalyticsNewsletterAnalytics()}
           analyticsWishlistCartOrderData={await readAnalyticsWishlistCartOrder()}
         />
         <BrowserChart analyticsData={await readAnalyticsVisitorInfos()} />

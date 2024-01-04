@@ -13,7 +13,7 @@ import {
   readAnalyticsVisited,
   readAnalyticsVisitorInfos,
 } from "./analytics/actions/analytics-visitors";
-import { readAnalyticsUsers } from "./analytics/actions/analytics-users";
+import { readAnalyticsNewsletter } from "./analytics/actions/analytics-newsletter";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -24,7 +24,7 @@ export default async function Dashboard() {
   const orders = await getOrderItems();
   const analyticsProductsData = await readAnalyticsProducts();
   const analyticsOrdersData = await readAnalyticsOrders();
-  const analyticsUsersData = await readAnalyticsUsers();
+  const analyticsUsersData = await readAnalyticsNewsletter();
   const analyticsWishlistCartOrderData = await readAnalyticsWishlistCartOrder();
   const analyticsVisitorInfosData = await readAnalyticsVisitorInfos();
   const analyticsVisitedData = await readAnalyticsVisited();

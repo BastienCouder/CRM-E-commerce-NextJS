@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { addWeeks, addMonths } from "date-fns";
+import { addWeeks, addMonths, addDays } from "date-fns";
 
 export function useFilteredAnalyticsData<T>(
   fetchData: (startDate: Date, endDate: Date) => Promise<T>,
@@ -14,6 +14,7 @@ export function useFilteredAnalyticsData<T>(
 ] {
   const options = [
     { value: "week", label: "Cette semaine" },
+    { value: "2weeks", label: "2 semaines" },
     { value: "month", label: "Ce mois" },
     { value: "3months", label: "3 Mois" },
     { value: "6months", label: "6 Mois" },
@@ -31,10 +32,13 @@ export function useFilteredAnalyticsData<T>(
     if (typeof timeRange === "string") {
       switch (timeRange) {
         case "week":
-          startDate = addWeeks(now, -1);
+          startDate = addDays(now, -6);
+          break;
+        case "2weeks":
+          startDate = addDays(now, -14);
           break;
         case "month":
-          startDate = addMonths(now, -1);
+          startDate = addWeeks(now, -3);
           break;
         case "3months":
           startDate = addMonths(now, -2);

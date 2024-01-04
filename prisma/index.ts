@@ -3,23 +3,23 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function main() {
-  // const userId = "clqwf1mll0000da8v7zx1chte";
-  // const user = await prisma.user.findUnique({
-  //   where: {
-  //     id: userId,
-  //   },
-  // });
-  // if (user) {
-  //   // Mise à jour du champ "isAdmin" pour définir l'utilisateur comme administrateur
-  //   const updatedUser = await prisma.user.update({
-  //     where: {
-  //       id: userId,
-  //     },
-  //     data: {
-  //       role: "MARKETING_MANAGER",
-  //     },
-  //   });
-  // }
+  const userId = "clqwf1mll0000da8v7zx1chte";
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+  if (user) {
+    // Mise à jour du champ "isAdmin" pour définir l'utilisateur comme administrateur
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        newsletter: true,
+      },
+    });
+  }
   //   console.log(`L'utilisateur  est maintenant administrateur.`);
   // } else {
   //   console.log("Utilisateur non trouvé.");

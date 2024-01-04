@@ -16,10 +16,11 @@ import { UserProps } from "@/lib/db/user";
 import CreateUsers from "../dashboard/CreateUsers";
 import { roles } from "@/app/dashboard/management/users/data/data";
 import { softDeleteItem } from "@/app/dashboard/management/action/soft-delete";
+import { AllowedVariant } from "./DataTable";
 
 interface DataTableToolbarProps {
   table: Table<ProductProps | OrderProps | UserProps>;
-  variant: "orders" | "products" | "users";
+  variant: AllowedVariant;
 }
 
 export function DataTableToolbar({ table, variant }: DataTableToolbarProps) {
@@ -42,20 +43,20 @@ export function DataTableToolbar({ table, variant }: DataTableToolbarProps) {
               : "Utilisateurs..."
           }
           value={
-            variant === "products" || variant === "users"
-              ? (table.getColumn("name")?.getFilterValue() as string)
-              : (table.getColumn("email")?.getFilterValue() as string) ?? ""
+            variant === "orders"
+              ? (table.getColumn("email")?.getFilterValue() as string) ?? ""
+              : (table.getColumn("name")?.getFilterValue() as string)
           }
           onChange={(event: any) => {
-            if (variant === "products" || variant === "users") {
-              table.getColumn("name")?.setFilterValue(event.target.value);
-            } else {
+            if (variant === "orders") {
               table.getColumn("email")?.setFilterValue(event.target.value);
+            } else {
+              table.getColumn("name")?.setFilterValue(event.target.value);
             }
           }}
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn("status") && (
+        {variant === "orders" && table.getColumn("status") && (
           <DataTableFacetedFilter
             column={table.getColumn("status")}
             title="Status"

@@ -27,10 +27,12 @@ import {
 } from "@/components/ui/table";
 import { DataTablePagination } from "./DataTablePagination";
 
+export type AllowedVariant = "orders" | "products" | "users" | "newsletter";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  variant: "orders" | "products" | "users";
+  variant: AllowedVariant;
 }
 
 export function DataTable<TData, TValue>({

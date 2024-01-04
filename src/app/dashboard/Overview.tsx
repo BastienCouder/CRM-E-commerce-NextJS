@@ -1,7 +1,6 @@
 "use client";
 import StatsCard from "@/components/dashboard/StatsCard";
 import SalesChart from "@/components/charts/SalesChart";
-import OrdersLengthChart from "@/components/charts/OrdersLengthChart";
 
 interface OverviewProps {
   analyticsProductsData: any;

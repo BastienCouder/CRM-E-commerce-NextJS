@@ -50,7 +50,7 @@ export async function readAnalyticsOrders(
     const daysDifference = differenceInDays(endDate, startDate);
 
     let intervalFunction: (interval: { start: Date; end: Date }) => Date[];
-    if (daysDifference <= 7) {
+    if (daysDifference <= 14) {
       intervalFunction = eachDayOfInterval;
     } else if (daysDifference <= 30) {
       intervalFunction = eachWeekOfInterval;

@@ -93,7 +93,7 @@ import { fr } from "date-fns/locale";
 
 export function formatDateBasedOnFilter(
   dateString: string,
-  filterType: "day" | "week" | "month"
+  filterType: "day" | "week" | "2weeks" | "month"
 ): string {
   const date = parseISO(dateString);
   const now = new Date();
@@ -129,10 +129,12 @@ export function formatDateBasedOnFilter(
 
 export function determineFilterType(
   timeRange: string | { from: Date; to: Date }
-): "day" | "week" | "month" {
+): "day" | "week" | "2weeks" | "month" {
   if (typeof timeRange === "string") {
     switch (timeRange) {
       case "week":
+        return "day";
+      case "2weeks":
         return "day";
       case "month":
         return "week";
@@ -144,7 +146,7 @@ export function determineFilterType(
     const weeksDiff = differenceInCalendarWeeks(timeRange.to, timeRange.from);
     const monthsDiff = differenceInCalendarMonths(timeRange.to, timeRange.from);
 
-    if (daysDiff <= 7 && weeksDiff === 0) {
+    if (daysDiff <= 15 && weeksDiff === 0) {
       return "day";
     } else if (weeksDiff >= 1 && monthsDiff === 0) {
       return "week";

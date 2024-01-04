@@ -13,12 +13,7 @@ export const currentRole = async () => {
 };
 
 const roles = {
-  protected: [
-    "ADMIN",
-    "PRODUCT_MANAGER",
-    "CUSTOMER_SERVICE",
-    "MARKETING_MANAGER",
-  ],
+  protected: ["ADMIN", "MARKETING_MANAGER"],
 };
 
 export function roleCheckMiddleware(

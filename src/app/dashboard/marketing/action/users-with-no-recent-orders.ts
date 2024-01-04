@@ -4,38 +4,43 @@ import { UserProps } from "@/lib/db/user";
 import { prisma } from "@/lib/prisma";
 import { subWeeks } from "date-fns";
 
-export async function getUsersWithNoRecentOrderItems(): Promise<
-  UserProps[] | null
-> {
-  try {
-    const twoWeeksAgo = subWeeks(new Date(), 2);
+export async function findUsersWithRecentCart(
+  weeksAgo: number
+): Promise<UserProps[]> {
+  const dateLimit = subWeeks(new Date(), weeksAgo);
 
-    const users = await prisma.user.findMany({
-      where: {
-        deleteAt: null,
-        Order: {
-          some: {
-            orderItems: {
-              some: {
-                createdAt: {
-                  lt: twoWeeksAgo,
-                },
+  const users = await prisma.user.findMany({
+    where: {
+      deleteAt: null,
+      Cart: {
+        some: {
+          cartItems: {
+            some: {
+              createdAt: {
+                gt: dateLimit,
               },
+              deleteAt: null,
             },
           },
         },
       },
-      orderBy: {
-        createdAt: "desc",
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      Cart: {
+        include: {
+          cartItems: {
+            where: {
+              deleteAt: null,
+            },
+            include: { product: true },
+          },
+        },
       },
-    });
+    },
+  });
 
-    return users;
-  } catch (error) {
-    console.error(
-      "Error while retrieving users with no recent order items:",
-      error
-    );
-    return null;
-  }
+  return users;
 }

@@ -1,6 +1,6 @@
 "use server";
+import { getWeekNumber } from "@/lib/format";
 import { prisma } from "@/lib/prisma";
-import { UserRole, UserRoleEnum } from "@/schemas/DbSchema";
 import {
   format,
   eachMonthOfInterval,
@@ -24,7 +24,7 @@ export interface NewsletterAnalytics {
   newsletterSubscribersCount: number;
 }
 
-export interface readAnalyticsNewsletterAnalyticsProps {
+export interface readAnalyticsNewsletterProps {
   data: NewsletterAnalytics[];
   totalUsers: number;
   totalNewsletterSubscribersCount: number;
@@ -32,11 +32,10 @@ export interface readAnalyticsNewsletterAnalyticsProps {
   lastMonthUsersCount: number;
   monthlyGrowthPercentage: number;
 }
-
-export async function readAnalyticsNewsletterAnalytics(
+export async function readAnalyticsNewsletter(
   startDateParam?: Date,
   endDateParam?: Date
-): Promise<readAnalyticsNewsletterAnalyticsProps> {
+): Promise<readAnalyticsNewsletterProps> {
   const currentDate = new Date();
   const startDate = startDateParam || startOfYear(currentDate);
   const endDate = endDateParam || endOfYear(currentDate);
@@ -48,19 +47,13 @@ export async function readAnalyticsNewsletterAnalytics(
     where: { newsletter: true, createdAt: { gte: startDate, lt: endDate } },
   });
 
+  const daysDifference = differenceInDays(endDate, startDate);
   const intervalFunction =
-    differenceInDays(endDate, startDate) <= 1
+    daysDifference <= 14
       ? eachDayOfInterval
-      : differenceInDays(endDate, startDate) <= 7
+      : daysDifference <= 30
       ? eachWeekOfInterval
       : eachMonthOfInterval;
-  const dateFormat =
-    intervalFunction === eachDayOfInterval
-      ? "yyyy-MM-dd"
-      : intervalFunction === eachWeekOfInterval
-      ? "yyyy-'W'Iso"
-      : "yyyy-MM";
-
   const allIntervals = intervalFunction({ start: startDate, end: endDate });
 
   const analyticsData = await Promise.all(
@@ -71,6 +64,14 @@ export async function readAnalyticsNewsletterAnalytics(
           : intervalFunction === eachWeekOfInterval
           ? addWeeks(intervalStart, 1)
           : addMonths(intervalStart, 1);
+      const formattedDate =
+        intervalFunction === eachDayOfInterval
+          ? format(intervalStart, "yyyy-MM-dd")
+          : intervalFunction === eachWeekOfInterval
+          ? `${intervalStart.getFullYear()}-W${String(
+              getWeekNumber(intervalStart)
+            ).padStart(2, "0")}`
+          : format(intervalStart, "yyyy-MM");
 
       const usersCreatedCount = await prisma.user.count({
         where: { createdAt: { gte: intervalStart, lt: intervalEnd } },
@@ -83,7 +84,7 @@ export async function readAnalyticsNewsletterAnalytics(
       });
 
       return {
-        date: format(intervalStart, dateFormat),
+        date: formattedDate,
         usersCreatedCount,
         newsletterSubscribersCount,
       };

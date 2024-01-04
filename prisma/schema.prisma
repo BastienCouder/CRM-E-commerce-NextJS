@@ -74,8 +74,6 @@ model TwoFactorConfirmation {
 enum UserRole {
     ADMIN
     USER
-    PRODUCT_MANAGER
-    CUSTOMER_SERVICE
     MARKETING_MANAGER
 }
 
@@ -316,4 +314,10 @@ model Contact {
     id    String @id @default(cuid())
     name  String
     email String @unique
+}
+
+model CronConfig {
+    id    String @id @default(cuid())
+    type  String
+    value String
 }

@@ -19,7 +19,7 @@ export default function AnalyticsNav({
   return (
     <>
       <div className="flex space-y-4">
-        <Tabs defaultValue="overview" className="space-y-4">
+        <Tabs defaultValue="views" className="space-y-4">
           <TabsList>
             <TabsTrigger value="views">Views</TabsTrigger>
             <TabsTrigger value="products">Produits</TabsTrigger>

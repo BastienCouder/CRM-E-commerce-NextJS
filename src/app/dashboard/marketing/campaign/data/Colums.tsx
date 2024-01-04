@@ -1,11 +1,12 @@
 "use client";
-
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DataTableRowActions } from "../components/DataTableRowActions";
+import { Badge } from "@/components/ui/badge";
+
 import Image from "next/image";
 import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader";
-import { roles } from "./data";
+import { newsletters } from "./data";
+import { DataTableRowActions } from "../components/DataTableRowActions";
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -94,25 +95,32 @@ export const columns: ColumnDef<any>[] = [
     },
   },
   {
-    accessorKey: "role",
+    accessorKey: "newsletter",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Role" />
+      <DataTableColumnHeader column={column} title="Newsletter" />
     ),
     cell: ({ row }) => {
-      const roleValue = row.original.role;
-
-      const role = roles.find((roleItem) => roleItem.value === roleValue);
+      const newsletterValue = row.original.newsletter;
+      const newsletter = newsletters.find(
+        (newsletterItem) => newsletterItem.value === newsletterValue
+      );
 
       return (
         <div className="flex space-x-2 items-center">
           <span className="max-w-[500px] lowercase truncate flex font-medium">
-            {role?.label}
+            <Badge
+              variant="outline"
+              className={`${
+                newsletter?.value === true
+                  ? "border-green-800"
+                  : "border-destructive"
+              }`}
+            >
+              {newsletter?.label}
+            </Badge>
           </span>
         </div>
       );
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
     },
   },
   {
