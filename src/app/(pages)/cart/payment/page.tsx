@@ -10,7 +10,7 @@ import { cache } from "react";
 import { notFound } from "next/navigation";
 import { CartItem, DeliveryItem, DeliveryOption } from "@/schemas/DbSchema";
 import CartItemsDetails from "@/components/profile/cartItems-details";
-import { createNewOrder } from "@/app/(pages)/actions/create-order";
+import { createNewOrder } from "@/app/(pages)/actions/create-order-session";
 import { useDeliveryOptionId } from "@/hooks/useDeliveryOptionId";
 
 export async function generateMetadata({

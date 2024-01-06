@@ -81,6 +81,13 @@ export async function POST() {
   const checkoutSession: Stripe.Checkout.Session =
     await stripe.checkout.sessions.create(params);
 
+  await prisma.stripeSession.create({
+    data: {
+      stripeId: checkoutSession.id,
+      isProcessed: false,
+    },
+  });
+
   return new Response(JSON.stringify(checkoutSession), { status: 200 });
 }
 

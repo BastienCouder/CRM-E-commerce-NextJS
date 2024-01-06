@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import Newsletter from "@/components/Newsletter";
 import styles from "@/styles/keyframes.module.css";
 
 export default function Home() {

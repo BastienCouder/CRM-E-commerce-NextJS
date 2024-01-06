@@ -18,7 +18,6 @@ export async function createNewOrder(
     return;
   }
 
-  const userId = session.id;
   const order = (await getOrder()) || (await createOrder());
   const OrderInSession = order?.orderItems?.find(
     (item: OrderItem) => item.cartId === cartId
@@ -30,7 +29,6 @@ export async function createNewOrder(
     await createOrderItem(order, cartId, deliveryId, deliveryOptionId);
   }
 
-  await updateCart(cartId, userId);
   revalidatePath("/cart");
 }
 
@@ -112,7 +110,7 @@ async function createOrderItem(
   }
 }
 
-async function updateCart(cartId: string, userId: string) {
+export async function updateCart(cartId: string, userId: string) {
   const cart = await prisma.cart.findUnique({
     where: {
       id: cartId,

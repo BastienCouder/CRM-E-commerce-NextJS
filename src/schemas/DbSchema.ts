@@ -171,6 +171,7 @@ export const OrderItemSchema: z.ZodSchema<any> = z.lazy(() =>
     orderNumber: z.string(),
     orderId: z.string(),
     cartId: z.string(),
+    isPaid: z.boolean(),
     status: z.string(),
     subtotal: z.number().optional(),
     createdAt: z.date(),

@@ -226,6 +226,7 @@ model Order {
 model OrderItems {
     id               String          @id @default(cuid())
     orderNumber      String
+    isPaid           Boolean         @default(false)
     orderId          String
     order            Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
     cartId           String
@@ -320,4 +321,12 @@ model CronConfig {
     id    String @id @default(cuid())
     type  String
     value String
+}
+
+model StripeSession {
+    id          String   @id @default(uuid())
+    stripeId    String   @unique
+    isProcessed Boolean  @default(false)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 }

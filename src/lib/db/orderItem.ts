@@ -1,8 +1,6 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { OrderItem } from "@/schemas/DbSchema";
-import { utils } from "../../data/infosWebsite";
-import { auth } from "@/auth";
 import { currentUser, roleCheckMiddleware } from "../auth";
 
 export type OrderProps = OrderItem & {
@@ -28,6 +26,7 @@ export async function getOrderItems(
             gte: startDate,
             lt: endDate,
           },
+          isPaid: true,
         },
         include: {
           cart: {

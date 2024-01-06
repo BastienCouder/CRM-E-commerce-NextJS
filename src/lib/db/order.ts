@@ -1,7 +1,6 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { CartItem, Order, OrderItem } from "../../schemas/DbSchema";
-import { auth } from "@/auth";
 import { currentUser } from "@/lib/auth";
 
 export type OrderProps = Order & {
@@ -20,6 +19,7 @@ export async function getOrder(): Promise<OrderProps | null> {
       },
       include: {
         orderItems: {
+          where: { isPaid: true },
           include: {
             cart: {
               include: {
@@ -87,6 +87,7 @@ export async function createOrder(): Promise<OrderProps | null> {
       },
       include: {
         orderItems: {
+          where: { isPaid: false },
           include: {
             cart: {
               include: {

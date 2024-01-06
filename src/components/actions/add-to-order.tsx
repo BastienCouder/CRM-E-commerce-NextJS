@@ -1,12 +1,10 @@
 "use client";
+import { createNewOrder } from "@/app/(pages)/actions/create-order-session";
 import { Dictionary } from "@/app/lang/dictionaries";
 import { Button } from "@/components/ui/button";
 import { useDeliveryOptionId } from "@/hooks/useDeliveryOptionId";
-import getStripe, { stripe } from "@/lib/stripe";
 import { loadStripe } from "@stripe/stripe-js";
-
-import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useTransition } from "react";
 
 interface AddToOrderProps {
   cartId: string;
@@ -16,18 +14,17 @@ interface AddToOrderProps {
     deliveryId: string,
     deliveryOptionId: string
   ) => Promise<void>;
-
   dict: Dictionary;
 }
 
 export default function AddToOrder({
   cartId,
   deliveryId,
-
   createOrder,
   dict,
 }: AddToOrderProps) {
   const [isPending, startTransition] = useTransition();
+  const deliveryOptionId = useDeliveryOptionId();
 
   const handleStripeCheckout = async () => {
     try {
@@ -47,7 +44,6 @@ export default function AddToOrder({
       const stripe = await loadStripe(
         `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
       );
-      console.log("stripe", stripe);
 
       if (!stripe) {
         throw new Error("Stripe n'est pas initialisé");
@@ -71,7 +67,12 @@ export default function AddToOrder({
       <Button
         disabled={isPending}
         aria-label={dict.payment.proceed_to_payment}
-        onClick={() => startTransition(handleStripeCheckout)}
+        onClick={() =>
+          startTransition(() => {
+            handleStripeCheckout();
+            createNewOrder(cartId, deliveryId, deliveryOptionId!);
+          })
+        }
       >
         {dict.payment.payment}
       </Button>
