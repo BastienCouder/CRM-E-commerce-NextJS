@@ -2,6 +2,7 @@
 import { Monitor, Smartphone } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { ReactElement } from "react";
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 interface DeviceData {
   count: number;
@@ -18,41 +19,57 @@ interface DeviceChartProps {
   };
 }
 
+const Style = { fontSize: "0.8rem", fill: "rgb(var(--foreground))" };
+
 export default function DeviceChart({ analyticsData }: DeviceChartProps) {
   const defaultDevice = {
-    mobile: { count: 0, percentage: 0 },
-    desktop: { count: 0, percentage: 0 },
+    mobile: { count: 0, percentage: 50 },
+    desktop: { count: 0, percentage: 50 },
   };
+
   const deviceData = { ...defaultDevice, ...analyticsData.devices };
 
-  function getDeviceIcon(device: string): ReactElement | null {
-    const icons: Record<string, ReactElement> = {
-      mobile: <Smartphone size={20} color="rgb(var(--chart))" />,
-      desktop: <Monitor size={20} color="rgb(var(--chart))" />,
-    };
+  const COLORS = ["rgb(var(--foreground))", "rgb(var(--primary))"];
 
-    return icons[device] || null;
-  }
+  const pieChartData = Object.entries(deviceData).map(([key, value], index) => {
+    return {
+      name: key.charAt(0).toUpperCase() + key.slice(1),
+      value: value.percentage,
+    };
+  });
 
   return (
     <>
-      <section className="border w-[15rem] h-[12.5rem] p-4 rounded-lg bg-card space-y-4">
+      <section className="border w-1/3 h-[14rem] p-4 rounded-lg bg-card space-y-4">
         <h2>Plateforme utilisées</h2>
         <Separator className="bg-[rgba(var(--foreground),0.5)]" />
-        <ul className="space-y-4">
-          {Object.entries(deviceData).map(([device, data]) => (
-            <li key={device} className="w-full flex gap-x-4 items-center">
-              <div className="bg-background p-2 rounded-lg">
-                {getDeviceIcon(device)}
-              </div>
 
-              <div className="w-full flex justify-between">
-                <p>{device}</p>
-                <p className="font-bold">{data.percentage}%</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart width={400} height={200} className="pt-6">
+            <Legend verticalAlign="top" />
+            <Pie
+              dataKey="value"
+              startAngle={180}
+              endAngle={0}
+              data={pieChartData}
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={80}
+              fill={Style.fill}
+              paddingAngle={15}
+              label
+              stroke="none"
+            >
+              {pieChartData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
       </section>
     </>
   );

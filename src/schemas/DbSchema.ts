@@ -199,6 +199,14 @@ export const VisitorInfoSchema: z.ZodSchema<any> = z.lazy(() =>
   })
 );
 
+export const CronSchema: z.ZodSchema<any> = z.lazy(() =>
+  z.object({
+    id: z.string(),
+    type: z.string(),
+    value: z.string(),
+  })
+);
+
 // Types inférés
 export type User = z.infer<typeof UserSchema>;
 export type Product = z.infer<typeof ProductSchema>;
@@ -212,3 +220,4 @@ export type DeliveryOption = z.infer<typeof DeliveryOptionSchema>;
 export type Order = z.infer<typeof OrderSchema>;
 export type OrderItem = z.infer<typeof OrderItemSchema>;
 export type VisitorInfo = z.infer<typeof VisitorInfoSchema>;
+export type Cron = z.infer<typeof CronSchema>;

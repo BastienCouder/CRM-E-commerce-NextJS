@@ -1,4 +1,4 @@
-import formatPrice from "@/lib/format";
+import formatPrice from "../../../../../../format";
 import { OrderProps } from "@/lib/db/orderItem";
 
 interface TotalOrderDetailsProps {

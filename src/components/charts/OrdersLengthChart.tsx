@@ -4,7 +4,7 @@ import {
   AnalyticsOrdersData,
   readAnalyticsOrdersProps,
 } from "@/app/dashboard/analytics/actions/analytics-orders";
-import { formatDate } from "@/lib/format";
+import { formatDate } from "../../../format";
 import {
   Bar,
   BarChart,

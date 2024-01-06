@@ -8,6 +8,7 @@ const website = {
   phone: `00000000`,
   address: `[........]`,
   creator: `2023 Bastien Couder`,
+  cron: "TZ=Europe/Paris",
 };
 
 export default website;

@@ -87,7 +87,7 @@ export function DataTableToolbar({ table, variant }: DataTableToolbarProps) {
             <X className="ml-2 h-4 w-4" />
           </Button>
         )}
-        {isSelected && (
+        {isSelected && variant !== "newsletter" && (
           <SoftDelete
             itemId={selectedRowIds}
             SoftDelete={softDeleteItem}

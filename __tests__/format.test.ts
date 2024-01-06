@@ -4,7 +4,7 @@ import formatPrice, {
   formatDate,
   formatDateMonth,
   formatDescription,
-} from "@/lib/format";
+} from "../format";
 
 describe("Utility Functions", () => {
   // Test for formatPrice

@@ -33,7 +33,9 @@ export default async function UserPage() {
 
   return (
     <>
-      <DataTable data={users as any} columns={columns} variant="users" />
+      <section className="p-4 rounded-lg bg-card">
+        <DataTable data={users as any} columns={columns} variant="users" />
+      </section>
     </>
   );
 }

@@ -1,4 +1,6 @@
+import website from "@/data/infosWebsite";
 import { CartProps } from "@/lib/db/cart";
+import { CronProps, getCrons } from "@/lib/db/crons";
 import { UserProps } from "@/lib/db/user";
 import { sendEmail } from "@/lib/email/auth";
 import { inngestClient } from "@/lib/inngestClient";
@@ -6,14 +8,18 @@ import { prisma } from "@/lib/prisma";
 import { CartItem } from "@/schemas/DbSchema";
 import { subWeeks } from "date-fns";
 
+const crons: CronProps = getCrons();
+const currentCron = crons.find(
+  (cron: CronProps) => cron === `${cron.cronWeeklyUsersWithRecentCart}`
+);
 const cronWeeklyUsersWithRecentCartEmailsJob = inngestClient.createFunction(
-  { id: "Users With Recent Cart" },
-  { cron: "TZ=Europe/Paris 0 0 * * 6,0" },
+  { id: currentCron.id },
+  { cron: `${website.cron} ${currentCron.cron}` },
   async ({ step }) => {
     const WeeksAgo = subWeeks(new Date(), 1);
 
     const usersWithRecentCart: UserProps[] = await step.run(
-      "Get Users with recent cart",
+      `${currentCron.id}`,
       async () =>
         await prisma.user.findMany({
           where: {

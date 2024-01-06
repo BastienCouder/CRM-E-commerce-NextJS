@@ -11,6 +11,7 @@ import { notFound } from "next/navigation";
 import { CartItem, DeliveryItem, DeliveryOption } from "@/schemas/DbSchema";
 import CartItemsDetails from "@/components/profile/cartItems-details";
 import { createNewOrder } from "@/app/(pages)/actions/create-order";
+import { useDeliveryOptionId } from "@/hooks/useDeliveryOptionId";
 
 export async function generateMetadata({
   params: { lang },
@@ -79,12 +80,12 @@ export default async function Payment({ params: { lang } }: PaymentProps) {
             deliveryOptions={deliveryOptions}
           />
         </section>
+
         <div className="pt-4">
           {cart && delivery && (
             <AddToOrder
               cartId={cart.id}
               deliveryId={delivery.id}
-              deliveryOptions={deliveryOptions}
               createOrder={createNewOrder}
               dict={dict}
             />

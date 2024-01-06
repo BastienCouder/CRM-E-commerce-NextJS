@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import formatPrice, { formatDescription } from "@/lib/format";
+import formatPrice, { formatDescription } from "../../../format";
 import { CartItem } from "@/schemas/DbSchema";
 import { Dictionary } from "@/app/lang/dictionaries";
 

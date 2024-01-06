@@ -2,7 +2,6 @@ import "@/styles/globals.css";
 import { AnimationProvider } from "@/context/AnimationContext";
 import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
-import { aggregateAndCleanUpVisits } from "@/lib/db/views";
 import { Inter } from "next/font/google";
 import { getDictionary } from "@/app/lang/dictionaries";
 import { getCart } from "@/lib/db/cart";

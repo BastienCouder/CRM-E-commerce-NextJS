@@ -3,7 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { statuses } from "./data";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import formatPrice, { formatDate } from "@/lib/format";
+import formatPrice, { formatDate } from "../../../../../../format";
 import { DataTableRowActions } from "../components/DataTableRowActions";
 import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader";
 

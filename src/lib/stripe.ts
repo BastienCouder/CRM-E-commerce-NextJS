@@ -2,7 +2,7 @@ import { Stripe, loadStripe } from "@stripe/stripe-js";
 import StripeSession from "stripe";
 import { env } from "./env";
 
-export const stripe = new StripeSession(env.STRIPE_SECRET_KEY || "", {
+export const stripe = new StripeSession(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2023-10-16",
 });
 

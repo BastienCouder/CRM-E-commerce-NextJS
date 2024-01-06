@@ -4,7 +4,9 @@ import cronWeeklyUsersWithNoRecentOrdersEmailsJob from "@/jobs/cron-weekly-user-
 
 export const { GET, POST, PUT } = serve({
   client: inngestClient,
-  functions: [cronWeeklyUsersWithNoRecentOrdersEmailsJob],
+  functions: [
+    // cronWeeklyUsersWithNoRecentOrdersEmailsJob
+  ],
   streaming: "allow",
   signingKey: process.env.INNGEST_SIGNING_KEY,
 });

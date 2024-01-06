@@ -1,7 +1,6 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
-import { formatDateMonth } from "@/lib/format";
 import { LineChart, AreaChart } from "lucide-react";
 import {
   ResponsiveContainer,

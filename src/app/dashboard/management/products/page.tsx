@@ -31,7 +31,9 @@ export default async function ProductsPage() {
 
   return (
     <>
-      <DataTable data={products} columns={columns} variant="products" />
+      <section className="p-4 rounded-lg bg-card">
+        <DataTable data={products} columns={columns} variant="products" />
+      </section>
     </>
   );
 }

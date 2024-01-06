@@ -1,6 +1,5 @@
-"use client";
 import { Dictionary } from "@/app/lang/dictionaries";
-import formatPrice from "@/lib/format";
+import formatPrice from "../../../format";
 import { DeliveryOption } from "@/schemas/DbSchema";
 
 interface SelectDeliveryOptions {
@@ -16,8 +15,6 @@ export default function SelectDeliveryOptions({
   handleDeliveryOptionsChange,
   dict,
 }: SelectDeliveryOptions) {
-  console.log(deliveryOptions);
-
   return (
     <>
       <ul className="space-y-4 w-[30rem]">

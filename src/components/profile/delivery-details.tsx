@@ -1,6 +1,7 @@
 "use client";
 import { Dictionary } from "@/app/lang/dictionaries";
 import { useDeliveryOptionId } from "@/hooks/useDeliveryOptionId";
+import formatPrice from "../../../format";
 import { DeliveryItem, DeliveryOption } from "@/schemas/DbSchema";
 
 interface DeliveryDetailsProps {
@@ -44,7 +45,7 @@ export default function DeliveryDetails({
               <div className="mt-4">
                 <h3>{deliveryOption.name}</h3>
                 <p>{deliveryOption.description}</p>
-                <p>{deliveryOption.price}</p>
+                <p>{formatPrice(deliveryOption.price, "EUR")}</p>
               </div>
             )}
           </>

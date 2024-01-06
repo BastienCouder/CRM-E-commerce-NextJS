@@ -1,5 +1,5 @@
 "use client";
-import formatPrice from "@/lib/format";
+import formatPrice from "../../../format";
 import Image from "next/image";
 import Link from "next/link";
 import QuantitySelector from "./quantity-update";

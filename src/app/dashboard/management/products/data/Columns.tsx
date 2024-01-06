@@ -6,7 +6,7 @@ import { statuses, priorities } from "./data";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 
-import formatPrice from "@/lib/format";
+import formatPrice from "../../../../../../format";
 import Image from "next/image";
 import { DataTableRowActions } from "../components/DataTableRowActions";
 import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader";
