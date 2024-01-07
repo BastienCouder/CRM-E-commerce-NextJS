@@ -8,6 +8,7 @@ import { useState } from "react";
 import { AiFillCreditCard, AiOutlineUser } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
 import { CartItem, OrderItem } from "@/schemas/DbSchema";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface OrdersProps {
   order: OrderProps;
@@ -19,7 +20,7 @@ export default function Orders({ order }: OrdersProps) {
   );
 
   return (
-    <div className="my-12">
+    <ScrollArea className="h-[80vh] px-4">
       <ul className="space-y-8">
         {order?.orderItems?.map((orderItem: OrderItem, index: number) => {
           const dateValue = new Date(orderItem.createdAt!);
@@ -259,6 +260,6 @@ export default function Orders({ order }: OrdersProps) {
           );
         })}
       </ul>
-    </div>
+    </ScrollArea>
   );
 }

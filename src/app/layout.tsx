@@ -6,6 +6,8 @@ import { Inter } from "next/font/google";
 import { getDictionary } from "@/app/lang/dictionaries";
 import { getCart } from "@/lib/db/cart";
 import NavBar from "./(pages)/Navbar/NavBar";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,18 +29,23 @@ export default async function RootLayout({
   const dict = await getDictionary(lang);
   const cart = await getCart();
   // const auto = await aggregateAndCleanUpVisits();
+  const session = await auth();
 
   return (
-    <html lang="fr" className={`${inter.variable}`}>
-      <body className={cn("min-h-screen bg-background font-sans antialiased")}>
-        <AnimationProvider>
-          <NavBar dict={dict} cart={cart} />
-          <main>{children}</main>
-          {/* <CookieBanner /> */}
-        </AnimationProvider>
+    <SessionProvider session={session}>
+      <html lang="fr" className={`${inter.variable}`}>
+        <body
+          className={cn("min-h-screen bg-background font-sans antialiased")}
+        >
+          <AnimationProvider>
+            <NavBar dict={dict} cart={cart} />
+            <main>{children}</main>
+            {/* <CookieBanner /> */}
+          </AnimationProvider>
 
-        <Toaster expand={false} position="bottom-left" />
-      </body>
-    </html>
+          <Toaster expand={false} position="bottom-left" />
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

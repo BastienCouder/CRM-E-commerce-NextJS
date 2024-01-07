@@ -3,6 +3,7 @@
 import { currentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { updateCart } from "./create-order-session";
+import { sendOrderEmail } from "@/lib/email/order";
 
 export async function handleOrderCreation(session_id: string) {
   if (!session_id) {
@@ -33,29 +34,41 @@ export async function handleOrderCreation(session_id: string) {
         where: { deleteAt: null },
       });
 
-      if (!cart) {
-        throw new Error("No cart found");
-      }
-
       const orderItem = await prisma.orderItems.findFirst({
         where: { isPaid: false },
       });
 
-      if (!orderItem) {
-        throw new Error("No unpaid order items found");
+      if (!cart && !orderItem) {
+        return;
       }
 
       await prisma.orderItems.update({
-        where: { id: orderItem.id },
+        where: { id: orderItem?.id },
+        include: {
+          cart: {
+            include: {
+              cartItems: {
+                where: { deleteAt: null },
+                include: {
+                  product: true,
+                },
+              },
+            },
+          },
+          deliveryItems: true,
+          deliveryOption: true,
+        },
         data: { isPaid: true },
       });
 
-      await updateCart(cart.id, session.id);
+      await updateCart(cart?.id!, session.id);
 
       await prisma.stripeSession.update({
         where: { stripeId: session_id },
         data: { isProcessed: true },
       });
+
+      await sendOrderEmail(session.email!, orderItem);
     });
   } catch (error) {
     console.error("Error during order creation:", error);

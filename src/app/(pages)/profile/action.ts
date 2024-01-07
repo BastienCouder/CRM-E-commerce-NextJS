@@ -15,6 +15,7 @@ export async function updateUser(formData: FormData) {
   if (!name && !email) {
     return;
   }
+
   await prisma.user.update({
     where: {
       id: session.id,

@@ -144,7 +144,7 @@ export default function DeliveryInfo({
   }, [delivery]);
 
   return (
-    <div className="space-y-4">
+    <>
       <ul className="space-y-4 w-[35rem]">
         {delivery?.deliveryItems &&
           delivery.deliveryItems.map((deliveryItem: DeliveryItem) => (
@@ -342,6 +342,6 @@ export default function DeliveryInfo({
           </form>
         </Form>
       )}
-    </div>
+    </>
   );
 }

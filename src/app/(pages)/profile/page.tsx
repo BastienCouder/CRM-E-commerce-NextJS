@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getOrder } from "@/lib/db/order";
-import Menu from "../../../components/profile/interface-profile";
+import Menu from "@/components/profile/interface-profile";
 import { getDelivery } from "@/lib/db/delivery";
 import { auth } from "@/auth";
 
