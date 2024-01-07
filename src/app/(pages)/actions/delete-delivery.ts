@@ -37,4 +37,5 @@ async function designateNextDefaultDeliveryItem(
   }
 
   revalidatePath("/cart/delivery");
+  revalidatePath("/profile");
 }

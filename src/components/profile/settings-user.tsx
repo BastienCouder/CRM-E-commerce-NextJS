@@ -15,9 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState, useTransition } from "react";
-import { Session } from "next-auth";
 import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
 import { settings } from "@/app/(auth)/actions/setting";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useSession } from "next-auth/react";
@@ -27,11 +25,7 @@ import { FormError } from "../auth/form-error";
 import { FormSuccess } from "../auth/form-success";
 import { Switch } from "../ui/switch";
 
-interface SettingsUserProps {
-  session: Session | null;
-}
-
-export default function SettingsUser({ session }: SettingsUserProps) {
+export default function SettingsUser() {
   const user = useCurrentUser();
 
   const [error, setError] = useState<string | undefined>();

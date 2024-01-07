@@ -24,7 +24,7 @@ export default function NavContent({
 }: NavContentProps) {
   const mainNavData = [
     { name: `${dict.nav.home}`, path: `${urls.home}` },
-    { name: `${dict.nav.collection}`, path: `${urls.store}` },
+    { name: `${dict.nav.collection}`, path: `${urls.shop}` },
   ];
 
   const footerNavData = [

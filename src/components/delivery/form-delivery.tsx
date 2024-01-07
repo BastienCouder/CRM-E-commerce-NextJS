@@ -1,6 +1,5 @@
 "use client";
-import { useCallback, useState } from "react";
-import { Session } from "next-auth";
+import { useState, useTransition } from "react";
 
 import {
   Select,
@@ -22,31 +21,34 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { z } from "zod";
+import { useSession } from "next-auth/react";
+import { FormError } from "../auth/form-error";
+import { FormSuccess } from "../auth/form-success";
+import { DeliveryFormSchema } from "@/schemas";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import {
-  DeliverySchema,
-  DeliveryValues,
-  defaultDeliveryValues,
-} from "@/lib/zod";
-import { DeliveryOption } from "@prisma/client";
+import { processDeliveryForm } from "@/app/(pages)/actions/process-delivery-form";
 
-interface FormDeliveryProps {
-  processDeliveryForm: any;
-  session: Session | null;
-}
+export default function FormDelivery() {
+  const session = useCurrentUser();
 
-export default function FormDelivery({
-  processDeliveryForm,
-  session,
-}: FormDeliveryProps) {
-  const form = useForm<DeliveryValues>({
-    resolver: zodResolver(DeliverySchema),
-    defaultValues: defaultDeliveryValues,
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
+  const { update } = useSession();
+  const [isPending, startTransition] = useTransition();
+
+  const form = useForm<z.infer<typeof DeliveryFormSchema>>({
+    resolver: zodResolver(DeliveryFormSchema),
+    defaultValues: {
+      name: undefined,
+      email: session?.email || undefined,
+      city: undefined,
+      postcode: undefined,
+      country: undefined,
+      tel: undefined,
+    },
   });
-
-  const [formVisible, setFormVisible] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const countries = [
     "Allemagne",
@@ -61,34 +63,21 @@ export default function FormDelivery({
     "Roumanie",
     "Royaume-uni",
   ];
-
-  const [selectedDeliveryOption, setSelectedDeliveryOption] =
-    useState<DeliveryOption | null>(null);
-
-  const onSubmit = async (data: DeliveryValues) => {
-    if (!session || !session.user) {
-      setError("Veuillez vous connecter");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("surname", data.surname);
-    formData.append("email", data.email);
-    formData.append("address", data.address);
-    formData.append("country", data.country);
-    formData.append("postcode", data.postcode);
-    formData.append("city", data.city);
-    formData.append("tel", data.tel);
-
-    try {
-      await processDeliveryForm(formData, selectedDeliveryOption!);
-      toast.success("Addresse de livraison ajoutée avec succès");
-      form.reset();
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
+  const onSubmit = (values: z.infer<typeof DeliveryFormSchema>) => {
+    if (session) {
+      startTransition(() => {
+        processDeliveryForm(values)
+          .then((data) => {
+            if (data.error) {
+              setError(data.error);
+            } else if (data.success) {
+              update();
+              form.reset();
+              setSuccess(data.success);
+            }
+          })
+          .catch(() => setError("Something went wrong!"));
+      });
     }
   };
 
@@ -184,7 +173,7 @@ export default function FormDelivery({
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="bg-foreground text-background">
                       <SelectValue placeholder="Pays" />
                     </SelectTrigger>
                   </FormControl>
@@ -228,8 +217,10 @@ export default function FormDelivery({
               </FormItem>
             )}
           />
+          <FormError message={error} />
+          <FormSuccess message={success} />
           <div className="pt-4">
-            <Button aria-label="ajouter" type="submit">
+            <Button disabled={isPending} aria-label="ajouter" type="submit">
               Ajouter
             </Button>
           </div>

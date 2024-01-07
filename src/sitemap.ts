@@ -19,7 +19,7 @@ export default async function sitemap() {
     const routes = [
       "",
       "/wishlist",
-      "/store",
+      "/shop",
       "/profile",
       "/cart",
       "/cart/delivery",

@@ -3,43 +3,56 @@
 import { DeliveryProps, createDelivery, getDelivery } from "@/lib/db/delivery";
 import { prisma } from "@/lib/prisma";
 import { validateEmail } from "@/lib/utils";
+import { DeliveryFormSchema } from "@/schemas";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 
-export async function processDeliveryForm(formData: FormData): Promise<void> {
+export const processDeliveryForm = async (
+  values: z.infer<typeof DeliveryFormSchema>
+) => {
   const delivery = (await getDelivery()) ?? (await createDelivery());
-  await createOrUpdateDeliveryItem(delivery, formData);
-  revalidatePath("/cart/delivery");
+  const result = await createOrUpdateDeliveryItem(delivery, values);
+  if (result.success) {
+    revalidatePath("/cart/delivery");
+    revalidatePath("/profile");
+    return { success: "Create Form Delivery!" };
+  } else {
+    return { error: "Invalid form data" };
+  }
+};
+
+interface CreateOrUpdateDeliveryItemResult {
+  success: boolean;
 }
 
 async function createOrUpdateDeliveryItem(
   delivery: DeliveryProps,
-  formData: FormData
-): Promise<void> {
-  const formDataValues = extractFormDataValues(formData);
-
+  values: z.infer<typeof DeliveryFormSchema>
+): Promise<CreateOrUpdateDeliveryItemResult> {
   if (
-    !validateFormData(formDataValues) ||
-    (formDataValues.email && !validateEmail(formDataValues.email))
+    !validateFormData(values) ||
+    (values.email && !validateEmail(values.email))
   ) {
-    throw new Error("Invalid form data");
+    return { success: false };
+  } else {
+    const newDeliveryItem = await prisma.deliveryItems.create({
+      data: {
+        delivery: { connect: { id: delivery.id } },
+        name: values.name ?? "",
+        surname: values.surname ?? "",
+        email: values.email ?? "",
+        address: values.address ?? "",
+        postcode: values.postcode ?? "",
+        city: values.city ?? "",
+        country: values.country ?? "",
+        tel: values.tel ?? "",
+        deleteAt: null,
+      },
+    });
+
+    await setDefaultDeliveryItem(delivery.id, newDeliveryItem.id);
+    return { success: true };
   }
-
-  const newDeliveryItem = await prisma.deliveryItems.create({
-    data: {
-      delivery: { connect: { id: delivery.id } },
-      name: formDataValues.name ?? "",
-      surname: formDataValues.surname ?? "",
-      email: formDataValues.email ?? "",
-      address: formDataValues.address ?? "",
-      postcode: formDataValues.postcode ?? "",
-      city: formDataValues.city ?? "",
-      country: formDataValues.country ?? "",
-      tel: formDataValues.tel ?? "",
-      deleteAt: null,
-    },
-  });
-
-  await setDefaultDeliveryItem(delivery.id, newDeliveryItem.id);
 }
 
 async function setDefaultDeliveryItem(
@@ -54,19 +67,6 @@ async function setDefaultDeliveryItem(
     where: { id: deliveryItemId },
     data: { Default: true },
   });
-}
-
-function extractFormDataValues(formData: FormData) {
-  return {
-    name: formData.get("name")?.toString(),
-    surname: formData.get("surname")?.toString(),
-    email: formData.get("email")?.toString(),
-    address: formData.get("address")?.toString(),
-    postcode: formData.get("postcode")?.toString(),
-    city: formData.get("city")?.toString(),
-    country: formData.get("country")?.toString(),
-    tel: formData.get("tel")?.toString(),
-  };
 }
 
 export interface FormDataValues {

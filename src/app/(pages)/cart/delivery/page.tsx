@@ -11,7 +11,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { designateDefaultDeliveryItem } from "@/app/(pages)/actions/designate-delivery-form";
-import { removeDeliveryItem } from "@/app/(pages)/actions/remove-deliveryItem";
+import { removeDeliveryItem } from "@/app/(pages)/actions/delete-delivery";
 import { processDeliveryForm } from "@/app/(pages)/actions/process-delivery-form";
 
 export async function generateMetadata({

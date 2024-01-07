@@ -1,4 +1,5 @@
 "use client";
+
 import { DeliveryProps } from "@/lib/db/delivery";
 import { Session } from "next-auth";
 import { useCallback, useEffect, useState } from "react";
@@ -27,6 +28,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { DeliverySchema, DeliveryValues } from "@/lib/zod";
 import { DeliveryItem } from "@/schemas/DbSchema";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 interface DeliveryInfoProps {
   delivery: DeliveryProps | null;
@@ -36,7 +38,6 @@ interface DeliveryInfoProps {
     deliveryItemId: string,
     formData: FormData
   ) => Promise<void>;
-  session: Session | null;
 }
 
 export default function DeliveryInfo({
@@ -44,8 +45,8 @@ export default function DeliveryInfo({
   setDefaultDeliveryItem,
   DeleteDeliveryItem,
   UpdateDeliveryForm,
-  session,
 }: DeliveryInfoProps) {
+  const session = useCurrentUser();
   const [selectedDeliveryItem, setSelectedDeliveryItem] = useState<
     string | undefined
   >(delivery?.deliveryItems.find((item: DeliveryItem) => item.Default)?.id);
@@ -106,7 +107,7 @@ export default function DeliveryInfo({
 
   const onSubmit = useCallback(
     async (data: DeliveryValues) => {
-      if (!session || !session.user) {
+      if (!session) {
         setError("Veuillez vous connecter");
         return;
       }

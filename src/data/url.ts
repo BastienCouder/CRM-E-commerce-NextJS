@@ -1,6 +1,6 @@
 const urls = {
   home: `/`,
-  store: `/store`,
+  shop: `/shop`,
   profile: `/profile`,
   products: `/products`,
   cart: `/cart`,

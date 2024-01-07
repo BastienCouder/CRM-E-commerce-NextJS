@@ -1,16 +1,14 @@
 "use client";
-import { useState } from "react";
-import { BsFillBoxSeamFill } from "react-icons/bs";
-import { AiFillFileText } from "react-icons/ai";
-import { Session } from "next-auth";
 
+import { useState } from "react";
+import { Session } from "next-auth";
 import Orders from "@/components/profile/orders-details";
 import { OrderProps } from "@/lib/db/order";
 import { DeliveryProps } from "@/lib/db/delivery";
-import Info from "./profile-page";
+import InformationUser from "./information-user";
 import { LogoutButton } from "../auth/logout-button";
 import SettingsUser from "./settings-user";
-import { LogOut, Settings, Tag } from "lucide-react";
+import { Box, FileStack, LogOut, Settings, Tag } from "lucide-react";
 
 interface InterfaceProfileProps {
   session: Session | null;
@@ -44,7 +42,7 @@ export default function InterfaceProfile({
                 selectedMenuItem === "orders" ? "text-white" : ""
               }`}
             >
-              <BsFillBoxSeamFill size={24} />
+              <Box size={24} />
               <p>mes commandes</p>
             </div>
             {/* User Info */}
@@ -54,7 +52,7 @@ export default function InterfaceProfile({
                 selectedMenuItem === "userInfo" ? "text-white" : ""
               }`}
             >
-              <AiFillFileText size={24} />
+              <FileStack size={24} />
               <p>mes informations</p>
             </div>
             {/* Settings */}
@@ -92,7 +90,7 @@ export default function InterfaceProfile({
         {/* Content based on selected menu item */}
         {selectedMenuItem === "orders" && <Orders order={order} />}
         {selectedMenuItem === "userInfo" && (
-          <Info delivery={delivery} session={session} />
+          <InformationUser delivery={delivery} session={session} />
         )}
         {selectedMenuItem === "settings" && <SettingsUser session={session} />}
         {/* {selectedMenuItem === "newsletter" && <Newsletter />} */}

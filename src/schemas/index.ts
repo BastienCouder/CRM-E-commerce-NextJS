@@ -68,3 +68,14 @@ export const RegisterSchema = z.object({
     message: "Name is required",
   }),
 });
+
+export const DeliveryFormSchema = z.object({
+  name: z.string().min(3, { message: "Name is required" }),
+  surname: z.string().min(3, { message: "Surname is required" }),
+  email: z.string().email({ message: "Invalid email format" }),
+  tel: z.string().min(6, { message: "Telephone number is required" }),
+  address: z.string().min(6, { message: "Address is required" }),
+  postcode: z.string().min(3, { message: "Postcode is required" }),
+  country: z.string().min(3, { message: "Country is required" }),
+  city: z.string().min(3, { message: "City is required" }),
+});

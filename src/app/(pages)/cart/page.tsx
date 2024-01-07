@@ -56,7 +56,7 @@ export default async function Cart({ params: { lang } }: CartProps) {
             <>
               <div className="flex flex-col lg:flex-row gap-y-4 items-center gap-x-16">
                 <p>{dict.cart.empty_cart}</p>
-                <Link href={urls.store}>
+                <Link href={urls.shop}>
                   <Button aria-label={dict.actions.back_to_store}>
                     {dict.cart.continue_shopping}
                   </Button>

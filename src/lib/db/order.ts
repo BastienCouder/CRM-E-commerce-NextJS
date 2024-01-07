@@ -20,6 +20,9 @@ export async function getOrder(): Promise<OrderProps | null> {
       include: {
         orderItems: {
           where: { isPaid: true },
+          orderBy: {
+            createdAt: "desc",
+          },
           include: {
             cart: {
               include: {
