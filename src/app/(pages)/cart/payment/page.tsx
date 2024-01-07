@@ -5,7 +5,7 @@ import DeliveryDetails from "@/components/profile/delivery-details";
 import AddToOrder from "@/components/actions/add-to-order";
 import { Metadata } from "next";
 import { getDictionary } from "@/app/lang/dictionaries";
-import website from "@/data/infosWebsite";
+import website from "@/lib/data/infosWebsite";
 import { cache } from "react";
 import { notFound } from "next/navigation";
 import { CartItem, DeliveryItem, DeliveryOption } from "@/schemas/DbSchema";

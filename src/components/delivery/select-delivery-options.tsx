@@ -1,5 +1,5 @@
 import { Dictionary } from "@/app/lang/dictionaries";
-import formatPrice from "../../../format";
+import formatPrice from "../../lib/helpers/format";
 import { DeliveryOption } from "@/schemas/DbSchema";
 
 interface SelectDeliveryOptions {

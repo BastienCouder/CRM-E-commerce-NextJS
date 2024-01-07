@@ -5,7 +5,7 @@ import Loading from "@/app/loading";
 import { CategoryEnum, ColorEnum, ProductSchema } from "@/schemas/DbSchema";
 import { Metadata } from "next";
 import { getDictionary } from "@/app/lang/dictionaries";
-import website from "@/data/infosWebsite";
+import website from "@/lib/data/infosWebsite";
 
 export async function generateMetadata({
   params: { lang },

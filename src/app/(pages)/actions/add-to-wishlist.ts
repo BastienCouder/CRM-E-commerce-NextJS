@@ -28,7 +28,7 @@ export async function addProductToWishlist(productId: string): Promise<void> {
   revalidatePath(`/products/${productId}`);
 }
 
-async function removeProductFromWishlist(
+export async function removeProductFromWishlist(
   productInWishlist: WishlistItem
 ): Promise<void> {
   await prisma.wishlistItems.update({

@@ -10,6 +10,7 @@ export async function deleteProductFromCart(productId: string): Promise<void> {
   const cartItem = cart.cartItems.find(
     (item: CartItem) => item.productId === productId
   );
+
   if (cartItem) {
     await removeCartItem(cartItem.id);
   }

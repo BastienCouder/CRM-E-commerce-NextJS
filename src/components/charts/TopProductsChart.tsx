@@ -1,5 +1,5 @@
 "use client";
-import formatPrice from "../../../format";
+import formatPrice from "../../lib/helpers/format";
 import React from "react";
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from "recharts";
 

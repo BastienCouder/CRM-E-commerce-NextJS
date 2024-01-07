@@ -23,7 +23,7 @@ import { register } from "@/app/(auth)/actions/register";
 import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 import Link from "next/link";
-import urls from "@/data/url";
+import urls from "@/lib/data/url";
 
 interface RegisterFormProps {
   dict: Dictionary;

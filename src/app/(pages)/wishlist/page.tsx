@@ -2,7 +2,7 @@ import { getWishlist } from "@/lib/db/wishlist";
 import WishlistEntry from "@/components/wishlist/wishlist-entry";
 import { getDictionary } from "@/app/lang/dictionaries";
 import { Metadata } from "next";
-import website from "@/data/infosWebsite";
+import website from "@/lib/data/infosWebsite";
 import { WishlistItem } from "@/schemas/DbSchema";
 import { addProductToCart } from "@/app/(pages)/actions/add-to-cart";
 

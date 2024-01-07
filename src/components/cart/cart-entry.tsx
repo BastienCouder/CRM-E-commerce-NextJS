@@ -1,5 +1,5 @@
 "use client";
-import formatPrice from "../../../format";
+import formatPrice from "../../lib/helpers/format";
 import Image from "next/image";
 import Link from "next/link";
 import QuantitySelector from "./quantity-update";
@@ -7,10 +7,10 @@ import QuantitySelector from "./quantity-update";
 import Loading from "@/app/loading";
 import { X } from "lucide-react";
 import { Dictionary } from "@/app/lang/dictionaries";
-import urls from "@/data/url";
+import urls from "@/lib/data/url";
 import { CartItem } from "@/schemas/DbSchema";
 import { updateCartItemQuantity } from "@/app/(pages)/actions/update-cart-quantity";
-import { removeCartItem } from "@/app/(pages)/actions/delete-product-from-cart";
+import { deleteProductFromCart } from "@/app/(pages)/actions/delete-product-from-cart";
 
 interface CartEntryProps {
   cartItem: CartItem;
@@ -29,7 +29,7 @@ export default function CartEntry({ cartItem, dict }: CartEntryProps) {
   };
 
   const handleDelete = () => {
-    removeCartItem(product.id);
+    deleteProductFromCart(product.id);
   };
 
   return (

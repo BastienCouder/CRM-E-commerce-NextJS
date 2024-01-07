@@ -8,8 +8,8 @@ import { useDisableAnimation } from "@/hooks/useDisableAnimation";
 import WishlistButton from "@/components/nav/wishlist-menu-button";
 import { CartProps } from "@/lib/db/cart";
 import { Dictionary } from "@/app/lang/dictionaries";
-import urls from "@/data/url";
-import website from "@/data/infosWebsite";
+import urls from "@/lib/data/url";
+import website from "@/lib/data/infosWebsite";
 
 interface NavContentProps {
   toggleMenu: () => void;

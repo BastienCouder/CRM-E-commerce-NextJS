@@ -1,4 +1,5 @@
 "use client";
+import { addProductToCart } from "@/app/(pages)/actions/add-to-cart";
 import { Dictionary } from "@/app/lang/dictionaries";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
@@ -6,13 +7,12 @@ import { Toaster, toast } from "sonner";
 
 interface AddToCartButtonProps {
   productId: string;
-  addToCart: (productId: string) => Promise<void>;
   dict: Dictionary;
 }
 
 export default function AddToCartButton({
   productId,
-  addToCart,
+
   dict,
 }: AddToCartButtonProps) {
   const [isPending, startTransition] = useTransition();
@@ -24,7 +24,7 @@ export default function AddToCartButton({
         aria-label={dict.actions.add_to_cart}
         onClick={() => {
           startTransition(async () => {
-            await addToCart(productId);
+            await addProductToCart(productId);
             toast.success(`${dict.favories.succes_product}`);
           });
         }}

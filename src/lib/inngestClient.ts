@@ -1,4 +1,4 @@
-import website from "@/data/infosWebsite";
+import website from "@/lib/data/infosWebsite";
 import { Inngest } from "inngest";
 
 // Create a client to send and receive events

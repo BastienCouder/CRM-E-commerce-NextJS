@@ -3,11 +3,10 @@ import React, { useState, useCallback, useEffect } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import styles from "@/styles/keyframes.module.css";
 import { CartItem, WishlistItem } from "@/schemas/DbSchema";
-import { toast } from "sonner";
+import { addProductToWishlist } from "@/app/(pages)/actions/add-to-wishlist";
 
 interface AddToWishlistProps {
   productId: string;
-  incrementWishlist: (productId: string) => Promise<void>;
   wishlistItems?: WishlistItem[];
   cartItems: CartItem[];
 }
@@ -16,7 +15,6 @@ export default function AddToWishlist({
   productId,
   wishlistItems,
   cartItems,
-  incrementWishlist,
 }: AddToWishlistProps) {
   const [like, setLike] = useState(false);
 
@@ -26,11 +24,7 @@ export default function AddToWishlist({
 
   const handleAddToWishlist = async () => {
     toggleLikeVisibility();
-    await incrementWishlist(productId);
-  };
-
-  const alreadyInCart = async () => {
-    toast.error("Déjà dans le panier");
+    await addProductToWishlist(productId);
   };
 
   const isProductInWishlist = wishlistItems?.find(
@@ -53,10 +47,7 @@ export default function AddToWishlist({
 
   return (
     <>
-      <div
-        className={`w-0 my-4 cursor-pointer`}
-        onClick={!isProductInCart ? handleAddToWishlist : alreadyInCart}
-      >
+      <div className={`w-0 my-4 cursor-pointer`} onClick={handleAddToWishlist}>
         <p>
           {like ? (
             <AiFillHeart

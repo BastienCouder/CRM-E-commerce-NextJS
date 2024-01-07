@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { toast } from "../ui/use-toast";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { saveCronConfig } from "@/data/save-conf-cron";
+import { saveCronConfig } from "@/lib/data/save-conf-cron";
 import { FormCron } from "./form-cron";
 
 const getSchema = (frequency: string) => {

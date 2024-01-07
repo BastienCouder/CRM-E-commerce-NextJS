@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { ThemeProviders } from "@/context/ThemeContext";
 import { MainNav } from "@/components/dashboard/MainNav";
 import Loading from "@/app/loading";
-import { utils } from "@/data/infosWebsite";
+import { utils } from "@/lib/data/infosWebsite";
 import { auth } from "@/auth";
 import { currentRole } from "@/lib/auth";
 

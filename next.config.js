@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -11,6 +12,7 @@ const nextConfig = {
     defaultLocale: "fr",
     locales: ["fr", "en", "zh-CN"],
   },
+
   async rewrites() {
     return [];
   },

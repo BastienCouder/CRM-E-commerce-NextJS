@@ -1,5 +1,5 @@
 "use client";
-import formatPrice from "../../../format";
+import formatPrice from "../../lib/helpers/format";
 import Image from "next/image";
 import Link from "next/link";
 import Loading from "@/app/loading";

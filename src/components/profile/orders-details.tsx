@@ -1,6 +1,9 @@
 "use client";
 import { OrderProps } from "@/lib/db/order";
-import formatPrice, { formatDate, formatDescription } from "../../../format";
+import formatPrice, {
+  formatDate,
+  formatDescription,
+} from "../../lib/helpers/format";
 import { handleStatusChange } from "@/lib/utils";
 import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";

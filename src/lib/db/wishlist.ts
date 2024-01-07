@@ -19,6 +19,12 @@ export async function getWishlist(): Promise<WishlistProps | null> {
       where: {
         userId: session.id,
       },
+      include: {
+        wishlistItems: {
+          where: { deleteAt: null },
+          include: { product: true },
+        },
+      },
     });
   } else {
     const localWishlistId: string | undefined =

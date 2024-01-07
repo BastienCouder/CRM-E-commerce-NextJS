@@ -1,8 +1,8 @@
 import crypto, { randomUUID } from "crypto";
 
-import { getVerificationTokenByEmail } from "@/data/verificiation-token";
-import { getPasswordResetTokenByEmail } from "@/data/password-reset-token";
-import { getTwoFactorTokenByEmail } from "@/data/two-factor-token";
+import { getVerificationTokenByEmail } from "@/lib/data/verificiation-token";
+import { getPasswordResetTokenByEmail } from "@/lib/data/password-reset-token";
+import { getTwoFactorTokenByEmail } from "@/lib/data/two-factor-token";
 import { prisma } from "@/lib/prisma";
 
 export const generateTwoFactorToken = async (email: string) => {

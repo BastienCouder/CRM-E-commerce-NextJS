@@ -4,7 +4,7 @@ import { getDictionary } from "@/app/lang/dictionaries";
 import { env } from "@/lib/env";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import urls from "@/data/url";
+import urls from "@/lib/data/url";
 import Link from "next/link";
 
 export async function generateMetadata({

@@ -1,7 +1,7 @@
 "use client";
 import { Dictionary } from "@/app/lang/dictionaries";
 import { useDeliveryOptionId } from "@/hooks/useDeliveryOptionId";
-import formatPrice from "../../../format";
+import formatPrice from "../../lib/helpers/format";
 import { DeliveryItem, DeliveryOption } from "@/schemas/DbSchema";
 
 interface DeliveryDetailsProps {

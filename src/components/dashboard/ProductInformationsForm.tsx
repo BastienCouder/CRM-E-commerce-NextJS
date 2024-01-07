@@ -25,7 +25,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import formatPrice from "../../../format";
+import formatPrice from "../../lib/helpers/format";
 import Image from "next/image";
 import { ProductProps } from "@/lib/db/product";
 import { Category } from "@/schemas/DbSchema";

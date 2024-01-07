@@ -1,5 +1,5 @@
 import { getDictionary } from "@/app/lang/dictionaries";
-import website from "@/data/infosWebsite";
+import website from "@/lib/data/infosWebsite";
 import { Metadata } from "next";
 
 export async function generateMetadata({

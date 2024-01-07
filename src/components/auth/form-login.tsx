@@ -17,7 +17,7 @@ import ShowPassword from "@/components/auth/show-password";
 import { AiFillGoogleSquare } from "react-icons/ai";
 import { Separator } from "@/components/ui/separator";
 import { Dictionary } from "@/app/lang/dictionaries";
-import urls from "@/data/url";
+import urls from "@/lib/data/url";
 import { LoginSchema } from "@/schemas";
 import { z } from "zod";
 import { useState, useTransition } from "react";

@@ -8,14 +8,14 @@ import { Delivery, DeliveryItem, DeliveryOption } from "@/schemas/DbSchema";
 import SelectDeliveryOptions from "@/components/delivery/select-delivery-options";
 import { Dictionary } from "@/app/lang/dictionaries";
 import { setLocalStorage } from "@/lib/helpers/storageHelper";
+import { removeDeliveryItem } from "@/app/(pages)/actions/delete-delivery";
+import { designateDefaultDeliveryItem } from "@/app/(pages)/actions/designate-delivery-form";
 
 interface SelectDeliveryProps {
   delivery: Delivery | null;
   session: Session | null;
   dict: Dictionary;
   deliveryOptions: DeliveryOption[];
-  designateDefaultDeliveryItem: (deliveryItemId: string) => void;
-  removeDeliveryItem: (deliveryItemId: string) => void;
 }
 
 export default function SelectDelivery({
@@ -23,8 +23,6 @@ export default function SelectDelivery({
   session,
   dict,
   deliveryOptions,
-  designateDefaultDeliveryItem,
-  removeDeliveryItem,
 }: SelectDeliveryProps) {
   const router = useRouter();
   const defaultDeliveryItemId = delivery?.deliveryItems?.find(

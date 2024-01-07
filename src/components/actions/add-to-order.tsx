@@ -9,18 +9,12 @@ import { useTransition } from "react";
 interface AddToOrderProps {
   cartId: string;
   deliveryId: string;
-  createOrder: (
-    cartId: string,
-    deliveryId: string,
-    deliveryOptionId: string
-  ) => Promise<void>;
   dict: Dictionary;
 }
 
 export default function AddToOrder({
   cartId,
   deliveryId,
-  createOrder,
   dict,
 }: AddToOrderProps) {
   const [isPending, startTransition] = useTransition();

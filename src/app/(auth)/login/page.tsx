@@ -5,7 +5,7 @@ import { env } from "@/lib/env";
 import { Metadata } from "next";
 import Link from "next/link";
 import { getDictionary } from "@/app/lang/dictionaries";
-import urls from "@/data/url";
+import urls from "@/lib/data/url";
 
 export async function generateMetadata({
   params: { lang },

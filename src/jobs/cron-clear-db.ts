@@ -1,4 +1,4 @@
-import website from "@/data/infosWebsite";
+import website from "@/lib/data/infosWebsite";
 import { inngestClient } from "@/lib/inngestClient";
 import { prisma } from "@/lib/prisma";
 

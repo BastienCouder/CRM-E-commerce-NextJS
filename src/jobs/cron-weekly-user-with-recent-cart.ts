@@ -1,4 +1,4 @@
-import website from "@/data/infosWebsite";
+import website from "@/lib/data/infosWebsite";
 import { CartProps } from "@/lib/db/cart";
 import { CronProps, getCrons } from "@/lib/db/crons";
 import { UserProps } from "@/lib/db/user";

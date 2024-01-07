@@ -4,7 +4,7 @@ import { CartProps } from "@/lib/db/cart";
 import { Badge } from "@/components/ui/badge";
 import { useDisableAnimation } from "@/hooks/useDisableAnimation";
 import { ShoppingBag } from "lucide-react";
-import urls from "@/data/url";
+import urls from "@/lib/data/url";
 
 interface ShoppingCartMenuButtonProps {
   toggleMenu: () => void;

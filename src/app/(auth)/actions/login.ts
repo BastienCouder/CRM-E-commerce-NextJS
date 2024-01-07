@@ -5,14 +5,14 @@ import { AuthError } from "next-auth";
 
 import { signIn } from "@/auth";
 import { LoginSchema } from "@/schemas/index";
-import { getUserByEmail } from "@/data/user";
-import { getTwoFactorTokenByEmail } from "@/data/two-factor-token";
+import { getUserByEmail } from "@/lib/data/user";
+import { getTwoFactorTokenByEmail } from "@/lib/data/two-factor-token";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import {
   generateVerificationToken,
   generateTwoFactorToken,
 } from "@/lib/tokens";
-import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
+import { getTwoFactorConfirmationByUserId } from "@/lib/data/two-factor-confirmation";
 import {
   sendTwoFactorTokenEmail,
   sendVerificationEmail,

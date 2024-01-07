@@ -20,7 +20,10 @@ import {
   ComposedChart,
   Area,
 } from "recharts";
-import { determineFilterType, formatDateBasedOnFilter } from "../../../format";
+import {
+  determineFilterType,
+  formatDateBasedOnFilter,
+} from "../../lib/helpers/format";
 
 const defaultAnalyticsData: readAnalyticsNewsletterProps = {
   data: [],

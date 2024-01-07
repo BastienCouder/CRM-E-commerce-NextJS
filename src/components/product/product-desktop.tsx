@@ -11,7 +11,6 @@ import { Dictionary } from "@/app/lang/dictionaries";
 import { Product } from "@prisma/client";
 import { CartItem, WishlistItem } from "@/schemas/DbSchema";
 import { addProductToCart } from "@/app/(pages)/actions/add-to-cart";
-import { addProductToWishlist } from "@/app/(pages)/actions/add-to-wishlist";
 
 interface ProductDesktopProps {
   wishlistItems: WishlistItem[] | undefined;
@@ -297,16 +296,11 @@ export default function ProductDesktop({
                       cartItems={cartItems}
                       wishlistItems={wishlistItems}
                       productId={product.id}
-                      incrementWishlist={addProductToWishlist}
                     />
                   </div>
                   <div className="flex flex-col">
                     <div className="flex items-center justify-center gap-2">
-                      <AddToCartButton
-                        productId={product.id}
-                        addToCart={addProductToCart}
-                        dict={dict}
-                      />
+                      <AddToCartButton productId={product.id} dict={dict} />
                     </div>
                   </div>
                 </motion.div>
@@ -356,16 +350,11 @@ export default function ProductDesktop({
                       cartItems={cartItems}
                       wishlistItems={wishlistItems}
                       productId={product.id}
-                      incrementWishlist={addProductToWishlist}
                     />
                   </div>
                   <div className="flex flex-col">
                     <div className="flex items-center justify-center gap-2">
-                      <AddToCartButton
-                        productId={product.id}
-                        addToCart={addProductToCart}
-                        dict={dict}
-                      />
+                      <AddToCartButton productId={product.id} dict={dict} />
                     </div>
                   </div>
                 </div>

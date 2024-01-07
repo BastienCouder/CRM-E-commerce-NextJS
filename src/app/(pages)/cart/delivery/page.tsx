@@ -5,7 +5,7 @@ import FormDelivery from "@/components/delivery/form-delivery";
 import SelectDelivery from "@/components/delivery/select-delivery";
 import { Metadata } from "next";
 import { getDictionary } from "@/app/lang/dictionaries";
-import website from "@/data/infosWebsite";
+import website from "@/lib/data/infosWebsite";
 import { cache } from "react";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
@@ -61,17 +61,12 @@ export default async function Delivery({ params: { lang } }: DeliveryProps) {
             session={session}
             delivery={delivery}
             deliveryOptions={deliveryOptions}
-            designateDefaultDeliveryItem={designateDefaultDeliveryItem}
-            removeDeliveryItem={removeDeliveryItem}
             dict={dict}
           />
         </div>
         <section className="w-2/3 space-y-4">
           <h2>Ajouter une adresse de livraison</h2>
-          <FormDelivery
-            processDeliveryForm={processDeliveryForm}
-            session={session}
-          />
+          <FormDelivery />
         </section>
       </div>
     </>
