@@ -4,12 +4,12 @@ import { MouseEventHandler, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Delivery, DeliveryItem, DeliveryOption } from "@/schemas/DbSchema";
+import { Delivery, DeliveryItem, DeliveryOption } from "@/schemas/db-schema";
 import SelectDeliveryOptions from "@/components/delivery/select-delivery-options";
-import { Dictionary } from "@/app/lang/dictionaries";
+import { Dictionary } from "@/lang/dictionaries";
 import { setLocalStorage } from "@/lib/helpers/storageHelper";
-import { removeDeliveryItem } from "@/app/(pages)/actions/delete-delivery";
-import { designateDefaultDeliveryItem } from "@/app/(pages)/actions/designate-delivery-form";
+import { designateDefaultDeliveryItem } from "@/app/actions/pages/designate-delivery-form";
+import { removeDeliveryItem } from "@/app/actions/pages/delete-delivery";
 
 interface SelectDeliveryProps {
   delivery: Delivery | null;
@@ -137,9 +137,11 @@ export default function SelectDelivery({
           dict={dict}
         />
       </section>
-      <Button aria-label="Valider" onClick={handleSubmit}>
-        Valider
-      </Button>
+      <div>
+        <Button variant={"client"} aria-label="Valider" onClick={handleSubmit}>
+          Valider
+        </Button>
+      </div>
     </>
   );
 }

@@ -58,6 +58,10 @@ const config = {
           foreground: "rgb(var(--card-foreground))",
         },
       },
+      fontFamily: {
+        inter: "var(--font-inter)",
+        prata: "var(--font-prata)",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -67,6 +71,9 @@ const config = {
         smooth: {
           scrollBehavior: "smooth",
         },
+      },
+      backgroundImage: {
+        "nav-pattern": "url('/images/watch3.jpg')",
       },
       keyframes: {
         "accordion-down": {

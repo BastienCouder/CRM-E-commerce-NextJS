@@ -1,6 +1,6 @@
 "use server";
 import { prisma } from "../prisma";
-import { Delivery } from "@/schemas/DbSchema";
+import { Delivery } from "@/schemas/db-schema";
 import { auth } from "@/auth";
 import { currentUser } from "@/lib/auth";
 

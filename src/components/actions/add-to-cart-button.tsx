@@ -1,6 +1,6 @@
 "use client";
-import { addProductToCart } from "@/app/(pages)/actions/add-to-cart";
-import { Dictionary } from "@/app/lang/dictionaries";
+import { addProductToCart } from "@/app/actions/pages/add-to-cart";
+import { Dictionary } from "@/lang/dictionaries";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 import { Toaster, toast } from "sonner";
@@ -20,6 +20,7 @@ export default function AddToCartButton({
   return (
     <>
       <Button
+        variant={"client"}
         disabled={isPending}
         aria-label={dict.actions.add_to_cart}
         onClick={() => {

@@ -1,7 +1,7 @@
 "use server";
 import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "../prisma";
-import { Wishlist, WishlistItem } from "@/schemas/DbSchema";
+import { Wishlist, WishlistItem } from "@/schemas/db-schema";
 import { currentUser } from "@/lib/auth";
 
 export type WishlistProps = Wishlist & {
@@ -22,7 +22,7 @@ export async function getWishlist(): Promise<WishlistProps | null> {
       include: {
         wishlistItems: {
           where: { deleteAt: null },
-          include: { product: true },
+          include: { product: { include: { category: true } } },
         },
       },
     });
@@ -77,7 +77,7 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
         where: { id: localWishlistId },
         include: {
           wishlistItems: {
-            include: { product: true },
+            include: { product: { include: { category: true } } },
           },
         },
       })
@@ -91,7 +91,7 @@ export async function mergeAnonymousWishlistIntoUserCart(userId: string) {
     where: { userId },
     include: {
       wishlistItems: {
-        include: { product: true },
+        include: { product: { include: { category: true } } },
       },
     },
   });

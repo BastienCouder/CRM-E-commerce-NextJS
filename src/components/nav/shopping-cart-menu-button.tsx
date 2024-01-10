@@ -4,7 +4,7 @@ import { CartProps } from "@/lib/db/cart";
 import { Badge } from "@/components/ui/badge";
 import { useDisableAnimation } from "@/hooks/useDisableAnimation";
 import { ShoppingBag } from "lucide-react";
-import urls from "@/lib/data/url";
+import routes from "@/lib/data/routes.json";
 
 interface ShoppingCartMenuButtonProps {
   toggleMenu: () => void;
@@ -19,14 +19,16 @@ export default function ShoppingCartMenuButton({
 
   return (
     <Link
-      href={`${urls.cart}`}
+      href={`${routes.cart}`}
       onClick={() => {
         toggleMenu();
         handleEnableAnimation();
       }}
     >
       <ShoppingBag size={27} />
-      <Badge className="absolute -top-1 -right-2">{cart?.size || 0}</Badge>
+      <Badge className="absolute -top-1 -right-3">
+        {(cart && cart.size) || 0}
+      </Badge>
     </Link>
   );
 }

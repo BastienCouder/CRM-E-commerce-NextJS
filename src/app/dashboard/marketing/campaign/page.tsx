@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/tables/DataTable";
 import { z } from "zod";
 import { getUsersNewsletter } from "@/lib/db/user";
-import { UserSchema } from "@/schemas/DbSchema";
+import { UserSchema } from "@/schemas/db-schema";
 import { Separator } from "@/components/ui/separator";
 import { columns } from "./data/Colums";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

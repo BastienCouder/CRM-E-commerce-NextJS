@@ -3,9 +3,9 @@ import { DeliveryProps } from "@/lib/db/delivery";
 import DeliveryInfo from "./delivery-info";
 import FormDelivery from "@/components/delivery/form-delivery";
 import { Separator } from "@/components/ui/separator";
-import { designateDefaultDeliveryItem } from "@/app/(pages)/actions/designate-delivery-form";
-import { removeDeliveryItem } from "@/app/(pages)/actions/delete-delivery";
-import { updateDeliveryFormData } from "@/app/(pages)/actions/update-delivery-form";
+import { designateDefaultDeliveryItem } from "@/app/actions/pages/designate-delivery-form";
+import { removeDeliveryItem } from "@/app/actions/pages/delete-delivery";
+import { updateDeliveryFormData } from "@/app/actions/pages/update-delivery-form";
 import { ScrollArea } from "../ui/scroll-area";
 
 interface InformationUserProps {

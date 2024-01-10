@@ -3,10 +3,10 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import { getOrderItemId } from "@/lib/db/orderItem";
-import { CartItem, OrderItem } from "@/schemas/DbSchema";
+import { CartItem, OrderItem } from "@/schemas/db-schema";
 import CartItemsDetails from "@/components/profile/cartItems-details";
 import DeliveryDetails from "@/components/profile/delivery-details";
-import { getDictionary } from "@/app/lang/dictionaries";
+import { getDictionary } from "@/lang/dictionaries";
 import TotalOrderDetails from "./TotalOrderDétails";
 
 const getOrderItem = cache(async (id: string) => {

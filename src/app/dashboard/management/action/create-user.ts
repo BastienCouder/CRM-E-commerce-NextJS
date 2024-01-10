@@ -1,6 +1,6 @@
 "use server";
 
-import { UserRole, UserRoleEnum } from "@/schemas/DbSchema";
+import { UserRole, UserRoleEnum } from "@/schemas/db-schema";
 
 export async function sendCreateUser(formData: FormData): Promise<void> {
   const name = formData.get("username")?.toString();

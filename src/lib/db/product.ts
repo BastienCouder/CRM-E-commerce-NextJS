@@ -1,6 +1,6 @@
 "use server";
 import { prisma } from "@/lib/prisma";
-import { Product } from "@/schemas/DbSchema";
+import { Product } from "@/schemas/db-schema";
 import { currentUser, roleCheckMiddleware } from "@/lib/auth";
 
 export type ProductProps = Product & {
@@ -18,6 +18,7 @@ export async function getProducts(): Promise<ProductProps[] | null> {
         orderBy: {
           createdAt: "desc",
         },
+        include: { category: true },
       });
 
       return products as ProductProps[];

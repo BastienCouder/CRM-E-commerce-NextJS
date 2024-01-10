@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import formatPrice, { formatDescription } from "../../lib/helpers/format";
-import { CartItem } from "@/schemas/DbSchema";
-import { Dictionary } from "@/app/lang/dictionaries";
+import { CartItem } from "@/schemas/db-schema";
+import { Dictionary } from "@/lang/dictionaries";
 
 interface CartItemsDetailsProps {
   cartItem: CartItem;

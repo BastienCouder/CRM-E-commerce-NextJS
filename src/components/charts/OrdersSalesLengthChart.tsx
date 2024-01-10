@@ -68,7 +68,6 @@ export default function OrdersSalesLengthChart({
             tickLine={false}
             axisLine={{ stroke: "rgb(var(--foreground))" }}
             style={axisStyle}
-            tickFormatter={(value) => formatDateMonth(value, "short")}
           />
           <YAxis
             scale="linear"

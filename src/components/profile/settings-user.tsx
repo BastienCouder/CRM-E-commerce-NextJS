@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState, useTransition } from "react";
 import { Separator } from "@/components/ui/separator";
-import { settings } from "@/app/(auth)/actions/setting";
+import { settings } from "@/app/actions/auth/setting";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useSession } from "next-auth/react";
 import { SettingsSchema } from "@/schemas";
@@ -24,10 +24,10 @@ import { z } from "zod";
 import { FormError } from "../auth/form-error";
 import { FormSuccess } from "../auth/form-success";
 import { Switch } from "../ui/switch";
+import { notFound } from "next/navigation";
 
 export default function SettingsUser() {
   const user = useCurrentUser();
-
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const { update } = useSession();
@@ -165,7 +165,11 @@ export default function SettingsUser() {
           )}
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button disabled={isPending} aria-label="modifier le profil">
+          <Button
+            variant={"client"}
+            disabled={isPending}
+            aria-label="modifier le profil"
+          >
             Modifier le profil
           </Button>
         </form>

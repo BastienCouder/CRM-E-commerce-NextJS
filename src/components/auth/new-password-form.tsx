@@ -19,7 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/auth/form-error";
 import { FormSuccess } from "@/components/auth/form-success";
-import { newPassword } from "@/app/(auth)/actions/new-password";
+import { newPassword } from "@/app/actions/auth/new-password";
 
 export const NewPasswordForm = () => {
   const searchParams = useSearchParams();
@@ -73,7 +73,12 @@ export const NewPasswordForm = () => {
         </div>
         <FormError message={error} />
         <FormSuccess message={success} />
-        <Button disabled={isPending} type="submit" className="w-full">
+        <Button
+          variant={"client"}
+          disabled={isPending}
+          type="submit"
+          className="w-full"
+        >
           Reset password
         </Button>
       </form>

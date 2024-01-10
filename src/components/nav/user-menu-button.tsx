@@ -22,7 +22,7 @@ export default function UserMenuButton({
       }}
     >
       {isSmallScreen ? (
-        <User size={34} />
+        <User size={27} />
       ) : (
         <p className="text-base uppercase mt-2">mon compte</p>
       )}

@@ -4,13 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import QuantitySelector from "./quantity-update";
 
-import Loading from "@/app/loading";
+import Loading from "@/app/[lang]/loading";
 import { X } from "lucide-react";
-import { Dictionary } from "@/app/lang/dictionaries";
-import urls from "@/lib/data/url";
-import { CartItem } from "@/schemas/DbSchema";
-import { updateCartItemQuantity } from "@/app/(pages)/actions/update-cart-quantity";
-import { deleteProductFromCart } from "@/app/(pages)/actions/delete-product-from-cart";
+import { Dictionary } from "@/lang/dictionaries";
+import routes from "@/lib/data/routes.json";
+import { CartItem } from "@/schemas/db-schema";
+import { updateCartItemQuantity } from "@/app/actions/pages/update-cart-quantity";
+import { deleteProductFromCart } from "@/app/actions/pages/delete-product-from-cart";
 
 interface CartEntryProps {
   cartItem: CartItem;
@@ -40,14 +40,14 @@ export default function CartEntry({ cartItem, dict }: CartEntryProps) {
         </h3>
         <div className="flex gap-8 items-center">
           <Image
-            src={product.imageUrl!}
+            src={product.imageUrl}
             alt={product.name}
             width={200}
             height={200}
             className="rounded-lg w-[70px] h-[70px] object-contain border-white border-[1px]"
           />
 
-          <Link href={`${urls.products}/` + product.id}>
+          <Link href={`${routes.products}/` + product.id}>
             <p className="font-bold capitalize">{product.name}</p>
           </Link>
         </div>

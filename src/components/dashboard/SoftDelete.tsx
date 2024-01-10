@@ -47,14 +47,18 @@ export default function SoftDelete({
         )}
         {type === "settings" && (
           <AlertDialogTrigger className="flex items-center">
-            <Button variant="delete" size="lg">
+            <Button variant="destructive" size="lg">
               Supprimer
             </Button>
           </AlertDialogTrigger>
         )}
         {type === "toolbar" && (
           <AlertDialogTrigger>
-            <Button variant="delete" size="lg" className="h-8 px-2 lg:px-3">
+            <Button
+              variant="destructive"
+              size="lg"
+              className="h-8 px-2 lg:px-3"
+            >
               Supprimer
               <X className="ml-2 h-4 w-4" />
             </Button>

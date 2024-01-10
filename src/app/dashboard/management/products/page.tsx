@@ -3,7 +3,7 @@ import { columns } from "./data/Columns";
 import { z } from "zod";
 import { getProducts } from "@/lib/db/product";
 import { DataTable } from "@/components/tables/DataTable";
-import { ProductSchema } from "@/schemas/DbSchema";
+import { ProductSchema } from "@/schemas/db-schema";
 
 export const metadata: Metadata = {
   title: "Dashboard - Products",
@@ -27,7 +27,6 @@ async function getfetchProducts() {
 
 export default async function ProductsPage() {
   const products = await getfetchProducts();
-  // await useServerNewPriorityToRecentProducts();
 
   return (
     <>

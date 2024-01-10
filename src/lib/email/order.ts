@@ -1,4 +1,4 @@
-import { OrderItem } from "@/schemas/DbSchema";
+import { OrderItem } from "@/schemas/db-schema";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);

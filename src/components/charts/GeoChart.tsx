@@ -1,15 +1,12 @@
 "use client";
-import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
-import { getCode } from "country-list";
 import {
   PopoverContent,
   Popover,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import {
-  Locate,
   LocateFixed,
   Map,
   MapPin,
@@ -69,9 +66,9 @@ export default function GeoChart() {
 
   const enrichedData =
     displayMode === "country"
-      ? geoCountryData.map((data) => ({
+      ? geoCountryData.map((data, index) => ({
           ...data,
-          flag: getCode(data.country!)?.toLowerCase() || "unknown",
+          flag: icons[index % icons.length],
         }))
       : geoCityData.map((data, index) => ({
           ...data,

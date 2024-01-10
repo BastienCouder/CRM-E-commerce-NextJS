@@ -16,15 +16,15 @@ import Link from "next/link";
 import ShowPassword from "@/components/auth/show-password";
 import { AiFillGoogleSquare } from "react-icons/ai";
 import { Separator } from "@/components/ui/separator";
-import { Dictionary } from "@/app/lang/dictionaries";
-import urls from "@/lib/data/url";
+import { Dictionary } from "@/lang/dictionaries";
+import routes from "@/lib/data/routes.json";
 import { LoginSchema } from "@/schemas";
 import { z } from "zod";
 import { useState, useTransition } from "react";
-import { login } from "@/app/(auth)/actions/login";
 import { useSearchParams } from "next/navigation";
 import { FormError } from "./form-error";
 import { FormSuccess } from "./form-success";
+import { login } from "@/app/actions/auth/login";
 
 interface LoginFormProps {
   dict: Dictionary;
@@ -162,7 +162,7 @@ export default function LoginForm({ dict }: LoginFormProps) {
                     <div className="flex flex-col">
                       <small>
                         <Link
-                          href={urls.forgot_password}
+                          href={routes.forgot_password}
                           className="cursor-pointer hover:text-secondary"
                         >
                           {dict.form.forgot_password} ?
@@ -177,7 +177,7 @@ export default function LoginForm({ dict }: LoginFormProps) {
           )}
           <FormError message={error || urlError} />
           <FormSuccess message={success} />
-          <Button aria-label={dict.auth.login} size="lg">
+          <Button variant={"client"} aria-label={dict.auth.login} size="lg">
             {showTwoFactor ? "Confirm" : `${dict.auth.login}`}
           </Button>
         </form>
@@ -185,14 +185,14 @@ export default function LoginForm({ dict }: LoginFormProps) {
       <p className="px-8 text-center text-sm text-muted-foreground first-letter:uppercase">
         {dict.auth.agree}{" "}
         <Link
-          href={urls.legal}
+          href={routes.legal}
           className="underline underline-offset-4 hover:text-secondary"
         >
           {dict.policy.terms_of_service}
         </Link>{" "}
         {dict.pronouns.and}{" "}
         <Link
-          href={urls.privacy}
+          href={routes.privacy}
           className="underline underline-offset-4 hover:text-secondary"
         >
           {dict.policy.privacy_policy}

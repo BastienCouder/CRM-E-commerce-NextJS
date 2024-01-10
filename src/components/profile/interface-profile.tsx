@@ -32,7 +32,7 @@ export default function InterfaceProfile({
         {/* Menu */}
         <div>
           <h1 className="text-2xl uppercase mb-4">
-            Bonjour {session?.user?.name}
+            bonjour {session?.user?.name}
           </h1>
           <div className="flex flex-col gap-2 w-72 text-white">
             {/* Orders */}
@@ -63,7 +63,7 @@ export default function InterfaceProfile({
               }`}
             >
               <Settings size={24} />
-              <p>Paramètres</p>
+              <p>paramètres</p>
             </div>
             {/* Newsletter */}
             <div
@@ -73,7 +73,7 @@ export default function InterfaceProfile({
               }`}
             >
               <Tag size={24} />
-              <p>Newsletter</p>
+              <p>newsletter</p>
             </div>
             {/* Logout */}
             <div
@@ -82,7 +82,7 @@ export default function InterfaceProfile({
               }`}
             >
               <LogOut size={24} />
-              <LogoutButton>Déconnexion</LogoutButton>
+              <LogoutButton>déconnexion</LogoutButton>
             </div>
           </div>
         </div>
@@ -90,9 +90,9 @@ export default function InterfaceProfile({
         {/* Content based on selected menu item */}
         {selectedMenuItem === "orders" && <Orders order={order} />}
         {selectedMenuItem === "userInfo" && (
-          <InformationUser delivery={delivery} session={session} />
+          <InformationUser delivery={delivery} />
         )}
-        {selectedMenuItem === "settings" && <SettingsUser session={session} />}
+        {selectedMenuItem === "settings" && <SettingsUser />}
         {/* {selectedMenuItem === "newsletter" && <Newsletter />} */}
       </div>
     </>

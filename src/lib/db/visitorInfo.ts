@@ -1,6 +1,6 @@
 "use server";
 import { prisma } from "@/lib/prisma";
-import { VisitorInfo } from "@/schemas/DbSchema";
+import { VisitorInfo } from "@/schemas/db-schema";
 import { currentUser, roleCheckMiddleware } from "../auth";
 
 export type VisitorInfoProps = VisitorInfo & {

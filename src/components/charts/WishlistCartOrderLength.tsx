@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Product } from "@/schemas/DbSchema";
+import { Product } from "@/schemas/db-schema";
 import {
   AnalyticsWishlistCartOrder,
   readAnalyticsWishlistCartOrderProps,

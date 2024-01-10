@@ -6,11 +6,11 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useMemo } from "react";
-import { Dictionary } from "@/app/lang/dictionaries";
-import urls from "@/lib/data/url";
+import { Dictionary } from "@/lang/dictionaries";
+import routes from "@/lib/data/routes.json";
 
 interface CheckCartProps {
-  cart: Cart | null;
+  cart: Cart;
   dict: Dictionary;
 }
 
@@ -24,20 +24,20 @@ export default function CheckCart({ cart, dict }: CheckCartProps) {
   const router = useRouter();
 
   const total: number = useMemo(() => {
-    return parseInt(formatPrice(cart?.subtotal || 0, dict.locale));
-  }, [cart?.subtotal, dict.locale]);
+    return parseInt(formatPrice(cart.subtotal || 0, dict.locale));
+  }, [cart.subtotal, dict.locale]);
 
   const totalTVA: string = useMemo(() => {
     return (VAT_RATE * total).toFixed(2);
   }, [total]);
 
   const quantity: number | undefined = useMemo(() => {
-    return cart?.cartItems?.reduce((acc, item) => acc + item?.quantity, 0);
-  }, [cart?.cartItems]);
+    return cart.cartItems.reduce((acc, item) => acc + item?.quantity, 0);
+  }, [cart.cartItems]);
 
   const cartCheckout = () => {
-    if (cart?.size !== 0) {
-      router.push(`${urls.delivery}`);
+    if (cart.size !== 0) {
+      router.push(`${routes.delivery}`);
     } else {
       toast.error(`${dict.cart.no_items_in_cart}`);
     }
@@ -45,7 +45,7 @@ export default function CheckCart({ cart, dict }: CheckCartProps) {
 
   return (
     <section className="flex gap-y-8 lg:space-x-12 flex-col-reverse lg:flex-row items-center lg:items-start">
-      <div className="text-sm lg:text-base tracking-wide space-y-4 bg-card flex flex-col p-4 w-80">
+      <div className="shadow-lg text-sm lg:text-base tracking-wide space-y-4 bg-card flex flex-col p-4 w-80">
         <h2 className="text-2xl mb-4">{dict.cart.recap}</h2>
         <div className="flex justify-between">
           <div className="flex items-center space-x-3">
@@ -57,7 +57,7 @@ export default function CheckCart({ cart, dict }: CheckCartProps) {
             </p>
           </div>
           <p className="sm text-white">
-            {formatPrice(cart?.subtotal || 0, dict.locale)}
+            {formatPrice(cart.subtotal || 0, dict.locale)}
           </p>
         </div>
         <div className="bg-white w-full h-px"></div>
@@ -74,10 +74,14 @@ export default function CheckCart({ cart, dict }: CheckCartProps) {
               <span className="font-bold uppercase">{dict.cart.tva})</span>
             </p>
           </div>
-          <p>{formatPrice(cart?.subtotal || 0, dict.locale)}</p>
+          <p>{formatPrice(cart.subtotal || 0, dict.locale)}</p>
         </div>
         <div className="pt-4">
-          <Button aria-label={dict.actions.confirm} onClick={cartCheckout}>
+          <Button
+            variant={"client"}
+            aria-label={dict.actions.confirm}
+            onClick={cartCheckout}
+          >
             {dict.actions.confirm}
           </Button>
         </div>

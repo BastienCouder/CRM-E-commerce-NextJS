@@ -1,6 +1,5 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Newsletter from "@/app/dashboard/Newsletter";
 import WhislistCartOrderLength from "../charts/WishlistCartOrderLength";
 import TopProductsChart from "../charts/TopProductsChart";
 
@@ -33,9 +32,7 @@ export default function AnalyticsNav({
             />
             <TopProductsChart analyticsData={analyticsProductsData} />
           </TabsContent>
-          <TabsContent value="users">
-            <Newsletter analyticsUsersData={analyticsUsersData} />
-          </TabsContent>
+          <TabsContent value="users"></TabsContent>
           <TabsContent value="orders">
             <div>Notifications Content</div>
           </TabsContent>

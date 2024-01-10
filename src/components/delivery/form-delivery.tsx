@@ -28,7 +28,7 @@ import { FormError } from "../auth/form-error";
 import { FormSuccess } from "../auth/form-success";
 import { DeliveryFormSchema } from "@/schemas";
 import { useForm } from "react-hook-form";
-import { processDeliveryForm } from "@/app/(pages)/actions/process-delivery-form";
+import { processDeliveryForm } from "@/app/actions/pages/process-delivery-form";
 
 export default function FormDelivery() {
   const session = useCurrentUser();
@@ -220,7 +220,12 @@ export default function FormDelivery() {
           <FormError message={error} />
           <FormSuccess message={success} />
           <div className="pt-4">
-            <Button disabled={isPending} aria-label="ajouter" type="submit">
+            <Button
+              variant={"client"}
+              disabled={isPending}
+              aria-label="ajouter"
+              type="submit"
+            >
               Ajouter
             </Button>
           </div>

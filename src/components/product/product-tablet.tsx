@@ -3,29 +3,25 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import AddToCartButton from "@/components/actions/add-to-cart-button";
 import PriceTag from "@/lib/helpers/PriceTag";
-import { Product } from "@prisma/client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { RxCross2 } from "react-icons/rx";
 import AddToWishlist from "@/components/actions/add-to-wishlist";
-
 import { useAnimationContext } from "@/context/AnimationContext";
 import { BsCaretDownFill } from "react-icons/bs";
 import styles from "@/styles/keyframes.module.css";
-import { Dictionary } from "@/app/lang/dictionaries";
-import { CartItem, WishlistItem } from "@/schemas/DbSchema";
-import { addProductToCart } from "@/app/(pages)/actions/add-to-cart";
-import { addProductToWishlist } from "@/app/(pages)/actions/add-to-wishlist";
+import { Dictionary } from "@/lang/dictionaries";
+import { CartItem, Product, WishlistItem } from "@/schemas/db-schema";
+import { replaceUnderscoresWithSpaces } from "@/lib/utils";
 
 interface ProductTabletProps {
   cartItems: CartItem[];
   wishlistItems: WishlistItem[] | undefined;
-  productCategory: string | null | undefined;
   products: Product[];
-  showColor: boolean;
   showCategories: boolean;
+  disableAnimation: boolean;
   product: Product;
-  toggleColorVisibility: () => Promise<void>;
+  handleSecondAnimation: () => void;
   toggleCategoriesVisibility: () => Promise<void>;
   dict: Dictionary;
 }
@@ -34,27 +30,18 @@ export default function ProductTablet({
   wishlistItems,
   products,
   cartItems,
-  showColor,
-  productCategory,
   showCategories,
-  toggleColorVisibility,
-  toggleCategoriesVisibility,
   product,
   dict,
+  disableAnimation,
+  toggleCategoriesVisibility,
+  handleSecondAnimation,
 }: ProductTabletProps) {
   const pathname = usePathname();
 
-  const { disableAnimation, setDisableAnimation } = useAnimationContext();
-
-  const handleSecondAnimation = () => {
-    if (!disableAnimation) {
-      setDisableAnimation(true);
-    }
-  };
-
   return (
     <>
-      <div className="flex h-full py-16 justify-center">
+      <div className="flex h-full py-12 justify-center">
         {!disableAnimation ? (
           <div className="w-1/2 relative">
             <motion.figure
@@ -63,7 +50,7 @@ export default function ProductTablet({
               transition={{ duration: 1 }}
             >
               <Image
-                src={product.imageUrl!}
+                src={product.imageUrl}
                 alt={product.name}
                 width={800}
                 height={2000}
@@ -72,7 +59,7 @@ export default function ProductTablet({
             </motion.figure>
 
             <motion.div
-              className="font-Bodoni absolute text-[5.5rem] top-44 -left-24 sm:-left-24 uppercase text-secondary/5"
+              className="font-prata absolute text-[5.5rem] top-44 -left-24 sm:-left-24 uppercase text-secondary/5"
               initial={{ opacity: 0, x: 50, rotate: -90 }}
               animate={{ opacity: 1, x: 0, rotate: -90 }}
               transition={{ delay: 0.4, duration: 0.6 }}
@@ -84,7 +71,7 @@ export default function ProductTablet({
           <div className="w-1/2 relative">
             <figure>
               <Image
-                src={product.imageUrl!}
+                src={product.imageUrl}
                 alt={product.name}
                 width={800}
                 height={2000}
@@ -93,7 +80,7 @@ export default function ProductTablet({
             </figure>
 
             <motion.div
-              className="font-Bodoni absolute text-[5.5rem] top-44 -left-24 sm:-left-24 uppercase text-secondary/5"
+              className="font-prata absolute text-[5.5rem] top-44 -left-24 sm:-left-24 uppercase text-secondary/5"
               initial={{ opacity: 0, x: 20, rotate: -90 }}
               animate={{ opacity: 1, x: 0, rotate: -90 }}
               transition={{
@@ -111,7 +98,7 @@ export default function ProductTablet({
         )}
 
         {!disableAnimation ? (
-          <div className="w-1/2 mt-32 pl-4 space-y-16">
+          <div className="w-1/2 mt-28 pl-4 space-y-16">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -128,10 +115,12 @@ export default function ProductTablet({
                 className="flex flex-col space-y-3 cursor-pointer"
                 onClick={toggleCategoriesVisibility}
               >
-                <span className="h-[1.5px] bg-secondary/70 px-24"></span>
+                <span className="h-[1.5px] bg-foreground px-24"></span>
                 <h2 className="flex gap-1 items-center text-start text-sm w-full font-Noto uppercase">
                   Catégories -
-                  <span className="capitalize text-sm">{product.category}</span>
+                  <span className="capitalize text-sm">
+                    {replaceUnderscoresWithSpaces(product.category.name)}
+                  </span>
                   <BsCaretDownFill
                     size={15}
                     className={`ml-2 ${
@@ -139,7 +128,7 @@ export default function ProductTablet({
                     } : ""}`}
                   />
                 </h2>
-                <span className="h-[1.5px] bg-secondary/70 px-24"></span>
+                <span className="h-[1.5px] bg-foreground px-24"></span>
               </div>
             </motion.div>
             <motion.div
@@ -185,16 +174,11 @@ export default function ProductTablet({
                 <AddToWishlist
                   wishlistItems={wishlistItems}
                   productId={product.id}
-                  incrementWishlist={addProductToWishlist}
                   cartItems={cartItems}
                 />
               </div>
               <div className="flex items-center justify-start gap-2">
-                <AddToCartButton
-                  productId={product.id}
-                  addToCart={addProductToCart}
-                  dict={dict}
-                />
+                <AddToCartButton productId={product.id} dict={dict} />
               </div>
             </motion.div>
           </div>
@@ -222,10 +206,12 @@ export default function ProductTablet({
                 className="flex flex-col space-y-3 cursor-pointer"
                 onClick={toggleCategoriesVisibility}
               >
-                <span className="h-[1.5px] bg-secondary/70 px-24"></span>
+                <span className="h-[1.5px] bg-foreground px-24"></span>
                 <h2 className="flex gap-1 items-center text-start text-sm w-full font-Noto uppercase">
                   Catégories -
-                  <span className="capitalize text-sm">{product.category}</span>
+                  <span className="capitalize text-sm">
+                    {replaceUnderscoresWithSpaces(product.category.name)}
+                  </span>
                   <BsCaretDownFill
                     size={15}
                     className={`ml-2 ${
@@ -233,7 +219,7 @@ export default function ProductTablet({
                     } : ""}`}
                   />
                 </h2>
-                <span className="h-[1.5px] bg-secondary/70 px-24"></span>
+                <span className="h-[1.5px] bg-foreground px-24"></span>
               </div>
             </div>
             <div className="flex flex-col items-start gap-4">
@@ -252,7 +238,7 @@ export default function ProductTablet({
                   duration: 0.2,
                   delay: 0.2,
                 }}
-                className="w-full"
+                className="w-full pr-12"
               >
                 {product.description}
               </motion.p>
@@ -282,41 +268,15 @@ export default function ProductTablet({
                   cartItems={cartItems}
                   wishlistItems={wishlistItems}
                   productId={product.id}
-                  incrementWishlist={addProductToWishlist}
                 />
               </div>
               <div className="flex items-center justify-start gap-2">
-                <AddToCartButton
-                  productId={product.id}
-                  addToCart={addProductToCart}
-                  dict={dict}
-                />
+                <AddToCartButton productId={product.id} dict={dict} />
               </div>
             </div>
           </div>
         )}
       </div>
-
-      <AnimatePresence>
-        {showColor ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.2 }}
-            className="z-20 fixed top-0 h-screen w-screen flex justify-center items-center bg-primary/80"
-          >
-            <div
-              onClick={toggleColorVisibility}
-              className="absolute top-20 right-10 cursor-pointer"
-            >
-              <RxCross2 size={25} />
-            </div>
-            <ul className="flex flex-col gap-3 items-center justify-center uppercase">
-              {/* /// */}
-            </ul>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
       <AnimatePresence>
         {showCategories ? (
           <motion.div
@@ -324,7 +284,7 @@ export default function ProductTablet({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="z-20 fixed top-0 h-screen w-screen flex justify-center items-center bg-primary/90"
+            className="z-20 fixed top-0 h-screen w-screen flex justify-center items-center bg-background"
           >
             <div
               onClick={toggleCategoriesVisibility}
@@ -332,47 +292,44 @@ export default function ProductTablet({
             >
               <RxCross2 size={25} />
             </div>
-            <ul className="absolute w-[15rem] space-y-4">
-              {products.map((product) => {
-                if (product.category === productCategory) {
-                  const productPath = `/products/${product.id}`;
-                  return (
-                    <motion.li
-                      initial={{ opacity: 0.5, y: -50 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{
-                        opacity: 0,
-                        y: -50,
-                      }}
-                      transition={{ duration: 0.2 }}
-                      key={product.id}
+            <ul className="absolute w-[15rem] space-y-6">
+              {products.map((product: Product) => {
+                const productPath = `/products/${product.name}`;
+
+                return (
+                  <motion.li
+                    initial={{ opacity: 0.5, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{
+                      opacity: 0,
+                      y: -50,
+                    }}
+                    transition={{ duration: 0.2 }}
+                    key={product.id}
+                  >
+                    <Link
+                      href={productPath}
+                      className="w-full flex justify-center"
+                      onClick={handleSecondAnimation}
                     >
-                      <Link
-                        href={productPath}
-                        className="w-full flex justify-center"
-                        onClick={handleSecondAnimation}
-                      >
-                        {pathname === productPath ? (
-                          <>
-                            <div className="bg-secondary h-[1px] w-1/3"></div>
-                            <div className="text-center w-full mx-4 -mt-3 font-Noto uppercase">
-                              {product.name}
-                            </div>
-                            <div className="bg-secondary h-[1px] w-1/3"></div>
-                          </>
-                        ) : (
-                          <>
-                            <div className="text-center w-full mx-8 -mt-3 font-Noto uppercase">
-                              {product.name}
-                            </div>
-                          </>
-                        )}
-                      </Link>
-                    </motion.li>
-                  );
-                } else {
-                  return null;
-                }
+                      {pathname === productPath ? (
+                        <>
+                          <div className="bg-secondary h-[1px] w-1/3"></div>
+                          <div className="text-center w-full mx-4 -mt-3 font-Noto uppercase">
+                            {product.name}
+                          </div>
+                          <div className="bg-secondary h-[1px] w-1/3"></div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="text-xl text-center w-full mx-8 -mt-3 font-Noto uppercase">
+                            {product.name}
+                          </div>
+                        </>
+                      )}
+                    </Link>
+                  </motion.li>
+                );
               })}
             </ul>
           </motion.div>

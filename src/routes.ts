@@ -18,6 +18,14 @@ export const authRoutes = [
   "/new-password",
 ];
 
+export const protectedRoutes = [
+  "/dashboard",
+  "/dashboard/marketing",
+  "/dashboard/settings",
+  "/dashboard/analytics",
+  "/dashboard/management",
+];
+
 /**
  * The prefix for API authentication routes
  * Routes that start with this prefix are used for API authentication purposes

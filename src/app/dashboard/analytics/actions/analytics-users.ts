@@ -1,6 +1,6 @@
 "use server";
 import { prisma } from "@/lib/prisma";
-import { UserRole, UserRoleEnum } from "@/schemas/DbSchema";
+import { UserRole, UserRoleEnum } from "@/schemas/db-schema";
 import {
   format,
   eachMonthOfInterval,

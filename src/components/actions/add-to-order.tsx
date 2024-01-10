@@ -1,6 +1,6 @@
 "use client";
-import { createNewOrder } from "@/app/(pages)/actions/create-order-session";
-import { Dictionary } from "@/app/lang/dictionaries";
+import { createNewOrder } from "@/app/actions/pages/create-order-session";
+import { Dictionary } from "@/lang/dictionaries";
 import { Button } from "@/components/ui/button";
 import { useDeliveryOptionId } from "@/hooks/useDeliveryOptionId";
 import { loadStripe } from "@stripe/stripe-js";
@@ -59,6 +59,7 @@ export default function AddToOrder({
   return (
     <>
       <Button
+        variant={"client"}
         disabled={isPending}
         aria-label={dict.payment.proceed_to_payment}
         onClick={() =>

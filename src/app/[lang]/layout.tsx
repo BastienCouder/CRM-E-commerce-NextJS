@@ -1,0 +1,60 @@
+import "@/styles/globals.css";
+import { AnimationProvider } from "@/context/AnimationContext";
+import { Toaster } from "sonner";
+import { cn } from "@/lib/utils";
+import { Inter, Prata } from "next/font/google";
+import { getDictionary } from "@/lang/dictionaries";
+import { getCart } from "@/lib/db/cart";
+import { SessionProvider } from "next-auth/react";
+import NavBar from "./(pages)/Navbar/NavBar";
+import { auth } from "@/auth";
+import { getCategories } from "@/lib/db/category";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
+const prata = Prata({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-prata",
+});
+
+export default async function RootLayout({
+  children,
+  params: { lang },
+}: {
+  params: {
+    lang: string;
+    locale: string;
+  };
+  children: React.ReactNode;
+}) {
+  const dict = await getDictionary(lang);
+  const cart = await getCart();
+
+  const categories = await getCategories();
+  // const auto = await aggregateAndCleanUpVisits();
+  const session = await auth();
+
+  return (
+    <SessionProvider session={session}>
+      <html lang={lang} className={`${inter.variable} ${prata.variable}`}>
+        <body
+          className={cn("min-h-screen bg-background font-sans antialiased")}
+        >
+          <AnimationProvider>
+            <NavBar dict={dict} cart={cart} categories={categories!} />
+            <main>{children}</main>
+            {/* <CookieBanner /> */}
+          </AnimationProvider>
+
+          <Toaster expand={false} position="bottom-left" />
+        </body>
+      </html>
+    </SessionProvider>
+  );
+}

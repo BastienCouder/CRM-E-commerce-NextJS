@@ -140,7 +140,7 @@ export default function Newsletter({ SubscribeToNewsletter }: NewsletterProps) {
                   </div>
                 </div>
                 <div className="py-4">
-                  <Button aria-label="s'abonner" size="lg">
+                  <Button variant={"client"} aria-label="s'abonner" size="lg">
                     S&apos;abonner
                   </Button>
                 </div>

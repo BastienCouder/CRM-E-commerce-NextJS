@@ -1,6 +1,6 @@
 "use client";
 
-import { logout } from "@/app/(auth)/actions/logout";
+import { logout } from "@/app/actions/auth/logout";
 
 interface LogoutButtonProps {
   children?: React.ReactNode;

@@ -1,6 +1,6 @@
 "use server";
 import { prisma } from "@/lib/prisma";
-import { User } from "@/schemas/DbSchema";
+import { User } from "@/schemas/db-schema";
 import { currentUser, roleCheckMiddleware } from "../auth";
 
 export type UserProps = User & {

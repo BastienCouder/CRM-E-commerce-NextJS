@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/auth/form-error";
 import { FormSuccess } from "@/components/auth/form-success";
-import { reset } from "@/app/(auth)/actions/reset";
+import { reset } from "@/app/actions/auth/reset";
 
 export const ResetForm = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -69,7 +69,12 @@ export const ResetForm = () => {
         </div>
         <FormError message={error} />
         <FormSuccess message={success} />
-        <Button disabled={isPending} type="submit" className="w-full">
+        <Button
+          variant={"client"}
+          disabled={isPending}
+          type="submit"
+          className="w-full"
+        >
           Send reset email
         </Button>
       </form>

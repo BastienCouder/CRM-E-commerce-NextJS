@@ -1,6 +1,6 @@
 "use server";
 import { prisma } from "@/lib/prisma";
-import { Cron } from "@/schemas/DbSchema";
+import { Cron } from "@/schemas/db-schema";
 
 export type CronProps = Cron & {
   ///

@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 35, 35, 35;
+    --background: 25, 25, 25;
     --foreground: 220, 220, 220;
     --card: 45, 45, 45;
     --card-foreground: 221, 229, 236;
@@ -26,7 +26,6 @@
     --ring: 207, 224, 234;
     --radius: 0.5rem;
     --chart: 210, 167, 142;
-    --font-bodoni: "Bodoni", sans-serif;
   }
 
   .light {
@@ -279,7 +278,6 @@
     --ring: 207, 224, 234;
     --radius: 0.5rem;
     --chart: 112, 157, 166;
-    --font-bodoni: "Bodoni", sans-serif;
   }
 }
 
@@ -288,13 +286,31 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground font-inter;
   }
   h1 {
-    @apply font-bold text-xl uppercase;
+    @apply font-bold text-xl uppercase font-prata;
   }
   h2 {
-    @apply font-bold uppercase;
+    @apply font-bold uppercase font-prata;
+  }
+}
+
+body {
+  background: linear-gradient(300deg,#090909,#242424,#110e0e);
+  background-size: 180% 180%;
+  animation: gradient-animation 24s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
@@ -337,86 +353,13 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
 }
 
-/* Ice - Light */
-/* --text: rgb(239, 246, 245);
---background: rgb(252, 253, 253);
---primary: rgb(70, 162, 195);
---secondary: rgb(144, 210, 234);
---accent: rgb(76, 199, 240); */
-
-/* Ice - Dark */
-/* --text: rgb(243, 245, 246);
---background: rgb(2, 3, 3);
---primary: rgb(60, 152, 185);
---secondary: rgb(21, 87, 111);
---accent: rgb(15, 138, 179); */
-
-/* Forest - Light */
-/* --text: rgb(25, 39, 17);
---background: rgb(236, 241, 233);
---primary: rgb(58, 90, 42);
---secondary: rgb(147, 204, 202);
---accent: rgb(67, 120, 142); */
-
-/* Forest - Dark */
-/* --text: rgb(223, 237, 215);
---background: rgb(16, 21, 13);
---primary: rgb(182, 213, 166);
---secondary: rgb(50, 106, 101);
---accent: rgb(113, 165, 188); */
-
-/* Violet - Light */
-/* --text: rgb(18, 13, 28);
---background: rgb(246, 245, 250);
---primary: rgb(105, 73, 188);
---secondary: rgb(164, 142, 220);
---accent: rgb(133, 101, 215); */
-
-/* Violet - Dark */
-/* --text: rgb(232, 227, 242);
---background: rgb(6, 5, 10);
---primary: rgb(100, 67, 182);
---secondary: rgb(57, 35, 113);
---accent: rgb(72, 40, 154); */
-
-/* Boisée - Light */
-/* --text: rgb(9, 16, 15);
---background: rgb(252, 253, 253);
---primary: rgb(98, 167, 155);
---secondary: rgb(208, 169, 199);
---accent: rgb(187, 140, 134); */
-
-/* Boisée - Dark */
-/* --text: rgb(239, 246, 245);
---background: rgb(2, 3, 3);
---primary: rgb(88, 157, 145);
---secondary: rgb(86, 47, 77);
---accent: rgb(121, 74, 68); */
-
-/* Fée - Light */
-/* --text: rgb(216, 248, 247);
---background: rgb(2, 8, 8);
---primary: rgb(142, 236, 231);
---secondary: rgb(131, 22, 91);
---accent: rgb(220, 70, 50); */
-
-/* Fée - Dark */
-/* --text: rgb(7, 39, 38);
---background: rgb(247, 253, 253);
---primary: rgb(19, 113, 109);
---secondary: rgb(233, 124, 193);
---accent: rgb(205, 55, 35); */
-
-/* Earth - Light */
-/* --text: rgb(29, 18, 7);
---background: rgb(252, 248, 242);
---primary: rgb(114, 79, 29);
---secondary: rgb(124, 222, 164);
---accent: rgb(41, 163, 163); */
-
-/* Earth - Dark */
-/* --text: rgb(248, 237, 226);
---background: rgb(12, 9, 3);
---primary: rgb(226, 191, 141);
---secondary: rgb(33, 131, 72);
---accent: rgb(92, 214, 214); */
+.bg-black-filter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: -1;
+}

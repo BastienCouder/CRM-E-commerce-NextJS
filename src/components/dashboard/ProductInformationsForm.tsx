@@ -28,7 +28,7 @@ import { Separator } from "@/components/ui/separator";
 import formatPrice from "../../lib/helpers/format";
 import Image from "next/image";
 import { ProductProps } from "@/lib/db/product";
-import { Category } from "@/schemas/DbSchema";
+import { Category } from "@/schemas/db-schema";
 
 export const productsFormSchema = z.object({
   name: z
@@ -162,7 +162,7 @@ export default function ProductInformationsForm({
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder={product.category} />
+                      <SelectValue placeholder={product.category.name} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -240,7 +240,7 @@ export default function ProductInformationsForm({
               </FormItem>
             )}
           />
-          <Button variant="outline" type="submit" size="xl">
+          <Button variant="outline" type="submit">
             Modifier le produit
           </Button>
         </form>

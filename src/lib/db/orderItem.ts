@@ -1,6 +1,6 @@
 "use server";
 import { prisma } from "@/lib/prisma";
-import { OrderItem } from "@/schemas/DbSchema";
+import { OrderItem } from "@/schemas/db-schema";
 import { currentUser, roleCheckMiddleware } from "../auth";
 
 export type OrderProps = OrderItem & {
@@ -35,7 +35,7 @@ export async function getOrderItems(
               cartItems: {
                 where: { deleteAt: null },
                 include: {
-                  product: true,
+                  product: { include: { category: true } },
                 },
               },
             },
@@ -89,7 +89,7 @@ export async function getOrderItemId(
               cartItems: {
                 where: { deleteAt: null },
                 include: {
-                  product: true,
+                  product: { include: { category: true } },
                 },
               },
             },

@@ -2,11 +2,10 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-
-import { newVerification } from "@/app/(auth)/actions/new-verification";
 import { FormError } from "@/components/auth/form-error";
 import { FormSuccess } from "@/components/auth/form-success";
-import Loading from "@/app/loading";
+import Loading from "@/app/[lang]/loading";
+import { newVerification } from "@/app/actions/auth/new-verification";
 
 export const NewVerificationForm = () => {
   const [error, setError] = useState<string | undefined>();

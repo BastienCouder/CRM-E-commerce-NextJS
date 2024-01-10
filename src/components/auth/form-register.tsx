@@ -15,15 +15,15 @@ import ShowPassword from "@/components/auth/show-password";
 import { Separator } from "@/components/ui/separator";
 import { signIn } from "next-auth/react";
 import { AiFillGoogleSquare } from "react-icons/ai";
-import { Dictionary } from "@/app/lang/dictionaries";
+import { Dictionary } from "@/lang/dictionaries";
 import { useState, useTransition } from "react";
 import { z } from "zod";
 import { RegisterSchema } from "@/schemas";
-import { register } from "@/app/(auth)/actions/register";
 import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 import Link from "next/link";
-import urls from "@/lib/data/url";
+import routes from "@/lib/data/routes.json";
+import { register } from "@/app/actions/auth/register";
 
 interface RegisterFormProps {
   dict: Dictionary;
@@ -143,6 +143,7 @@ export default function RegisterForm({ dict }: RegisterFormProps) {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button
+            variant={"client"}
             disabled={isPending}
             aria-label={dict.auth.register}
             size="lg"
@@ -154,14 +155,14 @@ export default function RegisterForm({ dict }: RegisterFormProps) {
       <p className="px-8 text-center text-sm text-muted-foreground first-letter:uppercase">
         {dict.auth.agree}{" "}
         <Link
-          href={urls.legal}
+          href={routes.legal}
           className="underline underline-offset-4 hover:text-secondary"
         >
           {dict.policy.terms_of_service}
         </Link>{" "}
         {dict.pronouns.and}{" "}
         <Link
-          href={urls.privacy}
+          href={routes.privacy}
           className="underline underline-offset-4 hover:text-secondary"
         >
           {dict.policy.privacy_policy}

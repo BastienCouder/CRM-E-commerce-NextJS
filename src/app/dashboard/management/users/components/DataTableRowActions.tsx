@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
-import { UserSchema } from "@/schemas/DbSchema";
+import { UserSchema } from "@/schemas/db-schema";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;

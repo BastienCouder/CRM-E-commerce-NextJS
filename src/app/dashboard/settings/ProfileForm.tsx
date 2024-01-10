@@ -182,7 +182,7 @@ export default function ProfileForm() {
             ))}
             <Button
               type="button"
-              variant="outline"
+              variant={"client"}
               size="lg"
               className="mt-2"
               onClick={() => append({ value: "" })}
@@ -190,7 +190,9 @@ export default function ProfileForm() {
               Add URL
             </Button>
           </div>
-          <Button type="submit">Update profile</Button>
+          <Button variant={"client"} type="submit">
+            Update profile
+          </Button>
         </form>
       </Form>
     </>

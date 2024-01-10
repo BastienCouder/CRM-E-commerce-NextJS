@@ -1,7 +1,7 @@
 "use server";
 
 import { getWeekNumber } from "../../../../lib/helpers/format";
-import { CartItem, OrderItem } from "@/schemas/DbSchema";
+import { CartItem, OrderItem } from "@/schemas/db-schema";
 import { getOrderItems } from "@/lib/db/orderItem";
 import {
   format,

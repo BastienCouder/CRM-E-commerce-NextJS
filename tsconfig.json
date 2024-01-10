@@ -14,6 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+   
     "plugins": [
       {
         "name": "next"
@@ -23,7 +24,6 @@
       "@/*": ["./src/*"],
     }
   },
-  "types": ["node", "jest"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/[lang]/(pages)/Navbar/NavBar.tsx", "react-email-starter/emails/order-template.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next-sitemap.config.js",],
   "exclude": ["node_modules"]
 }

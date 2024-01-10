@@ -5,7 +5,7 @@ import { UserProps } from "@/lib/db/user";
 import { sendEmail } from "@/lib/email/auth";
 import { inngestClient } from "@/lib/inngestClient";
 import { prisma } from "@/lib/prisma";
-import { CartItem } from "@/schemas/DbSchema";
+import { CartItem } from "@/schemas/db-schema";
 import { subWeeks } from "date-fns";
 
 const crons: CronProps = getCrons();

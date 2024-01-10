@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-
+import buttonStyles from "@/styles/Button.module.css";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
@@ -9,6 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        client: "rounded-none text-sm",
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
@@ -39,14 +40,26 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild, children = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={`relative ${cn(
+          buttonVariants({ variant, size, className })
+        )} ${variant === "client" && buttonStyles.button} `}
         ref={ref}
         {...props}
-      />
+      >
+        {variant === "client" && (
+          <>
+            <span className={buttonStyles.span1}></span>
+            <span className={buttonStyles.span2}></span>
+            <span className={buttonStyles.span3}></span>
+            <span className={buttonStyles.span4}></span>
+          </>
+        )}
+        {children}
+      </Comp>
     );
   }
 );

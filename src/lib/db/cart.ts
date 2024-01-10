@@ -2,7 +2,7 @@
 
 import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "@/lib/prisma";
-import { Cart, CartItem } from "@/schemas/DbSchema";
+import { Cart, CartItem } from "@/schemas/db-schema";
 import { currentUser } from "@/lib/auth";
 
 export type CartProps = Cart & {
@@ -23,7 +23,7 @@ export async function getCart(): Promise<CartProps | null> {
       include: {
         cartItems: {
           where: { deleteAt: null },
-          include: { product: true },
+          include: { product: { include: { category: true } } },
         },
       },
     });
@@ -35,7 +35,7 @@ export async function getCart(): Promise<CartProps | null> {
           include: {
             cartItems: {
               where: { deleteAt: null },
-              include: { product: true },
+              include: { product: { include: { category: true } } },
             },
           },
         })
@@ -94,7 +94,7 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
         where: { id: localCartId },
         include: {
           cartItems: {
-            include: { product: true },
+            include: { product: { include: { category: true } } },
           },
         },
       })
@@ -108,7 +108,7 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
     where: { userId },
     include: {
       cartItems: {
-        include: { product: true },
+        include: { product: { include: { category: true } } },
       },
     },
   });

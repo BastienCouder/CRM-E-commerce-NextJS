@@ -63,8 +63,7 @@ model TwoFactorToken {
 }
 
 model TwoFactorConfirmation {
-    id String @id @default(cuid())
-
+    id     String @id @default(cuid())
     userId String
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -77,12 +76,21 @@ enum UserRole {
     MARKETING_MANAGER
 }
 
-model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
+model Category {
+    id        String    @id @default(cuid())
+    name      String
+    Product   Product[]
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
 
+    @@unique([name])
+}
+
+model User {
+    id                    String                 @id @default(cuid())
+    name                  String?
+    email                 String?                @unique
+    emailVerified         DateTime?
     role                  UserRole               @default(USER)
     password              String?
     newsletter            Boolean?
@@ -92,13 +100,12 @@ model User {
     accounts              Account[]
     isTwoFactorEnabled    Boolean                @default(false)
     twoFactorConfirmation TwoFactorConfirmation?
-
-    Cart     Cart[]
-    Wishlist Wishlist[]
-    Delivery Delivery[]
-    Order    Order[]
-    deleteAt DateTime?
-    Session  Session[]
+    Cart                  Cart[]
+    Wishlist              Wishlist[]
+    Delivery              Delivery[]
+    Order                 Order[]
+    deleteAt              DateTime?
+    Session               Session[]
 }
 
 enum Color {
@@ -107,14 +114,10 @@ enum Color {
     rose
 }
 
-enum Category {
-    bracelet_cuir
-    bracelet_acier
-}
-
 model Product {
     id            String          @id @default(cuid())
     description   String
+    ref           String          @default(cuid())
     imageUrl      String?
     name          String
     status        String
@@ -127,7 +130,10 @@ model Product {
     CartItems     CartItems[]
     WishlistItems WishlistItems[]
     color         Color?
-    category      Category?
+    category      Category?       @relation(fields: [categoryId], references: [id])
+    categoryId    String?
+
+    @@unique([name])
 }
 
 model Cart {

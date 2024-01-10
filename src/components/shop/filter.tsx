@@ -10,15 +10,12 @@ import {
 } from "@/components/ui/sheet";
 import PriceRangeFilter from "@/components/shop/price-range-filter";
 import AccordionFilter from "@/components/shop/accordion-filter";
-import { Category, Color } from "@/schemas/DbSchema";
+import { Color } from "@/schemas/db-schema";
 import { ArrowDown } from "lucide-react";
 
 interface FilterProps {
-  categories: Category[];
   colors: Color[];
-  onSelectCategory: (category: Category | null) => void;
   onSelectColor: (category: Color | null) => void;
-  selectedCategory: Category | null;
   selectedColor: Color | null;
   priceRange: number;
   PriceRangeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -26,25 +23,14 @@ interface FilterProps {
 
 export default function Filter({
   colors,
-  categories,
-  onSelectCategory,
   onSelectColor,
-  selectedCategory,
   selectedColor,
 
   PriceRangeChange,
   priceRange,
 }: FilterProps) {
-  const handleCategoryClick = (category: Category) => {
-    onSelectCategory(category);
-  };
-
   const handleColorClick = (color: Color) => {
     onSelectColor(color);
-  };
-
-  const handleResetCategory = () => {
-    onSelectCategory(null);
   };
 
   const handleResetColor = () => {
@@ -60,13 +46,6 @@ export default function Filter({
         <Separator className="h-[2px]" />
 
         <div className="mt-8 space-y-8 flex flex-col w-full relative">
-          <AccordionFilter<Category>
-            title="Catégories"
-            items={categories}
-            selectedItem={selectedCategory}
-            onItemClick={handleCategoryClick}
-            onReset={handleResetCategory}
-          />
           <AccordionFilter<Color>
             title="Couleurs"
             items={colors}
@@ -97,14 +76,7 @@ export default function Filter({
                 <Separator className="h-[2px]" />
 
                 <div className="mt-8 space-y-8 flex flex-col w-full relative">
-                  <AccordionFilter
-                    title="Catégories"
-                    items={categories}
-                    selectedItem={selectedCategory}
-                    onItemClick={handleCategoryClick}
-                    onReset={handleResetCategory}
-                  />
-                  <AccordionFilter
+                  <AccordionFilter<Color>
                     title="Couleurs"
                     items={colors}
                     selectedItem={selectedColor}

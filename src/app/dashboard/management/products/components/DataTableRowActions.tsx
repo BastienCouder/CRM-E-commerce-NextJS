@@ -14,7 +14,7 @@ import Link from "next/link";
 import Duplicate from "@/components/dashboard/Duplicate";
 import Favorites from "@/components/dashboard/Favorites";
 import Status from "@/components/dashboard/Status";
-import { ProductSchema } from "@/schemas/DbSchema";
+import { ProductSchema } from "@/schemas/db-schema";
 import SoftDelete from "@/components/dashboard/SoftDelete";
 import { updateStatusItem } from "@/app/dashboard/management/action/update-status";
 import { softDeleteItem } from "@/app/dashboard/management/action/soft-delete";

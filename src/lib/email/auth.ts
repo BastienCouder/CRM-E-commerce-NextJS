@@ -1,4 +1,4 @@
-import { CartItem } from "@/schemas/DbSchema";
+import { CartItem } from "@/schemas/db-schema";
 import { env } from "../env";
 import { Resend } from "resend";
 

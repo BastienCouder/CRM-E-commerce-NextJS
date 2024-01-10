@@ -26,9 +26,7 @@ export default function DangerDelete({ itemId, Delete }: DangerDeleteProps) {
     <div className="relative flex select-none items-center rounded-sm py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
       <AlertDialog>
         <AlertDialogTrigger className="flex items-center">
-          <Button variant="destructive" size="xl">
-            Supprimer définitivement
-          </Button>
+          <Button variant="destructive">Supprimer définitivement</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

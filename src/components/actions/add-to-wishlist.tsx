@@ -2,8 +2,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import styles from "@/styles/keyframes.module.css";
-import { CartItem, WishlistItem } from "@/schemas/DbSchema";
-import { addProductToWishlist } from "@/app/(pages)/actions/add-to-wishlist";
+import { CartItem, WishlistItem } from "@/schemas/db-schema";
+import { addProductToWishlist } from "@/app/actions/pages/add-to-wishlist";
 
 interface AddToWishlistProps {
   productId: string;

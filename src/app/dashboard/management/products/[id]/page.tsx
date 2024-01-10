@@ -3,8 +3,9 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import ProductInformationsForm from "@/components/dashboard/ProductInformationsForm";
-import { CategoryEnum } from "@/schemas/DbSchema";
+
 import { updateProduct } from "@/app/dashboard/management/action/update-product";
+import { getCategories } from "@/lib/db/category";
 
 interface ProductPageProps {
   params: {
@@ -35,7 +36,11 @@ export default async function ProductPage({
   params: { id },
 }: ProductPageProps) {
   const product = await getProduct(id);
-  const categories = CategoryEnum.options;
+  const categories = await getCategories();
+
+  if (!product || !categories) {
+    return null;
+  }
 
   return (
     <>

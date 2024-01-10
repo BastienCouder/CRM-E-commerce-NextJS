@@ -1,6 +1,6 @@
-import { Dictionary } from "@/app/lang/dictionaries";
+import { Dictionary } from "@/lang/dictionaries";
 import formatPrice from "../../lib/helpers/format";
-import { DeliveryOption } from "@/schemas/DbSchema";
+import { DeliveryOption } from "@/schemas/db-schema";
 
 interface SelectDeliveryOptions {
   handleDeliveryOptionsChange: (id: string) => void;

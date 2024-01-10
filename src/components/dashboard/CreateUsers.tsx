@@ -43,7 +43,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { UserRoleEnum } from "@/schemas/DbSchema";
+import { UserRoleEnum } from "@/schemas/db-schema";
 import { z } from "zod";
 import { checkIfEmailExists } from "@/lib/helpers/authHelper";
 import { toast } from "sonner";

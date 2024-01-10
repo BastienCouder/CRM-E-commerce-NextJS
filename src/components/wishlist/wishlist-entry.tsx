@@ -2,11 +2,11 @@
 import formatPrice from "../../lib/helpers/format";
 import Image from "next/image";
 import Link from "next/link";
-import Loading from "@/app/loading";
+import Loading from "@/app/[lang]/loading";
 import AddToCartButton from "@/components/actions/add-to-cart-button";
-import { Dictionary } from "@/app/lang/dictionaries";
-import { WishlistItem } from "@/schemas/DbSchema";
-import { addProductToCart } from "@/app/(pages)/actions/add-to-cart";
+import { Dictionary } from "@/lang/dictionaries";
+import { WishlistItem } from "@/schemas/db-schema";
+import AddToWishlist from "../actions/add-to-wishlist";
 
 interface WishlistEntryProps {
   wishlistItem: WishlistItem;
@@ -31,9 +31,9 @@ export default function WishlistEntry({
           {dict.favories.product}
         </h3>
         <div className="flex gap-8 items-center">
-          <Link href={"/products/" + product.id}>
+          <Link href={"/products/" + product.name}>
             <Image
-              src={product.imageUrl!}
+              src={product.imageUrl}
               alt={product.name}
               width={200}
               height={200}
@@ -48,17 +48,15 @@ export default function WishlistEntry({
       </div>
 
       <div className="lg:h-[85px] justify-start items-center w-full flex flex-col lg:space-y-2 lg:items-start">
-        <h3 className="hidden lg:flex text-xs mb-[1.5rem] capitalize">
+        <h3 className="hidden lg:flex text-xs mb-[1.2rem] capitalize">
           {dict.favories.price}
         </h3>
-        <p className="font-bold">{formatPrice(product.price, dict.locale)}</p>
+        <p className="font-bold text-xl md:text-base">
+          {formatPrice(product.price, dict.locale)}
+        </p>
       </div>
-      <div className="w-[80rem] lg:h-[85px] flex justify-center pt-[1.2rem] items-center">
-        <AddToCartButton
-          productId={product.id}
-          addToCart={addProductToCart}
-          dict={dict}
-        />
+      <div className="w-[80rem] lg:h-[85px] flex justify-center items-center">
+        <AddToCartButton productId={product.id} dict={dict} />
       </div>
     </>
   );

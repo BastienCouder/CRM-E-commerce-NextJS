@@ -214,9 +214,7 @@ export function AccountForm() {
             </FormItem>
           )}
         />
-        <Button size="xl" type="submit">
-          Mise à jour du compte
-        </Button>
+        <Button type="submit">Mise à jour du compte</Button>
       </form>
     </Form>
   );

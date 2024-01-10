@@ -13,6 +13,18 @@ export const validateEmail = (email: string): boolean => {
   return emailRegex.test(email.toLowerCase());
 };
 
+export function replaceUnderscoresWithSpaces(str: string) {
+  return str.replace(/_/g, " ");
+}
+
+export function replaceUnderscoresWithDash(str: string) {
+  return str.replace(/_/g, "-");
+}
+
+export function replaceEncodedSpaces(str: string) {
+  return str.replace(/%20/g, " ");
+}
+
 export const validateString = (value: unknown, maxLength: number) => {
   if (!value || typeof value !== "string" || value.length > maxLength) {
     return false;
@@ -51,7 +63,7 @@ export function handleStatusChange(value: string): string {
 }
 
 import { subDays, subMonths, subYears } from "date-fns";
-import { Browser, BrowserEnum, Category } from "@/schemas/DbSchema";
+import { Browser, BrowserEnum, Category } from "@/schemas/db-schema";
 
 export function findCategoryIdByName(
   categoryName: string,
