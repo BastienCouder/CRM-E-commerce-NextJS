@@ -52,7 +52,7 @@ export default async function Product({
   const wishlist = await getWishlist();
   const cart = await getCart();
 
-  if (!cart || !products || !wishlist) {
+  if (!products) {
     return notFound();
   }
 
@@ -60,8 +60,8 @@ export default async function Product({
     <InterfaceProduct
       products={products}
       product={product}
-      wishlistItems={wishlist.wishlistItems}
-      cartItems={cart.cartItems}
+      wishlistItems={wishlist?.wishlistItems}
+      cartItems={cart?.cartItems}
       dict={dict}
     />
   );

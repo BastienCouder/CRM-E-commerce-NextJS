@@ -44,7 +44,7 @@ export default function CartEntry({ cartItem, dict }: CartEntryProps) {
             alt={product.name}
             width={200}
             height={200}
-            className="rounded-lg w-[70px] h-[70px] object-contain border-white border-[1px]"
+            className="rounded-lg w-[70px] h-[70px] object-contain"
           />
 
           <Link href={`${routes.products}/` + product.id}>

@@ -103,7 +103,6 @@ export const WishlistSchema: z.ZodSchema<any> = z.lazy(() =>
     createdAt: z.date(),
     updatedAt: z.date(),
     deleteAt: z.date().nullable(),
-
     wishlistItems: z.array(WishlistItemSchema).optional(),
   })
 );

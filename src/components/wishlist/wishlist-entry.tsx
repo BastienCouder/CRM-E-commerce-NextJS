@@ -20,10 +20,6 @@ export default function WishlistEntry({
 }: WishlistEntryProps) {
   const { product } = wishlistItem;
 
-  if (!product) {
-    return <Loading />;
-  }
-
   return (
     <>
       <div className="justify-end items-center w-full flex flex-col lg:items-start">
@@ -37,7 +33,7 @@ export default function WishlistEntry({
               alt={product.name}
               width={200}
               height={200}
-              className="rounded-lg w-[70px] h-[70px] border-white border-[1px] object-contain"
+              className="rounded-lg w-[70px] h-[70px] object-contain"
             />
           </Link>
 
@@ -55,7 +51,7 @@ export default function WishlistEntry({
           {formatPrice(product.price, dict.locale)}
         </p>
       </div>
-      <div className="w-[80rem] lg:h-[85px] flex justify-center items-center">
+      <div className="w-[80rem] pt-6 flex justify-center items-center">
         <AddToCartButton productId={product.id} dict={dict} />
       </div>
     </>

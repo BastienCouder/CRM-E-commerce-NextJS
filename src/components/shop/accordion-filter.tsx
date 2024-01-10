@@ -24,10 +24,10 @@ export default function AccordionFilter<T extends Color>({
   onReset,
 }: AccordionFilterProps<T>) {
   return (
-    <div className="flex w-full relative">
-      <Accordion className="flex w-full relative" type="single" collapsible>
-        <AccordionItem value="item-1">
-          <AccordionTrigger className="font-Noto">{title}</AccordionTrigger>
+    <>
+      <Accordion className="flex w-[10rem] relative" type="single" collapsible>
+        <AccordionItem value="item-1" className="w-full">
+          <AccordionTrigger>{title}</AccordionTrigger>
           <ul className="w-full">
             {items.map((item) => {
               return (
@@ -37,7 +37,7 @@ export default function AccordionFilter<T extends Color>({
                     className="cursor-pointer"
                   >
                     <div
-                      className={`text-xs font-Noto text-start uppercase ${
+                      className={`text-xs  text-start uppercase ${
                         selectedItem === item ? "text-secondary" : "text-white"
                       }`}
                     >
@@ -58,6 +58,6 @@ export default function AccordionFilter<T extends Color>({
           <X size={15} />
         </div>
       )}
-    </div>
+    </>
   );
 }

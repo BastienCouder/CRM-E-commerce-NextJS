@@ -3,38 +3,37 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function main() {
-  //   const userId = "clr5d1t280000glp1nk3af1m4";
-  //   const user = await prisma.user.findUnique({
-  //     where: {
-  //       id: userId,
-  //     },
-  //   });
-  //   if (user) {
-  //     // Mise à jour du champ "isAdmin" pour définir l'utilisateur comme administrateur
-  //     const updatedUser = await prisma.user.update({
-  //       where: {
-  //         id: userId,
-  //       },
-  //       data: {
-  //         role: "ADMIN",
-  //       },
-  //     });
-  //     console.log(updatedUser);
-  //   }
-  // }
+  const userId = "clr7w4pji0006iljagxmcfg1u";
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+  if (user) {
+    // Mise à jour du champ "isAdmin" pour définir l'utilisateur comme administrateur
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        role: "ADMIN",
+      },
+    });
+    console.log(updatedUser);
+  }
   //   console.log(`L'utilisateur  est maintenant administrateur.`);
   // } else {
   //   console.log("Utilisateur non trouvé.");
   // }
-  const category = await prisma.category.update({
-    where: {
-      id: "clr7qsjzs0000pfkd0hltr48o",
-    },
-    data: {
-      name: "formal",
-    },
-  });
-  console.log(category);
+  // const category = await prisma.category.update({
+  //   where: {
+  //     id: "clr7qsjzs0000pfkd0hltr48o",
+  //   },
+  //   data: {
+  //     name: "formal",
+  //   },
+  // });
+  // console.log(category);
   // const colorId = "6543ebe837fe0b8d20918e67";
   // const categoryId = "653aa6eef14338a1dca7ff19";
   // const productId = "6548fe48162c51153c648d0c";
@@ -63,7 +62,7 @@ async function main() {
   // });
   // const product = await prisma.product.create({
   //   data: {
-  //     name: "Produit 2",
+  //     name: "scs7t15545scscs",
   //     description:
   //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
   //     price: 9000,
@@ -75,7 +74,6 @@ async function main() {
   //   },
   // });
   // console.log(product);
-
   //   });
   // const deliveryOptions = [
   //   {

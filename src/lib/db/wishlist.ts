@@ -32,6 +32,12 @@ export async function getWishlist(): Promise<WishlistProps | null> {
     wishlist = localWishlistId
       ? await prisma.wishlist.findUnique({
           where: { id: localWishlistId },
+          include: {
+            wishlistItems: {
+              where: { deleteAt: null },
+              include: { product: { include: { category: true } } },
+            },
+          },
         })
       : null;
   }
@@ -42,7 +48,7 @@ export async function getWishlist(): Promise<WishlistProps | null> {
 
   return {
     ...wishlist,
-    size: wishlist.wishlistItems?.reduce((acc: number) => acc + 1, 0),
+    size: wishlist.wishlistItems.reduce((acc: number) => acc + 1, 0),
   };
 }
 

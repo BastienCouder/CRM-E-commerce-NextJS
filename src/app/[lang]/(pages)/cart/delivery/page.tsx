@@ -1,4 +1,3 @@
-import Loading from "@/app/[lang]/loading";
 import { getDelivery } from "@/lib/db/delivery";
 import FormDelivery from "@/components/delivery/form-delivery";
 import SelectDelivery from "@/components/delivery/select-delivery";
@@ -41,7 +40,7 @@ export default async function Delivery({ params: { lang } }: DeliveryProps) {
   const dict = await getDictionary(lang);
 
   if (!delivery || !deliveryOptions) {
-    return notFound();
+    return null;
   }
 
   return (

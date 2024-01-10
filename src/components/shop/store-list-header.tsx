@@ -1,69 +1,63 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+"use client";
+
 import Search from "@/components/shop/search";
 import { ChangeEvent } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Color } from "@/schemas/db-schema";
+import Filter from "./filter";
 
 interface StoreListHeaderProps {
   searchTerm: string;
   onSearchChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  productsCount: number;
   selectedSort: string;
   onSortAlphabetically: () => void;
   onSortReverseAlphabetically: () => void;
+  colors: Color[];
+  onSelectColor: (category: Color | null) => void;
+  selectedColor: Color | null;
+  priceRange: number;
+  PriceRangeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function StoreListHeader({
   searchTerm,
   onSearchChange,
-  productsCount,
   selectedSort,
   onSortAlphabetically,
   onSortReverseAlphabetically,
+  colors,
+  onSelectColor,
+  selectedColor,
+  priceRange,
+  PriceRangeChange,
 }: StoreListHeaderProps) {
   return (
-    <div className="mb-4 w-full flex flex-col md:flex-row gap-y-4 md:gap-0 md:justify-between items-start relative">
-      <div className="md:hidden w-full space-y-2 relative">
+    <section className="mb-4 w-full lg:w-2/3 flex flex-col lg:flex-row gap-y-4 lg:gap-0 jsutify-center lg:justify-between items-center relative">
+      <div className="h-12 lg:w-1/5">
+        <Link href={"/"}>
+          <Image
+            src={"/svg/logo.svg"}
+            alt="logo"
+            height={400}
+            width={240}
+            className="-mt-6 lg:-mt-12 lg:h-[160px] h-[120px] w-[120px] lg:w-full lg:aspect-square lg:object-contain object-cover"
+          />
+        </Link>
+      </div>
+      <div className="w-4/5 flex flex-col lg:flex-row gap-4">
         <Search searchTerm={searchTerm} onSearchChange={onSearchChange} />
+        <Filter
+          colors={colors}
+          selectedColor={selectedColor}
+          onSelectColor={onSelectColor}
+          priceRange={priceRange}
+          PriceRangeChange={PriceRangeChange}
+          onSortAlphabetically={onSortAlphabetically}
+          onSortReverseAlphabetically={onSortReverseAlphabetically}
+          selectedSort={selectedSort}
+        />
       </div>
-
-      <div className="font-bold">
-        Produits : <span>{productsCount}</span>
-      </div>
-
-      <div className="hidden md:block">
-        <Search searchTerm={searchTerm} onSearchChange={onSearchChange} />
-      </div>
-      <Accordion className="-mt-4 w-[10rem]" type="single" collapsible>
-        <AccordionItem value="item-1" className="relative">
-          <AccordionTrigger className="text-sm md:text-base font-Noto">
-            Trier
-          </AccordionTrigger>
-          <AccordionContent>
-            <p
-              className={`text-sm cursor-pointer ${
-                selectedSort === "A-Z" ? "text-secondary" : "text-white"
-              }`}
-              onClick={onSortAlphabetically}
-            >
-              Ordre A-Z
-            </p>
-          </AccordionContent>
-          <AccordionContent>
-            <p
-              className={`text-sm cursor-pointer ${
-                selectedSort === "Z-A" ? "text-secondary" : "text-white"
-              }`}
-              onClick={onSortReverseAlphabetically}
-            >
-              Ordre Z-A
-            </p>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
+    </section>
   );
 }

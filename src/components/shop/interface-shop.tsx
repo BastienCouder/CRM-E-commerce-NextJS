@@ -6,7 +6,6 @@ import { Color, Product, Category } from "@/schemas/db-schema";
 import CardProduct from "@/components/shop/card-product";
 import StoreListHeader from "@/components/shop/store-list-header";
 import { Dictionary } from "@/lang/dictionaries";
-import Filter from "./filter";
 
 interface InterfaceStoreProps {
   products: Product[];
@@ -84,40 +83,38 @@ export default function InterfaceStore({
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="w-full flex flex-col md:pt-10"
+      className="w-full flex flex-col"
     >
-      <div className="w-full flex flex-col xl:flex-row">
-        <div className="mt-4 xl:w-3/4 mx-8 md:mx-20 xl:mx-0 xl:mr-12 flex flex-col xl:pl-20 ">
-          <StoreListHeader
-            searchTerm={searchTerm}
-            onSearchChange={handleSearch}
-            productsCount={filteredProducts.length}
-            selectedSort={selectedSort}
-            onSortAlphabetically={handleSortAlphabetically}
-            onSortReverseAlphabetically={handleSortReverseAlphabetically}
-          />
+      <div className="mt-4 w-full flex flex-col">
+        <StoreListHeader
+          searchTerm={searchTerm}
+          onSearchChange={handleSearch}
+          selectedSort={selectedSort}
+          onSortAlphabetically={handleSortAlphabetically}
+          onSortReverseAlphabetically={handleSortReverseAlphabetically}
+          colors={colors}
+          selectedColor={selectedColor}
+          onSelectColor={handleColorSelect}
+          priceRange={priceRange}
+          PriceRangeChange={handlePriceRangeChange}
+        />
 
-          <Separator />
-          <div className="bg-card">
-            <Filter
-              colors={colors}
-              selectedColor={selectedColor}
-              onSelectColor={handleColorSelect}
-              priceRange={priceRange}
-              PriceRangeChange={handlePriceRangeChange}
-            />
-          </div>
-          <ul className="mt-4 mb-8 xl:mb-0 w-full pb-4 flex justify-center lg:justify-start flex-wrap gap-8">
-            {filteredProducts.map((product) => (
+        <Separator />
+        <div className="bg-card"></div>
+        <ul className="px-4 gap-y-4 w-full flex justify-center lg:justify-start flex-wrap">
+          {filteredProducts.map((product) => (
+            <li
+              key={product.id}
+              className="w-full md:w-1/2 lg:w-1/4 p-2 pt-8 border-b border-foreground"
+            >
               <CardProduct
                 product={product}
-                key={product.id}
                 selectedColor={selectedColor}
                 dict={dict}
               />
-            ))}
-          </ul>
-        </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </motion.div>
   );

@@ -41,11 +41,26 @@ export default auth((req: any) => {
     return null;
   }
 
+  if (!isLoggedIn && !isPublicRoute) {
+    let callbackUrl = nextUrl.pathname;
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search;
+    }
+
+    // const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+    // console.log(isLoggedIn);
+
+    // return Response.redirect(
+    //   new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+    // );
+  }
+
   const { pathname } = req.nextUrl;
 
-  if (pathname === "/sitemap.xml") {
+  if (pathname === "/sitemap.xml" || pathname === "/dashboard") {
     return NextResponse.next();
   }
+
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
