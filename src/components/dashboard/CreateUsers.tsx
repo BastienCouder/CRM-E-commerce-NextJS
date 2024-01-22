@@ -49,7 +49,7 @@ import { checkIfEmailExists } from "@/lib/helpers/authHelper";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { sendCreateUser } from "@/app/dashboard/management/action/create-user";
+import { sendCreateUser } from "@/app/dashboard/(management)/action/create-user";
 
 export default function CreateUsers() {
   const [open, setOpen] = React.useState(false);
@@ -132,6 +132,11 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
           message: "L'e-mail n'existe pas",
         }
       ),
+    password: z
+      .string({ required_error: "Un mot de passe est requis" })
+      .min(6, {
+        message: "Minimum 6 characters required",
+      }),
     username: z
       .string({
         required_error: "Le nom d'utilisateur est requis",
@@ -211,6 +216,21 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
                 <FormLabel>Username</FormLabel>
                 <FormControl>
                   <Input placeholder="Username" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="grid gap-2">
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Mot de passe</FormLabel>
+                <FormControl>
+                  <Input placeholder="Mot de passe" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

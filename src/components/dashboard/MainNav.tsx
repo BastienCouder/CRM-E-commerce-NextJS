@@ -5,16 +5,16 @@ import { Separator } from "@/components/ui/separator";
 import { User, Moon, Settings } from "lucide-react";
 import { AreaNav } from "./AreaNav";
 import ColorCircles from "./ColorCircles";
+import { ThemeSwitcher } from "./theme-switcher";
 
 type NavSectionProps = {
   title: string;
-  variant: "main" | "management" | "analytics" | "marketing";
+  variant: "main" | "management" | "marketing";
 };
 
 const navSections: NavSectionProps[] = [
   { title: "Dashboard", variant: "main" },
   { title: "Gestion", variant: "management" },
-  { title: "Analytics", variant: "analytics" },
   { title: "Marketing", variant: "marketing" },
 ];
 
@@ -42,7 +42,7 @@ export function MainNav() {
             <Settings size={20} />
           </Link>
         </div> */}
-        <ColorCircles />
+        <ThemeSwitcher />
       </div>
     </nav>
   );

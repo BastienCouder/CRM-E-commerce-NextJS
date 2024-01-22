@@ -12,7 +12,6 @@ export function ThemeProviders({ children }: ThemeProvidersProps) {
     <ThemeProvider
       attribute="class"
       themes={[
-        "ice",
         "red-light",
         "red-dark",
         "green-light",

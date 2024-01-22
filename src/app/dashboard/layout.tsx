@@ -7,6 +7,7 @@ import Loading from "@/app/[lang]/loading";
 import { currentRole } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { redirect } from "next/navigation";
+import CurrentPageIndicator from "@/components/dashboard/CurrentPageIndicator";
 
 export const metadata = {
   title: "Dashboard",
@@ -37,7 +38,7 @@ export default async function DashboardLayout({
               <Suspense fallback={<Loading />}>
                 <div className="h-full w-full mt-4 pb-10 px-4">
                   <div className="flex flex-col gap-y-3">
-                    {/* <CurrentPageIndicator /> */}
+                    <CurrentPageIndicator />
                     {children}
                   </div>
                 </div>

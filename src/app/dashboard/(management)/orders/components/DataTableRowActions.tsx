@@ -1,6 +1,4 @@
 "use client";
-
-import { FoldHorizontalIcon } from "lucide-react";
 import { Row } from "@tanstack/react-table";
 import {
   DropdownMenu,
@@ -10,16 +8,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { FoldHorizontalIcon } from "lucide-react";
 import Link from "next/link";
-import Duplicate from "@/components/dashboard/Duplicate";
-import Favorites from "@/components/dashboard/Favorites";
 import Status from "@/components/dashboard/Status";
-import { ProductSchema } from "@/schemas/db-schema";
 import SoftDelete from "@/components/dashboard/SoftDelete";
-import { updateStatusItem } from "@/app/dashboard/management/action/update-status";
-import { softDeleteItem } from "@/app/dashboard/management/action/soft-delete";
-import { updateProductFavourites } from "@/app/dashboard/management/action/update-product-favorites";
-import { duplicateProduct } from "@/app/dashboard/management/action/duplicate-product";
+import { OrderItemSchema } from "@/schemas/db-schema";
+import { updateStatusItem } from "@/app/dashboard/(management)/action/update-status";
+import { softDeleteItem } from "@/app/dashboard/(management)/action/soft-delete";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -28,7 +23,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const product = ProductSchema.parse(row.original);
+  const order = OrderItemSchema.parse(row.original);
 
   return (
     <DropdownMenu>
@@ -43,38 +38,23 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem>
-          <Link href={`/dashboard/management/products/${product.id}`}>
-            Modifier
+          <Link href={`/dashboard/management/orders/${order.id}`}>
+            Voir le détail
           </Link>
         </DropdownMenuItem>
-        {product.deleteAt === null && (
+        {order.deleteAt === null && (
           <>
-            <DropdownMenuItem>
-              <Duplicate
-                productId={product.id}
-                DuplicateProduct={duplicateProduct}
-                type="actions"
-              />
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Favorites
-                productId={product.id}
-                Favorite={updateProductFavourites}
-                type="actions"
-                productPriority={product.priority}
-              />
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <Status
-              itemId={product.id}
+              itemId={order.id}
               UpdateStatus={updateStatusItem}
               type="actions"
-              data="products"
-              itemStatus={product.status}
+              data="orders"
+              itemStatus={order.status!}
             />
             <DropdownMenuSeparator />
             <SoftDelete
-              itemId={product.id}
+              itemId={order.id}
               SoftDelete={softDeleteItem}
               type="actions"
             />

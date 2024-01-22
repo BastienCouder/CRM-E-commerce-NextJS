@@ -59,13 +59,13 @@ export default async function Payment({ params: { lang } }: PaymentProps) {
         </h1>
         <Separator className="bg-primary" />
         <section className="space-y-8">
-          <article>
+          <article className="space-y-4">
             <h2 className="text-2xl">
               {cart.cartItems.length > 1
                 ? `${dict.payment.products}`
                 : `${dict.payment.product}`}
             </h2>
-            <ul className="mt-8 flex flex flex-col justify-center md:justify-start md:flex-row flex-wrap gap-8 md:gap-24 w-full">
+            <ul className="flex flex flex-col justify-center md:justify-start md:flex-row flex-wrap gap-8 md:gap-x-24 w-full">
               {cart.cartItems.map((cartItem: CartItem) => (
                 <CartItemsDetails
                   key={cartItem.id}
@@ -82,7 +82,6 @@ export default async function Payment({ params: { lang } }: PaymentProps) {
             deliveryOptions={deliveryOptions}
           />
         </section>
-
         <div className="pt-4">
           <AddToOrder cartId={cart.id} deliveryId={delivery.id} dict={dict} />
         </div>

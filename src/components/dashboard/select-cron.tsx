@@ -16,11 +16,16 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "../ui/use-toast";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { saveCronConfig } from "@/lib/data/save-conf-cron";
 import { FormCron } from "./form-cron";
+
+interface SelectCronProps {
+  title: string;
+  id: string;
+}
 
 const getSchema = (frequency: string) => {
   switch (frequency) {
@@ -56,22 +61,12 @@ export const daysOfWeek = [
   { label: "Sunday", value: "SUN" },
 ];
 
-export function SelectCron() {
+export function SelectCron({ title, id }: SelectCronProps) {
   const [frequency, setFrequency] = useState("daily");
 
   const form = useForm({
     resolver: zodResolver(getSchema(frequency)),
   });
-
-  useEffect(() => {
-    form.reset({
-      hour: "",
-      minute: "",
-      weekly: "",
-      dayOfMonth: "",
-    });
-    form.trigger();
-  }, [frequency, form]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     let cronString = "";
@@ -93,13 +88,12 @@ export function SelectCron() {
     console.log(cronString);
 
     try {
-      const id = "unique-id-for-this-config";
       const type = frequency;
 
       const savedConfig = await saveCronConfig(id, type, cronString);
       toast({
-        title: "Cron Config Saved",
-        description: `Cron configuration was saved successfully. ID: ${savedConfig.id}`,
+        title: "Config Cron sauvegardée",
+        description: `La configuration Cron a été sauvegardée avec succès. ID: ${savedConfig.id}`,
       });
     } catch (error) {
       console.error("Error saving cron config:", error);
@@ -116,7 +110,7 @@ export function SelectCron() {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Edit Profile</Button>
+          <Button variant="outline">{title}</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

@@ -1,6 +1,7 @@
 export type Dictionary = {
   [key: string]: any;
 };
+
 const defaultLocale = "fr";
 // Dictionnaires disponibles
 const dictionaries: Record<string, () => Promise<Dictionary>> = {

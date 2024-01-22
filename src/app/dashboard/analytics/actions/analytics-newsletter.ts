@@ -16,7 +16,6 @@ import {
   endOfMonth,
   subMonths,
 } from "date-fns";
-import { revalidatePath } from "next/cache";
 
 export interface NewsletterAnalytics {
   date: string;
@@ -112,8 +111,6 @@ export async function readAnalyticsNewsletter(
         : 100
       : ((thisMonthUsersCount - lastMonthUsersCount) / lastMonthUsersCount) *
         100;
-
-  revalidatePath("/dashboard");
 
   return {
     data: analyticsData,

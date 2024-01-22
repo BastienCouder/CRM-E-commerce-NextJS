@@ -19,23 +19,20 @@ const areaNavItems = [
 
 const managementNavItems = [
   {
-    href: "/dashboard/management/orders",
+    href: "/dashboard/orders",
     label: "Commandes",
     icon: <ShoppingCart size={15} />,
   },
   {
-    href: "/dashboard/management/products",
+    href: "/dashboard/products",
     label: "Produits",
     icon: <PackageOpen size={15} />,
   },
   {
-    href: "/dashboard/management/users",
+    href: "/dashboard/users",
     label: "Utilisateurs",
     icon: <Users2 size={15} />,
   },
-];
-
-const analyticsNavItems = [
   {
     href: "/dashboard/analytics",
     label: "Views",
@@ -45,12 +42,12 @@ const analyticsNavItems = [
 
 const marketingNavItems = [
   {
-    href: "/dashboard/marketing/campaign",
+    href: "/dashboard/campaign",
     label: "Campagne",
     icon: <Paperclip size={15} />,
   },
   {
-    href: "/dashboard/marketing/mail",
+    href: "/dashboard/mail",
     label: "Mail",
     icon: <Mail size={15} />,
   },
@@ -60,7 +57,7 @@ export function AreaNav({
   variant = "main",
   ...props
 }: React.HTMLAttributes<HTMLElement> & {
-  variant?: "main" | "management" | "analytics" | "marketing";
+  variant?: "main" | "management" | "marketing";
 }) {
   const pathname = usePathname();
 
@@ -71,9 +68,6 @@ export function AreaNav({
       break;
     case "management":
       navItems = managementNavItems;
-      break;
-    case "analytics":
-      navItems = analyticsNavItems;
       break;
     case "marketing":
       navItems = marketingNavItems;
@@ -96,7 +90,7 @@ export function AreaNav({
             href={item.href}
             className={cn(
               buttonVariants({ variant: "ghost" }),
-              "w-[10rem] bg-background flex items-center border-none justify-start text-sm font-medium py-2 px-4 gap-x-2",
+              "w-[10rem] bg-none flex items-center border-none justify-start text-sm font-medium py-2 px-4 gap-x-2",
               {
                 "bg-muted hover:bg-muted":
                   item.href !== "/dashboard" && pathname.startsWith(item.href),

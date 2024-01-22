@@ -1,4 +1,4 @@
-import { NextResponse, userAgent } from "next/server";
+import { NextRequest, NextResponse, userAgent } from "next/server";
 import { cookies } from "next/headers";
 import authConfig from "./auth.config";
 import NextAuth from "next-auth";
@@ -14,14 +14,20 @@ const { auth } = NextAuth(authConfig);
 
 let headers = { "accept-language": "en-US,en;q=0.5" };
 let languages = new Negotiator({ headers }).languages();
-let locales = ["fr", "en", "us"];
-let defaultLocale = "fr";
+export let locales = ["fr", "en", "us"];
+export let defaultLocale = "fr";
 
-function getLocale(req: any) {
-  const preferredLanguage = new Negotiator(req).language(locales);
+export function getLocale(
+  req: NextRequest,
+  defaultLocale: string,
+  locales: string[]
+) {
+  const headers = Object.fromEntries(req.headers.entries());
+  const negotiator = new Negotiator({ headers });
+  const preferredLanguage = negotiator.language(locales);
+
   return preferredLanguage || defaultLocale;
 }
-
 export default auth((req: any) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
@@ -57,7 +63,11 @@ export default auth((req: any) => {
 
   const { pathname } = req.nextUrl;
 
-  if (pathname === "/sitemap.xml" || pathname === "/dashboard") {
+  if (
+    pathname === "/sitemap.xml" ||
+    pathname === "/dashboard" ||
+    pathname === "/robots.txt"
+  ) {
     return NextResponse.next();
   }
 
@@ -67,7 +77,7 @@ export default auth((req: any) => {
 
   if (pathnameHasLocale) return NextResponse.next();
 
-  const locale = getLocale(req);
+  const locale = getLocale(req, defaultLocale, locales);
   req.nextUrl.pathname = `/${locale}${pathname}`;
 
   // Visitor tracking logic
@@ -87,7 +97,8 @@ export default auth((req: any) => {
     !url.endsWith(".png") &&
     !url.endsWith(".css") &&
     !url.endsWith(".js") &&
-    !url.endsWith("json")
+    !url.endsWith("json") &&
+    !url.endsWith(".ico")
   ) {
     // console.log(`Page requested: ${url}`);
     // recordVisit(url);

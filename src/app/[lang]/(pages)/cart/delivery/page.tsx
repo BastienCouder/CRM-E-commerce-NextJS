@@ -39,10 +39,6 @@ export default async function Delivery({ params: { lang } }: DeliveryProps) {
   const deliveryOptions = await getDeliveryOptions();
   const dict = await getDictionary(lang);
 
-  if (!delivery || !deliveryOptions) {
-    return null;
-  }
-
   return (
     <>
       <div className="flex flex-col">

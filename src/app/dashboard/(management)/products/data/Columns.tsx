@@ -10,6 +10,7 @@ import formatPrice from "../../../../../lib/helpers/format";
 import Image from "next/image";
 import { DataTableRowActions } from "../components/DataTableRowActions";
 import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader";
+import UpdateStock from "@/components/dashboard/update-stock";
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -91,18 +92,9 @@ export const columns: ColumnDef<any>[] = [
     ),
     cell: ({ row }) => {
       const stock = row.original.stock;
+      const id = row.original.id;
 
-      return (
-        <div className="flex space-x-2">
-          <span
-            className={`max-w-[500px] truncate font-medium ${
-              stock === 0 ? "text-red-500" : ""
-            }`}
-          >
-            {stock ? stock : "Rupture de stock"}
-          </span>
-        </div>
-      );
+      return <UpdateStock initialStock={stock} productId={id} />;
     },
     enableSorting: true,
   },

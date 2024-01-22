@@ -3,7 +3,13 @@
  * These routes do not require authentication
  * @type {string[]}
  */
-export const publicRoutes = ["/", "/wishlist", "cart"];
+export const publicRoutes = [
+  "/",
+  "/wishlist",
+  "cart",
+  "/cart/delivery",
+  "/cart/payment",
+];
 
 /**
  * An array of routes that are used for authentication
@@ -23,7 +29,7 @@ export const protectedRoutes = [
   "/dashboard/marketing",
   "/dashboard/settings",
   "/dashboard/analytics",
-  "/dashboard/management",
+  "/dashboard/orders",
 ];
 
 /**

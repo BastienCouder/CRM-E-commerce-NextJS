@@ -10,11 +10,11 @@ import {
 import Restore from "@/components/dashboard/Restore";
 import SoftDelete from "@/components/dashboard/SoftDelete";
 import DangerDelete from "@/components/dashboard/DangerDelete";
-import { statuses as statusesOrder } from "@/app/dashboard/management/orders/data/data";
-import { statuses as statusesProduct } from "@/app/dashboard/management/products/data/data";
-import { restoreItem } from "@/app/dashboard/management/action/restore";
-import { softDeleteItem } from "@/app/dashboard/management/action/soft-delete";
-import { DeleteItem } from "@/app/dashboard/management/action/delete";
+import { statuses as statusesOrder } from "@/app/dashboard/(management)/orders/data/data";
+import { statuses as statusesProduct } from "@/app/dashboard/(management)/products/data/data";
+import { restoreItem } from "@/app/dashboard/(management)/action/restore";
+import { softDeleteItem } from "@/app/dashboard/(management)/action/soft-delete";
+import { DeleteItem } from "@/app/dashboard/(management)/action/delete";
 
 interface SettingsFormProps<T> {
   itemId: string;

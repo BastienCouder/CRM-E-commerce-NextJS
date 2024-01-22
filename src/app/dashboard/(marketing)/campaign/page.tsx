@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { columns } from "./data/Colums";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import NewsletterChart from "@/components/charts/newsletter-chart";
-import { SelectCron } from "@/components/dashboard/select-cron";
+import ConfCron from "@/components/dashboard/conf-email";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -60,11 +60,11 @@ export default async function NewsletterPage() {
           </div>
         </div>
         <div className="w-full h-full bg-card rounded-lg rounded-tr-none p-4">
-          <SelectCron />
           <Tabs defaultValue="users" className="space-y-4">
             <TabsList>
               <TabsTrigger value="users">Gérer les contacts</TabsTrigger>
               <TabsTrigger value="views">Analytics</TabsTrigger>
+              <TabsTrigger value="crons">Automatisation</TabsTrigger>
             </TabsList>
             <TabsContent value="users">
               <DataTable
@@ -75,6 +75,9 @@ export default async function NewsletterPage() {
             </TabsContent>
             <TabsContent value="views">
               <NewsletterChart />
+            </TabsContent>
+            <TabsContent value="crons">
+              <ConfCron />
             </TabsContent>
           </Tabs>
         </div>

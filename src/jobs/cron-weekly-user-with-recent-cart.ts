@@ -56,7 +56,7 @@ const cronWeeklyUsersWithRecentCartEmailsJob = inngestClient.createFunction(
 
     for (const user of usersWithRecentCart) {
       const cartItems: CartItem[] =
-        user.Cart?.flatMap((cart: CartProps) => cart.cartItems) || [];
+        user.Cart.flatMap((cart: CartProps) => cart.cartItems) || [];
       await sendEmail(user.email!, cartItems);
     }
 

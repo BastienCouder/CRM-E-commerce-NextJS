@@ -3,24 +3,24 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function main() {
-  const userId = "clr7w4pji0006iljagxmcfg1u";
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-  if (user) {
-    // Mise à jour du champ "isAdmin" pour définir l'utilisateur comme administrateur
-    const updatedUser = await prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        role: "ADMIN",
-      },
-    });
-    console.log(updatedUser);
-  }
+  // const userId = "clr7w4pji0006iljagxmcfg1u";
+  // const user = await prisma.user.findUnique({
+  //   where: {
+  //     id: userId,
+  //   },
+  // });
+  // if (user) {
+  //   // Mise à jour du champ "isAdmin" pour définir l'utilisateur comme administrateur
+  //   const updatedUser = await prisma.user.update({
+  //     where: {
+  //       id: userId,
+  //     },
+  //     data: {
+  //       role: "ADMIN",
+  //     },
+  //   });
+  //   console.log(updatedUser);
+  // }
   //   console.log(`L'utilisateur  est maintenant administrateur.`);
   // } else {
   //   console.log("Utilisateur non trouvé.");
@@ -75,30 +75,30 @@ async function main() {
   // });
   // console.log(product);
   //   });
-  // const deliveryOptions = [
-  //   {
-  //     name: "Livraison Standard",
-  //     description: "Livraison en 3-5 jours ouvrables",
-  //     price: 299,
-  //   },
-  //   {
-  //     name: "Livraison Express",
-  //     description: "Livraison en 1-2 jours ouvrables",
-  //     price: 799,
-  //   },
-  // ];
-  // async function seedDeliveryOptions() {
-  //   for (const option of deliveryOptions) {
-  //     await prisma.deliveryOption.create({
-  //       data: {
-  //         name: option.name,
-  //         description: option.description,
-  //         price: option.price,
-  //       },
-  //     });
-  //   }
-  // }
-  // seedDeliveryOptions();
+  const deliveryOptions = [
+    {
+      name: "Livraison Standard",
+      description: "Livraison en 3-5 jours ouvrables",
+      price: 299,
+    },
+    {
+      name: "Livraison Express",
+      description: "Livraison en 1-2 jours ouvrables",
+      price: 799,
+    },
+  ];
+  async function seedDeliveryOptions() {
+    for (const option of deliveryOptions) {
+      await prisma.deliveryOption.create({
+        data: {
+          name: option.name,
+          description: option.description,
+          price: option.price,
+        },
+      });
+    }
+  }
+  seedDeliveryOptions();
 }
 main()
   .catch(async (e) => {

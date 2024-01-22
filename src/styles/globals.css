@@ -18,8 +18,7 @@
     --muted-foreground: 215, 219, 235;
     --accent: 210, 167, 142;
     --accent-foreground: 45, 45, 45;
-    --destructive: 178, 34, 34;
-    --destructive2: 139, 0, 0;
+    --destructive: 238, 68, 68;
     --destructive-foreground: 250, 250, 250;
     --border: 232, 232, 232, 0.5;
     --input: 232, 232, 232;
@@ -66,7 +65,7 @@
     --muted-foreground: 161, 161, 169;
     --accent: 39, 39, 42;
     --accent-foreground: 249, 249, 249;
-    --destructive: 127, 29, 29;
+    --destructive:238, 68, 68;
     --destructive-foreground: 249, 249, 249;
     --border: 39, 39, 42;
     --input: 39, 39, 42;
@@ -111,7 +110,7 @@
     --muted-foreground: 162, 162, 162;
     --accent: 37, 37, 37;
     --accent-foreground: 249, 249, 249;
-    --destructive: 127, 29, 29;
+    --destructive:238, 68, 68;
     --destructive-foreground: 249, 249, 249;
     --border: 37, 37, 37;
     --input: 37, 37, 37;
@@ -157,7 +156,7 @@
     --muted-foreground: 161, 161, 169;
     --accent: 41, 37, 36;
     --accent-foreground: 249, 249, 249;
-    --destructive: 127, 29, 29;
+    --destructive: 238, 68, 68;
     --destructive-foreground: 254, 242, 242;
     --border: 39, 39, 42;
     --input: 39, 39, 42;
@@ -214,7 +213,7 @@
 .violet-light {
   --background: 255, 255, 255;
   --foreground: 2, 6, 17;
-  --card: 255, 255, 255;
+  --card: 250, 250, 250;
   --card-foreground: 2, 6, 17;
   --popover: 255, 255, 255;
   --popover-foreground: 2, 6, 17;
@@ -296,7 +295,7 @@
   }
 }
 
-body {
+.body {
   background: linear-gradient(300deg,#090909,#242424,#110e0e);
   background-size: 180% 180%;
   animation: gradient-animation 24s ease infinite;

@@ -14,6 +14,8 @@ import {
   readAnalyticsVisitorInfos,
 } from "./analytics/actions/analytics-visitors";
 import { readAnalyticsNewsletter } from "./analytics/actions/analytics-newsletter";
+import LatestPurchasedProducts from "@/components/dashboard/last-purshased-products";
+import { getLatestPurchasedProducts } from "./actions/last-purchased-product";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -28,14 +30,7 @@ export default async function Dashboard() {
   const analyticsWishlistCartOrderData = await readAnalyticsWishlistCartOrder();
   const analyticsVisitorInfosData = await readAnalyticsVisitorInfos();
   const analyticsVisitedData = await readAnalyticsVisited();
-
-  // const email = await sendEmail({
-  //   from: "Acme <onboarding@acme.com>",
-  //   to: ["bastien.couder@gmail.com"],
-  //   subject: "Stripe",
-  //   content: StripeWelcomeEmail(),
-  //   text: "bonjour",
-  // });
+  const latestProducts = await getLatestPurchasedProducts();
 
   return (
     <>
@@ -69,16 +64,13 @@ export default async function Dashboard() {
         <section className="flex flex-col gap-y-4">
           <div className="flex gap-x-4">
             <SalesChart />
-            <ViewsChart analyticsData={analyticsVisitedData} />
+            {/* <ViewsChart analyticsData={analyticsVisitedData} /> */}
           </div>
           <div className="flex gap-x-4">
-            <GeoChart />
+            <LatestPurchasedProducts latestProducts={latestProducts} />
             <DeviceChart analyticsData={analyticsVisitorInfosData} />
           </div>
         </section>
-        {/* {orders?.slice(0, 5).map((orderItem, index) => (
-          <LastOrderItem key={index} orderItem={orderItem} />
-        ))} */}
       </div>
     </>
   );

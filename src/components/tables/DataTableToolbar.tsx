@@ -1,6 +1,6 @@
 import { Table } from "@tanstack/react-table";
 import SoftDelete from "@/components/dashboard/SoftDelete";
-import { statuses as orderStatuses } from "@/app/dashboard/management/orders/data/data";
+import { statuses as orderStatuses } from "@/app/dashboard/(management)/orders/data/data";
 import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "@/components/tables/DataTableFacetedFilter";
 import { Button } from "@/components/ui/button";
@@ -9,13 +9,13 @@ import { DataTableViewOptions } from "@/components/tables/DataTableViewOptions";
 import {
   priorities,
   statuses as productStatuses,
-} from "@/app/dashboard/management/products/data/data";
+} from "@/app/dashboard/(management)/products/data/data";
 import { ProductProps } from "@/lib/db/product";
 import { OrderProps } from "@/lib/db/orderItem";
 import { UserProps } from "@/lib/db/user";
 import CreateUsers from "../dashboard/CreateUsers";
-import { roles } from "@/app/dashboard/management/users/data/data";
-import { softDeleteItem } from "@/app/dashboard/management/action/soft-delete";
+import { roles } from "@/app/dashboard/(management)/users/data/data";
+import { softDeleteItem } from "@/app/dashboard/(management)/action/soft-delete";
 import { AllowedVariant } from "./DataTable";
 
 interface DataTableToolbarProps {
@@ -54,7 +54,7 @@ export function DataTableToolbar({ table, variant }: DataTableToolbarProps) {
               table.getColumn("name")?.setFilterValue(event.target.value);
             }
           }}
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="h-8 w-[150px] lg:w-[250px] bg-accent placeholder:text-foregroud text-foreground"
         />
         {variant === "orders" && table.getColumn("status") && (
           <DataTableFacetedFilter

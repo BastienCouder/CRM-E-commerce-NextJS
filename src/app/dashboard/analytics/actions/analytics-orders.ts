@@ -15,7 +15,6 @@ import {
   addWeeks,
   addMonths,
 } from "date-fns";
-import { revalidatePath } from "next/cache";
 
 export interface AnalyticsOrdersData {
   date: string;
@@ -162,8 +161,6 @@ export async function readAnalyticsOrders(
       lastMonthOrderCount,
       currentMonthOrderCount
     );
-
-    revalidatePath("/dashboard");
 
     return {
       data: orderItemsData,

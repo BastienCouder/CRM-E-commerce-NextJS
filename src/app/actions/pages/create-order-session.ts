@@ -19,7 +19,7 @@ export async function createNewOrder(
   }
 
   const order = (await getOrder()) || (await createOrder());
-  const OrderInSession = order?.orderItems?.find(
+  const OrderInSession = order.orderItems.find(
     (item: OrderItem) => item.cartId === cartId
   );
 
@@ -57,10 +57,10 @@ async function updateOrderItem(
     if (deliveryItem) {
       await prisma.orderItems.update({
         where: {
-          id: OrderIncart?.id,
+          id: OrderIncart.id,
         },
         data: {
-          orderId: order?.id,
+          orderId: order.id,
           cartId,
           deliveryItemsId: deliveryItem.id,
           deleteAt: new Date(),
@@ -98,7 +98,7 @@ async function createOrderItem(
       await prisma.orderItems.create({
         data: {
           orderNumber,
-          orderId: order!.id,
+          orderId: order.id,
           cartId,
           deliveryItemsId: deliveryItem.id,
           status: "waiting",
