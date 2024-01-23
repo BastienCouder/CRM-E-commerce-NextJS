@@ -29,7 +29,7 @@ export default function TopProductsChart({
   return (
     <>
       <h2>
-        Top {analyticsData?.topProducts?.length} des produits les plus vendus
+        Top {analyticsData.topProducts.length} des produits les plus vendus
       </h2>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
@@ -44,7 +44,7 @@ export default function TopProductsChart({
             dataKey="totalSales"
             label={(entry) => entry.name}
           >
-            {analyticsData?.topProducts?.map((entry: string, index: number) => (
+            {analyticsData.topProducts.map((entry: string, index: number) => (
               <Cell
                 key={`cell-${entry}`}
                 fill={COLORS[index % COLORS.length]}

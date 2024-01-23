@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { notFound } from "next/navigation";
-import SettingsForm from "@/components/dashboard/SettingsForm";
+import SettingsForm from "@/components/dashboard/settings-form";
 import { updateStatusItem } from "../../../action/update-status";
 
 const getProduct = cache(async (id: string) => {

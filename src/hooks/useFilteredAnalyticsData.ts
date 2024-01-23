@@ -10,7 +10,8 @@ export function useFilteredAnalyticsData<T>(
   T,
   string | { from: Date; to: Date },
   (timeRange: string | { from: Date; to: Date }) => void,
-  { value: string; label: string }[]
+  { value: string; label: string }[],
+  boolean
 ] {
   const options = [
     { value: "week", label: "Cette semaine" },
@@ -23,6 +24,7 @@ export function useFilteredAnalyticsData<T>(
   const [timeRange, setTimeRange] = useState<string | { from: Date; to: Date }>(
     initialTimeRange
   );
+  const [isLoading, setIsLoading] = useState(false);
   const [filteredData, setFilteredData] = useState<T>(defaultValue);
 
   useEffect(() => {
@@ -57,14 +59,18 @@ export function useFilteredAnalyticsData<T>(
       endDate = timeRange.to;
     }
 
+    setIsLoading(true);
+
     fetchData(startDate, endDate)
       .then((response) => {
         setFilteredData(response);
       })
       .catch((error) => {
         console.error("Erreur lors de la récupération des données :", error);
+      })
+      .finally(() => {
+        setIsLoading(false); // Fin du chargement
       });
   }, [timeRange, fetchData]);
-
-  return [filteredData, timeRange, setTimeRange, options];
+  return [filteredData, timeRange, setTimeRange, options, isLoading];
 }

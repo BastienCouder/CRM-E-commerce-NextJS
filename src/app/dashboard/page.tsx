@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import { getOrderItems } from "@/lib/db/orderItem";
-import StatsCard from "@/components/dashboard/StatsCard";
-import SalesChart from "@/components/charts/SalesChart";
+import StatsCard from "@/components/dashboard/stats-card";
+import SalesChart from "@/components/charts/sales-chart";
 import GeoChart from "@/components/charts/GeoChart";
-import DeviceChart from "@/components/charts/DeviceChart";
+import DeviceChart from "@/components/charts/device-chart";
 
 import ViewsChart from "@/components/charts/ViewsChart";
 import { readAnalyticsProducts } from "./analytics/actions/analytics-products";
@@ -59,6 +59,14 @@ export default async function Dashboard() {
             secondaryText={`${analyticsProductsData.salesGrowthPercentage}`}
             type="nbr"
             variant="zap"
+          />
+          <StatsCard
+            title="Profit total"
+            data={analyticsOrdersData}
+            value={analyticsOrdersData.maxSubtotal}
+            secondaryText={`${analyticsOrdersData.subtotalDifferencePercent}`}
+            type="price"
+            variant="trening"
           />
         </section>
         <section className="flex flex-col gap-y-4">

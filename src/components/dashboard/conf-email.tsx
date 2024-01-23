@@ -11,7 +11,7 @@ export default function ConfCron() {
           <li>
             <SelectCron
               id="email-weekly-user-with-recent-cart"
-              title="mail de relance de panier récents"
+              title="Relance de panier récents"
             />
           </li>
         </ul>

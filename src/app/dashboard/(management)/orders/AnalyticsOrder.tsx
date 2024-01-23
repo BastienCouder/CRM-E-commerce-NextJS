@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import OrdersLengthChart from "@/components/charts/OrdersLengthChart";
-import StatsCard from "@/components/dashboard/StatsCard";
+import StatsCard from "@/components/dashboard/stats-card";
 
 interface AnalyticsOrderProps {
   analyticsData: any;

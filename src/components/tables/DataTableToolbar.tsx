@@ -1,5 +1,5 @@
 import { Table } from "@tanstack/react-table";
-import SoftDelete from "@/components/dashboard/SoftDelete";
+import SoftDelete from "@/components/dashboard/soft-delete";
 import { statuses as orderStatuses } from "@/app/dashboard/(management)/orders/data/data";
 import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "@/components/tables/DataTableFacetedFilter";
@@ -13,7 +13,7 @@ import {
 import { ProductProps } from "@/lib/db/product";
 import { OrderProps } from "@/lib/db/orderItem";
 import { UserProps } from "@/lib/db/user";
-import CreateUsers from "../dashboard/CreateUsers";
+import CreateUsers from "../dashboard/create-users";
 import { roles } from "@/app/dashboard/(management)/users/data/data";
 import { softDeleteItem } from "@/app/dashboard/(management)/action/soft-delete";
 import { AllowedVariant } from "./DataTable";

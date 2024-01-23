@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 import { Separator } from "@/components/ui/separator";
-import { SidebarNav } from "@/components/dashboard/SideBar";
+import { SidebarNav } from "@/components/dashboard/side-bar";
 
 export const metadata: Metadata = {
   title: "Forms",

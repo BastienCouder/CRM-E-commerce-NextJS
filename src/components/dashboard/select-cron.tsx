@@ -1,11 +1,8 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import * as z from "zod";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
 import {
   Dialog,
   DialogContent,
@@ -15,7 +12,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-
 import { useState } from "react";
 import { toast } from "../ui/use-toast";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
@@ -46,19 +42,26 @@ const getSchema = (frequency: string) => {
         minute: z.string().min(1).max(59),
         dayOfMonth: z.string().min(1).max(31),
       });
+    case "biweekly":
+    case "triweekly":
+      return z.object({
+        daysOfWeek: z.array(z.string()),
+        hour: z.string().min(1).max(23),
+        minute: z.string().min(1).max(59),
+      });
     default:
       return z.object({});
   }
 };
 
 export const daysOfWeek = [
-  { label: "Monday", value: "MON" },
-  { label: "Tuesday", value: "THU" },
-  { label: "Wednesday", value: "WEd" },
-  { label: "Thursday", value: "THU" },
-  { label: "Friday", value: "FRI" },
-  { label: "Saturday", value: "SAT" },
-  { label: "Sunday", value: "SUN" },
+  { label: "Lundi", value: "MON" },
+  { label: "Mardi", value: "TUE" },
+  { label: "Mercredi", value: "WED" },
+  { label: "Jeudi", value: "THU" },
+  { label: "Vendredi", value: "FRI" },
+  { label: "Samedi", value: "SAT" },
+  { label: "Dimanche", value: "SUN" },
 ];
 
 export function SelectCron({ title, id }: SelectCronProps) {
@@ -85,18 +88,20 @@ export function SelectCron({ title, id }: SelectCronProps) {
         }
         break;
     }
-    console.log(cronString);
 
     try {
       const type = frequency;
 
       const savedConfig = await saveCronConfig(id, type, cronString);
       toast({
-        title: "Config Cron sauvegardée",
-        description: `La configuration Cron a été sauvegardée avec succès. ID: ${savedConfig.id}`,
+        title: "Configuration Cron enregistrée",
+        description: `La configuration Cron a été enregistrée avec succès. ID : ${savedConfig.id}`,
       });
     } catch (error) {
-      console.error("Error saving cron config:", error);
+      console.error(
+        "Erreur lors de l'enregistrement de la configuration Cron :",
+        error
+      );
     }
   };
   const handleFrequencyChange = (newFrequency: string) => {
@@ -114,9 +119,9 @@ export function SelectCron({ title, id }: SelectCronProps) {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Editer la configuration</DialogTitle>
+            <DialogTitle>Éditer la configuration</DialogTitle>
             <DialogDescription>
-              Modifier et sélectionner l&apos;horaire. Cliquez sur Enregistrer
+              Modifiez et sélectionnez l&apos;horaire. Cliquez sur Enregistrer
               lorsque vous avez terminé.
             </DialogDescription>
           </DialogHeader>
@@ -136,6 +141,14 @@ export function SelectCron({ title, id }: SelectCronProps) {
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="monthly" />
               <Label htmlFor="r3">Mensuel</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="biweekly" />
+              <Label htmlFor="biweekly">Deux fois par semaine</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="triweekly" />
+              <Label htmlFor="triweekly">Trois fois par semaine</Label>
             </div>
           </RadioGroup>
           <FormCron form={form} frequency={frequency} onSubmit={onSubmit} />
@@ -158,6 +171,14 @@ export function SelectCron({ title, id }: SelectCronProps) {
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="monthly" />
           <Label htmlFor="r3">Mensuel</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="biweekly" />
+          <Label htmlFor="biweekly">Deux fois par semaine</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="triweekly" />
+          <Label htmlFor="triweekly">Trois fois par semaine</Label>
         </div>
       </RadioGroup>
 

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import StatsCard from "@/components/dashboard/StatsCard";
+import StatsCard from "@/components/dashboard/stats-card";
 import { readAnalyticsNewsletterAnalytics } from "@/app/dashboard/analytics/actions/analytics-users";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/tables/DataTable";

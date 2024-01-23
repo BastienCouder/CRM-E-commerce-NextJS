@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Duplicate from "@/components/dashboard/Duplicate";
-import Favorites from "@/components/dashboard/Favorites";
-import Status from "@/components/dashboard/Status";
+import Duplicate from "@/components/dashboard/duplicate";
+import Favorites from "@/components/dashboard/favorites";
+import Status from "@/components/dashboard/status";
 import { ProductSchema } from "@/schemas/db-schema";
-import SoftDelete from "@/components/dashboard/SoftDelete";
+import SoftDelete from "@/components/dashboard/soft-delete";
 import { updateStatusItem } from "@/app/dashboard/(management)/action/update-status";
 import { softDeleteItem } from "@/app/dashboard/(management)/action/soft-delete";
 import { updateProductFavourites } from "@/app/dashboard/(management)/action/update-product-favorites";

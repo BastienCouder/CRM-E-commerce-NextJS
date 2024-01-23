@@ -3,8 +3,8 @@ import React from "react";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { User, Moon, Settings } from "lucide-react";
-import { AreaNav } from "./AreaNav";
-import ColorCircles from "./ColorCircles";
+import { AreaNav } from "./area-nav";
+import ColorCircles from "./color-circles";
 import { ThemeSwitcher } from "./theme-switcher";
 
 type NavSectionProps = {

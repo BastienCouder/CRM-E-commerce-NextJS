@@ -25,26 +25,27 @@ interface FormCronProps {
   frequency: string;
   onSubmit: SubmitHandler<FieldValues>;
 }
+
 export function FormCron({ form, frequency, onSubmit }: FormCronProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-4">
         <div className="space-y-2">
-          {/* day of month */}
+          {/* Jour du mois */}
           {frequency === "monthly" && (
             <FormField
               control={form.control}
               name="dayOfMonth"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Day of month</FormLabel>
+                  <FormLabel>Jour du mois</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="hour" />
+                        <SelectValue placeholder="Jour du mois" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="max-h-44">
@@ -62,21 +63,24 @@ export function FormCron({ form, frequency, onSubmit }: FormCronProps) {
               )}
             />
           )}
-          {/* weekly */}
+          {/* Hebdomadaire */}
           {frequency === "weekly" && (
             <FormField
               control={form.control}
               name="weekly"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>weekly</FormLabel>
+                  <FormLabel>Jour de la semaine</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue defaultValue={"MON"} />
+                        <SelectValue
+                          defaultValue={"MON"}
+                          placeholder="Jour de la semaine"
+                        />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -93,20 +97,20 @@ export function FormCron({ form, frequency, onSubmit }: FormCronProps) {
             />
           )}
 
-          {/*hour */}
+          {/* Heure */}
           <FormField
             control={form.control}
             name="hour"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Hour</FormLabel>
+                <FormLabel>Heure</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="hour" />
+                      <SelectValue placeholder="Heure" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -121,7 +125,7 @@ export function FormCron({ form, frequency, onSubmit }: FormCronProps) {
               </FormItem>
             )}
           />
-          {/*minute */}
+          {/* Minute */}
           <FormField
             control={form.control}
             name="minute"
@@ -134,7 +138,7 @@ export function FormCron({ form, frequency, onSubmit }: FormCronProps) {
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="minute" />
+                      <SelectValue placeholder="Minute" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -150,7 +154,7 @@ export function FormCron({ form, frequency, onSubmit }: FormCronProps) {
             )}
           />
         </div>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Soumettre</Button>
       </form>
     </Form>
   );

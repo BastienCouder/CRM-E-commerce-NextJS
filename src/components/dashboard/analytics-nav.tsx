@@ -1,18 +1,16 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import WhislistCartOrderLength from "../charts/WishlistCartOrderLength";
-import TopProductsChart from "../charts/TopProductsChart";
+import TopProductsChart from "../charts/top-products-chart";
 
 interface AnalyticsNavProps {
   analyticsProductsData: any;
   analyticsOrdersData: any;
   analyticsWishlistCartOrderData: any;
-  analyticsUsersData: any;
 }
 
 export default function AnalyticsNav({
   analyticsProductsData,
-  analyticsUsersData,
   analyticsWishlistCartOrderData,
 }: AnalyticsNavProps) {
   return (

@@ -10,8 +10,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { FoldHorizontalIcon } from "lucide-react";
 import Link from "next/link";
-import Status from "@/components/dashboard/Status";
-import SoftDelete from "@/components/dashboard/SoftDelete";
+import Status from "@/components/dashboard/status";
+import SoftDelete from "@/components/dashboard/soft-delete";
 import { OrderItemSchema } from "@/schemas/db-schema";
 import { updateStatusItem } from "@/app/dashboard/(management)/action/update-status";
 import { softDeleteItem } from "@/app/dashboard/(management)/action/soft-delete";

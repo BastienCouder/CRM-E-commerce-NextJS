@@ -23,7 +23,9 @@ import {
 import {
   determineFilterType,
   formatDateBasedOnFilter,
-} from "../../lib/helpers/format";
+} from "@/lib/helpers/format";
+import { useState } from "react";
+import Spinner from "../spinner";
 
 const defaultAnalyticsData: readAnalyticsNewsletterProps = {
   data: [],
@@ -38,7 +40,7 @@ const axisStyle = { fontSize: "0.8rem", fill: "rgb(var(--foreground))" };
 
 export default function NewsletterChart() {
   const initialRange = "week";
-  const [fetchData, timeRange, setTimeRange, options] =
+  const [fetchData, timeRange, setTimeRange, options, isLoading] =
     useFilteredAnalyticsData<readAnalyticsNewsletterProps>(
       readAnalyticsNewsletter,
       initialRange,
@@ -80,33 +82,39 @@ export default function NewsletterChart() {
           </Select>
         </div>
         <Separator className="bg-[rgba(var(--foreground),0.5)]" />
-        <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={chartData} className="mt-2">
-            <XAxis
-              dataKey="date"
-              scale="band"
-              tickLine={false}
-              tickFormatter={(value) =>
-                formatDateBasedOnFilter(value, filterType)
-              }
-              axisLine={{ stroke: "rgb(var(--foreground))" }}
-              style={axisStyle}
-            />
-            <YAxis
-              scale="linear"
-              tickLine={false}
-              style={axisStyle}
-              axisLine={{ stroke: "rgb(var(--foreground))" }}
-            />
-            <Area
-              type="monotone"
-              name="Nombres de nouveau abonnées"
-              dataKey="newsletterSubscribersCount"
-              fill="rgb(var(--chart))"
-              stroke="none"
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
+        {!isLoading ? (
+          <ResponsiveContainer width="100%" height="100%">
+            <ComposedChart data={chartData} className="mt-2">
+              <XAxis
+                dataKey="date"
+                scale="band"
+                tickLine={false}
+                tickFormatter={(value) =>
+                  formatDateBasedOnFilter(value, filterType)
+                }
+                axisLine={{ stroke: "rgb(var(--foreground))" }}
+                style={axisStyle}
+              />
+              <YAxis
+                scale="linear"
+                tickLine={false}
+                style={axisStyle}
+                axisLine={{ stroke: "rgb(var(--foreground))" }}
+              />
+              <Area
+                type="monotone"
+                name="Nombres de nouveau abonnées"
+                dataKey="newsletterSubscribersCount"
+                fill="rgb(var(--chart))"
+                stroke="none"
+              />
+            </ComposedChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="h-full w-full flex justify-center items-center">
+            <Spinner />
+          </div>
+        )}
       </section>
     </>
   );

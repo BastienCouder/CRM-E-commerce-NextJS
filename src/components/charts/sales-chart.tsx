@@ -26,13 +26,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useFilteredAnalyticsData } from "@/hooks/useFilteredAnalyticsData";
-import { DateRangePicker } from "../dashboard/DateRangePicker";
+import { DateRangePicker } from "../dashboard/date-range-picker";
 import { MoreHorizontal } from "lucide-react";
 import {
   AnalyticsOrdersData,
   readAnalyticsOrders,
   readAnalyticsOrdersProps,
 } from "@/app/dashboard/analytics/actions/analytics-orders";
+import Spinner from "../spinner";
 
 interface CustomTooltipProps {
   active?: boolean;
@@ -72,7 +73,7 @@ const axisStyle = { fontSize: "0.8rem", fill: "rgb(var(--foreground))" };
 
 export default function SalesChart() {
   const initialRange = "week";
-  const [fetchData, timeRange, setTimeRange, options] =
+  const [fetchData, timeRange, setTimeRange, options, isLoading] =
     useFilteredAnalyticsData<readAnalyticsOrdersProps>(
       readAnalyticsOrders,
       initialRange,
@@ -118,7 +119,7 @@ export default function SalesChart() {
             />
             <Popover>
               <PopoverTrigger asChild>
-                <button className="bg-background py-px px-1 rounded-lg">
+                <button className="bg-background border py-px px-1 rounded-lg">
                   <MoreHorizontal />
                 </button>
               </PopoverTrigger>
@@ -132,48 +133,54 @@ export default function SalesChart() {
           </div>
         </div>
         <Separator className="bg-[rgba(var(--foreground),0.5)]" />
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={chartData}
-            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-            barCategoryGap="20%"
-            className="mt-4"
-          >
-            <XAxis
-              dataKey="date"
-              style={axisStyle}
-              tickLine={false}
-              tickFormatter={(value) =>
-                formatDateBasedOnFilter(value, filterType)
-              }
-              axisLine={{ stroke: "rgb(var(--foreground))" }}
-            />
-            <YAxis
-              scale="linear"
-              tickLine={false}
-              style={axisStyle}
-              tickFormatter={(value) => formatPrice(value, "EUR")}
-              axisLine={{ stroke: "rgb(var(--foreground))" }}
-              allowDuplicatedCategory={false}
-            />
-            <Tooltip
-              cursor={{ fill: "rgb(var(--muted))" }}
-              formatter={formatPrice}
-              content={
-                <CustomTooltip
-                  tickFormatter={(value: string) =>
-                    formatDateBasedOnFilter(value, filterType)
-                  }
-                />
-              }
-            />
-            <Bar
-              dataKey="subtotal"
-              fill="rgb(var(--chart))"
-              radius={[4, 4, 0, 0]}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+        {!isLoading ? (
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={chartData}
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+              barCategoryGap="20%"
+              className="mt-4"
+            >
+              <XAxis
+                dataKey="date"
+                style={axisStyle}
+                tickLine={false}
+                tickFormatter={(value) =>
+                  formatDateBasedOnFilter(value, filterType)
+                }
+                axisLine={{ stroke: "rgb(var(--foreground))" }}
+              />
+              <YAxis
+                scale="linear"
+                tickLine={false}
+                style={axisStyle}
+                tickFormatter={(value) => formatPrice(value, "EUR")}
+                axisLine={{ stroke: "rgb(var(--foreground))" }}
+                allowDuplicatedCategory={false}
+              />
+              <Tooltip
+                cursor={{ fill: "rgb(var(--muted))" }}
+                formatter={formatPrice}
+                content={
+                  <CustomTooltip
+                    tickFormatter={(value: string) =>
+                      formatDateBasedOnFilter(value, filterType)
+                    }
+                  />
+                }
+              />
+              <Bar
+                dataKey="subtotal"
+                fill="rgb(var(--chart))"
+                radius={[4, 4, 0, 0]}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="h-full w-full flex justify-center items-center">
+            <Spinner />
+          </div>
+        )}
       </section>
     </>
   );

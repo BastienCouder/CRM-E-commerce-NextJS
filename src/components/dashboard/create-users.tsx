@@ -15,7 +15,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -41,15 +40,16 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useState, useTransition } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { UserRoleEnum } from "@/schemas/db-schema";
 import { z } from "zod";
-import { checkIfEmailExists } from "@/lib/helpers/authHelper";
-import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { sendCreateUser } from "@/app/dashboard/(management)/action/create-user";
+import { RegisterAdminSchema } from "@/schemas";
+import { registerDashboard } from "@/app/actions/auth/register";
+import { FormError } from "../auth/form-error";
+import { FormSuccess } from "../auth/form-success";
 
 export default function CreateUsers() {
   const [open, setOpen] = React.useState(false);
@@ -114,77 +114,30 @@ export default function CreateUsers() {
 }
 
 function ProfileForm({ className }: React.ComponentProps<"form">) {
-  const UserSchema = z.object({
-    email: z
-      .string({
-        required_error: "Un email est requis",
-        invalid_type_error: "L'email doit être une chaîne de caractères",
-      })
-      .email({
-        message: "Adresse e-mail invalide",
-      })
-      .refine(
-        async (email) => {
-          const existingUser = await checkIfEmailExists(email);
-          return !existingUser;
-        },
-        {
-          message: "L'e-mail n'existe pas",
-        }
-      ),
-    password: z
-      .string({ required_error: "Un mot de passe est requis" })
-      .min(6, {
-        message: "Minimum 6 characters required",
-      }),
-    username: z
-      .string({
-        required_error: "Le nom d'utilisateur est requis",
-        invalid_type_error:
-          "Le nom d'utilisateur doit être une chaîne de caractères",
-      })
-      .min(3, {
-        message: "Le nom d'utilisateur doit comporter au moins 3 caractères",
-      })
-      .max(50),
-    role: z.string({
-      required_error: "Le role est requis",
-      invalid_type_error: "Le role doit être une chaîne de caractères",
-    }),
-  });
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+  const [isPending, startTransition] = useTransition();
 
-  type UserValues = z.infer<typeof UserSchema>;
-  const defaultUserValues: Partial<UserValues> = {};
-  const formResolver = zodResolver(UserSchema);
-  const form = useForm<UserValues>({
+  type RegisterAdminSchemaValues = z.infer<typeof RegisterAdminSchema>;
+  const defaultRegisterAdminSchemaValues: Partial<RegisterAdminSchemaValues> =
+    {};
+  const formResolver = zodResolver(RegisterAdminSchema);
+  const form = useForm<RegisterAdminSchemaValues>({
     resolver: formResolver,
-    defaultValues: defaultUserValues,
+    defaultValues: defaultRegisterAdminSchemaValues,
   });
 
-  const onSubmit = async (data: UserValues) => {
-    try {
-      const formData = new FormData();
-      formData.append("email", data.email);
-      formData.append("username", data.username);
-      formData.append("role", data.role);
+  const onSubmit = (values: z.infer<typeof RegisterAdminSchema>) => {
+    setError("");
+    setSuccess("");
 
-      try {
-        await sendCreateUser(formData);
-        toast.success(
-          "E-mail de réinitialisation de mot de passe envoyé avec succès"
-        );
-        form.reset();
-      } catch (error) {
-        if (error instanceof Error) {
-          toast.error("Une erreur s'est produite");
-        }
-      }
-    } catch (error) {
-      console.error("Une erreur s'est produite lors de la connexion : ", error);
-      throw error;
-    }
+    startTransition(() => {
+      registerDashboard(values).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
+      });
+    });
   };
-
   const userRoles = UserRoleEnum.options;
   return (
     <Form {...form}>
@@ -210,12 +163,12 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
         <div className="grid gap-2">
           <FormField
             control={form.control}
-            name="username"
+            name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Username" {...field} />
+                  <Input placeholder="name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -230,7 +183,11 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
               <FormItem>
                 <FormLabel>Mot de passe</FormLabel>
                 <FormControl>
-                  <Input placeholder="Mot de passe" {...field} />
+                  <Input
+                    placeholder="Mot de passe"
+                    {...field}
+                    type="password"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -265,12 +222,15 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
               </FormItem>
             )}
           />
+          <FormError message={error} />
+          <FormSuccess message={success} />
         </div>
         <Button
           variant="outline"
           onClick={() => {}}
           className="h-8 px-2 lg:px-3"
           type="submit"
+          disabled={isPending}
         >
           Sauvegarder
         </Button>

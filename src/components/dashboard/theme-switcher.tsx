@@ -17,7 +17,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import ColorCircles from "./ColorCircles";
+import ColorCircles from "./color-circles";
 import { Palette } from "lucide-react";
 
 export function ThemeSwitcher() {

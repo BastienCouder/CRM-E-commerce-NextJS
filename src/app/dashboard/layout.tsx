@@ -2,12 +2,12 @@ import "@/styles/globals.css";
 import React, { Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProviders } from "@/context/ThemeContext";
-import { MainNav } from "@/components/dashboard/MainNav";
+import { MainNav } from "@/components/dashboard/main-nav";
 import Loading from "@/app/[lang]/loading";
 import { currentRole } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { redirect } from "next/navigation";
-import CurrentPageIndicator from "@/components/dashboard/CurrentPageIndicator";
+import CurrentPageIndicator from "@/components/dashboard/current-page-indicator";
 
 export const metadata = {
   title: "Dashboard",
