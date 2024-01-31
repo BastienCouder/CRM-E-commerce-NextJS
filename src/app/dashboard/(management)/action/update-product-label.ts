@@ -1,6 +1,7 @@
 "use server";
 
 import { currentUser, roleCheckMiddleware } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export async function updateProductLabel(productId: string, newLabel: string) {
@@ -17,16 +18,9 @@ export async function updateProductLabel(productId: string, newLabel: string) {
         return null;
       }
 
-      const updatedProduct = await prisma.product.update({
-        where: { id: productId },
-        data: {
-          label: newLabel,
-        },
-      });
-
       revalidatePath("/dashboard");
 
-      return updatedProduct;
+      return;
     } catch (error) {
       console.error(
         "Erreur lors de la mise à jour du statut du produit :",

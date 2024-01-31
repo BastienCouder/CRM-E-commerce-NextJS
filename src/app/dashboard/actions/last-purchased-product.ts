@@ -1,4 +1,5 @@
 import { OrderProps } from "@/lib/db/order";
+import { prisma } from "@/lib/prisma";
 import { CartItem } from "@/schemas/db-schema";
 
 export async function getLatestPurchasedProducts(): Promise<any[] | null> {

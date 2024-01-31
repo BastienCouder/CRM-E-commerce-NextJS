@@ -2,6 +2,7 @@ import { cache } from "react";
 import { notFound } from "next/navigation";
 import SettingsForm from "@/components/dashboard/settings-form";
 import { updateStatusItem } from "../../../action/update-status";
+import { prisma } from "@/lib/prisma";
 
 const getOrderItem = cache(async (id: string) => {
   const order = await prisma.orderItems.findUnique({

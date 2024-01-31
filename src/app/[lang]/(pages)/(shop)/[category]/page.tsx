@@ -47,7 +47,6 @@ export default async function Store({
   });
 
   const products = rawProducts.map((product) => ProductSchema.parse(product));
-  console.log(products);
 
   if (!categoryData) {
     return <Loading />;

@@ -126,17 +126,33 @@ export async function readAnalyticsProducts(): Promise<readAnalyticsProductsProp
         ? 0
         : ((currentMonthSales - lastMonthSales) / lastMonthSales) * 100;
 
-    revalidatePath("/dashboard");
+    // Retourner les données seulement si elles ne sont pas vides
+    if (productSalesArray.length > 0) {
+      const topProducts = productSalesArray
+        .sort((a, b) => b.totalSales - a.totalSales)
+        .slice(0, 5);
 
-    return {
-      data: productSalesArray,
-      topProducts,
-      totalSales,
-      totalProductsSales: totalProductsSold,
-      currentMonthSales,
-      lastMonthSales,
-      salesGrowthPercentage,
-    };
+      return {
+        data: productSalesArray,
+        topProducts,
+        totalSales,
+        totalProductsSales: totalProductsSold,
+        currentMonthSales,
+        lastMonthSales,
+        salesGrowthPercentage,
+      };
+    } else {
+      // Vous pouvez gérer le cas de données vides comme vous le souhaitez
+      return {
+        data: [],
+        topProducts: [],
+        totalSales: 0,
+        totalProductsSales: 0,
+        currentMonthSales: 0,
+        lastMonthSales: 0,
+        salesGrowthPercentage: 0,
+      };
+    }
   } catch (error: any) {
     throw new Error(
       "Erreur lors de la récupération des données pour les produits : " +

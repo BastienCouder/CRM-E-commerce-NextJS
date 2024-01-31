@@ -10,28 +10,17 @@ export const metadata: Metadata = {
   description: "Example dashboard app built using the components.",
 };
 
-async function getfetchProducts() {
-  try {
-    const data = await getProducts();
-    if (Array.isArray(data)) {
-      return z.array(ProductSchema).parse(data);
-    } else {
-      console.error("Erreur: Les données ne sont pas un tableau.");
-      return [];
-    }
-  } catch (error) {
-    console.error("Erreur lors de la récupération des produits :", error);
-    return [];
-  }
-}
-
 export default async function ProductsPage() {
-  const products = await getfetchProducts();
+  const products = await getProducts();
 
   return (
     <>
       <section className="p-4 rounded-lg bg-card">
-        <DataTable data={products} columns={columns} variant="products" />
+        <DataTable
+          data={products as any}
+          columns={columns}
+          variant="products"
+        />
       </section>
     </>
   );

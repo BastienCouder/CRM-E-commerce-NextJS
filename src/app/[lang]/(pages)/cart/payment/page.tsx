@@ -10,6 +10,7 @@ import { cache } from "react";
 import { notFound } from "next/navigation";
 import { CartItem, DeliveryItem, DeliveryOption } from "@/schemas/db-schema";
 import CartItemsDetails from "@/components/profile/cartItems-details";
+import { prisma } from "@/lib/prisma";
 
 export async function generateMetadata({
   params: { lang },

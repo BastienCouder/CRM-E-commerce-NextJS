@@ -3,6 +3,7 @@ import { createCart, getCart } from "@/lib/db/cart";
 import { CartItem } from "@/schemas/db-schema";
 import { revalidatePath } from "next/cache";
 import { removeCartItem } from "./delete-product-from-cart";
+import { prisma } from "@/lib/prisma";
 
 export async function updateCartItemQuantity(
   productId: string,

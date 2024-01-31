@@ -162,15 +162,32 @@ export async function readAnalyticsOrders(
       currentMonthOrderCount
     );
 
-    return {
-      data: orderItemsData,
-      maxSubtotal,
-      maxOrder,
-      currentMonthSubtotal,
-      currentMonthOrderCount,
-      subtotalDifferencePercent,
-      orderCountDifferencePercent,
-    };
+    // Retourner les données seulement si elles ne sont pas vides
+    if (orderItemsData.length > 0) {
+      return {
+        data: orderItemsData,
+        maxSubtotal,
+        maxOrder,
+        currentMonthSubtotal,
+        currentMonthOrderCount,
+        subtotalDifferencePercent,
+        orderCountDifferencePercent,
+      };
+    } else {
+      // Vous pouvez gérer le cas de données vides comme vous le souhaitez
+      console.error(
+        "Aucune donnée de commande trouvée pour la période spécifiée."
+      );
+      return {
+        data: [],
+        maxSubtotal: 0,
+        maxOrder: 0,
+        currentMonthSubtotal: 0,
+        currentMonthOrderCount: 0,
+        subtotalDifferencePercent: 0,
+        orderCountDifferencePercent: 0,
+      };
+    }
   } catch (error: any) {
     throw new Error(
       "Erreur lors de la récupération des données pour le graphique : " +

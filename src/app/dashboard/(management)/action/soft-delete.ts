@@ -1,9 +1,13 @@
 "use server";
 
 import { currentUser, roleCheckMiddleware } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { Order, Product } from "@/schemas/db-schema";
 import { revalidatePath } from "next/cache";
 
-export async function softDeleteItem(itemId: string | string[]) {
+export async function softDeleteItem(
+  itemId: string | string[]
+): Promise<Product | Order> {
   const deleteItem = async (id: string) => {
     const deleteData = { deleteAt: new Date(), status: "delete" };
     const updatedItem = await prisma.product

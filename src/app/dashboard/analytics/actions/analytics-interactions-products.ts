@@ -111,11 +111,17 @@ export async function readAnalyticsWishlistCartOrder(): Promise<readAnalyticsWis
 
     const analyticsData = Object.values(productAnalyticsMap);
 
-    revalidatePath("/dashboard");
-
-    return {
-      data: analyticsData,
-    };
+    // Retourner les données seulement si elles ne sont pas vides
+    if (analyticsData.length > 0) {
+      return {
+        data: analyticsData,
+      };
+    } else {
+      console.error(
+        "Aucune donnée d'analyse trouvée pour la période spécifiée."
+      );
+      return { data: [] };
+    }
   } catch (error: any) {
     throw new Error(
       "Erreur lors de la récupération des données pour les produits : " +

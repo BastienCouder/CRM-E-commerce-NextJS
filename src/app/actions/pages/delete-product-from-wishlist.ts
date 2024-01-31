@@ -1,4 +1,5 @@
 "use server";
+import { prisma } from "@/lib/prisma";
 import { WishlistItem } from "@/schemas/db-schema";
 
 export async function deleteFromWishlist(item: WishlistItem) {

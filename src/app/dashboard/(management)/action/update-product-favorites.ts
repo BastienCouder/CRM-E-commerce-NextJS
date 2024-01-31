@@ -2,6 +2,7 @@
 
 import { currentUser, roleCheckMiddleware } from "@/lib/auth";
 import { ProductProps } from "@/lib/db/product";
+import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export async function updateProductFavourites(

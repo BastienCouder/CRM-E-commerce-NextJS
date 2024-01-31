@@ -1,3 +1,4 @@
+import { prisma } from "@/lib/prisma";
 import { DeliveryItem } from "@/schemas/db-schema";
 import { revalidatePath } from "next/cache";
 

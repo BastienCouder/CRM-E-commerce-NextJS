@@ -4,6 +4,7 @@ import { findCategoryIdByName } from "@/lib/utils";
 import { getProducts } from "@/lib/db/product";
 import { currentUser, roleCheckMiddleware } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { prisma } from "@/lib/prisma";
 
 export async function updateProduct(productId: string, formData: FormData) {
   const name = formData.get("name")?.toString() || "";
@@ -38,7 +39,7 @@ export async function updateProduct(productId: string, formData: FormData) {
         description,
         imageUrl,
         categoryId: categoryId || null,
-        stock: stock || null,
+        stock: stock,
       };
 
       await prisma.product.update({

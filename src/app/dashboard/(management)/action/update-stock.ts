@@ -1,6 +1,7 @@
 "use server";
 
 import { currentUser, roleCheckMiddleware } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 export async function updateProductStock(
   productId: string,

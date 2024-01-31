@@ -1,9 +1,14 @@
 "use server";
 
 import { currentUser, roleCheckMiddleware } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { Order, Product } from "@/schemas/db-schema";
 import { revalidatePath } from "next/cache";
 
-export async function updateStatusItem(itemId: string, newStatus: string) {
+export async function updateStatusItem(
+  itemId: string,
+  newStatus: string
+): Promise<Product | Order> {
   const session = await currentUser();
 
   if (roleCheckMiddleware(session, ["ADMIN"])) {
