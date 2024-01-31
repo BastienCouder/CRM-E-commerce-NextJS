@@ -42,7 +42,10 @@ export default auth((req: any) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+      const locale = getLocale(req, defaultLocale, locales);
+      return Response.redirect(
+        new URL(`${locale} + ${DEFAULT_LOGIN_REDIRECT}`, nextUrl)
+      );
     }
     return null;
   }

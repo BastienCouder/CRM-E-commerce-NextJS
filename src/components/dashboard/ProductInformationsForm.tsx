@@ -166,8 +166,8 @@ export default function ProductInformationsForm({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {categories.map((category) => (
-                      <SelectItem key={category} value={category!}>
+                    {categories.map((category, index) => (
+                      <SelectItem key={index} value={category!}>
                         {category}
                       </SelectItem>
                     ))}

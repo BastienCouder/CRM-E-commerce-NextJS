@@ -29,9 +29,9 @@ export default function AccordionFilter<T extends Color>({
         <AccordionItem value="item-1" className="w-full">
           <AccordionTrigger>{title}</AccordionTrigger>
           <ul className="w-full">
-            {items.map((item) => {
+            {items.map((item, index) => {
               return (
-                <li key={item}>
+                <li key={index}>
                   <AccordionContent
                     onClick={() => onItemClick(item)}
                     className="cursor-pointer"

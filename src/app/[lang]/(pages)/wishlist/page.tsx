@@ -50,23 +50,23 @@ export default async function Wishlist({ params: { lang } }: WishlistProps) {
         </h1>
         <ul className="flex flex-col space-y-2 py-8 lg:py-12">
           {wishlist.wishlistItems &&
-            wishlist.wishlistItems.map((wishlistItem: WishlistItem) => {
-              console.log(wishlistItem);
-
-              return (
-                <li
-                  key={wishlistItem.id}
-                  className="flex flex-col lg:flex-row items-center space-y-6 lg:space-y-0 px-8 py-4 lg:border-b-2 lg:border-primary w-full"
-                >
-                  <WishlistEntry
-                    wishlistItem={wishlistItem}
-                    AddToCart={addProductToCart}
-                    dict={dict}
-                  />
-                  <div className="flex lg:hidden h-[2px] w-3/4 bg-primary"></div>
-                </li>
-              );
-            })}
+            wishlist.wishlistItems.map(
+              (wishlistItem: WishlistItem, index: number) => {
+                return (
+                  <li
+                    key={index}
+                    className="flex flex-col lg:flex-row items-center space-y-6 lg:space-y-0 px-8 py-4 lg:border-b-2 lg:border-primary w-full"
+                  >
+                    <WishlistEntry
+                      wishlistItem={wishlistItem}
+                      AddToCart={addProductToCart}
+                      dict={dict}
+                    />
+                    <div className="flex lg:hidden h-[2px] w-3/4 bg-primary"></div>
+                  </li>
+                );
+              }
+            )}
         </ul>
       </div>
     </>

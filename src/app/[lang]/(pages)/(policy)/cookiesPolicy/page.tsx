@@ -25,7 +25,7 @@ export default async function CookiesPolicy({
   const dict = await getDictionary(lang);
 
   return (
-    <div>
+    <>
       <div className="container mx-auto p-4">
         <div className="space-y-2">
           <h1 className="text-2xl font-bold">Politique de Cookies</h1>
@@ -108,6 +108,6 @@ export default async function CookiesPolicy({
           </p>
         </div>
       </div>
-    </div>
+    </>
   );
 }

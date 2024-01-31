@@ -172,14 +172,14 @@ export default function Orders({ order }: OrdersProps) {
                         <h2 className="text-lg mt-8 pb-2">Votre commande</h2>
                         {isOrderSelected &&
                           orderItem.cart.cartItems.map(
-                            (cartItems: CartItem, itemIndex: number) => {
+                            (cartItems: CartItem, index: number) => {
                               const description = `${cartItems.product.description}`;
                               const formattedDescription =
                                 formatDescription(description);
                               return (
                                 <>
                                   <div
-                                    key={itemIndex}
+                                    key={index}
                                     className="flex flex-row-reverse justify-end gap-4 text-sm pb-8"
                                   >
                                     <div className="flex w-full">

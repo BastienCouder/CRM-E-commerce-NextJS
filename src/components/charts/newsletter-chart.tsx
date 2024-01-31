@@ -73,7 +73,7 @@ export default function NewsletterChart() {
               />
             </SelectTrigger>
             <SelectContent>
-              {options.map((option) => (
+              {options.map((option, index) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>

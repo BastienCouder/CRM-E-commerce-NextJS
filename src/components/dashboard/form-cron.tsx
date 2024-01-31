@@ -84,8 +84,8 @@ export function FormCron({ form, frequency, onSubmit }: FormCronProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {daysOfWeek.map((day) => (
-                        <SelectItem key={day.value} value={day.value}>
+                      {daysOfWeek.map((day, index) => (
+                        <SelectItem key={index} value={day.value}>
                           {day.label}
                         </SelectItem>
                       ))}

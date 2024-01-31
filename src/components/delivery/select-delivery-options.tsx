@@ -18,9 +18,9 @@ export default function SelectDeliveryOptions({
   return (
     <>
       <ul className="space-y-4 w-[30rem]">
-        {deliveryOptions.map((deliveryOption) => (
+        {deliveryOptions.map((deliveryOption, index) => (
           <li
-            key={deliveryOption.id}
+            key={index}
             className="flex text-sm border-2 px-8 py-6 border-white"
           >
             <div className="w-60">

@@ -56,9 +56,9 @@ export default async function Cart({ params: { lang } }: CartProps) {
         {dict.cart.shopping_cart}
       </h1>
       <ul className="flex flex-col space-y-2 py-4">
-        {cart.cartItems.map((cartItem: CartItem) => (
+        {cart.cartItems.map((cartItem: CartItem, index: number) => (
           <li
-            key={cartItem.id}
+            key={index}
             className="flex flex-col lg:flex-row items-center space-y-6 lg:space-y-0 px-8 py-4 lg:border-b-2 lg:border-primary w-full"
           >
             <CartEntry cartItem={cartItem} dict={dict} />

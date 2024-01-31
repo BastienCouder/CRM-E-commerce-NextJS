@@ -4,10 +4,9 @@ import Stripe from "stripe";
 import { currentUser } from "@/lib/auth";
 import { LineItem } from "../../../../@types/lineItem";
 import { NextApiRequest, NextApiResponse } from "next";
-import { NextRequest } from "next/server";
 import { defaultLocale, getLocale, locales } from "@/middleware";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: any) {
   const locale = getLocale(req, defaultLocale, locales);
   const userSession = await currentUser();
   if (!userSession) {
@@ -81,7 +80,7 @@ export async function POST(req: NextRequest) {
   return new Response(JSON.stringify(checkoutSession), { status: 200 });
 }
 
-export async function GET(request: NextApiRequest, response: NextApiResponse) {
+export async function GET(request: any, response: any) {
   const sessionId = request.query.sessionId as string;
 
   try {

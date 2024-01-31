@@ -3,9 +3,5 @@ export default async function CollectionLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      <div>{children}</div>
-    </>
-  );
+  return <>{children}</>;
 }

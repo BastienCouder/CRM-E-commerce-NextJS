@@ -66,12 +66,8 @@ export default async function Payment({ params: { lang } }: PaymentProps) {
                 : `${dict.payment.product}`}
             </h2>
             <ul className="flex flex flex-col justify-center md:justify-start md:flex-row flex-wrap gap-8 md:gap-x-24 w-full">
-              {cart.cartItems.map((cartItem: CartItem) => (
-                <CartItemsDetails
-                  key={cartItem.id}
-                  cartItem={cartItem}
-                  dict={dict}
-                />
+              {cart.cartItems.map((cartItem: CartItem, index: number) => (
+                <CartItemsDetails key={index} cartItem={cartItem} dict={dict} />
               ))}
             </ul>
           </article>

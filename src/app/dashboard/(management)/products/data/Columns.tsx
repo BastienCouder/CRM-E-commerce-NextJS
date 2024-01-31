@@ -59,7 +59,7 @@ export const columns: ColumnDef<any>[] = [
           <Image
             className="rounded-lg w-[50px] h-[50px] object-contain border-white/50 border-[1px]"
             src={imageUrl}
-            alt={row.getValue("nom")}
+            alt={row.getValue("name")}
             width={500}
             height={500}
           />

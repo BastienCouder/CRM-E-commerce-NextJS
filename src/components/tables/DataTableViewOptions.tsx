@@ -41,10 +41,10 @@ export function DataTableViewOptions<TData>({
             (column) =>
               typeof column.accessorFn !== "undefined" && column.getCanHide()
           )
-          .map((column) => {
+          .map((column, index) => {
             return (
               <DropdownMenuCheckboxItem
-                key={column.id}
+                key={index}
                 className="capitalize"
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}

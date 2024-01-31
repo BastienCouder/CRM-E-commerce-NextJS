@@ -27,9 +27,9 @@ export default function PaymentSuccess() {
   }, [session_id, router]);
 
   return (
-    <div>
+    <>
       <h1>Paiement réussi</h1>
       <p>Votre commande est en cours de traitement.</p>
-    </div>
+    </>
   );
 }

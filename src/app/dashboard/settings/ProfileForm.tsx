@@ -162,7 +162,7 @@ export default function ProfileForm() {
             {fields.map((field, index) => (
               <FormField
                 control={form.control}
-                key={field.id}
+                key={index}
                 name={`urls.${index}.value`}
                 render={({ field }) => (
                   <FormItem>

@@ -102,9 +102,9 @@ export default function InterfaceStore({
         <Separator />
         <div className="bg-card"></div>
         <ul className="px-4 gap-y-4 w-full flex justify-center lg:justify-start flex-wrap">
-          {filteredProducts.map((product) => (
+          {filteredProducts.map((product, index) => (
             <li
-              key={product.id}
+              key={index}
               className="w-full md:w-1/2 lg:w-1/4 p-2 pt-8 border-b border-foreground"
             >
               <CardProduct

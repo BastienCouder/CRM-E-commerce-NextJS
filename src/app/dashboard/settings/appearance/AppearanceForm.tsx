@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { cn } from "@/helpers/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,
@@ -21,6 +20,7 @@ import { toast } from "@/components/ui/use-toast";
 import { useTheme } from "next-themes";
 import { ChevronDownIcon } from "lucide-react";
 import { useFont } from "@/context/FontContext";
+import { cn } from "@/lib/utils";
 
 const appearanceFormSchema = z.object({
   theme: z.enum(["light", "dark"], {
@@ -82,8 +82,8 @@ export function AppearanceForm() {
                     )}
                     {...field}
                   >
-                    {fontOptions.map((font) => (
-                      <option key={font.value} value={font.value}>
+                    {fontOptions.map((font, index) => (
+                      <option key={index} value={font.value}>
                         {font.label}
                       </option>
                     ))}
@@ -171,9 +171,7 @@ export function AppearanceForm() {
           )}
         />
 
-        <Button size="xl" type="submit">
-          Mise à jour des préférences
-        </Button>
+        <Button type="submit">Mise à jour des préférences</Button>
       </form>
     </Form>
   );

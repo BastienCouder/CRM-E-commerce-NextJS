@@ -274,7 +274,7 @@ export default function ProductMobile({
               <RxCross2 size={25} />
             </div>
             <ul className="absolute w-[15rem] space-y-6">
-              {products.map((product: Product) => {
+              {products.map((product: Product, index) => {
                 const productPath = `/products/${product.name}`;
                 return (
                   <motion.li
@@ -285,7 +285,7 @@ export default function ProductMobile({
                       y: -50,
                     }}
                     transition={{ duration: 0.2 }}
-                    key={product.id}
+                    key={index}
                   >
                     <Link
                       href={productPath}

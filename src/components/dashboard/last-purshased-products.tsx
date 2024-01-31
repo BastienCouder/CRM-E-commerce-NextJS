@@ -1,4 +1,6 @@
+"use client";
 import { Product } from "@/schemas/db-schema";
+
 import { Separator } from "../ui/separator";
 
 interface LatestPurchasedProductsProps {
@@ -18,8 +20,8 @@ export default function LatestPurchasedProducts({
         <Separator className="bg-[rgba(var(--foreground),0.5)]" />
 
         <ul>
-          {latestProducts.slice(0, 5).map((product) => (
-            <li key={product.id}>
+          {latestProducts.slice(0, 5).map((product, index) => (
+            <li key={index}>
               <div>{product.name}</div>
             </li>
           ))}

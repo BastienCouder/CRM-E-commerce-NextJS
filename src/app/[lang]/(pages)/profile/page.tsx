@@ -9,10 +9,10 @@ export default async function Profile() {
   const delivery = await getDelivery();
 
   return (
-    <div>
+    <>
       <div className="flex">
         <Menu session={session} order={order} delivery={delivery} />
       </div>
-    </div>
+    </>
   );
 }

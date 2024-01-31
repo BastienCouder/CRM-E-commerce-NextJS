@@ -15,13 +15,13 @@ export default function Search({ searchTerm, onSearchChange }: SearchProps) {
   return (
     <div className="space-y-1 relative">
       <Input
-        className="w-full md:w-[20rem] p-2 border-none outline-none"
+        className="w-full md:w-[20rem] p-2 border-none outline-none text-background"
         type="text"
         value={searchTerm}
         onChange={handleSearchChange}
         placeholder="Rechercher..."
       />
-      <div className="absolute text-zinc-900 top-1.5 right-0 px-2 outline-none text-xl cursor-pointer">
+      <div className="absolute text-background top-1.5 right-0 px-2 outline-none text-xl cursor-pointer">
         <AiOutlineSearch size={20} className="mr-1" />
       </div>
     </div>

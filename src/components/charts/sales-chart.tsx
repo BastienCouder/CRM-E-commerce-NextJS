@@ -104,8 +104,8 @@ export default function SalesChart() {
                 />
               </SelectTrigger>
               <SelectContent>
-                {options.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
+                {options.map((option, index) => (
+                  <SelectItem key={index} value={option.value}>
                     {option.label}
                   </SelectItem>
                 ))}

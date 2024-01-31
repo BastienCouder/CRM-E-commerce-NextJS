@@ -28,7 +28,7 @@ export default function NavigationButtons({
   };
 
   return (
-    <div>
+    <>
       <motion.button
         onClick={handlePrevClick}
         className="absolute top-1/2 left-12"
@@ -54,6 +54,6 @@ export default function NavigationButtons({
           <ChevronRight size={30} className="-ml-4" />
         </div>
       </motion.button>
-    </div>
+    </>
   );
 }

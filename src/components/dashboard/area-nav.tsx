@@ -84,8 +84,8 @@ export function AreaNav({
       )}
       {...props}
     >
-      {navItems.map((item) => (
-        <li key={item.href}>
+      {navItems.map((item, index) => (
+        <li key={index}>
           <Link
             href={item.href}
             className={cn(

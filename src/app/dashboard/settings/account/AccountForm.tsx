@@ -183,10 +183,10 @@ export function AccountForm() {
                       Aucune langue n&apos;a été trouvée.
                     </CommandEmpty>
                     <CommandGroup>
-                      {languages.map((language) => (
+                      {languages.map((language, index) => (
                         <CommandItem
                           value={language.label}
-                          key={language.value}
+                          key={index}
                           onSelect={() => {
                             form.setValue("language", language.value);
                           }}

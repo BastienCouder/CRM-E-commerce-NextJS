@@ -1,7 +1,6 @@
 "use server";
 import { currentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { sendOrderEmail } from "@/lib/email/order";
 import { updateCart } from "./create-order-session";
 
 export async function handleOrderCreation(session_id: string) {
@@ -57,7 +56,7 @@ export async function handleOrderCreation(session_id: string) {
         data: { isProcessed: true },
       });
 
-      await sendOrderEmail(session.email!, orderItem);
+      // await sendOrderEmail(session.email!, orderItem);
     });
   } catch (error) {
     console.error("Error during order creation:", error);

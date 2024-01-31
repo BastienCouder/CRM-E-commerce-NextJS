@@ -39,9 +39,9 @@ export default function Status({
               <DropdownMenuRadioGroup value={itemStatus || undefined}>
                 {statuses
                   .filter((status) => status.value !== "delete")
-                  .map((status: any) => (
+                  .map((status: any, index) => (
                     <DropdownMenuRadioItem
-                      key={status.value}
+                      key={index}
                       value={status.value}
                       className="cursor-pointer"
                       onClick={async () => {

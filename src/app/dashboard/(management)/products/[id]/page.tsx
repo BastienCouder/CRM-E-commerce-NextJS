@@ -3,9 +3,8 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import ProductInformationsForm from "@/components/dashboard/ProductInformationsForm";
-
-import { updateProduct } from "@/app/dashboard/management/action/update-product";
 import { getCategories } from "@/lib/db/category";
+import { updateProduct } from "../../action/update-product";
 
 interface ProductPageProps {
   params: {

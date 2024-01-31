@@ -60,45 +60,45 @@ async function main() {
   //     email: "couderbastien@gmail.com",
   //   },
   // });
-  // const product = await prisma.product.create({
-  //   data: {
-  //     name: "scs7t15545scscs",
-  //     description:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
-  //     price: 9000,
-  //     imageUrl: "/images/montre16.png",
-  //     color: "or",
-  //     status: "unavailable",
-  //     stock: 20,
-  //     categoryId: "clr7qrpwf0000vhrudnz77di7",
-  //   },
-  // });
-  // console.log(product);
+  const product = await prisma.product.create({
+    data: {
+      name: "scs7t15545scscs",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+      price: 9000,
+      imageUrl: "/images/montre16.png",
+      color: "or",
+      status: "unavailable",
+      stock: 20,
+      categoryId: "clr7qrpwf0000vhrudnz77di7",
+    },
+  });
+  console.log(product);
   //   });
-  const deliveryOptions = [
-    {
-      name: "Livraison Standard",
-      description: "Livraison en 3-5 jours ouvrables",
-      price: 299,
-    },
-    {
-      name: "Livraison Express",
-      description: "Livraison en 1-2 jours ouvrables",
-      price: 799,
-    },
-  ];
-  async function seedDeliveryOptions() {
-    for (const option of deliveryOptions) {
-      await prisma.deliveryOption.create({
-        data: {
-          name: option.name,
-          description: option.description,
-          price: option.price,
-        },
-      });
-    }
-  }
-  seedDeliveryOptions();
+  // const deliveryOptions = [
+  //   {
+  //     name: "Livraison Standard",
+  //     description: "Livraison en 3-5 jours ouvrables",
+  //     price: 299,
+  //   },
+  //   {
+  //     name: "Livraison Express",
+  //     description: "Livraison en 1-2 jours ouvrables",
+  //     price: 799,
+  //   },
+  // ];
+  // async function seedDeliveryOptions() {
+  //   for (const option of deliveryOptions) {
+  //     await prisma.deliveryOption.create({
+  //       data: {
+  //         name: option.name,
+  //         description: option.description,
+  //         price: option.price,
+  //       },
+  //     });
+  //   }
+  // }
+  // seedDeliveryOptions();
 }
 main()
   .catch(async (e) => {

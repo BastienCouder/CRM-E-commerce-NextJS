@@ -148,61 +148,63 @@ export default function DeliveryInfo({
     <>
       <ul className="space-y-4 w-[35rem]">
         {delivery?.deliveryItems &&
-          delivery.deliveryItems.map((deliveryItem: DeliveryItem) => (
-            <li
-              key={deliveryItem.id}
-              className="flex text-sm border-2 px-8 py-6 border-white"
-            >
-              <div className="w-60">
-                <div className="flex flex-col font-bold">
-                  <div className="capitalize flex space-x-2">
-                    <p>{deliveryItem.name}</p>
-                    <p>{deliveryItem.surname}</p>
+          delivery.deliveryItems.map(
+            (deliveryItem: DeliveryItem, index: number) => (
+              <li
+                key={index}
+                className="flex text-sm border-2 px-8 py-6 border-white"
+              >
+                <div className="w-60">
+                  <div className="flex flex-col font-bold">
+                    <div className="capitalize flex space-x-2">
+                      <p>{deliveryItem.name}</p>
+                      <p>{deliveryItem.surname}</p>
+                    </div>
+                    <p>{deliveryItem.email}</p>
                   </div>
-                  <p>{deliveryItem.email}</p>
+                  <p className="uppercase">{deliveryItem.address}</p>
+                  <div className="flex">
+                    <p className="flex gap-2">
+                      <span className="uppercase">
+                        {deliveryItem.city}, {deliveryItem.postcode},
+                      </span>
+                      {deliveryItem.country}
+                    </p>
+                  </div>
+                  <p>{deliveryItem.tel}</p>
                 </div>
-                <p className="uppercase">{deliveryItem.address}</p>
-                <div className="flex">
-                  <p className="flex gap-2">
-                    <span className="uppercase">
-                      {deliveryItem.city}, {deliveryItem.postcode},
-                    </span>
-                    {deliveryItem.country}
-                  </p>
+                <div className="pl-12 space-y-4">
+                  <div className="flex gap-x-4">
+                    <div
+                      onClick={() => handleDeliveryChange(deliveryItem.id)}
+                      className={`mb-2 h-4 w-4 border-2 border-white cursor-pointer ${
+                        selectedDeliveryItem === deliveryItem.id
+                          ? "bg-secondary"
+                          : ""
+                      }`}
+                    ></div>
+                    {selectedDeliveryItem === deliveryItem.id
+                      ? "Adresse par défaut"
+                      : ""}
+                  </div>
+                  <button
+                    aria-label="modifier"
+                    onClick={toggleFormVisibility}
+                    className="text-blue-500 cursor-pointer w-28 px-3 py-2 border-[1px] border-blue-500"
+                  >
+                    modifier
+                  </button>
+                  <button
+                    aria-label="supprimer"
+                    onClick={() => handleDeleteDeliveryItem(deliveryItem.id)}
+                    className="text-red-600 cursor-pointer w-28 px-3 py-2 border-[1px] border-red-600"
+                  >
+                    Supprimer
+                  </button>
                 </div>
-                <p>{deliveryItem.tel}</p>
-              </div>
-              <div className="pl-12 space-y-4">
-                <div className="flex gap-x-4">
-                  <div
-                    onClick={() => handleDeliveryChange(deliveryItem.id)}
-                    className={`mb-2 h-4 w-4 border-2 border-white cursor-pointer ${
-                      selectedDeliveryItem === deliveryItem.id
-                        ? "bg-secondary"
-                        : ""
-                    }`}
-                  ></div>
-                  {selectedDeliveryItem === deliveryItem.id
-                    ? "Adresse par défaut"
-                    : ""}
-                </div>
-                <button
-                  aria-label="modifier"
-                  onClick={toggleFormVisibility}
-                  className="text-blue-500 cursor-pointer w-28 px-3 py-2 border-[1px] border-blue-500"
-                >
-                  modifier
-                </button>
-                <button
-                  aria-label="supprimer"
-                  onClick={() => handleDeleteDeliveryItem(deliveryItem.id)}
-                  className="text-red-600 cursor-pointer w-28 px-3 py-2 border-[1px] border-red-600"
-                >
-                  Supprimer
-                </button>
-              </div>
-            </li>
-          ))}
+              </li>
+            )
+          )}
       </ul>
       {formVisible && (
         <Form {...form}>

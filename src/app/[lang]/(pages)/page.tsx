@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import styles from "@/styles/keyframes.module.css";
 import routes from "@/lib/data/routes.json";
 
 export default function Home() {
@@ -68,9 +67,7 @@ export default function Home() {
         animate={{ opacity: 1 }}
       >
         <div>
-          <div
-            className={`absolute md:relative top-36 md:top-0 ${styles.scale}`}
-          >
+          <div className={`absolute md:relative top-36 md:top-0`}>
             <Image
               src={"/images/watch-2.jpg"}
               alt=""
@@ -80,7 +77,7 @@ export default function Home() {
             ></Image>
           </div>
           <div
-            className={`absolute top-52 left-32 md:top-52 md:left-64 xl:left-80 ${styles.scale}`}
+            className={`absolute top-52 left-32 md:top-52 md:left-64 xl:left-80`}
           >
             <Image
               src={"/images/watch3-2.jpg"}

@@ -14,7 +14,7 @@ import { statuses as statusesProduct } from "@/app/dashboard/(management)/produc
 import { restoreItem } from "@/app/dashboard/(management)/action/restore";
 import { softDeleteItem } from "@/app/dashboard/(management)/action/soft-delete";
 import { DeleteItem } from "@/app/dashboard/(management)/action/delete";
-import Restore from "./Restore";
+import Restore from "./restore";
 
 interface SettingsFormProps<T> {
   itemId: string;
@@ -70,8 +70,8 @@ function SettingsForm<
               type === "order" &&
               statusesOrder
                 .filter((status) => status.value !== "delete")
-                .map((status) => (
-                  <SelectItem key={status.value} value={status.value}>
+                .map((status, index) => (
+                  <SelectItem key={index} value={status.value}>
                     {status.label}
                   </SelectItem>
                 ))}

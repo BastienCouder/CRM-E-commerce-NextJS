@@ -54,13 +54,15 @@ export default async function OrderIdDashboard({
             <ul className="mt-4 space-x-4 flex w-full h-full">
               <div className="flex flex-col justify-center md:justify-start md:flex-row flex-wrap gap-8">
                 {order.cart &&
-                  order.cart.cartItems.map((cartItem: CartItem) => (
-                    <CartItemsDetails
-                      key={cartItem.id}
-                      cartItem={cartItem}
-                      dict={dict}
-                    />
-                  ))}
+                  order.cart.cartItems.map(
+                    (cartItem: CartItem, index: number) => (
+                      <CartItemsDetails
+                        key={index}
+                        cartItem={cartItem}
+                        dict={dict}
+                      />
+                    )
+                  )}
               </div>
             </ul>
           </article>

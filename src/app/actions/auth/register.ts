@@ -44,8 +44,8 @@ async function createUser({
     },
   });
 
-  const verificationToken = await generateVerificationToken(to);
-  await sendEmail(resend, EmailType.Verification, to, verificationToken.token);
+  // const verificationToken = await generateVerificationToken(to);
+  // await sendEmail(resend, EmailType.Verification, to, verificationToken.token);
 
   return { success: "Confirmation email envoyé !", user };
 }

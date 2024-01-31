@@ -9,20 +9,15 @@ import { cn } from "@/lib/utils";
 import { redirect } from "next/navigation";
 import CurrentPageIndicator from "@/components/dashboard/current-page-indicator";
 
-export const metadata = {
-  title: "Dashboard",
-  description: "Ceci est le dashboard de mon application.",
-};
-
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const admin = await currentRole();
-  if (!admin) {
-    redirect("/");
-  }
+  // const admin = await currentRole();
+  // if (!admin) {
+  //   redirect("/");
+  // }
 
   return (
     <>
@@ -35,14 +30,9 @@ export default async function DashboardLayout({
               <div className="w-[12rem] border-r border-[rgba(var(--foreground),0.5)]">
                 <MainNav />
               </div>
-              <Suspense fallback={<Loading />}>
-                <div className="h-full w-full mt-4 pb-10 px-4">
-                  <div className="flex flex-col gap-y-3">
-                    <CurrentPageIndicator />
-                    {children}
-                  </div>
-                </div>
-              </Suspense>
+              <div className="h-full w-full mt-4 pb-10 px-4">
+                <div className="flex flex-col gap-y-3">{children}</div>
+              </div>
               <Toaster />
             </div>
           </ThemeProviders>

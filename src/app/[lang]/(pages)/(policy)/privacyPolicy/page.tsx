@@ -25,7 +25,7 @@ export default async function PrivatyPolicy({
   const dict = await getDictionary(lang);
 
   return (
-    <div>
+    <>
       <div className="container mx-auto p-4">
         <div className="space-y-2">
           <h1 className="text-2xl font-bold">Politique de Confidentialité</h1>
@@ -125,6 +125,6 @@ export default async function PrivatyPolicy({
           </p>
         </div>
       </div>
-    </div>
+    </>
   );
 }
