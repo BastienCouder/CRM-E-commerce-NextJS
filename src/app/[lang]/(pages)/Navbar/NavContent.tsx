@@ -13,12 +13,14 @@ import routes from "@/lib/data/routes.json";
 import website from "@/lib/data/infosWebsite";
 import { Category } from "@/schemas/db-schema";
 import { replaceUnderscoresWithSpaces } from "@/lib/utils";
+import { Session } from "next-auth";
 
 interface NavContentProps {
   toggleMenu: () => void;
   cart: CartProps;
   dict: Dictionary;
   categories: Category[];
+  session: Session | null;
 }
 
 export default function NavContent({
@@ -26,6 +28,7 @@ export default function NavContent({
   cart,
   dict,
   categories,
+  session,
 }: NavContentProps) {
   const mainNavData = [
     ...categories.map((category) => ({
@@ -116,6 +119,7 @@ export default function NavContent({
           <UserMenuButton
             toggleMenu={toggleMenu}
             isSmallScreen={isSmallScreen}
+            session={session}
           />
         </motion.div>
         <div className="flex gap-x-4 mt-1">

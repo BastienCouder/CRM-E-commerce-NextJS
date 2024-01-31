@@ -15,7 +15,7 @@ export default function Search({ searchTerm, onSearchChange }: SearchProps) {
   return (
     <div className="space-y-1 relative">
       <Input
-        className="w-full md:w-[20rem] p-2 border-none outline-none text-background"
+        className="w-full md:w-[20rem] p-2 border-none outline-none text-background placeholder:text-background"
         type="text"
         value={searchTerm}
         onChange={handleSearchChange}

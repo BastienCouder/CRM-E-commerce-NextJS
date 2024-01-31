@@ -9,51 +9,51 @@ export type UserProps = User & {
 
 export async function getUsers(): Promise<UserProps[] | null> {
   const session = await currentUser();
-  const isAuthorized = roleCheckMiddleware(session);
+  // const isAuthorized = roleCheckMiddleware(session);
 
-  if (isAuthorized) {
-    try {
-      const users = await prisma.user.findMany({
-        where: { deleteAt: null || undefined },
-        orderBy: {
-          createdAt: "desc",
-        },
-      });
+  // if (isAuthorized) {
+  try {
+    const users = await prisma.user.findMany({
+      where: { deleteAt: null || undefined },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
 
-      return users;
-    } catch (error) {
-      console.error("Error while retrieving users:", error);
-      return null;
-    }
-  } else {
-    console.error("Error: Unauthorized user");
+    return users;
+  } catch (error) {
+    console.error("Error while retrieving users:", error);
     return null;
   }
+  // } else {
+  //   console.error("Error: Unauthorized user");
+  //   return null;
+  // }
 }
 
 export async function getUsersNewsletter(): Promise<UserProps[] | null> {
   const session = await currentUser();
-  const isAuthorized = roleCheckMiddleware(session);
+  // const isAuthorized = roleCheckMiddleware(session);
 
-  if (isAuthorized) {
-    try {
-      const users = await prisma.user.findMany({
-        where: {
-          deleteAt: null,
-          newsletter: true,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-      });
+  // if (isAuthorized) {
+  try {
+    const users = await prisma.user.findMany({
+      where: {
+        deleteAt: null,
+        newsletter: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
 
-      return users;
-    } catch (error) {
-      console.error("Error while retrieving newsletter users:", error);
-      return null;
-    }
-  } else {
-    console.error("Error: Unauthorized user");
+    return users;
+  } catch (error) {
+    console.error("Error while retrieving newsletter users:", error);
     return null;
   }
+  // } else {
+  //   console.error("Error: Unauthorized user");
+  //   return null;
+  // }
 }

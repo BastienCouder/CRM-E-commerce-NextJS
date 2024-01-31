@@ -62,12 +62,12 @@ async function main() {
   // });
   const product = await prisma.product.create({
     data: {
-      name: "scs7t15545scscs",
+      name: "montre 12",
       description:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
-      price: 9000,
-      imageUrl: "/images/montre16.png",
-      color: "or",
+      price: 15000,
+      imageUrl: "/images/montre2.png",
+      color: "argent",
       status: "unavailable",
       stock: 20,
       categoryId: "clr7qrpwf0000vhrudnz77di7",

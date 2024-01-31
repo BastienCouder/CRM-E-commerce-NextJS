@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import AnalyticsNav from "@/components/dashboard/analytics-nav";
-import { readAnalyticsProducts } from "./actions/analytics-products";
 import { readAnalyticsOrders } from "./actions/analytics-orders";
-import { readAnalyticsWishlistCartOrder } from "./actions/analytics-interactions-products";
+import { readAnalyticsProducts } from "./actions/analytics-products"; // Import manquant
+import { readAnalyticsWishlistCartOrder } from "./actions/analytics-interactions-products"; // Import manquant
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -12,13 +12,13 @@ export const metadata: Metadata = {
 export default async function ViewsPage() {
   return (
     <>
-      <div className="flex-1 space-y-4">
+      {/* <div className="flex-1 space-y-4">
         <AnalyticsNav
-          analyticsProductsData={await readAnalyticsProducts()}
-          analyticsOrdersData={await readAnalyticsOrders()}
-          analyticsWishlistCartOrderData={await readAnalyticsWishlistCartOrder()}
+          analyticsProductsData={readAnalyticsProducts}
+          analyticsOrdersData={readAnalyticsOrders}
+          analyticsWishlistCartOrderData={readAnalyticsWishlistCartOrder}
         />
-      </div>
+      </div> */}
     </>
   );
 }

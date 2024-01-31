@@ -7,13 +7,20 @@ import { usePathname } from "next/navigation";
 import { Dictionary } from "@/lang/dictionaries";
 import NavContent from "./NavContent";
 import { Category } from "@/schemas/db-schema";
+import { Session } from "next-auth";
 
 interface NavBarProps {
   categories: Category[];
   cart: CartProps;
   dict: Dictionary;
+  session: Session | null;
 }
-export default function NavBar({ cart, dict, categories }: NavBarProps) {
+export default function NavBar({
+  cart,
+  dict,
+  categories,
+  session,
+}: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prevIsMenuOpen) => !prevIsMenuOpen);
@@ -52,6 +59,7 @@ export default function NavBar({ cart, dict, categories }: NavBarProps) {
                   cart={cart}
                   dict={dict}
                   categories={categories}
+                  session={session}
                 />
               </div>
             )}

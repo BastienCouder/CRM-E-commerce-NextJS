@@ -40,7 +40,6 @@ export default async function Store({
 }: StoreProps) {
   const dict = await getDictionary(lang);
   const categoryData = await getCategories(category);
-  console.log(categoryData);
 
   const rawProducts = await prisma.product.findMany({
     where: { status: "available", categoryId: categoryData.id },
@@ -48,6 +47,7 @@ export default async function Store({
   });
 
   const products = rawProducts.map((product) => ProductSchema.parse(product));
+  console.log(products);
 
   if (!categoryData) {
     return <Loading />;

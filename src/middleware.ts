@@ -40,29 +40,29 @@ export default auth((req: any) => {
     return null;
   }
 
-  if (isAuthRoute) {
-    if (isLoggedIn) {
-      const locale = getLocale(req, defaultLocale, locales);
-      return Response.redirect(
-        new URL(`${locale} + ${DEFAULT_LOGIN_REDIRECT}`, nextUrl)
-      );
-    }
-    return null;
-  }
+  // if (isAuthRoute) {
+  //   if (isLoggedIn) {
+  //     const locale = getLocale(req, defaultLocale, locales);
+  //     return Response.redirect(
+  //       new URL(`${locale} + ${DEFAULT_LOGIN_REDIRECT}`, nextUrl)
+  //     );
+  //   }
+  //   return null;
+  // }
 
-  if (!isLoggedIn && !isPublicRoute) {
-    let callbackUrl = nextUrl.pathname;
-    if (nextUrl.search) {
-      callbackUrl += nextUrl.search;
-    }
+  // if (!isLoggedIn && !isPublicRoute) {
+  //   let callbackUrl = nextUrl.pathname;
+  //   if (nextUrl.search) {
+  //     callbackUrl += nextUrl.search;
+  //   }
 
-    // const encodedCallbackUrl = encodeURIComponent(callbackUrl);
-    // console.log(isLoggedIn);
+  // const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+  // console.log(isLoggedIn);
 
-    // return Response.redirect(
-    //   new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
-    // );
-  }
+  // return Response.redirect(
+  //   new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+  // );
+  // }
 
   const { pathname } = req.nextUrl;
 

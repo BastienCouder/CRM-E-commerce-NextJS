@@ -51,7 +51,12 @@ export default async function RootLayout({
       <html lang={lang} className={`${inter.variable} ${prata.variable}`}>
         <body className={cn("min-h-screen body font-sans antialiased")}>
           <AnimationProvider>
-            <NavBar dict={dict} cart={cart} categories={categories!} />
+            <NavBar
+              dict={dict}
+              cart={cart}
+              categories={categories!}
+              session={session}
+            />
             <main>{children}</main>
             {/* <CookieBanner /> */}
           </AnimationProvider>
