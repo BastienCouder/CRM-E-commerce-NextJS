@@ -27,6 +27,7 @@ export const {
       });
     },
   },
+  secret: process.env.AUTH_SECRET,
   callbacks: {
     async signIn({ user, account }) {
       // Allow OAuth without email verification

@@ -32,7 +32,7 @@ export default async function Login({ params: { lang } }: LoginProps) {
       <Link
         href={routes.register}
         className={cn(
-          buttonVariants({ variant: "outline" }),
+          buttonVariants(),
           "absolute top-[1.5rem] hover:bg-muted"
         )}
       >

@@ -46,12 +46,7 @@ export async function readAnalyticsProducts(): Promise<readAnalyticsProductsProp
             },
           },
         },
-      },
-      where: {
-        createdAt: {
-          gte: startDate,
-          lt: endDate,
-        },
+      
       },
     });
 

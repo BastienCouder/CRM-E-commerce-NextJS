@@ -33,7 +33,7 @@ export default async function Register({ params: { lang } }: RegisterProps) {
         <Link
           href={routes.login}
           className={cn(
-            buttonVariants({ variant: "outline" }),
+            buttonVariants(),
             "absolute top-[1.5rem] hover:bg-muted"
           )}
         >

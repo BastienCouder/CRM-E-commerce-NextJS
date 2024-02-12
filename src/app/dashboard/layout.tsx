@@ -14,10 +14,10 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const admin = await currentRole();
-  // if (!admin) {
-  //   redirect("/");
-  // }
+  const admin = await currentRole();
+  if (!admin) {
+    redirect("/");
+  }
 
   return (
     <>
